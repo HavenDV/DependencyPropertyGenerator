@@ -3,7 +3,7 @@ Dependency property source generator for WPF/UWP/WinUI/Uno platforms.
 
 ```cs
 [DependencyProperty("IsSpinning", typeof(bool))]
-public partial MainWindow
+public partial class MainWindow
 {
 }
 ```
