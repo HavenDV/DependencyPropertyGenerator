@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net4.5.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
+    <Description>Core library for DependencyProperty Generator.</Description>
+    <PackageTags>dependency;property;dependency property;generator;source generator</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup Label="Usings">
+    <Using Remove="System.Net.Http"/>
+  </ItemGroup>
+
+</Project>

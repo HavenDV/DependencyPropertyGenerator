@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1014;CA1031</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <Description>C# Source Generator library to generate DependencyProperty.</Description>
+    <PackageTags>dependency;property;dependency property;generator;source generator</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="true" Link="Dependencies/%(FileName).dll" />
+    <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.2.0" PrivateAssets="all" />
+    <PackageReference Include="H.Generators.Extensions" Version="1.0.5" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
