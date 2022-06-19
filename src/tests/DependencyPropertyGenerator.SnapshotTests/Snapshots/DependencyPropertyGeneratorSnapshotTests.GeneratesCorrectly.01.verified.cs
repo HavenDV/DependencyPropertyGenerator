@@ -8,10 +8,12 @@ namespace H.Ipc.Apps.Wpf
     {
         public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
             global::System.Windows.DependencyProperty.Register(
-                "IsSpinning",
-                typeof(bool),
-                typeof(MainWindow),
-                new global::System.Windows.PropertyMetadata(default(bool), static (sender, args) => OnIsSpinningChanged((MainWindow)sender, args)));
+                name: "IsSpinning",
+                propertyType: typeof(bool),
+                ownerType: typeof(MainWindow),
+                typeMetadata: new global::System.Windows.PropertyMetadata(
+                    default(bool),
+                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, args)));
 
         public bool IsSpinning
         {

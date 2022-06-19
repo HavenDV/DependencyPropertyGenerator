@@ -17,10 +17,12 @@ namespace {@class.Namespace}
 {@class.DependencyProperties.Select(property => $@"
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.Register(
-                ""{property.Name}"",
-                typeof({property.Type}),
-                typeof({@class.Name}),
-                new global::System.Windows.PropertyMetadata({GenerateDefaultValue(property)}, static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
+                name: ""{property.Name}"",
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Name}),
+                typeMetadata: new global::System.Windows.PropertyMetadata(
+                    {GenerateDefaultValue(property)},
+                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
 
         public {property.Type} {property.Name}
         {{
@@ -46,22 +48,25 @@ namespace {@class.Namespace}
 {@class.AttachedDependencyProperties.Select(property => $@"
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.RegisterAttached(
-                ""{property.Name}"",
-                typeof({property.Type}),
-                typeof({@class.Name}),
-                new global::System.Windows.PropertyMetadata({GenerateDefaultValue(property)}, static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
+                name: ""{property.Name}"",
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Name}),
+                defaultMetadata: new global::System.Windows.PropertyMetadata(
+                    {GenerateDefaultValue(property)},
+                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, args)));
   
-        public static void Set{property.Name}(global::System.Windows.UIElement element, {property.Type} value)
+        public static void Set{property.Name}(global::System.Windows.DependencyObject element, {property.Type} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
-        public static {property.Type} Get{property.Name}(global::System.Windows.UIElement element)
+        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]
+        public static {property.Type} Get{property.Name}(global::System.Windows.DependencyObject element)
         {{
             return ({property.Type})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({@class.Name} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
 ").Inject()}
     }}
 }}";
@@ -70,6 +75,11 @@ namespace {@class.Namespace}
     public static string GenerateDefaultValue(DependencyPropertyData property)
     {
         return property.DefaultValue ?? $"default({property.Type})";
+    }
+
+    public static string GenerateBrowsableForType(DependencyPropertyData property)
+    {
+        return property.BrowsableForType ?? "global::System.Windows.DependencyObject";
     }
 }
 
@@ -82,4 +92,5 @@ public readonly record struct ClassData(
 public readonly record struct DependencyPropertyData(
     string Name,
     string Type,
-    string? DefaultValue);
+    string? DefaultValue = null,
+    string? BrowsableForType = null);

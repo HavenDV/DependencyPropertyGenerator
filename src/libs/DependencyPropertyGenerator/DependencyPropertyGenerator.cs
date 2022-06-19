@@ -128,10 +128,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                 var type = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
                 var defaultValue = attributeSyntax.ArgumentList?.Arguments.ElementAtOrDefault(2)?.Expression.ToFullString();
+                var browsableForType = attribute.ConstructorArguments.ElementAtOrDefault(3).Value?.ToString();
                 var value = new DependencyPropertyData(
                     Name: name,
                     Type: type,
-                    DefaultValue: defaultValue);
+                    DefaultValue: defaultValue,
+                    BrowsableForType: browsableForType);
                 var attributeClass = attribute.AttributeClass?.ToDisplayString();
                 if (attributeClass is DependencyPropertyAttribute)
                 {

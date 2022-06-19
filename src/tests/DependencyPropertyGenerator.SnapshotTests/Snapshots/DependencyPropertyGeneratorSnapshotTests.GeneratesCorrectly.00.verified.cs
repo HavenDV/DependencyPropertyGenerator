@@ -8,21 +8,24 @@ namespace H.Ipc.Apps.Wpf
     {
         public static readonly global::System.Windows.DependencyProperty IsBubbleSourceProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
-                "IsBubbleSource",
-                typeof(bool),
-                typeof(MainWindow),
-                new global::System.Windows.PropertyMetadata(true, static (sender, args) => OnIsBubbleSourceChanged((MainWindow)sender, args)));
+                name: "IsBubbleSource",
+                propertyType: typeof(bool),
+                ownerType: typeof(MainWindow),
+                defaultMetadata: new global::System.Windows.PropertyMetadata(
+                    true,
+                    static (sender, args) => OnIsBubbleSourceChanged((System.Windows.Controls.TreeView)sender, args)));
   
-        public static void SetIsBubbleSource(global::System.Windows.UIElement element, bool value)
+        public static void SetIsBubbleSource(global::System.Windows.DependencyObject element, bool value)
         {
             element.SetValue(IsBubbleSourceProperty, value);
         }
 
-        public static bool GetIsBubbleSource(global::System.Windows.UIElement element)
+        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
+        public static bool GetIsBubbleSource(global::System.Windows.DependencyObject element)
         {
             return (bool)element.GetValue(IsBubbleSourceProperty);
         }
 
-        static partial void OnIsBubbleSourceChanged(MainWindow sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void OnIsBubbleSourceChanged(System.Windows.Controls.TreeView sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
     }
 }
