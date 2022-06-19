@@ -4,7 +4,7 @@ using System.Windows;
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty("IsSpinning", typeof(bool))]
-[AttachedDependencyProperty("IsBubbleSource", typeof(bool))]
+[AttachedDependencyProperty("IsBubbleSource", typeof(bool), defaultValue: true)]
 public partial class MainWindow : Window
 {
     static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)

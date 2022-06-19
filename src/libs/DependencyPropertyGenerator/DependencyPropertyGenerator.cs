@@ -121,13 +121,17 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
-            foreach (var attribute in classSymbol.GetAttributes())
+            foreach (var (attributeSyntax, attribute) in @class.AttributeLists
+                .SelectMany(static list => list.Attributes)
+                .Zip(classSymbol.GetAttributes(), static (a, b) => (a, b)))
             {
-                var argument0 = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
-                var argument1 = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
+                var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
+                var type = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
+                var defaultValue = attributeSyntax.ArgumentList?.Arguments.ElementAtOrDefault(2)?.Expression.ToFullString();
                 var value = new DependencyPropertyData(
-                    Name: argument0,
-                    Type: argument1);
+                    Name: name,
+                    Type: type,
+                    DefaultValue: defaultValue);
                 var attributeClass = attribute.AttributeClass?.ToDisplayString();
                 if (attributeClass is DependencyPropertyAttribute)
                 {

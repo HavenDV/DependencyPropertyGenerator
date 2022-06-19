@@ -20,7 +20,7 @@ namespace {@class.Namespace}
                 ""{property.Name}"",
                 typeof({property.Type}),
                 typeof({@class.Name}),
-                new global::System.Windows.PropertyMetadata(default({property.Type}), static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
+                new global::System.Windows.PropertyMetadata({GenerateDefaultValue(property)}, static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
 
         public {property.Type} {property.Name}
         {{
@@ -33,6 +33,7 @@ namespace {@class.Namespace}
     }}
 }}";
     }
+
     public static string GenerateAttachedDependencyProperty(ClassData @class)
     {
         return @$"
@@ -48,7 +49,7 @@ namespace {@class.Namespace}
                 ""{property.Name}"",
                 typeof({property.Type}),
                 typeof({@class.Name}),
-                new global::System.Windows.PropertyMetadata(default({property.Type}), static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
+                new global::System.Windows.PropertyMetadata({GenerateDefaultValue(property)}, static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
   
         public static void Set{property.Name}(global::System.Windows.UIElement element, {property.Type} value)
         {{
@@ -65,6 +66,11 @@ namespace {@class.Namespace}
     }}
 }}";
     }
+
+    public static string GenerateDefaultValue(DependencyPropertyData property)
+    {
+        return property.DefaultValue ?? $"default({property.Type})";
+    }
 }
 
 public readonly record struct ClassData(
@@ -75,4 +81,5 @@ public readonly record struct ClassData(
 
 public readonly record struct DependencyPropertyData(
     string Name,
-    string Type);
+    string Type,
+    string? DefaultValue);

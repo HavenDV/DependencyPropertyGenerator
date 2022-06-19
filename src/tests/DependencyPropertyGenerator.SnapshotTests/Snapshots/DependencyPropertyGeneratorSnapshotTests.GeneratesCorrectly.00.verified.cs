@@ -11,7 +11,7 @@ namespace H.Ipc.Apps.Wpf
                 "IsBubbleSource",
                 typeof(bool),
                 typeof(MainWindow),
-                new global::System.Windows.PropertyMetadata(default(bool), static (sender, args) => OnIsBubbleSourceChanged((MainWindow)sender, args)));
+                new global::System.Windows.PropertyMetadata(true, static (sender, args) => OnIsBubbleSourceChanged((MainWindow)sender, args)));
   
         public static void SetIsBubbleSource(global::System.Windows.UIElement element, bool value)
         {
