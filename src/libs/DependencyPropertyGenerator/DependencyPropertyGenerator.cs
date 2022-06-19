@@ -84,6 +84,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 context.AddTextSource(
                     hintName: $"{@class.Name}_DependencyProperties.generated.cs",
                     text: SourceGenerationHelper.GenerateDependencyProperty(@class));
+                context.AddTextSource(
+                    hintName: $"{@class.Name}_AttachedDependencyProperties.generated.cs",
+                    text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class));
             }
         }
         catch (Exception exception)
@@ -117,18 +120,26 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
 
             var dependencyProperties = new List<DependencyPropertyData>();
+            var attachedDependencyProperties = new List<DependencyPropertyData>();
             foreach (var attribute in classSymbol.GetAttributes())
             {
                 var argument0 = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                 var argument1 = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
-                
-                dependencyProperties.Add(new DependencyPropertyData(
+                var value = new DependencyPropertyData(
                     Name: argument0,
-                    Type: argument1,
-                    IsAttached: false));
+                    Type: argument1);
+                var attributeClass = attribute.AttributeClass?.ToDisplayString();
+                if (attributeClass is DependencyPropertyAttribute)
+                {
+                    dependencyProperties.Add(value);
+                }
+                else if (attributeClass is AttachedDependencyPropertyAttribute)
+                {
+                    attachedDependencyProperties.Add(value);
+                }
             }
 
-            enumsToGenerate.Add(new ClassData(@namespace, className, dependencyProperties));
+            enumsToGenerate.Add(new ClassData(@namespace, className, dependencyProperties, attachedDependencyProperties));
         }
 
         return enumsToGenerate;

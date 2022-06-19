@@ -39,19 +39,19 @@ namespace {@class.Namespace}
 {{
     public partial class {@class.Name}
     {{
-{@class.DependencyProperties.Select(property => $@"
+{@class.AttachedDependencyProperties.Select(property => $@"
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 ""{property.Name}"",
                 typeof({property.Type}),
                 typeof({@class.Name}));
   
-        public static void Set{property.Name}(UIElement element, {property.Type} value)
+        public static void Set{property.Name}(global::System.Windows.UIElement element, {property.Type} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
-        public static {property.Type} Get{property.Name}(UIElement element)
+        public static {property.Type} Get{property.Name}(global::System.Windows.UIElement element)
         {{
             return ({property.Type})element.GetValue({property.Name}Property);
         }}
@@ -64,9 +64,9 @@ namespace {@class.Namespace}
 public readonly record struct ClassData(
     string Namespace,
     string Name,
-    IReadOnlyCollection<DependencyPropertyData> DependencyProperties);
+    IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
+    IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties);
 
 public readonly record struct DependencyPropertyData(
     string Name,
-    string Type,
-    bool IsAttached);
+    string Type);

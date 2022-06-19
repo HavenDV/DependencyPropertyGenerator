@@ -6,18 +6,23 @@ public class DependencyPropertyGeneratorTests
     [TestMethod]
     public void GeneratesCorrectly()
     {
-        var value = false;
+        var isSpinningValue = false;
+        var isBubbleSourceValue = false;
 
         var thread = new Thread(() =>
         {
             var window = new MainWindow();
             window.SetValue(MainWindow.IsSpinningProperty, true);
-            value = (bool)window.GetValue(MainWindow.IsSpinningProperty);
+            isSpinningValue = (bool)window.GetValue(MainWindow.IsSpinningProperty);
+
+            MainWindow.SetIsBubbleSource(window, true);
+            isBubbleSourceValue = (bool)MainWindow.GetIsBubbleSource(window);
         });
         thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
         thread.Join();
 
-        value.Should().BeTrue();
+        isSpinningValue.Should().BeTrue();
+        isBubbleSourceValue.Should().BeTrue();
     }
 }

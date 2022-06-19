@@ -12,6 +12,7 @@ using DependencyPropertyGenerator;
 namespace H.Ipc.Apps.Wpf;
 
 [DependencyProperty(""IsSpinning"", typeof(bool))]
+[AttachedDependencyProperty(""IsBubbleSource"", typeof(bool))]
 public partial class MainWindow : global::System.Windows.Window
 {
 }");
