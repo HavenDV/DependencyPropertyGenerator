@@ -8,6 +8,7 @@ public class DependencyPropertyGeneratorSnapshotTests : VerifyBase
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
+using System.Windows;
 
 namespace H.Ipc.Apps.Wpf;
 
@@ -15,6 +16,13 @@ namespace H.Ipc.Apps.Wpf;
 [AttachedDependencyProperty(""IsBubbleSource"", typeof(bool))]
 public partial class MainWindow : global::System.Windows.Window
 {
+    static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
+    {
+    }
+
+    static partial void OnIsBubbleSourceChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
+    {
+    }
 }");
     }
 }

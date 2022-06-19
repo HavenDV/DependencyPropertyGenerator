@@ -18,14 +18,17 @@ namespace {@class.Namespace}
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.Register(
                 ""{property.Name}"",
-                 typeof({property.Type}),
-                 typeof({@class.Name}));
+                typeof({property.Type}),
+                typeof({@class.Name}),
+                new global::System.Windows.PropertyMetadata(default({property.Type}), static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
 
         public {property.Type} {property.Name}
         {{
             get => ({property.Type})GetValue({property.Name}Property);
             set => SetValue({property.Name}Property, value);
         }}
+
+        static partial void On{property.Name}Changed({@class.Name} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
 ").Inject()}
     }}
 }}";
@@ -44,7 +47,8 @@ namespace {@class.Namespace}
             global::System.Windows.DependencyProperty.RegisterAttached(
                 ""{property.Name}"",
                 typeof({property.Type}),
-                typeof({@class.Name}));
+                typeof({@class.Name}),
+                new global::System.Windows.PropertyMetadata(default({property.Type}), static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
   
         public static void Set{property.Name}(global::System.Windows.UIElement element, {property.Type} value)
         {{
@@ -55,6 +59,8 @@ namespace {@class.Namespace}
         {{
             return ({property.Type})element.GetValue({property.Name}Property);
         }}
+
+        static partial void On{property.Name}Changed({@class.Name} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
 ").Inject()}
     }}
 }}";

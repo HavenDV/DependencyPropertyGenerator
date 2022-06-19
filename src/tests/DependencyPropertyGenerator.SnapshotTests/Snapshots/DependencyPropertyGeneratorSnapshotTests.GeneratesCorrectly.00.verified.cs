@@ -10,7 +10,8 @@ namespace H.Ipc.Apps.Wpf
             global::System.Windows.DependencyProperty.RegisterAttached(
                 "IsBubbleSource",
                 typeof(bool),
-                typeof(MainWindow));
+                typeof(MainWindow),
+                new global::System.Windows.PropertyMetadata(default(bool), static (sender, args) => OnIsBubbleSourceChanged((MainWindow)sender, args)));
   
         public static void SetIsBubbleSource(global::System.Windows.UIElement element, bool value)
         {
@@ -21,5 +22,7 @@ namespace H.Ipc.Apps.Wpf
         {
             return (bool)element.GetValue(IsBubbleSourceProperty);
         }
+
+        static partial void OnIsBubbleSourceChanged(MainWindow sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
     }
 }
