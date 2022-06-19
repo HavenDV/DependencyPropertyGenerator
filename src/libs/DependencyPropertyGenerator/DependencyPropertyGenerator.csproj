@@ -24,8 +24,4 @@
     <PackageReference Include="H.Generators.Extensions" Version="1.2.0" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj" />
-  </ItemGroup>
-
 </Project>
