@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace H.Ipc.Apps.Wpf
+namespace H.Generators.IntegrationTests
 {
     public partial class MainWindow
     {

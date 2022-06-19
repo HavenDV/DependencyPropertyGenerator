@@ -1,6 +1,12 @@
 # DependencyPropertyGenerator
 Dependency property source generator for WPF/UWP/WinUI/Uno platforms.
 
+### Install
+```
+Install-Package DependencyPropertyGenerator // Generator
+Install-Package DependencyPropertyGenerator.Core // Attributes
+```
+
 ### Usage
 ```cs
 using DependencyPropertyGenerator;
@@ -10,58 +16,28 @@ using System.Windows.Controls;
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty("IsSpinning", typeof(bool))]
-[AttachedDependencyProperty("IsBubbleSource", typeof(bool), defaultValue: true, browsableForType: typeof(System.Windows.Controls.TreeView))]
 public partial class MainWindow : Window
 {
     static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
     {
     }
+}
 
-    static partial void OnIsBubbleSourceChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
+[AttachedDependencyProperty("SelectedItem", typeof(object), browsableForType: typeof(System.Windows.Controls.TreeView))]
+public static partial class TreeViewExtensions
+{
+    static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
     {
     }
 }
 ```
 will generate:
 ```cs
-//HintName: MainWindow_AttachedDependencyProperties.generated.cs
-
-#nullable enable
-
-namespace H.Ipc.Apps.Wpf
-{
-    public partial class MainWindow
-    {
-        public static readonly global::System.Windows.DependencyProperty IsBubbleSourceProperty =
-            global::System.Windows.DependencyProperty.RegisterAttached(
-                name: "IsBubbleSource",
-                propertyType: typeof(bool),
-                ownerType: typeof(MainWindow),
-                defaultMetadata: new global::System.Windows.PropertyMetadata(
-                    true,
-                    static (sender, args) => OnIsBubbleSourceChanged((System.Windows.Controls.TreeView)sender, args)));
-  
-        public static void SetIsBubbleSource(global::System.Windows.DependencyObject element, bool value)
-        {
-            element.SetValue(IsBubbleSourceProperty, value);
-        }
-
-        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
-        public static bool GetIsBubbleSource(global::System.Windows.DependencyObject element)
-        {
-            return (bool)element.GetValue(IsBubbleSourceProperty);
-        }
-
-        static partial void OnIsBubbleSourceChanged(System.Windows.Controls.TreeView sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
-    }
-}
-```
-```cs
 //HintName: MainWindow_DependencyProperties.generated.cs
 
 #nullable enable
 
-namespace H.Ipc.Apps.Wpf
+namespace H.Generators.IntegrationTests
 {
     public partial class MainWindow
     {
@@ -81,6 +57,39 @@ namespace H.Ipc.Apps.Wpf
         }
 
         static partial void OnIsSpinningChanged(MainWindow sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+    }
+}
+```
+```cs
+//HintName: TreeViewExtensions_AttachedDependencyProperties.generated.cs
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests
+{
+    public static partial class TreeViewExtensions
+    {
+        public static readonly global::System.Windows.DependencyProperty SelectedItemProperty =
+            global::System.Windows.DependencyProperty.RegisterAttached(
+                name: "SelectedItem",
+                propertyType: typeof(object),
+                ownerType: typeof(TreeViewExtensions),
+                defaultMetadata: new global::System.Windows.PropertyMetadata(
+                    typeof(System.Windows.Controls.TreeView),
+                    static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, args)));
+  
+        public static void SetSelectedItem(global::System.Windows.DependencyObject element, object value)
+        {
+            element.SetValue(SelectedItemProperty, value);
+        }
+
+        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
+        public static object GetSelectedItem(global::System.Windows.DependencyObject element)
+        {
+            return (object)element.GetValue(SelectedItemProperty);
+        }
+
+        static partial void OnSelectedItemChanged(System.Windows.Controls.TreeView sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
     }
 }
 ```

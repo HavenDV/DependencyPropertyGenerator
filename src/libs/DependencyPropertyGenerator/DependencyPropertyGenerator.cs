@@ -20,11 +20,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     #region Methods
 
-    private static (ClassDeclarationSyntax Class, string FullName)? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+    private static ClassDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
     {
-        var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
+        var syntax = (ClassDeclarationSyntax)context.Node;
 
-        foreach (var attributeListSyntax in classDeclarationSyntax.AttributeLists)
+        foreach (var attributeListSyntax in syntax.AttributeLists)
         {
             foreach (var attributeSyntax in attributeListSyntax.Attributes)
             {
@@ -37,7 +37,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 var fullName = attributeContainingTypeSymbol.ToDisplayString();
                 if (fullName is AttachedDependencyPropertyAttribute or DependencyPropertyAttribute)
                 {
-                    return (classDeclarationSyntax, fullName);
+                    return syntax;
                 }
             }
         }
@@ -57,12 +57,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
         context.RegisterSourceOutput(
             compilationAndClasses,
-            static (context, source) => Execute(source.Left, source.Right, context));
+            static (context, source) => Execute(source.Left, source.Right!, context));
     }
 
     private static void Execute(
         Compilation compilation,
-        ImmutableArray<(ClassDeclarationSyntax Class, string FullName)?> classSyntaxes,
+        ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
         SourceProductionContext context)
     {
         if (classSyntaxes.IsDefaultOrEmpty)
@@ -72,13 +72,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
         try
         {
-            var distinctClassSyntaxes = classSyntaxes
-                .Where(static tuple => tuple!.Value.FullName == DependencyPropertyAttribute)
-                .Select(static tuple => tuple!.Value.Class)
-                .Distinct()
-                .ToArray();
-
-            var classes = GetTypesToGenerate(compilation, distinctClassSyntaxes, context.CancellationToken);
+            var classes = GetTypesToGenerate(compilation, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 context.AddTextSource(
@@ -118,6 +112,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var fullClassName = classSymbol.ToString();
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
+            var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
 
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
@@ -145,7 +140,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
             }
 
-            enumsToGenerate.Add(new ClassData(@namespace, className, dependencyProperties, attachedDependencyProperties));
+            enumsToGenerate.Add(new ClassData(@namespace, className, classModifiers, dependencyProperties, attachedDependencyProperties));
         }
 
         return enumsToGenerate;

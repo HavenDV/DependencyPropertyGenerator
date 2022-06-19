@@ -1,4 +1,6 @@
-﻿namespace H.Generators.IntegrationTests;
+﻿using System.Windows.Controls;
+
+namespace H.Generators.IntegrationTests;
 
 [TestClass]
 public class DependencyPropertyGeneratorTests
@@ -7,7 +9,7 @@ public class DependencyPropertyGeneratorTests
     public void GeneratesCorrectly()
     {
         var isSpinningValue = false;
-        var isBubbleSourceValue = false;
+        var selectedItemValue = (object?)null;
 
         var thread = new Thread(() =>
         {
@@ -15,14 +17,15 @@ public class DependencyPropertyGeneratorTests
             window.SetValue(MainWindow.IsSpinningProperty, true);
             isSpinningValue = (bool)window.GetValue(MainWindow.IsSpinningProperty);
 
-            MainWindow.SetIsBubbleSource(window, true);
-            isBubbleSourceValue = (bool)MainWindow.GetIsBubbleSource(window);
+            var treeView = new TreeView();
+            TreeViewExtensions.SetSelectedItem(treeView, new object());
+            selectedItemValue = TreeViewExtensions.GetSelectedItem(treeView);
         });
         thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
         thread.Join();
 
         isSpinningValue.Should().BeTrue();
-        isBubbleSourceValue.Should().BeTrue();
+        selectedItemValue.Should().NotBeNull();
     }
 }

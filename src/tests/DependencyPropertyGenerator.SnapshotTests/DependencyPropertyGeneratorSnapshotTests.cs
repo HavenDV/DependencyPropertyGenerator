@@ -11,17 +11,20 @@ using DependencyPropertyGenerator;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace H.Ipc.Apps.Wpf;
+namespace H.Generators.IntegrationTests;
 
 [DependencyProperty(""IsSpinning"", typeof(bool))]
-[AttachedDependencyProperty(""IsBubbleSource"", typeof(bool), defaultValue: true, browsableForType: typeof(System.Windows.Controls.TreeView))]
-public partial class MainWindow : global::System.Windows.Window
+public partial class MainWindow : Window
 {
     static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
     {
     }
+}
 
-    static partial void OnIsBubbleSourceChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
+[AttachedDependencyProperty(""SelectedItem"", typeof(object), browsableForType: typeof(System.Windows.Controls.TreeView))]
+public static partial class TreeViewExtensions
+{
+    static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
     {
     }
 }");

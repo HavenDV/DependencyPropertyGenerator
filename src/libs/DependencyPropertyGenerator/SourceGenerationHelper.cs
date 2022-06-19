@@ -12,7 +12,7 @@ internal class SourceGenerationHelper
 
 namespace {@class.Namespace}
 {{
-    public partial class {@class.Name}
+    public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.DependencyProperties.Select(property => $@"
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
@@ -43,7 +43,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public partial class {@class.Name}
+    public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.AttachedDependencyProperties.Select(property => $@"
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
@@ -86,6 +86,7 @@ namespace {@class.Namespace}
 public readonly record struct ClassData(
     string Namespace,
     string Name,
+    string Modifiers,
     IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
     IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties);
 
