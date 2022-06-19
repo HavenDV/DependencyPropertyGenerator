@@ -26,8 +26,8 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Authors>havendv</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/HavenDV/H.NSwag.Generator</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/HavenDV/H.NSwag.Generator</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/HavenDV/DependencyPropertyGenerator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HavenDV/DependencyPropertyGenerator</RepositoryUrl>
     <PackageIcon>nuget_icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
