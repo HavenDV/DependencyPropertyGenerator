@@ -1,22 +1,137 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Immutable;
+using H.Generators.Extensions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace H.Generators;
 
 [Generator]
 public class DependencyPropertyGenerator : IIncrementalGenerator
 {
+    #region Constants
+
+    public const string Name = nameof(DependencyPropertyGenerator);
+    public const string Id = "DPG";
+
+    private const string AttachedDependencyPropertyAttribute = "DependencyPropertyGenerator.AttachedDependencyPropertyAttribute";
+    private const string DependencyPropertyAttribute = "DependencyPropertyGenerator.DependencyPropertyAttribute";
+
+    #endregion
+
     #region Methods
+
+    private static (ClassDeclarationSyntax Class, string FullName)? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+    {
+        var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
+
+        foreach (var attributeListSyntax in classDeclarationSyntax.AttributeLists)
+        {
+            foreach (var attributeSyntax in attributeListSyntax.Attributes)
+            {
+                if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
+                {
+                    continue;
+                }
+
+                var attributeContainingTypeSymbol = attributeSymbol.ContainingType;
+                var fullName = attributeContainingTypeSymbol.ToDisplayString();
+                if (fullName is AttachedDependencyPropertyAttribute or DependencyPropertyAttribute)
+                {
+                    return (classDeclarationSyntax, fullName);
+                }
+            }
+        }
+
+        return null;
+    }
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var classes = context.SyntaxProvider
+            .CreateSyntaxProvider(
+                predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+                transform: static (context, _) => GetSemanticTargetForGeneration(context))
+            .Where(static syntax => syntax is not null);
+
+        var compilationAndClasses = context.CompilationProvider.Combine(classes.Collect());
+
         context.RegisterSourceOutput(
-            context.CompilationProvider,
-            static (context, _) => Execute(context));
+            compilationAndClasses,
+            static (context, source) => Execute(source.Left, source.Right, context));
     }
 
     private static void Execute(
+        Compilation compilation,
+        ImmutableArray<(ClassDeclarationSyntax Class, string FullName)?> classSyntaxes,
         SourceProductionContext context)
     {
+        if (classSyntaxes.IsDefaultOrEmpty)
+        {
+            return;
+        }
+
+        try
+        {
+            var distinctClassSyntaxes = classSyntaxes
+                .Where(static tuple => tuple!.Value.FullName == DependencyPropertyAttribute)
+                .Select(static tuple => tuple!.Value.Class)
+                .Distinct()
+                .ToArray();
+
+            var classes = GetTypesToGenerate(compilation, distinctClassSyntaxes, context.CancellationToken);
+            foreach (var @class in classes)
+            {
+                context.AddTextSource(
+                    hintName: $"{@class.Name}_DependencyProperties.generated.cs",
+                    text: SourceGenerationHelper.GenerateDependencyProperty(@class));
+            }
+        }
+        catch (Exception exception)
+        {
+            context.ReportException(
+                id: "001",
+                exception: exception,
+                prefix: Id);
+        }
+    }
+
+    private static List<ClassData> GetTypesToGenerate(
+        Compilation compilation,
+        IEnumerable<ClassDeclarationSyntax> classes,
+        CancellationToken cancellationToken)
+    {
+        var enumsToGenerate = new List<ClassData>();
+        foreach (var @class in classes)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
+            if (semanticModel.GetDeclaredSymbol(
+                @class, cancellationToken) is not INamedTypeSymbol classSymbol)
+            {
+                continue;
+            }
+
+            var fullClassName = classSymbol.ToString();
+            var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
+            var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
+
+            var dependencyProperties = new List<DependencyPropertyData>();
+            foreach (var attribute in classSymbol.GetAttributes())
+            {
+                var argument0 = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
+                var argument1 = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
+                
+                dependencyProperties.Add(new DependencyPropertyData(
+                    Name: argument0,
+                    Type: argument1,
+                    IsAttached: false));
+            }
+
+            enumsToGenerate.Add(new ClassData(@namespace, className, dependencyProperties));
+        }
+
+        return enumsToGenerate;
     }
 
     #endregion

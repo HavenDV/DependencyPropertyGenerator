@@ -6,6 +6,14 @@ public class DependencyPropertyGeneratorSnapshotTests : VerifyBase
     [TestMethod]
     public Task GeneratesCorrectly()
     {
-        return this.CheckSourceAsync();
+        return this.CheckSourceAsync(@"
+using DependencyPropertyGenerator;
+
+namespace H.Ipc.Apps.Wpf;
+
+[DependencyProperty(""IsSpinning"", typeof(bool))]
+public partial class MainWindow : global::System.Windows.Window
+{
+}");
     }
 }

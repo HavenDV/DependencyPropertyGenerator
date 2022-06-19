@@ -8,13 +8,19 @@ public static class TestHelper
 {
     public static async Task CheckSourceAsync(
         this VerifyBase verifier,
+        string source,
         CancellationToken cancellationToken = default)
     {
-        var referenceAssemblies = ReferenceAssemblies.Net.Net60;
+        var referenceAssemblies = ReferenceAssemblies.NetFramework.Net48.Wpf;
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
         var compilation = (Compilation)CSharpCompilation.Create(
             assemblyName: "Tests",
-            references: references,
+            syntaxTrees: new[]
+            {
+                CSharpSyntaxTree.ParseText(source, cancellationToken: cancellationToken),
+            },
+            references: references
+                .Add(MetadataReference.CreateFromFile(typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var generator = new DependencyPropertyGenerator();
         var driver = CSharpGeneratorDriver
