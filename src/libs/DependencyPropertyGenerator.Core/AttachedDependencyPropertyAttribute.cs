@@ -1,6 +1,6 @@
 ﻿namespace DependencyPropertyGenerator;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public sealed class AttachedDependencyPropertyAttribute : Attribute
 {
 	public string Name { get; }
