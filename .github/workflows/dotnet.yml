@@ -7,5 +7,6 @@ jobs:
     uses: HavenDV/workflows/.github/workflows/dotnet_build-test-publish.yml@main
     with:
       os: windows-latest
+      generate-build-number: false
     secrets:
       nuget-key: ${{ secrets.NUGET_KEY }}
