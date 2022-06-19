@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj" />
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>
