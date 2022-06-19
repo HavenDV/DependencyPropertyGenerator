@@ -1,50 +1,86 @@
 # DependencyPropertyGenerator
 Dependency property source generator for WPF/UWP/WinUI/Uno platforms.
 
-### Dependency property
+### Usage
 ```cs
+using DependencyPropertyGenerator;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace H.Generators.IntegrationTests;
+
 [DependencyProperty("IsSpinning", typeof(bool))]
-public partial class MainWindow
+[AttachedDependencyProperty("IsBubbleSource", typeof(bool), defaultValue: true, browsableForType: typeof(System.Windows.Controls.TreeView))]
+public partial class MainWindow : Window
 {
+    static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
+    {
+    }
+
+    static partial void OnIsBubbleSourceChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
+    {
+    }
 }
 ```
 will generate:
 ```cs
-public static readonly DependencyProperty IsSpinningProperty =
-    DependencyProperty.Register(
-        "IsSpinning",
-         typeof(bool),
-         typeof(MainWindow));
+//HintName: MainWindow_AttachedDependencyProperties.generated.cs
 
-public bool IsSpinning
-{
-    get => (bool)GetValue(IsSpinningProperty);
-    set => SetValue(IsSpinningProperty, value);
-}
-```
+#nullable enable
 
-### Attached Dependency Property
-```cs
-[AttachedDependencyProperty("IsBubbleSource", typeof(bool))]
-public partial static class AquariumObject2
+namespace H.Ipc.Apps.Wpf
 {
-}
-```
-will generate:
-```cs
-public static readonly DependencyProperty IsBubbleSourceProperty =
-    DependencyProperty.RegisterAttached(
-        "IsBubbleSource",
-        typeof(bool),
-        typeof(AquariumObject2));
+    public partial class MainWindow
+    {
+        public static readonly global::System.Windows.DependencyProperty IsBubbleSourceProperty =
+            global::System.Windows.DependencyProperty.RegisterAttached(
+                name: "IsBubbleSource",
+                propertyType: typeof(bool),
+                ownerType: typeof(MainWindow),
+                defaultMetadata: new global::System.Windows.PropertyMetadata(
+                    true,
+                    static (sender, args) => OnIsBubbleSourceChanged((System.Windows.Controls.TreeView)sender, args)));
   
-public static void SetIsBubbleSource(UIElement element, bool value)
-{
-    element.SetValue(IsBubbleSourceProperty, value);
-}
+        public static void SetIsBubbleSource(global::System.Windows.DependencyObject element, bool value)
+        {
+            element.SetValue(IsBubbleSourceProperty, value);
+        }
 
-public static bool GetIsBubbleSource(UIElement element)
+        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
+        public static bool GetIsBubbleSource(global::System.Windows.DependencyObject element)
+        {
+            return (bool)element.GetValue(IsBubbleSourceProperty);
+        }
+
+        static partial void OnIsBubbleSourceChanged(System.Windows.Controls.TreeView sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+    }
+}
+```
+```cs
+//HintName: MainWindow_DependencyProperties.generated.cs
+
+#nullable enable
+
+namespace H.Ipc.Apps.Wpf
 {
-    return (bool)element.GetValue(IsBubbleSourceProperty);
+    public partial class MainWindow
+    {
+        public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
+            global::System.Windows.DependencyProperty.Register(
+                name: "IsSpinning",
+                propertyType: typeof(bool),
+                ownerType: typeof(MainWindow),
+                typeMetadata: new global::System.Windows.PropertyMetadata(
+                    default(bool),
+                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, args)));
+
+        public bool IsSpinning
+        {
+            get => (bool)GetValue(IsSpinningProperty);
+            set => SetValue(IsSpinningProperty, value);
+        }
+
+        static partial void OnIsSpinningChanged(MainWindow sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+    }
 }
 ```
