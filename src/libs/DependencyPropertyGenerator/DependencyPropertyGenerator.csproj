@@ -10,6 +10,7 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Description>C# Source Generator library to generate DependencyProperty.</Description>
     <PackageTags>dependency;property;dependency property;generator;source generator</PackageTags>
   </PropertyGroup>
