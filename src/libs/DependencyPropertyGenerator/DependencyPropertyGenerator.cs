@@ -123,17 +123,22 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             {
                 var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                 var type =
-                    GetGenericTypeArgumentFromAttributeData(attribute, 0) ??
+                    GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
                     attribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ??
                     string.Empty;
+                var isValueType =
+                    GetGenericTypeArgumentFromAttributeData(attribute, 0)?.IsValueType ??
+                    attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
+                    true;
                 var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
                 var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
                 var browsableForType =
-                    GetGenericTypeArgumentFromAttributeData(attribute, 1) ??
+                    GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
                 var value = new DependencyPropertyData(
                     Name: name,
                     Type: type,
+                    IsValueType: isValueType,
                     DefaultValue: defaultValue,
                     BindsTwoWayByDefault: bool.Parse(bindsTwoWayByDefault),
                     BrowsableForType: browsableForType);
@@ -154,9 +159,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         return enumsToGenerate;
     }
 
-    private static string? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
+    private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
 {
-        return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position)?.ToDisplayString();
+        return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
     }
 
     private static TypedConstant? GetPropertyFromAttributeData(AttributeData data, string name)

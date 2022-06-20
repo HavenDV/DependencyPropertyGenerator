@@ -13,12 +13,14 @@ using DependencyPropertyGenerator;
 using System.Windows;
 using System.Windows.Controls;
 
+#nullable enable
+
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>("IsSpinning", DefaultValue = true)]
 public partial class MainWindow : Window
 {
-    static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
+    static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue)
     {
     }
 }
@@ -26,7 +28,7 @@ public partial class MainWindow : Window
 [AttachedDependencyProperty<object, TreeView>("SelectedItem", BindsTwoWayByDefault = true)]
 public static partial class TreeViewExtensions
 {
-    static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
+    static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
 }
@@ -49,7 +51,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     true,
                     global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, args)));
+                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, (bool)args.OldValue, (bool)args.NewValue)));
 
         public bool IsSpinning
         {
@@ -57,7 +59,7 @@ namespace H.Generators.IntegrationTests
             set => SetValue(IsSpinningProperty, value);
         }
 
-        static partial void OnIsSpinningChanged(MainWindow sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue);
     }
 }
 ```
@@ -78,20 +80,20 @@ namespace H.Generators.IntegrationTests
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     default(object),
                     global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, args)));
+                    static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
   
-        public static void SetSelectedItem(global::System.Windows.DependencyObject element, object value)
+        public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
             element.SetValue(SelectedItemProperty, value);
         }
 
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
-        public static object GetSelectedItem(global::System.Windows.DependencyObject element)
+        public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {
-            return (object)element.GetValue(SelectedItemProperty);
+            return (object?)element.GetValue(SelectedItemProperty);
         }
 
-        static partial void OnSelectedItemChanged(System.Windows.Controls.TreeView sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void OnSelectedItemChanged(System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
     }
 }
 ```

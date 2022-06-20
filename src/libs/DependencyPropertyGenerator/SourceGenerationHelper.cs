@@ -23,15 +23,15 @@ namespace {@class.Namespace}
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
                     {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, ({property.Type})args.OldValue, ({property.Type})args.NewValue)));
+                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
 
-        public {property.Type} {property.Name}
+        public {GenerateType(property)} {property.Name}
         {{
-            get => ({property.Type})GetValue({property.Name}Property);
+            get => ({GenerateType(property)})GetValue({property.Name}Property);
             set => SetValue({property.Name}Property, value);
         }}
 
-        static partial void On{property.Name}Changed({@class.Name} sender, {property.Type} oldValue, {property.Type} newValue);
+        static partial void On{property.Name}Changed({@class.Name} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 ").Inject()}
     }}
 }}";
@@ -55,20 +55,20 @@ namespace {@class.Namespace}
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
                     {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, ({property.Type})args.OldValue, ({property.Type})args.NewValue)));
+                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
   
-        public static void Set{property.Name}(global::System.Windows.DependencyObject element, {property.Type} value)
+        public static void Set{property.Name}(global::System.Windows.DependencyObject element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]
-        public static {property.Type} Get{property.Name}(global::System.Windows.DependencyObject element)
+        public static {GenerateType(property)} Get{property.Name}(global::System.Windows.DependencyObject element)
         {{
-            return ({property.Type})element.GetValue({property.Name}Property);
+            return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {property.Type} oldValue, {property.Type} newValue);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 ").Inject()}
     }}
 }}";
@@ -82,6 +82,17 @@ namespace {@class.Namespace}
     public static string GenerateBrowsableForType(DependencyPropertyData property)
     {
         return property.BrowsableForType ?? "global::System.Windows.DependencyObject";
+    }
+
+    public static string GenerateType(DependencyPropertyData property)
+    {
+        var value = property.Type;
+        if (!property.IsValueType)
+        {
+            value += "?";
+        }
+
+        return value;
     }
 
     public static string GenerateOptions(DependencyPropertyData property)
