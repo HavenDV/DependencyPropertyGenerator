@@ -20,8 +20,9 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                typeMetadata: new global::System.Windows.PropertyMetadata(
+                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
+                    {GenerateOptions(property)},
                     static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
 
         public {property.Type} {property.Name}
@@ -51,8 +52,9 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                defaultMetadata: new global::System.Windows.PropertyMetadata(
+                defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
+                    {GenerateOptions(property)},
                     static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, args)));
   
         public static void Set{property.Name}(global::System.Windows.DependencyObject element, {property.Type} value)
@@ -80,5 +82,20 @@ namespace {@class.Namespace}
     public static string GenerateBrowsableForType(DependencyPropertyData property)
     {
         return property.BrowsableForType ?? "global::System.Windows.DependencyObject";
+    }
+
+    public static string GenerateOptions(DependencyPropertyData property)
+    {
+        var value = string.Empty;
+        if (property.BindsTwoWayByDefault)
+        {
+            value += "global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault";
+        }
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            return value;
+        }
+
+        return "global::System.Windows.FrameworkPropertyMetadataOptions.None";
     }
 }
