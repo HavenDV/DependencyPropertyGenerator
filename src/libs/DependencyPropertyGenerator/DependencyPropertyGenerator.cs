@@ -85,10 +85,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var useUnoWinUI = constants.Contains("HAS_UNO_WINUI") || (constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI"));
             var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI) switch
             {
-                (_, _, _, true, _) => Platform.Uno,
                 (_, _, _, _, true) => Platform.UnoWinUI,
-                (_, true, _, _, _) => Platform.UWP,
+                (_, _, _, true, _) => Platform.Uno,
                 (_, _, true, _, _) => Platform.WinUI,
+                (_, true, _, _, _) => Platform.UWP,
                 (true, _, _, _, _) => Platform.WPF,
                 _ =>                  Platform.Undefined,
             };
