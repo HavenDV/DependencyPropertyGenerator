@@ -15,7 +15,7 @@ using System.Windows.Controls;
 
 namespace H.Generators.IntegrationTests;
 
-[DependencyProperty("IsSpinning", typeof(bool))]
+[DependencyProperty("IsSpinning", typeof(bool), DefaultValue = true)]
 public partial class MainWindow : Window
 {
     static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
@@ -23,7 +23,7 @@ public partial class MainWindow : Window
     }
 }
 
-[AttachedDependencyProperty("SelectedItem", typeof(object), browsableForType: typeof(System.Windows.Controls.TreeView))]
+[AttachedDependencyProperty("SelectedItem", typeof(object), BrowsableForType = typeof(TreeView), BindsTwoWayByDefault = true)]
 public static partial class TreeViewExtensions
 {
     static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
@@ -46,8 +46,9 @@ namespace H.Generators.IntegrationTests
                 name: "IsSpinning",
                 propertyType: typeof(bool),
                 ownerType: typeof(MainWindow),
-                typeMetadata: new global::System.Windows.PropertyMetadata(
-                    default(bool),
+                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                    true,
+                    global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     static (sender, args) => OnIsSpinningChanged((MainWindow)sender, args)));
 
         public bool IsSpinning
@@ -74,8 +75,9 @@ namespace H.Generators.IntegrationTests
                 name: "SelectedItem",
                 propertyType: typeof(object),
                 ownerType: typeof(TreeViewExtensions),
-                defaultMetadata: new global::System.Windows.PropertyMetadata(
-                    typeof(System.Windows.Controls.TreeView),
+                defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                    default(object),
+                    global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, args)));
   
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object value)
