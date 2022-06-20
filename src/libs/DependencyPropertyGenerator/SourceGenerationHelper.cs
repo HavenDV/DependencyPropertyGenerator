@@ -21,7 +21,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                typeMetadata: {GeneratePropertyMetadata(@class, property, false)});
+                {GeneratePropertyMetadata(@class, property, false)});
 
 {GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
         public {GenerateType(property)} {property.Name}
@@ -52,7 +52,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                defaultMetadata: {GeneratePropertyMetadata(@class, property, true)});
+                {GeneratePropertyMetadata(@class, property, true)});
   
 {GenerateXmlDocumentationFrom(property.PropertySetterXmlDoc)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
@@ -75,11 +75,16 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
+        var parameterName = (@class.Platform, isAttached) switch
+        {
+            (Platform.WPF, true) or (Platform.WinUI, true) => "defaultMetadata",
+            _ => "typeMetadata",
+        };
         var senderType = isAttached ? GenerateBrowsableForType(@class, property) : @class.Name;
         switch (@class.Platform)
         {
             case Platform.WPF:
-                return $@"new global::System.Windows.FrameworkPropertyMetadata(
+                return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
                     propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
@@ -89,7 +94,7 @@ namespace {@class.Namespace}
             case Platform.Uno:
             case Platform.UnoWinUI:
                 var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
-                return $@"new {type}(
+                return $@"{parameterName}: new {type}(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
         }
