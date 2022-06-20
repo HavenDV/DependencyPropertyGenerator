@@ -135,10 +135,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
 
-                var xmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "XmlDoc");
-                var propertyXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertyXmlDoc");
-                var propertyGetterXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertyGetterXmlDoc");
-                var propertySetterXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertySetterXmlDoc");
+                var xmlDoc = GetPropertyFromAttributeData(attribute, "XmlDoc")?.Value?.ToString();
+                var propertyXmlDoc = GetPropertyFromAttributeData(attribute, "PropertyXmlDoc")?.Value?.ToString();
+                var propertyGetterXmlDoc = GetPropertyFromAttributeData(attribute, "PropertyGetterXmlDoc")?.Value?.ToString();
+                var propertySetterXmlDoc = GetPropertyFromAttributeData(attribute, "PropertySetterXmlDoc")?.Value?.ToString();
 
                 var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsMeasure") ?? bool.FalseString;
                 var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsArrange") ?? bool.FalseString;
