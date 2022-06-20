@@ -17,3 +17,18 @@ public sealed class DependencyPropertyAttribute : Attribute
         Type = type ?? throw new ArgumentNullException(nameof(type));
     }
 }
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public sealed class DependencyPropertyAttribute<T> : Attribute
+{
+    public string Name { get; }
+
+    public T? DefaultValue { get; set; }
+    public bool BindsTwoWayByDefault { get; set; }
+
+    public DependencyPropertyAttribute(
+        string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
+}

@@ -17,7 +17,7 @@ public static class TestHelper
             assemblyName: "Tests",
             syntaxTrees: new[]
             {
-                CSharpSyntaxTree.ParseText(source, cancellationToken: cancellationToken),
+                CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview), cancellationToken: cancellationToken),
             },
             references: references
                 .Add(MetadataReference.CreateFromFile(typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
@@ -25,7 +25,7 @@ public static class TestHelper
         var generator = new DependencyPropertyGenerator();
         var driver = CSharpGeneratorDriver
             .Create(generator)
-            .RunGeneratorsAndUpdateCompilation(compilation, out compilation, out _, cancellationToken);
+            .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(

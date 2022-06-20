@@ -19,3 +19,20 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
         Type = type ?? throw new ArgumentNullException(nameof(type));
     }
 }
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
+{
+    public string Name { get; }
+
+    public T? DefaultValue { get; set; }
+    public bool BindsTwoWayByDefault { get; set; }
+
+    public Type? BrowsableForType { get; set; }
+
+    public AttachedDependencyPropertyAttribute(
+        string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
+}

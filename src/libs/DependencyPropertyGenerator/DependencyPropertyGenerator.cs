@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -36,7 +35,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
                 var attributeContainingTypeSymbol = attributeSymbol.ContainingType;
                 var fullName = attributeContainingTypeSymbol.ToDisplayString();
-                if (fullName is AttachedDependencyPropertyAttribute or DependencyPropertyAttribute)
+                if (fullName.StartsWith(AttachedDependencyPropertyAttribute) ||
+                    fullName.StartsWith(DependencyPropertyAttribute))
                 {
                     return syntax;
                 }
@@ -122,7 +122,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .Zip(classSymbol.GetAttributes(), static (a, b) => (a, b)))
             {
                 var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
-                var type = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
+                var type =
+                    attribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ??
+                    attribute.AttributeClass?.TypeArguments.ElementAtOrDefault(0)?.ToDisplayString() ??
+                    string.Empty;
                 var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
                 var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
                 var browsableForType = GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
@@ -132,12 +135,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     DefaultValue: defaultValue,
                     BindsTwoWayByDefault: bool.Parse(bindsTwoWayByDefault),
                     BrowsableForType: browsableForType);
-                var attributeClass = attribute.AttributeClass?.ToDisplayString();
-                if (attributeClass is DependencyPropertyAttribute)
+                var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
+                if (attributeClass.StartsWith(DependencyPropertyAttribute))
                 {
                     dependencyProperties.Add(value);
                 }
-                else if (attributeClass is AttachedDependencyPropertyAttribute)
+                else if (attributeClass.StartsWith(AttachedDependencyPropertyAttribute))
                 {
                     attachedDependencyProperties.Add(value);
                 }

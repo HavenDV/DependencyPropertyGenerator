@@ -15,7 +15,7 @@ using System.Windows.Controls;
 
 namespace H.Generators.IntegrationTests;
 
-[DependencyProperty("IsSpinning", typeof(bool), DefaultValue = true)]
+[DependencyProperty<bool>("IsSpinning", DefaultValue = true)]
 public partial class MainWindow : Window
 {
     static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
@@ -23,7 +23,7 @@ public partial class MainWindow : Window
     }
 }
 
-[AttachedDependencyProperty("SelectedItem", typeof(object), BrowsableForType = typeof(TreeView), BindsTwoWayByDefault = true)]
+[AttachedDependencyProperty<object>("SelectedItem", BrowsableForType = typeof(TreeView), BindsTwoWayByDefault = true)]
 public static partial class TreeViewExtensions
 {
     static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
@@ -95,3 +95,14 @@ namespace H.Generators.IntegrationTests
     }
 }
 ```
+
+### Notes
+To use generic attributes, you need to set up `LangVersion` in your .csproj:
+```xml
+<LangVersion>preview</LangVersion>
+```
+There are also non-Generic attributes here.
+
+### Support
+You can get answers to your questions in my discord support channel:  
+https://discord.gg/g8u2t9dKgE
