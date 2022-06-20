@@ -1,3 +1,9 @@
 ﻿<Project>
 
+  <ItemGroup>
+    <CompilerVisibleProperty Include="DefineConstants"/>
+    <CompilerVisibleProperty Include="UseWPF"/>
+    <CompilerVisibleProperty Include="UseWinUI"/>
+  </ItemGroup>
+  
 </Project>

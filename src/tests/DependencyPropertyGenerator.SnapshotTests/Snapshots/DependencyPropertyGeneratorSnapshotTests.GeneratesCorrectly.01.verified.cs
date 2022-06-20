@@ -13,9 +13,9 @@ namespace H.Generators.IntegrationTests
                 propertyType: typeof(bool),
                 ownerType: typeof(MainWindow),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    true,
-                    global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, (bool)args.OldValue, (bool)args.NewValue)));
+                    defaultValue: true,
+                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
+                    propertyChangedCallback: static (sender, args) => OnIsSpinningChanged((MainWindow)sender, (bool)args.OldValue, (bool)args.NewValue)));
 
         /// <summary></summary>
         public bool IsSpinning

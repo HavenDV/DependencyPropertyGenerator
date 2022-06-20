@@ -5,6 +5,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <CompilerVisibleProperty Include="DefineConstants"/>
+    <CompilerVisibleProperty Include="UseWPF"/>
+    <CompilerVisibleProperty Include="UseWinUI"/>
+  </ItemGroup>
+
   <ItemGroup Label="Base packages">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />

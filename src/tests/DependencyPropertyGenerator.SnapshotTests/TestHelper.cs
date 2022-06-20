@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using H.Generators.Tests.Extensions;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 
@@ -25,6 +26,11 @@ public static class TestHelper
         var generator = new DependencyPropertyGenerator();
         var driver = CSharpGeneratorDriver
             .Create(generator)
+            .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(
+                globalOptions: new Dictionary<string, string>
+                {
+                    ["build_property.UseWPF"] = "true",
+                }))
             .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 

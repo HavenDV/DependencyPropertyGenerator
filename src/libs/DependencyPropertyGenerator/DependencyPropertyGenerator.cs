@@ -2,6 +2,7 @@
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace H.Generators;
 
@@ -54,15 +55,18 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 transform: static (context, _) => GetSemanticTargetForGeneration(context))
             .Where(static syntax => syntax is not null);
 
-        var compilationAndClasses = context.CompilationProvider.Combine(classes.Collect());
+        var compilationAndClasses = context.CompilationProvider
+            .Combine(context.AnalyzerConfigOptionsProvider)
+            .Combine(classes.Collect());
 
         context.RegisterSourceOutput(
             compilationAndClasses,
-            static (context, source) => Execute(source.Left, source.Right!, context));
+            static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right!, context));
     }
 
     private static void Execute(
         Compilation compilation,
+        AnalyzerConfigOptionsProvider options,
         ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
         SourceProductionContext context)
     {
@@ -70,10 +74,26 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         {
             return;
         }
-
+        
         try
         {
-            var classes = GetTypesToGenerate(compilation, classSyntaxes, context.CancellationToken);
+            var constants = options.GetGlobalOption("DefineConstants") ?? string.Empty;
+            var useWpf = bool.Parse(options.GetGlobalOption("UseWPF") ?? bool.FalseString) || constants.Contains("HAS_WPF");
+            var useWinUI = bool.Parse(options.GetGlobalOption("UseWinUI") ?? bool.FalseString) || constants.Contains("HAS_WINUI");
+            var useUwp = constants.Contains("HAS_UWP");
+            var useUno = constants.Contains("HAS_UNO");
+            var useUnoWinUI = constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI");
+            var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI) switch
+            {
+                (_, _, _, true, _) => Platform.Uno,
+                (_, _, _, _, true) => Platform.UnoWinUI,
+                (_, true, _, _, _) => Platform.UWP,
+                (_, _, true, _, _) => Platform.WinUI,
+                (true, _, _, _, _) => Platform.WPF,
+                _ =>                  Platform.Undefined,
+            };
+
+            var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 context.AddTextSource(
@@ -95,6 +115,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     private static List<ClassData> GetTypesToGenerate(
         Compilation compilation,
+        Platform platform,
         IEnumerable<ClassDeclarationSyntax> classes,
         CancellationToken cancellationToken)
     {
@@ -184,7 +205,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
             }
 
-            enumsToGenerate.Add(new ClassData(@namespace, className, classModifiers, dependencyProperties, attachedDependencyProperties));
+            enumsToGenerate.Add(new ClassData(@namespace, className, classModifiers, platform, dependencyProperties, attachedDependencyProperties));
         }
 
         return enumsToGenerate;

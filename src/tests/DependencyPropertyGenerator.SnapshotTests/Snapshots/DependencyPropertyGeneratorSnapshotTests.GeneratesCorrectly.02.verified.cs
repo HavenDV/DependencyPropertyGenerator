@@ -13,9 +13,9 @@ namespace H.Generators.IntegrationTests
                 propertyType: typeof(object),
                 ownerType: typeof(TreeViewExtensions),
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    default(object),
-                    global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
+                    defaultValue: default(object),
+                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    propertyChangedCallback: static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
   
         /// <summary></summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)

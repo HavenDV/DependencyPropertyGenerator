@@ -16,15 +16,12 @@ namespace {@class.Namespace}
     {{
 {@class.DependencyProperties.Select(property => $@"
 {GenerateXmlDocumentationFrom(property.XmlDoc)}
-        public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
-            global::System.Windows.DependencyProperty.Register(
+        public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
+            {GenerateDependencyPropertyType(@class)}.Register(
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    {GenerateDefaultValue(property)},
-                    {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
+                typeMetadata: {GeneratePropertyMetadata(@class, property, false)});
 
 {GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
         public {GenerateType(property)} {property.Name}
@@ -50,25 +47,22 @@ namespace {@class.Namespace}
     {{
 {@class.AttachedDependencyProperties.Select(property => $@"
 {GenerateXmlDocumentationFrom(property.XmlDoc)}
-        public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
-            global::System.Windows.DependencyProperty.RegisterAttached(
+        public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
+            {GenerateDependencyPropertyType(@class)}.RegisterAttached(
                 name: ""{property.Name}"",
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
-                defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    {GenerateDefaultValue(property)},
-                    {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
+                defaultMetadata: {GeneratePropertyMetadata(@class, property, true)});
   
 {GenerateXmlDocumentationFrom(property.PropertySetterXmlDoc)}
-        public static void Set{property.Name}(global::System.Windows.DependencyObject element, {GenerateType(property)} value)
+        public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
 {GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
-        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]
-        public static {GenerateType(property)} Get{property.Name}(global::System.Windows.DependencyObject element)
+{GenerateBrowsableForTypeAttribute(@class, property)}
+        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
         {{
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
@@ -77,6 +71,61 @@ namespace {@class.Namespace}
 ").Inject()}
     }}
 }}";
+    }
+
+    public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
+    {
+        var senderType = isAttached ? GenerateBrowsableForType(property) : @class.Name;
+        switch (@class.Platform)
+        {
+            case Platform.WPF:
+                return $@"new global::System.Windows.FrameworkPropertyMetadata(
+                    defaultValue: {GenerateDefaultValue(property)},
+                    flags: {GenerateOptions(property)},
+                    propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
+
+            case Platform.UWP:
+            case Platform.WinUI:
+            case Platform.Uno:
+            case Platform.UnoWinUI:
+                var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
+                return $@"new {type}(
+                    defaultValue: {GenerateDefaultValue(property)},
+                    propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
+        }
+
+        throw new InvalidOperationException("Platform is not supported.");
+    }
+
+    public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
+    {
+        if (@class.Platform != Platform.WPF)
+        {
+            return string.Empty;
+        }
+
+        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]";
+    }
+
+    public static string GenerateTypeByPlatform(Platform platform, string name)
+    {
+        return platform switch
+        {
+            Platform.WPF => $"global::System.Windows.{name}",
+            Platform.UWP or Platform.Uno => $"global::Windows.UI.Xaml.{name}",
+            Platform.WinUI or Platform.UnoWinUI => $"global::Microsoft.UI.Xaml.{name}",
+            _ => throw new InvalidOperationException("Platform is not supported."),
+        };
+    }
+
+    public static string GenerateDependencyPropertyType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
+    }
+
+    public static string GenerateDependencyObjectType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "DependencyObject");
     }
 
     public static string GenerateDefaultValue(DependencyPropertyData property)
