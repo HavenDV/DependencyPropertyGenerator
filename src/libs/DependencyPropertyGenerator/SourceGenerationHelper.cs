@@ -23,7 +23,7 @@ namespace {@class.Namespace}
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
                     {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, args)));
+                    static (sender, args) => On{property.Name}Changed(({@class.Name})sender, ({property.Type})args.OldValue, ({property.Type})args.NewValue)));
 
         public {property.Type} {property.Name}
         {{
@@ -31,7 +31,7 @@ namespace {@class.Namespace}
             set => SetValue({property.Name}Property, value);
         }}
 
-        static partial void On{property.Name}Changed({@class.Name} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void On{property.Name}Changed({@class.Name} sender, {property.Type} oldValue, {property.Type} newValue);
 ").Inject()}
     }}
 }}";
@@ -55,7 +55,7 @@ namespace {@class.Namespace}
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     {GenerateDefaultValue(property)},
                     {GenerateOptions(property)},
-                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, args)));
+                    static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, ({property.Type})args.OldValue, ({property.Type})args.NewValue)));
   
         public static void Set{property.Name}(global::System.Windows.DependencyObject element, {property.Type} value)
         {{
@@ -68,7 +68,7 @@ namespace {@class.Namespace}
             return ({property.Type})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, global::System.Windows.DependencyPropertyChangedEventArgs args);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {property.Type} oldValue, {property.Type} newValue);
 ").Inject()}
     }}
 }}";

@@ -2,12 +2,14 @@
 using System.Windows;
 using System.Windows.Controls;
 
+#nullable enable
+
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>("IsSpinning", DefaultValue = true)]
 public partial class MainWindow : Window
 {
-    static partial void OnIsSpinningChanged(MainWindow sender, DependencyPropertyChangedEventArgs args)
+    static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue)
     {
     }
 }
@@ -15,7 +17,7 @@ public partial class MainWindow : Window
 [AttachedDependencyProperty<object, TreeView>("SelectedItem", BindsTwoWayByDefault = true)]
 public static partial class TreeViewExtensions
 {
-    static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
+    static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
 }
