@@ -67,7 +67,7 @@ namespace {@class.Namespace}
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(@class, property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 ").Inject()}
     }}
 }}";
@@ -75,7 +75,7 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
-        var senderType = isAttached ? GenerateBrowsableForType(property) : @class.Name;
+        var senderType = isAttached ? GenerateBrowsableForType(@class, property) : @class.Name;
         switch (@class.Platform)
         {
             case Platform.WPF:
@@ -104,7 +104,7 @@ namespace {@class.Namespace}
             return string.Empty;
         }
 
-        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]";
+        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(@class, property)}))]";
     }
 
     public static string GenerateTypeByPlatform(Platform platform, string name)
@@ -133,9 +133,9 @@ namespace {@class.Namespace}
         return property.DefaultValue ?? $"default({property.Type})";
     }
 
-    public static string GenerateBrowsableForType(DependencyPropertyData property)
+    public static string GenerateBrowsableForType(ClassData @class, DependencyPropertyData property)
     {
-        return property.BrowsableForType ?? "global::System.Windows.DependencyObject";
+        return property.BrowsableForType ?? GenerateDependencyObjectType(@class);
     }
 
     public static string GenerateType(DependencyPropertyData property)
