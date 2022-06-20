@@ -5,8 +5,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
+
+    <PropertyGroup>
+      <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
+    </PropertyGroup>
+
+  </Target>
+  
   <ItemGroup>
-    <CompilerVisibleProperty Include="DefineConstants"/>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
   </ItemGroup>

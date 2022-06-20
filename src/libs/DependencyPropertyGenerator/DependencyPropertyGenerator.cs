@@ -77,12 +77,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         
         try
         {
-            var constants = options.GetGlobalOption("DefineConstants") ?? string.Empty;
+            var constants = options.GetGlobalOption("DefineConstants", prefix: Name) ?? string.Empty;
             var useWpf = bool.Parse(options.GetGlobalOption("UseWPF") ?? bool.FalseString) || constants.Contains("HAS_WPF");
             var useWinUI = bool.Parse(options.GetGlobalOption("UseWinUI") ?? bool.FalseString) || constants.Contains("HAS_WINUI");
-            var useUwp = bool.Parse(options.GetGlobalOption("UseUWP") ?? bool.FalseString) || constants.Contains("HAS_UWP");
-            var useUno = bool.Parse(options.GetGlobalOption("UseUno") ?? bool.FalseString) || constants.Contains("HAS_UNO");
-            var useUnoWinUI = bool.Parse(options.GetGlobalOption("UseUnoWinUI") ?? bool.FalseString) || constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI");
+            var useUwp = constants.Contains("WINDOWS_UWP") || constants.Contains("HAS_UWP");
+            var useUno = constants.Contains("HAS_UNO");
+            var useUnoWinUI = constants.Contains("HAS_UNO_WINUI") || (constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI"));
             var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI) switch
             {
                 (_, _, _, true, _) => Platform.Uno,

@@ -1,12 +1,17 @@
 ﻿<Project>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="DefineConstants"/>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
-    <CompilerVisibleProperty Include="UseUWP"/>
-    <CompilerVisibleProperty Include="UseUno"/>
-    <CompilerVisibleProperty Include="UseUnoWinUI"/>
   </ItemGroup>
+
+  <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
+
+    <PropertyGroup>
+      <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
+    </PropertyGroup>
+
+  </Target>
   
 </Project>
