@@ -123,12 +123,14 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             {
                 var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                 var type =
+                    GetGenericTypeArgumentFromAttributeData(attribute, 0) ??
                     attribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ??
-                    attribute.AttributeClass?.TypeArguments.ElementAtOrDefault(0)?.ToDisplayString() ??
                     string.Empty;
                 var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
                 var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
-                var browsableForType = GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
+                var browsableForType =
+                    GetGenericTypeArgumentFromAttributeData(attribute, 1) ??
+                    GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
                 var value = new DependencyPropertyData(
                     Name: name,
                     Type: type,
@@ -150,6 +152,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
 
         return enumsToGenerate;
+    }
+
+    private static string? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
+{
+        return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position)?.ToDisplayString();
     }
 
     private static TypedConstant? GetPropertyFromAttributeData(AttributeData data, string name)

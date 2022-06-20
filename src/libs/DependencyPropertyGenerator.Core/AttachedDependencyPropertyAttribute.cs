@@ -24,6 +24,7 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 {
     public string Name { get; }
+    public Type Type { get; }
 
     public T? DefaultValue { get; set; }
     public bool BindsTwoWayByDefault { get; set; }
@@ -34,5 +35,26 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
         string name)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = typeof(T);
+    }
+}
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : Attribute
+{
+    public string Name { get; }
+    public Type Type { get; }
+
+    public T? DefaultValue { get; set; }
+    public bool BindsTwoWayByDefault { get; set; }
+
+    public Type? BrowsableForType { get; set; }
+
+    public AttachedDependencyPropertyAttribute(
+        string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = typeof(T);
+        BrowsableForType = typeof(TBrowsableForType);
     }
 }

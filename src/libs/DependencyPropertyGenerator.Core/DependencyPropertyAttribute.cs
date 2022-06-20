@@ -22,6 +22,7 @@ public sealed class DependencyPropertyAttribute : Attribute
 public sealed class DependencyPropertyAttribute<T> : Attribute
 {
     public string Name { get; }
+    public Type Type { get; }
 
     public T? DefaultValue { get; set; }
     public bool BindsTwoWayByDefault { get; set; }
@@ -30,5 +31,6 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
         string name)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = typeof(T);
     }
 }

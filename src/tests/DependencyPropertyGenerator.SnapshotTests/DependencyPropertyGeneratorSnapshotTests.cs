@@ -21,7 +21,7 @@ public partial class MainWindow : Window
     }
 }
 
-[AttachedDependencyProperty<object>(""SelectedItem"", BrowsableForType = typeof(TreeView), BindsTwoWayByDefault = true)]
+[AttachedDependencyProperty<object, TreeView>(""SelectedItem"", BindsTwoWayByDefault = true)]
 public static partial class TreeViewExtensions
 {
     static partial void OnSelectedItemChanged(TreeView sender, DependencyPropertyChangedEventArgs args)
