@@ -82,16 +82,3 @@ namespace {@class.Namespace}
         return property.BrowsableForType ?? "global::System.Windows.DependencyObject";
     }
 }
-
-public readonly record struct ClassData(
-    string Namespace,
-    string Name,
-    string Modifiers,
-    IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
-    IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties);
-
-public readonly record struct DependencyPropertyData(
-    string Name,
-    string Type,
-    string? DefaultValue = null,
-    string? BrowsableForType = null);

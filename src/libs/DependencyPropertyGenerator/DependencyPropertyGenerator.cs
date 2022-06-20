@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -122,8 +123,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             {
                 var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                 var type = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
-                var defaultValue = attributeSyntax.ArgumentList?.Arguments.ElementAtOrDefault(2)?.Expression.ToFullString();
-                var browsableForType = attribute.ConstructorArguments.ElementAtOrDefault(3).Value?.ToString();
+                var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
+                var browsableForType = GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
                 var value = new DependencyPropertyData(
                     Name: name,
                     Type: type,
@@ -144,6 +145,21 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
 
         return enumsToGenerate;
+    }
+
+    private static TypedConstant? GetPropertyFromAttributeData(AttributeData data, string name)
+{
+        return data.NamedArguments
+            .FirstOrDefault(pair => pair.Key == name)
+            .Value;
+    }
+
+    private static string? GetPropertyFromAttributeSyntax(AttributeSyntax syntax, string name)
+    {
+        return syntax.ArgumentList?.Arguments
+            .FirstOrDefault(pair => pair.NameEquals?.ToFullString().StartsWith(name) == true)?
+            .Expression
+            .ToFullString();
     }
 
     #endregion
