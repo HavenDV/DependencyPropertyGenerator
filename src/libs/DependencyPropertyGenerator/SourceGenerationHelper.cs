@@ -97,16 +97,57 @@ namespace {@class.Namespace}
 
     public static string GenerateOptions(DependencyPropertyData property)
     {
-        var value = string.Empty;
+        var values = new List<string>();
+        if (property.AffectsMeasure)
+        {
+            values.Add(nameof(property.AffectsMeasure));
+        }
+        if (property.AffectsArrange)
+        {
+            values.Add(nameof(property.AffectsArrange));
+        }
+        if (property.AffectsParentMeasure)
+        {
+            values.Add(nameof(property.AffectsParentMeasure));
+        }
+        if (property.AffectsParentArrange)
+        {
+            values.Add(nameof(property.AffectsParentArrange));
+        }
+        if (property.AffectsRender)
+        {
+            values.Add(nameof(property.AffectsRender));
+        }
+        if (property.Inherits)
+        {
+            values.Add(nameof(property.Inherits));
+        }
+        if (property.OverridesInheritanceBehavior)
+        {
+            values.Add(nameof(property.OverridesInheritanceBehavior));
+        }
+        if (property.NotDataBindable)
+        {
+            values.Add(nameof(property.NotDataBindable));
+        }
         if (property.BindsTwoWayByDefault)
         {
-            value += "global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault";
+            values.Add(nameof(property.BindsTwoWayByDefault));
         }
-        if (!string.IsNullOrWhiteSpace(value))
+        if (property.Journal)
         {
-            return value;
+            values.Add(nameof(property.Journal));
+        }
+        if (property.SubPropertiesDoNotAffectRender)
+        {
+            values.Add(nameof(property.SubPropertiesDoNotAffectRender));
+        }
+        if (!values.Any())
+        {
+            values.Add("None");
         }
 
-        return "global::System.Windows.FrameworkPropertyMetadataOptions.None";
+        return string.Join(" | ", values
+            .Select(static value => $"global::System.Windows.FrameworkPropertyMetadataOptions.{value}"));
     }
 }

@@ -131,17 +131,40 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
                     true;
                 var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
-                var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
                 var browsableForType =
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
+
+                var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsMeasure") ?? bool.FalseString;
+                var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsArrange") ?? bool.FalseString;
+                var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsParentMeasure") ?? bool.FalseString;
+                var affectsParentArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsParentArrange") ?? bool.FalseString;
+                var affectsRender = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsRender") ?? bool.FalseString;
+                var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, "Inherits") ?? bool.FalseString;
+                var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, "OverridesInheritanceBehavior") ?? bool.FalseString;
+                var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, "NotDataBindable") ?? bool.FalseString;
+                var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
+                var journal = GetPropertyFromAttributeSyntax(attributeSyntax, "Journal") ?? bool.FalseString;
+                var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, "SubPropertiesDoNotAffectRender") ?? bool.FalseString;
+
                 var value = new DependencyPropertyData(
                     Name: name,
                     Type: type,
                     IsValueType: isValueType,
                     DefaultValue: defaultValue,
+                    BrowsableForType: browsableForType,
+                    AffectsMeasure: bool.Parse(affectsMeasure),
+                    AffectsArrange: bool.Parse(affectsArrange),
+                    AffectsParentMeasure: bool.Parse(affectsParentMeasure),
+                    AffectsParentArrange: bool.Parse(affectsParentArrange),
+                    AffectsRender: bool.Parse(affectsRender),
+                    Inherits: bool.Parse(inherits),
+                    OverridesInheritanceBehavior: bool.Parse(overridesInheritanceBehavior),
+                    NotDataBindable: bool.Parse(notDataBindable),
                     BindsTwoWayByDefault: bool.Parse(bindsTwoWayByDefault),
-                    BrowsableForType: browsableForType);
+                    Journal: bool.Parse(journal),
+                    SubPropertiesDoNotAffectRender: bool.Parse(subPropertiesDoNotAffectRender));
+
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(DependencyPropertyAttribute))
                 {
