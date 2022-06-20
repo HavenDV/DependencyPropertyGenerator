@@ -4,6 +4,9 @@
     <CompilerVisibleProperty Include="DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
+    <CompilerVisibleProperty Include="UseUWP"/>
+    <CompilerVisibleProperty Include="UseUno"/>
+    <CompilerVisibleProperty Include="UseUnoWinUI"/>
   </ItemGroup>
   
 </Project>
