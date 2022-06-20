@@ -27,6 +27,16 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public Type? BrowsableForType { get; set; }
 
     /// <summary>
+    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -124,6 +134,16 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public Type? BrowsableForType { get; set; }
 
     /// <summary>
+    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -218,6 +238,16 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// The type for which the extension is intended. Default - DependencyObject.
     /// </summary>
     public Type? BrowsableForType { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

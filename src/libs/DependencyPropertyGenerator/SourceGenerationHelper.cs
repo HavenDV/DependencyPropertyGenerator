@@ -15,6 +15,7 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.DependencyProperties.Select(property => $@"
+{GenerateXmlDocumentationFrom(property.XmlDoc)}
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.Register(
                 name: ""{property.Name}"",
@@ -25,6 +26,7 @@ namespace {@class.Namespace}
                     {GenerateOptions(property)},
                     static (sender, args) => On{property.Name}Changed(({@class.Name})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
 
+{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
         public {GenerateType(property)} {property.Name}
         {{
             get => ({GenerateType(property)})GetValue({property.Name}Property);
@@ -47,6 +49,7 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.AttachedDependencyProperties.Select(property => $@"
+{GenerateXmlDocumentationFrom(property.XmlDoc)}
         public static readonly global::System.Windows.DependencyProperty {property.Name}Property =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: ""{property.Name}"",
@@ -57,11 +60,13 @@ namespace {@class.Namespace}
                     {GenerateOptions(property)},
                     static (sender, args) => On{property.Name}Changed(({GenerateBrowsableForType(property)})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)));
   
+{GenerateXmlDocumentationFrom(property.PropertySetterXmlDoc)}
         public static void Set{property.Name}(global::System.Windows.DependencyObject element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
+{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(property)}))]
         public static {GenerateType(property)} Get{property.Name}(global::System.Windows.DependencyObject element)
         {{
@@ -93,6 +98,13 @@ namespace {@class.Namespace}
         }
 
         return value;
+    }
+
+    public static string GenerateXmlDocumentationFrom(string value)
+    {
+        var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+        return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
     public static string GenerateOptions(DependencyPropertyData property)

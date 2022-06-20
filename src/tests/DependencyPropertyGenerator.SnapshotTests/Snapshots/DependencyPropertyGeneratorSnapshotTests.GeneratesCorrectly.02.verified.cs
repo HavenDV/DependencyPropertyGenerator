@@ -6,6 +6,7 @@ namespace H.Generators.IntegrationTests
 {
     public static partial class TreeViewExtensions
     {
+        /// <summary></summary>
         public static readonly global::System.Windows.DependencyProperty SelectedItemProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "SelectedItem",
@@ -16,11 +17,13 @@ namespace H.Generators.IntegrationTests
                     global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
   
+        /// <summary></summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
             element.SetValue(SelectedItemProperty, value);
         }
 
+        /// <summary></summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
         public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {

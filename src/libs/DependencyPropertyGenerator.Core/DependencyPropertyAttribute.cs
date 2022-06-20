@@ -22,6 +22,21 @@ public sealed class DependencyPropertyAttribute : Attribute
     public object? DefaultValue { get; set; }
 
     /// <summary>
+    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -112,6 +127,21 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default value of this dependency property. Default - <see langword="default(type)"/>.
     /// </summary>
     public T? DefaultValue { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertySetterXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

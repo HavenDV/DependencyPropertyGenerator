@@ -135,6 +135,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
 
+                var xmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "XmlDoc");
+                var propertyXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertyXmlDoc");
+                var propertyGetterXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertyGetterXmlDoc");
+                var propertySetterXmlDoc = GetPropertyFromAttributeSyntax(attributeSyntax, "PropertySetterXmlDoc");
+
                 var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsMeasure") ?? bool.FalseString;
                 var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsArrange") ?? bool.FalseString;
                 var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsParentMeasure") ?? bool.FalseString;
@@ -153,6 +158,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     IsValueType: isValueType,
                     DefaultValue: defaultValue,
                     BrowsableForType: browsableForType,
+                    XmlDoc: xmlDoc ?? "<summary></summary>",
+                    PropertyGetterXmlDoc: propertyGetterXmlDoc ?? propertyXmlDoc ?? "<summary></summary>",
+                    PropertySetterXmlDoc: propertySetterXmlDoc ?? "<summary></summary>",
                     AffectsMeasure: bool.Parse(affectsMeasure),
                     AffectsArrange: bool.Parse(affectsArrange),
                     AffectsParentMeasure: bool.Parse(affectsParentMeasure),
