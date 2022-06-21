@@ -21,7 +21,7 @@ namespace H.Generators.IntegrationTests;
 public partial class MainWindow : Window
 {
     // Optional
-    static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue)
+    partial void OnIsSpinningChanged(bool oldValue, bool newValue)
     {
     }
 }
@@ -45,23 +45,25 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MainWindow
     {
+        /// <summary></summary>
         public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning",
                 propertyType: typeof(bool),
                 ownerType: typeof(MainWindow),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    true,
-                    global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    static (sender, args) => OnIsSpinningChanged((MainWindow)sender, (bool)args.OldValue, (bool)args.NewValue)));
+                    defaultValue: true,
+                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
+                    propertyChangedCallback: static (sender, args) => ((MainWindow)sender).OnIsSpinningChanged((bool)args.OldValue, (bool)args.NewValue)));
 
+        /// <summary></summary>
         public bool IsSpinning
         {
             get => (bool)GetValue(IsSpinningProperty);
             set => SetValue(IsSpinningProperty, value);
         }
 
-        static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue);
+        partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }
 ```
@@ -74,21 +76,24 @@ namespace H.Generators.IntegrationTests
 {
     public static partial class TreeViewExtensions
     {
+        /// <summary></summary>
         public static readonly global::System.Windows.DependencyProperty SelectedItemProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "SelectedItem",
                 propertyType: typeof(object),
                 ownerType: typeof(TreeViewExtensions),
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    default(object),
-                    global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
+                    defaultValue: default(object),
+                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    propertyChangedCallback: static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
   
+        /// <summary></summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
             element.SetValue(SelectedItemProperty, value);
         }
 
+        /// <summary></summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
         public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {

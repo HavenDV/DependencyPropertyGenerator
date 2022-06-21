@@ -30,7 +30,7 @@ namespace {@class.Namespace}
             set => SetValue({property.Name}Property, value);
         }}
 
-        static partial void On{property.Name}Changed({@class.Name} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
+        partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 ").Inject()}
     }}
 }}";
@@ -73,6 +73,15 @@ namespace {@class.Namespace}
 }}";
     }
 
+    public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
+    {
+        var senderType = isAttached ? GenerateBrowsableForType(@class, property) : @class.Name;
+
+        return isAttached
+            ? $@"propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)"
+            : $@"propertyChangedCallback: static (sender, args) => (({senderType})sender).On{property.Name}Changed(({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)";
+    }
+
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
         var parameterName = (@class.Platform, isAttached) switch
@@ -80,14 +89,13 @@ namespace {@class.Namespace}
             (Platform.WPF, true) or (Platform.WinUI, true) => "defaultMetadata",
             _ => "typeMetadata",
         };
-        var senderType = isAttached ? GenerateBrowsableForType(@class, property) : @class.Name;
         switch (@class.Platform)
         {
             case Platform.WPF:
                 return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
-                    propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
+                    {GeneratePropertyChangedCallback(@class, property, isAttached)})";
 
             case Platform.UWP:
             case Platform.WinUI:
@@ -96,7 +104,7 @@ namespace {@class.Namespace}
                 var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
                 return $@"{parameterName}: new {type}(
                     defaultValue: {GenerateDefaultValue(property)},
-                    propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue))";
+                    {GeneratePropertyChangedCallback(@class, property, isAttached)})";
         }
 
         throw new InvalidOperationException("Platform is not supported.");

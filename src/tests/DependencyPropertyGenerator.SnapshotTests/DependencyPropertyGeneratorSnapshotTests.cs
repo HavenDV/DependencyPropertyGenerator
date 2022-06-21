@@ -19,7 +19,7 @@ namespace H.Generators.IntegrationTests;
 public partial class MainWindow : Window
 {
     // Optional
-    static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue)
+    partial void OnIsSpinningChanged(bool oldValue, bool newValue)
     {
     }
 }

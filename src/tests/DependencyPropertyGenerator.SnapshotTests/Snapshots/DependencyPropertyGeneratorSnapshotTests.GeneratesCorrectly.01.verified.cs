@@ -15,7 +15,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: true,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) => OnIsSpinningChanged((MainWindow)sender, (bool)args.OldValue, (bool)args.NewValue)));
+                    propertyChangedCallback: static (sender, args) => ((MainWindow)sender).OnIsSpinningChanged((bool)args.OldValue, (bool)args.NewValue)));
 
         /// <summary></summary>
         public bool IsSpinning
@@ -24,6 +24,6 @@ namespace H.Generators.IntegrationTests
             set => SetValue(IsSpinningProperty, value);
         }
 
-        static partial void OnIsSpinningChanged(MainWindow sender, bool oldValue, bool newValue);
+        partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }
