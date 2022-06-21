@@ -96,12 +96,18 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
-                context.AddTextSource(
-                    hintName: $"{@class.Name}_DependencyProperties.generated.cs",
-                    text: SourceGenerationHelper.GenerateDependencyProperty(@class));
-                context.AddTextSource(
-                    hintName: $"{@class.Name}_AttachedDependencyProperties.generated.cs",
-                    text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class));
+                if (@class.DependencyProperties.Any())
+                {
+                    context.AddTextSource(
+                        hintName: $"{@class.Name}_DependencyProperties.generated.cs",
+                        text: SourceGenerationHelper.GenerateDependencyProperty(@class));
+                }
+                if (@class.AttachedDependencyProperties.Any())
+                {
+                    context.AddTextSource(
+                        hintName: $"{@class.Name}_AttachedDependencyProperties.generated.cs",
+                        text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class));
+                }
             }
         }
         catch (Exception exception)
@@ -113,16 +119,18 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
     }
 
-    private static List<ClassData> GetTypesToGenerate(
+    private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
         Compilation compilation,
         Platform platform,
         IEnumerable<ClassDeclarationSyntax> classes,
         CancellationToken cancellationToken)
     {
-        var enumsToGenerate = new List<ClassData>();
-        foreach (var @class in classes)
+        var values = new List<ClassData>();
+        foreach (var group in classes.GroupBy(@class => GetFullClassName(compilation, @class)))
         {
             cancellationToken.ThrowIfCancellationRequested();
+
+            var @class = group.First();
 
             var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
             if (semanticModel.GetDeclaredSymbol(
@@ -138,7 +146,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
-            foreach (var (attributeSyntax, attribute) in @class.AttributeLists
+            foreach (var (attributeSyntax, attribute) in group
+                .SelectMany(static list => list.AttributeLists)
                 .SelectMany(static list => list.Attributes)
                 .Zip(classSymbol.GetAttributes(), static (a, b) => (a, b)))
             {
@@ -212,10 +221,21 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
             }
 
-            enumsToGenerate.Add(new ClassData(@namespace, className, classModifiers, platform, dependencyProperties, attachedDependencyProperties));
+            values.Add(new ClassData(@namespace, className, classModifiers, platform, dependencyProperties, attachedDependencyProperties));
         }
 
-        return enumsToGenerate;
+        return values;
+    }
+
+    private static string? GetFullClassName(Compilation compilation, ClassDeclarationSyntax classDeclarationSyntax)
+    {
+        var semanticModel = compilation.GetSemanticModel(classDeclarationSyntax.SyntaxTree);
+        if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
+        {
+            return null;
+        }
+
+        return classSymbol.ToString();
     }
 
     private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
