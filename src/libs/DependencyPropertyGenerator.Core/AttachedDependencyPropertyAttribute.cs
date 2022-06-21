@@ -17,24 +17,42 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public Type Type { get; }
 
     /// <summary>
-    /// Default value of this dependency property. Default - <see langword="default(type)"/>.
+    /// Default value of this dependency property. <br/>
+    /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
+    /// Default - <see langword="default(type)"/>.
     /// </summary>
     public object? DefaultValue { get; set; }
 
     /// <summary>
-    /// The type for which the extension is intended. Default - DependencyObject.
+    /// Default value expression of this dependency property. <br/>
+    /// Used to pass a new() expression to an initializer. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The type for which the extension is intended. <br/>
+    /// Default - DependencyObject.
     /// </summary>
     public Type? BrowsableForType { get; set; }
 
     /// <summary>
-    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDoc { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The property getter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDoc { get; set; } = string.Empty;
+    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertySetterXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -124,24 +142,42 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public Type Type { get; }
 
     /// <summary>
-    /// Default value of this dependency property. Default - <see langword="default(type)"/>.
+    /// Default value of this dependency property. <br/>
+    /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
+    /// Default - <see langword="default(type)"/>.
     /// </summary>
     public T? DefaultValue { get; set; }
 
     /// <summary>
-    /// The type for which the extension is intended. Default - DependencyObject.
+    /// Default value expression of this dependency property. <br/>
+    /// Used to pass a new() expression to an initializer. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The type for which the extension is intended. <br/>
+    /// Default - DependencyObject.
     /// </summary>
     public Type? BrowsableForType { get; set; }
 
     /// <summary>
-    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDoc { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The property getter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDoc { get; set; } = string.Empty;
+    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertySetterXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -230,24 +266,42 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     public Type Type { get; }
 
     /// <summary>
-    /// Default value of this dependency property. Default - <see langword="default(type)"/>.
+    /// Default value of this dependency property. <br/>
+    /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
+    /// Default - <see langword="default(type)"/>.
     /// </summary>
     public T? DefaultValue { get; set; }
 
     /// <summary>
-    /// The type for which the extension is intended. Default - DependencyObject.
+    /// Default value expression of this dependency property. <br/>
+    /// Used to pass a new() expression to an initializer. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The type for which the extension is intended. <br/>
+    /// Default - DependencyObject.
     /// </summary>
     public Type? BrowsableForType { get; set; }
 
     /// <summary>
-    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDoc { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter/setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The property getter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDoc { get; set; } = string.Empty;
+    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertySetterXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

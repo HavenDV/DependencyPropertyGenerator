@@ -17,24 +17,30 @@ public sealed class DependencyPropertyAttribute : Attribute
     public Type Type { get; }
 
     /// <summary>
-    /// Default value of this dependency property. Default - <see langword="default(type)"/>.
+    /// Default value of this dependency property. <br/>
+    /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
+    /// Default - <see langword="default(type)"/>.
     /// </summary>
     public object? DefaultValue { get; set; }
 
     /// <summary>
-    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// Default value expression of this dependency property. <br/>
+    /// Used to pass a new() expression to an initializer. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDoc { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The property getter/setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+    public string PropertyXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -124,24 +130,30 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public Type Type { get; }
 
     /// <summary>
-    /// Default value of this dependency property. Default - <see langword="default(type)"/>.
+    /// Default value of this dependency property. <br/>
+    /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
+    /// Default - <see langword="default(type)"/>.
     /// </summary>
     public T? DefaultValue { get; set; }
 
     /// <summary>
-    /// The dependency property xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// Default value expression of this dependency property. <br/>
+    /// Used to pass a new() expression to an initializer. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDoc { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// The property getter/setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property setter xml documentation. Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+    public string PropertyXmlDoc { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

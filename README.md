@@ -1,13 +1,13 @@
 # DependencyPropertyGenerator
 Dependency property source generator for WPF/UWP/WinUI/Uno platforms.
 
-### Install
+## Install
 ```
 Install-Package DependencyPropertyGenerator // Generator
 Install-Package DependencyPropertyGenerator.Core // Attributes
 ```
 
-### Usage
+## Usage
 ```cs
 using DependencyPropertyGenerator;
 using System.Windows;
@@ -100,13 +100,29 @@ namespace H.Generators.IntegrationTests
 }
 ```
 
-### Notes
+## Advanced usage
+### new object/struct() expressions in DefaultValue
+While it's [generally not recommended](https://discord.com/channels/372137812037730304/669640275500466197/988522411274158131) 
+to use new expressions in properties, a generator provides this capability:
+```cs
+public readonly record struct Data();
+
+[AttachedDependencyProperty<object, TreeView>(""SelectedItem"", DefaultValueExpression = ""new Data()"")]
+```
+If your type is declared outside the namespace of an attribute declaration, you will need to specify the full name of the type, including the namespace.
+
+### XML documentation
+If for some reason you need to save xml documentation for your properties, 
+there is an option to specify xml text for both DependencyProperty and getter/setter 
+via XmlDoc/PropertyXmlDoc attribute properties.
+
+## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
 ```xml
 <LangVersion>preview</LangVersion>
 ```
 There are also non-Generic attributes here.
 
-### Support
+## Support
 You can get answers to your questions in my discord support channel:  
 https://discord.gg/g8u2t9dKgE

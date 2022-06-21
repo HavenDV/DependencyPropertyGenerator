@@ -151,7 +151,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     GetGenericTypeArgumentFromAttributeData(attribute, 0)?.IsValueType ??
                     attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
                     true;
-                var defaultValue = GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
+                var defaultValue =
+                    GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
+                    GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
                 var browsableForType =
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
