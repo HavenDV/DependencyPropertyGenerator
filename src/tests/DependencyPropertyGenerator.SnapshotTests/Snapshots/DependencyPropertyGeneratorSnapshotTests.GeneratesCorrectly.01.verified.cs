@@ -6,7 +6,7 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MainWindow
     {
-        /// <summary></summary>
+        /// <summary>Description</summary>
         public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning",
@@ -17,7 +17,9 @@ namespace H.Generators.IntegrationTests
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) => ((MainWindow)sender).OnIsSpinningChanged((bool)args.OldValue, (bool)args.NewValue)));
 
-        /// <summary></summary>
+        /// <summary>Description</summary>
+        [global::System.ComponentModel.Category("Category")]
+        [global::System.ComponentModel.Description("Description")]
         public bool IsSpinning
         {
             get => (bool)GetValue(IsSpinningProperty);

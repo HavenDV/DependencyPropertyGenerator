@@ -16,7 +16,7 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     propertyChangedCallback: static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
-  
+
         /// <summary></summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {

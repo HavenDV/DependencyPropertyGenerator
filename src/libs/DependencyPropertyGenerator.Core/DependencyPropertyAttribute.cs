@@ -1,4 +1,6 @@
-﻿namespace DependencyPropertyGenerator;
+﻿using System.ComponentModel;
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will generates attached dependency property using DependencyProperty.Register.
@@ -29,6 +31,21 @@ public sealed class DependencyPropertyAttribute : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// Description of this dependency property. <br/>
+    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// This will also be used in the xml documentation if not explicitly specified. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Category of this dependency property. <br/>
+    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Category { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>
@@ -142,6 +159,21 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// Description of this dependency property. <br/>
+    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// This will also be used in the xml documentation if not explicitly specified. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Category of this dependency property. <br/>
+    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Category { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>

@@ -24,6 +24,8 @@ namespace {@class.Namespace}
                 {GeneratePropertyMetadata(@class, property, false)});
 
 {GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
+{GenerateCategoryAttribute(property.Category)}
+{GenerateDescriptionAttribute(property.Description)}
         public {GenerateType(property)} {property.Name}
         {{
             get => ({GenerateType(property)})GetValue({property.Name}Property);
@@ -31,7 +33,7 @@ namespace {@class.Namespace}
         }}
 
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-").Inject()}
+").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
 }}";
     }
@@ -53,14 +55,18 @@ namespace {@class.Namespace}
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Name}),
                 {GeneratePropertyMetadata(@class, property, true)});
-  
+
 {GenerateXmlDocumentationFrom(property.PropertySetterXmlDoc)}
+{GenerateCategoryAttribute(property.Category)}
+{GenerateDescriptionAttribute(property.Description)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
 {GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
+{GenerateCategoryAttribute(property.Category)}
+{GenerateDescriptionAttribute(property.Description)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
         {{
@@ -68,7 +74,7 @@ namespace {@class.Namespace}
         }}
 
         static partial void On{property.Name}Changed({GenerateBrowsableForType(@class, property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-").Inject()}
+").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
 }}";
     }
@@ -108,16 +114,6 @@ namespace {@class.Namespace}
         }
 
         throw new InvalidOperationException("Platform is not supported.");
-    }
-
-    public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
-    {
-        if (@class.Platform != Platform.WPF)
-        {
-            return string.Empty;
-        }
-
-        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(@class, property)}))]";
     }
 
     public static string GenerateTypeByPlatform(Platform platform, string name)
@@ -167,6 +163,36 @@ namespace {@class.Namespace}
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
+    }
+
+    public static string GenerateCategoryAttribute(string? value)
+    {
+        if (value == null)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.ComponentModel.Category(\"{value}\")]";
+    }
+
+    public static string GenerateDescriptionAttribute(string? value)
+    {
+        if (value == null)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.ComponentModel.Description(\"{value}\")]";
+    }
+
+    public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
+    {
+        if (@class.Platform != Platform.WPF)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(@class, property)}))]";
     }
 
     public static string GenerateOptions(DependencyPropertyData property)

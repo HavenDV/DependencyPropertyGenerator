@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace H.Generators.IntegrationTests;
 
-[DependencyProperty<bool>("IsSpinning", DefaultValue = true)]
+[DependencyProperty<bool>("IsSpinning", DefaultValue = true, Category = "Category", Description = "Description")]
 public partial class MainWindow : Window
 {
     // Optional
