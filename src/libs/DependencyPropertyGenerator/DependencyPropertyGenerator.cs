@@ -166,34 +166,35 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     false;
                 var defaultValue =
                     GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
-                    GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
+                    GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultValue));
                 var browsableForType =
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
-                    GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
+                    GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value?.ToString();
                 var isBrowsableForTypeSpecialType =
                     IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
-                    IsSpecialType(GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Type) ??
+                    IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Type) ??
                     false;
 
-                var description = GetPropertyFromAttributeData(attribute, "Description")?.Value?.ToString();
-                var category = GetPropertyFromAttributeData(attribute, "Category")?.Value?.ToString();
+                var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
+                var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
+                var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
 
-                var xmlDoc = GetPropertyFromAttributeData(attribute, "XmlDoc")?.Value?.ToString();
-                var propertyXmlDoc = GetPropertyFromAttributeData(attribute, "PropertyXmlDoc")?.Value?.ToString();
-                var propertyGetterXmlDoc = GetPropertyFromAttributeData(attribute, "PropertyGetterXmlDoc")?.Value?.ToString();
-                var propertySetterXmlDoc = GetPropertyFromAttributeData(attribute, "PropertySetterXmlDoc")?.Value?.ToString();
+                var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.XmlDocumentation))?.Value?.ToString();
+                var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, "PropertyXmlDocumentation")?.Value?.ToString();
+                var getterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.GetterXmlDocumentation))?.Value?.ToString();
+                var setterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.SetterXmlDocumentation))?.Value?.ToString();
 
-                var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsMeasure") ?? bool.FalseString;
-                var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsArrange") ?? bool.FalseString;
-                var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsParentMeasure") ?? bool.FalseString;
-                var affectsParentArrange = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsParentArrange") ?? bool.FalseString;
-                var affectsRender = GetPropertyFromAttributeSyntax(attributeSyntax, "AffectsRender") ?? bool.FalseString;
-                var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, "Inherits") ?? bool.FalseString;
-                var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, "OverridesInheritanceBehavior") ?? bool.FalseString;
-                var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, "NotDataBindable") ?? bool.FalseString;
-                var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, "BindsTwoWayByDefault") ?? bool.FalseString;
-                var journal = GetPropertyFromAttributeSyntax(attributeSyntax, "Journal") ?? bool.FalseString;
-                var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, "SubPropertiesDoNotAffectRender") ?? bool.FalseString;
+                var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsMeasure)) ?? bool.FalseString;
+                var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsArrange)) ?? bool.FalseString;
+                var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsParentMeasure)) ?? bool.FalseString;
+                var affectsParentArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsParentArrange)) ?? bool.FalseString;
+                var affectsRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsRender)) ?? bool.FalseString;
+                var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Inherits)) ?? bool.FalseString;
+                var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.OverridesInheritanceBehavior)) ?? bool.FalseString;
+                var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.NotDataBindable)) ?? bool.FalseString;
+                var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.BindsTwoWayByDefault)) ?? bool.FalseString;
+                var journal = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Journal)) ?? bool.FalseString;
+                var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.SubPropertiesDoNotAffectRender)) ?? bool.FalseString;
 
                 var value = new DependencyPropertyData(
                     Name: name,
@@ -203,11 +204,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     DefaultValue: defaultValue,
                     Description: description,
                     Category: category,
+                    CLSCompliant: clsCompliant,
                     BrowsableForType: browsableForType,
                     IsBrowsableForTypeSpecialType: isBrowsableForTypeSpecialType,
-                    XmlDocumentation: xmlDoc,
-                    PropertyGetterXmlDocumentation: propertyGetterXmlDoc ?? propertyXmlDoc,
-                    PropertySetterXmlDocumentation: propertySetterXmlDoc,
+                    XmlDocumentation: xmlDocumentation,
+                    GetterXmlDocumentation: getterXmlDocumentation ?? propertyXmlDocumentation,
+                    SetterXmlDocumentation: setterXmlDocumentation,
                     AffectsMeasure: bool.Parse(affectsMeasure),
                     AffectsArrange: bool.Parse(affectsArrange),
                     AffectsParentMeasure: bool.Parse(affectsParentMeasure),

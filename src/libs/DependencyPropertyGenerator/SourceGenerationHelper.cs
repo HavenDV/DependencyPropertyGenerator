@@ -23,9 +23,10 @@ namespace {@class.Namespace}
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property, false)});
 
-{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
+{GenerateCLSCompliantAttribute(property.CLSCompliant)}
         public {GenerateType(property)} {property.Name}
         {{
             get => ({GenerateType(property)})GetValue({property.Name}Property);
@@ -56,18 +57,20 @@ namespace {@class.Namespace}
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property, true)});
 
-{GenerateXmlDocumentationFrom(property.PropertySetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
+{GenerateCLSCompliantAttribute(property.CLSCompliant)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
         }}
 
-{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
+{GenerateCLSCompliantAttribute(property.CLSCompliant)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
         {{
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
@@ -210,6 +213,16 @@ Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({propert
         }
 
         return $"        [global::System.ComponentModel.Description(\"{value}\")]";
+    }
+
+    public static string GenerateCLSCompliantAttribute(string? value)
+    {
+        if (value == null)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.CLSCompliant({value})]";
     }
 
     public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)

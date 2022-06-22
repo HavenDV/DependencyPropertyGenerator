@@ -48,16 +48,22 @@ public sealed class DependencyPropertyAttribute : Attribute
     public string? Category { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string XmlDoc { get; set; } = string.Empty;
+    public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property getter/setter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDoc { get; set; } = string.Empty;
+    public string PropertyXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -176,16 +182,22 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public string? Category { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string XmlDoc { get; set; } = string.Empty;
+    public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property getter/setter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDoc { get; set; } = string.Empty;
+    public string PropertyXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

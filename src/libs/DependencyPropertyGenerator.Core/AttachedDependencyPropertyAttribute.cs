@@ -48,6 +48,12 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public string? Category { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
@@ -57,19 +63,19 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string XmlDoc { get; set; } = string.Empty;
+    public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property getter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+    public string GetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property setter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -188,6 +194,12 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public string? Category { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
@@ -197,19 +209,19 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string XmlDoc { get; set; } = string.Empty;
+    public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property getter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+    public string GetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property setter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -327,6 +339,12 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     public string? Category { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
@@ -336,19 +354,19 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string XmlDoc { get; set; } = string.Empty;
+    public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property getter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyGetterXmlDoc { get; set; } = string.Empty;
+    public string GetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// The property setter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertySetterXmlDoc { get; set; } = string.Empty;
+    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
