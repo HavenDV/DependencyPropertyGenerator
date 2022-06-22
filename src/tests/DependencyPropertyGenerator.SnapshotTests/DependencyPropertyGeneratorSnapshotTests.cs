@@ -89,4 +89,21 @@ public static partial class TreeViewExtensions
     }
 }");
     }
+
+    [TestMethod]
+    public Task GeneratesRoutedEventCorrectly()
+    {
+        return this.CheckSourceAsync(@"
+using DependencyPropertyGenerator;
+using System.Windows;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+
+[RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
+public partial class MainWindow : Window
+{
+}");
+    }
 }

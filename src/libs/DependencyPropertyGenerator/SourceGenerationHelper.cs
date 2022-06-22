@@ -87,6 +87,48 @@ namespace {@class.Namespace}
     }}
 }}";
     }
+    
+    public static string GenerateRoutedEvent(ClassData @class)
+    {
+        return @$"
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+{@class.RoutedEvents.Select(@event => $@"
+{GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
+        public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
+            {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
+                name: ""{@event.Name}"",
+                routingStrategy: ({GenerateRoutingStrategyType(@class)}){@event.Strategy},
+                handlerType: typeof({GenerateRouterEventType(@class, @event)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)}));
+
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+{GenerateCategoryAttribute(@event.Category)}
+{GenerateDescriptionAttribute(@event.Description)}
+        public event {GenerateRouterEventType(@class, @event)} {@event.Name}
+        {{
+            add => AddHandler({@event.Name}Event, value);
+            remove => RemoveHandler({@event.Name}Event, value);
+        }}
+
+        /// <summary>
+        /// A helper method to raise the {@event.Name} event.
+        /// </summary>
+        protected {GenerateRoutedEventArgsType(@class)} Raise{@event.Name}Event()
+        {{
+            var args = new {GenerateRoutedEventArgsType(@class)}({@event.Name}Event);
+            this.RaiseEvent(args);
+
+            return args;
+        }}
+").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
+    }}
+}}";
+    }
 
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
@@ -158,6 +200,31 @@ namespace {@class.Namespace}
         };
     }
 
+    public static string GenerateRoutedEventType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "RoutedEvent");
+    }
+
+    public static string GenerateRoutedEventArgsType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "RoutedEventArgs");
+    }
+
+    public static string GenerateRoutedEventHandlerType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "RoutedEventHandler");
+    }
+
+    public static string GenerateEventManagerType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "EventManager");
+    }
+
+    public static string GenerateRoutingStrategyType(ClassData @class)
+    {
+        return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
+    }
+
     public static string GenerateDependencyPropertyType(ClassData @class)
     {
         return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
@@ -178,6 +245,11 @@ namespace {@class.Namespace}
         return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(@class);
     }
 
+    public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
+    {
+        return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
+    }
+
     public static string GenerateType(DependencyPropertyData property)
     {
         var value = GenerateType(property.Type, property.IsSpecialType);
@@ -189,6 +261,13 @@ namespace {@class.Namespace}
         return value;
     }
 
+    public static string GenerateXmlDocumentationFrom(string value)
+    {
+        var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+        return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
+    }
+
     public static string GenerateXmlDocumentationFrom(string? value, DependencyPropertyData property)
     {
         value ??= @$"<summary>
@@ -196,9 +275,16 @@ namespace {@class.Namespace}
 Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
-        var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        return GenerateXmlDocumentationFrom(value);
+    }
 
-        return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
+    public static string GenerateXmlDocumentationFrom(string? value, RoutedEventData @event)
+    {
+        value ??= @$"<summary>
+{(@event.Description != null ? $"{@event.Description}" : " ")}
+</summary>".RemoveBlankLinesWhereOnlyWhitespaces();
+
+        return GenerateXmlDocumentationFrom(value);
     }
 
     public static string GenerateCategoryAttribute(string? value)

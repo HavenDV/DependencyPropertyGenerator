@@ -1,5 +1,6 @@
 # DependencyPropertyGenerator
-Dependency property source generator for WPF/UWP/WinUI/Uno platforms.
+Dependency property source generator for WPF/UWP/WinUI/Uno platforms. 
+For the WPF platform, RoutedEvents are also supported.
 
 ## Install
 ```

@@ -37,3 +37,8 @@ public static partial class TreeViewExtensions
     {
     }
 }
+
+[RoutedEvent("TrayLeftMouseDown", RoutedEventStrategy.Bubble)]
+public partial class MainWindow
+{
+}
