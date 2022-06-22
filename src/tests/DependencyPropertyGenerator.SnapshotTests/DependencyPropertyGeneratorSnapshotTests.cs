@@ -106,4 +106,21 @@ public partial class MainWindow : Window
 {
 }");
     }
+
+    [TestMethod]
+    public Task GeneratesAttachedRoutedEventCorrectly()
+    {
+        return this.CheckSourceAsync(@"
+using DependencyPropertyGenerator;
+using System.Windows;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+
+[RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
+public partial class MainWindow : Window
+{
+}");
+    }
 }

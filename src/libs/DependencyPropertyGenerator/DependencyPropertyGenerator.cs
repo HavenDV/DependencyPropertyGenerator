@@ -102,19 +102,25 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 {
                     context.AddTextSource(
                         hintName: $"{@class.Name}_DependencyProperties.generated.cs",
-                        text: SourceGenerationHelper.GenerateDependencyProperty(@class));
+                        text: SourceGenerationHelper.GenerateDependencyProperties(@class));
                 }
                 if (@class.AttachedDependencyProperties.Any())
                 {
                     context.AddTextSource(
                         hintName: $"{@class.Name}_AttachedDependencyProperties.generated.cs",
-                        text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class));
+                        text: SourceGenerationHelper.GenerateAttachedDependencyProperties(@class));
                 }
-                if (platform == Platform.WPF && @class.RoutedEvents.Any())
+                if (platform == Platform.WPF && @class.RoutedEvents.Any(static @event => !@event.IsAttached))
                 {
                     context.AddTextSource(
                         hintName: $"{@class.Name}_RoutedEvents.generated.cs",
-                        text: SourceGenerationHelper.GenerateRoutedEvent(@class));
+                        text: SourceGenerationHelper.GenerateRoutedEvents(@class));
+                }
+                if (platform == Platform.WPF && @class.RoutedEvents.Any(static @event => @event.IsAttached))
+                {
+                    context.AddTextSource(
+                        hintName: $"{@class.Name}_AttachedRoutedEvents.generated.cs",
+                        text: SourceGenerationHelper.GenerateAttachedRoutedEvents(@class));
                 }
             }
         }
@@ -168,7 +174,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
                         GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Type))?.Value?.ToString();
-
+                    var isAttached = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventData.IsAttached)) ?? bool.FalseString;
+                    
                     var description = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Description))?.Value?.ToString();
                     var category = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Category))?.Value?.ToString();
 
@@ -179,6 +186,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Name: name,
                         Strategy: strategy,
                         Type: type,
+                        IsAttached: bool.Parse(isAttached),
                         Description: description,
                         Category: category,
                         XmlDocumentation: xmlDocumentation,

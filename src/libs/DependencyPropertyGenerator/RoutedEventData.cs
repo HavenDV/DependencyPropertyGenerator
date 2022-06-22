@@ -4,6 +4,7 @@ public readonly record struct RoutedEventData(
     string Name,
     string Strategy,
     string? Type,
+    bool IsAttached,
     string? Description,
     string? Category,
     string? XmlDocumentation,

@@ -5,7 +5,7 @@ namespace H.Generators;
 
 internal class SourceGenerationHelper
 {
-    public static string GenerateDependencyProperty(ClassData @class)
+    public static string GenerateDependencyProperties(ClassData @class)
     {
         return @$"
 #nullable enable
@@ -41,7 +41,7 @@ namespace {@class.Namespace}
 }}";
     }
 
-    public static string GenerateAttachedDependencyProperty(ClassData @class)
+    public static string GenerateAttachedDependencyProperties(ClassData @class)
     {
         return @$"
 #nullable enable
@@ -88,7 +88,7 @@ namespace {@class.Namespace}
 }}";
     }
     
-    public static string GenerateRoutedEvent(ClassData @class)
+    public static string GenerateRoutedEvents(ClassData @class)
     {
         return @$"
 #nullable enable
@@ -97,7 +97,7 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{@class.RoutedEvents.Select(@event => $@"
+{@class.RoutedEvents.Where(static @event => !@event.IsAttached).Select(@event => $@"
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
             {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
@@ -124,6 +124,58 @@ namespace {@class.Namespace}
             this.RaiseEvent(args);
 
             return args;
+        }}
+").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
+    }}
+}}";
+    }
+
+    public static string GenerateAttachedRoutedEvents(ClassData @class)
+    {
+        return @$"
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+{@class.RoutedEvents.Where(static @event => @event.IsAttached).Select(@event => $@"
+{GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
+        public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
+            {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
+                name: ""{@event.Name}"",
+                routingStrategy: ({GenerateRoutingStrategyType(@class)}){@event.Strategy},
+                handlerType: typeof({GenerateRouterEventType(@class, @event)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)}));
+
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+{GenerateCategoryAttribute(@event.Category)}
+{GenerateDescriptionAttribute(@event.Description)}
+        public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        {{
+            if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
+            {{
+                uiElement.AddHandler({@event.Name}Event, handler);
+            }}
+            else if (element is {GenerateTypeByPlatform(@class.Platform, "ContentElement")} contentElement)
+            {{
+                contentElement.AddHandler({@event.Name}Event, handler);
+            }}
+        }}
+
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+{GenerateCategoryAttribute(@event.Category)}
+{GenerateDescriptionAttribute(@event.Description)}
+        public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        {{
+            if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
+            {{
+                uiElement.RemoveHandler({@event.Name}Event, handler);
+            }}
+            else if (element is {GenerateTypeByPlatform(@class.Platform, "ContentElement")} contentElement)
+            {{
+                contentElement.RemoveHandler({@event.Name}Event, handler);
+            }}
         }}
 ").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}

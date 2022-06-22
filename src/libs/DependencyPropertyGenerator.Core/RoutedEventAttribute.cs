@@ -25,6 +25,12 @@ public sealed class RoutedEventAttribute : Attribute
     public Type? Type { get; set; }
 
     /// <summary>
+    /// Will generates attached routed event. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsAttached { get; set; }
+
+    /// <summary>
     /// Description of this routed event. <br/>
     /// The event will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -88,6 +94,12 @@ public sealed class RoutedEventAttribute<T> : Attribute
     /// Default - typeof(RoutedEventHandler).
     /// </summary>
     public Type? Type { get; set; }
+
+    /// <summary>
+    /// Will generates attached routed event. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsAttached { get; set; }
 
     /// <summary>
     /// Description of this routed event. <br/>
