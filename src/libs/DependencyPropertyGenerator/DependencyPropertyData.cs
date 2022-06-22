@@ -9,6 +9,7 @@ public readonly record struct DependencyPropertyData(
     string? Description,
     string? Category,
     string? CLSCompliant,
+    string? Localizability,
     string? BrowsableForType,
     bool IsBrowsableForTypeSpecialType,
     string? XmlDocumentation,

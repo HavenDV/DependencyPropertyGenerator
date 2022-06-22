@@ -27,6 +27,7 @@ namespace {@class.Namespace}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
         {{
             get => ({GenerateType(property)})GetValue({property.Name}Property);
@@ -61,6 +62,7 @@ namespace {@class.Namespace}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
         {{
             element.SetValue({property.Name}Property, value);
@@ -71,6 +73,7 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
         {{
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
@@ -225,6 +228,16 @@ Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({propert
         return $"        [global::System.CLSCompliant({value})]";
     }
 
+    public static string GenerateLocalizabilityAttribute(string? value, Platform platform)
+    {
+        if (value == null || platform != Platform.WPF)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.Windows.Localizability(global::System.Windows.LocalizationCategory.{value})]";
+    }
+    
     public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
     {
         if (@class.Platform != Platform.WPF)

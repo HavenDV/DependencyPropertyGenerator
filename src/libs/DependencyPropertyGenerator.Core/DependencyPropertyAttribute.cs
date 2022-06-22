@@ -54,6 +54,12 @@ public sealed class DependencyPropertyAttribute : Attribute
     public bool CLSCompliant { get; set; }
 
     /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
+
+    /// <summary>
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
@@ -186,6 +192,12 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool CLSCompliant { get; set; }
+
+    /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>

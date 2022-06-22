@@ -54,6 +54,12 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public bool CLSCompliant { get; set; }
 
     /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
+
+    /// <summary>
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
@@ -200,6 +206,12 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public bool CLSCompliant { get; set; }
 
     /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
+
+    /// <summary>
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
@@ -343,6 +355,12 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool CLSCompliant { get; set; }
+
+    /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
 
     /// <summary>
     /// The type for which the extension is intended. <br/>
