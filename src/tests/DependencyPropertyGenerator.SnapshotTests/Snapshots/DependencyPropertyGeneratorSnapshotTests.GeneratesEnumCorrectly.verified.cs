@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class TreeViewExtensions
     {
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: Mode2
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty ModeProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
@@ -15,7 +15,7 @@ namespace H.Generators.IntegrationTests
                 propertyType: typeof(global::H.Generators.IntegrationTests.Mode),
                 ownerType: typeof(global::H.Generators.IntegrationTests.TreeViewExtensions),
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    defaultValue: default(global::H.Generators.IntegrationTests.Mode),
+                    defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                         OnModeChanged(
@@ -24,7 +24,7 @@ namespace H.Generators.IntegrationTests
                             (global::H.Generators.IntegrationTests.Mode)args.NewValue)));
 
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: Mode2
         /// </summary>
         public static void SetMode(global::System.Windows.DependencyObject element, global::H.Generators.IntegrationTests.Mode value)
         {
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         }
 
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: Mode2
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
         public static global::H.Generators.IntegrationTests.Mode GetMode(global::System.Windows.DependencyObject element)

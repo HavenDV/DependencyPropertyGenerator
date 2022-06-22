@@ -6,6 +6,7 @@ public readonly record struct DependencyPropertyData(
     bool IsValueType,
     bool IsSpecialType,
     string? DefaultValue,
+    string? DefaultValueDocumentation,
     string? Description,
     string? Category,
     string? TypeConverter,

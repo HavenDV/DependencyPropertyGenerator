@@ -212,6 +212,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         false;
                     var defaultValue =
                         GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
+                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.DefaultValue))?.Value?.ToString();
+                    var defaultValueDocumentation =
+                        GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
                         GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultValue));
                     var browsableForType =
                         GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
@@ -250,6 +253,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsValueType: isValueType,
                         IsSpecialType: isSpecialType,
                         DefaultValue: defaultValue,
+                        DefaultValueDocumentation: defaultValueDocumentation,
                         Description: description,
                         Category: category,
                         TypeConverter: typeConverter,

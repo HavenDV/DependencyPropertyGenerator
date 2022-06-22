@@ -30,7 +30,7 @@ public enum Mode
     Mode2,
 }
 
-[AttachedDependencyProperty<Mode, TreeView>("Mode")]
+[AttachedDependencyProperty<Mode, TreeView>("Mode", DefaultValue = Mode.Mode2)]
 public static partial class TreeViewExtensions
 {
     static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)

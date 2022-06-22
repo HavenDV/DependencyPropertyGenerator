@@ -289,7 +289,15 @@ namespace {@class.Namespace}
 
     public static string GenerateDefaultValue(DependencyPropertyData property)
     {
-        return property.DefaultValue ?? $"default({GenerateType(property.Type, property.IsSpecialType)})";
+        if (property.IsSpecialType && property.DefaultValueDocumentation != null)
+        {
+            return property.DefaultValueDocumentation;
+        }
+
+        var type = GenerateType(property.Type, property.IsSpecialType);
+        return property.DefaultValue != null 
+            ? $"({type}){property.DefaultValue}"
+            : $"default({type})";
     }
 
     public static string GenerateBrowsableForType(ClassData @class, DependencyPropertyData property)
@@ -324,7 +332,7 @@ namespace {@class.Namespace}
     {
         value ??= @$"<summary>
 {(property.Description != null ? $"{property.Description}<br/>" : " ")}
-Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
+Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
         return GenerateXmlDocumentationFrom(value);
