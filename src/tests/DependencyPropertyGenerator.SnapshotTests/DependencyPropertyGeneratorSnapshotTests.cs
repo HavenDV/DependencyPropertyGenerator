@@ -63,4 +63,30 @@ public partial class MainWindow
     }
 }");
     }
+
+    [TestMethod]
+    public Task GeneratesEnumCorrectly()
+    {
+        return this.CheckSourceAsync(@"
+using DependencyPropertyGenerator;
+using System.Windows.Controls;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+
+public enum Mode
+{
+    Mode1,
+    Mode2,
+}
+
+[AttachedDependencyProperty<Mode, TreeView>(""Mode"")]
+public static partial class TreeViewExtensions
+{
+    static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
+    {
+    }
+}");
+    }
 }

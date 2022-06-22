@@ -23,3 +23,17 @@ public static partial class TreeViewExtensions
     {
     }
 }
+
+public enum Mode
+{
+    Mode1,
+    Mode2,
+}
+
+[AttachedDependencyProperty<Mode, TreeView>("Mode")]
+public static partial class TreeViewExtensions
+{
+    static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
+    {
+    }
+}
