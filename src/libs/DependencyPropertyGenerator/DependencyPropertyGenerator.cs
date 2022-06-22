@@ -160,12 +160,20 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     GetGenericTypeArgumentFromAttributeData(attribute, 0)?.IsValueType ??
                     attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
                     true;
+                var isSpecialType =
+                    IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 0)) ??
+                    IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Type) ??
+                    false;
                 var defaultValue =
                     GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
                     GetPropertyFromAttributeSyntax(attributeSyntax, "DefaultValue");
                 var browsableForType =
                     GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                     GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Value?.ToString();
+                var isBrowsableForTypeSpecialType =
+                    IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
+                    IsSpecialType(GetPropertyFromAttributeData(attribute, "BrowsableForType")?.Type) ??
+                    false;
 
                 var description = GetPropertyFromAttributeData(attribute, "Description")?.Value?.ToString();
                 var category = GetPropertyFromAttributeData(attribute, "Category")?.Value?.ToString();
@@ -191,13 +199,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     Name: name,
                     Type: type,
                     IsValueType: isValueType,
+                    IsSpecialType: isSpecialType,
                     DefaultValue: defaultValue,
                     Description: description,
                     Category: category,
                     BrowsableForType: browsableForType,
-                    XmlDoc: xmlDoc ?? $"<summary>{description}</summary>",
-                    PropertyGetterXmlDoc: propertyGetterXmlDoc ?? propertyXmlDoc ?? $"<summary>{description}</summary>",
-                    PropertySetterXmlDoc: propertySetterXmlDoc ?? $"<summary>{description}</summary>",
+                    IsBrowsableForTypeSpecialType: isBrowsableForTypeSpecialType,
+                    XmlDocumentation: xmlDoc,
+                    PropertyGetterXmlDocumentation: propertyGetterXmlDoc ?? propertyXmlDoc,
+                    PropertySetterXmlDocumentation: propertySetterXmlDoc,
                     AffectsMeasure: bool.Parse(affectsMeasure),
                     AffectsArrange: bool.Parse(affectsArrange),
                     AffectsParentMeasure: bool.Parse(affectsParentMeasure),
@@ -221,7 +231,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
             }
 
-            values.Add(new ClassData(@namespace, className, classModifiers, platform, dependencyProperties, attachedDependencyProperties));
+            values.Add(new ClassData(@namespace, className, fullClassName, classModifiers, platform, dependencyProperties, attachedDependencyProperties));
         }
 
         return values;
@@ -236,6 +246,16 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
 
         return classSymbol.ToString();
+    }
+
+    private static bool? IsSpecialType(ITypeSymbol? symbol)
+    {
+        if (symbol == null)
+        {
+            return null;
+        }
+
+        return symbol.SpecialType != SpecialType.None;
     }
 
     private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)

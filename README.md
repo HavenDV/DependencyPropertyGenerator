@@ -45,18 +45,27 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MainWindow
     {
-        /// <summary>Description</summary>
+        /// <summary>
+        /// Description<br/>
+        /// Default value: true
+        /// </summary>
         public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning",
                 propertyType: typeof(bool),
-                ownerType: typeof(MainWindow),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: true,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) => ((MainWindow)sender).OnIsSpinningChanged((bool)args.OldValue, (bool)args.NewValue)));
+                    propertyChangedCallback: static (sender, args) =>
+                        ((global::H.Generators.IntegrationTests.MainWindow)sender).OnIsSpinningChanged(
+                            (bool)args.OldValue,
+                            (bool)args.NewValue)));
 
-        /// <summary>Description</summary>
+        /// <summary>
+        /// Description<br/>
+        /// Default value: true
+        /// </summary>
         [global::System.ComponentModel.Category("Category")]
         [global::System.ComponentModel.Description("Description")]
         public bool IsSpinning
@@ -78,31 +87,41 @@ namespace H.Generators.IntegrationTests
 {
     public static partial class TreeViewExtensions
     {
-        /// <summary></summary>
+        /// <summary>
+        /// Default value: default(object)
+        /// </summary>
         public static readonly global::System.Windows.DependencyProperty SelectedItemProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "SelectedItem",
                 propertyType: typeof(object),
-                ownerType: typeof(TreeViewExtensions),
+                ownerType: typeof(global::H.Generators.IntegrationTests.TreeViewExtensions),
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    propertyChangedCallback: static (sender, args) => OnSelectedItemChanged((System.Windows.Controls.TreeView)sender, (object?)args.OldValue, (object?)args.NewValue)));
-  
-        /// <summary></summary>
+                    propertyChangedCallback: static (sender, args) =>
+                        OnSelectedItemChanged(
+                            (global::System.Windows.Controls.TreeView)sender,
+                            (object?)args.OldValue,
+                            (object?)args.NewValue)));
+
+        /// <summary>
+        /// Default value: default(object)
+        /// </summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
             element.SetValue(SelectedItemProperty, value);
         }
 
-        /// <summary></summary>
-        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(System.Windows.Controls.TreeView))]
+        /// <summary>
+        /// Default value: default(object)
+        /// </summary>
+        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
         public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {
             return (object?)element.GetValue(SelectedItemProperty);
         }
 
-        static partial void OnSelectedItemChanged(System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
     }
 }
 ```

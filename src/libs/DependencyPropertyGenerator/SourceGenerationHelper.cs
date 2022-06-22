@@ -15,15 +15,15 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.DependencyProperties.Select(property => $@"
-{GenerateXmlDocumentationFrom(property.XmlDoc)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
             {GenerateDependencyPropertyType(@class)}.Register(
                 name: ""{property.Name}"",
-                propertyType: typeof({property.Type}),
-                ownerType: typeof({@class.Name}),
+                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property, false)});
 
-{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
+{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
         public {GenerateType(property)} {property.Name}
@@ -48,15 +48,15 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {@class.AttachedDependencyProperties.Select(property => $@"
-{GenerateXmlDocumentationFrom(property.XmlDoc)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
             {GenerateDependencyPropertyType(@class)}.RegisterAttached(
                 name: ""{property.Name}"",
-                propertyType: typeof({property.Type}),
-                ownerType: typeof({@class.Name}),
+                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property, true)});
 
-{GenerateXmlDocumentationFrom(property.PropertySetterXmlDoc)}
+{GenerateXmlDocumentationFrom(property.PropertySetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
@@ -64,7 +64,7 @@ namespace {@class.Namespace}
             element.SetValue({property.Name}Property, value);
         }}
 
-{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDoc)}
+{GenerateXmlDocumentationFrom(property.PropertyGetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
@@ -81,11 +81,20 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
-        var senderType = isAttached ? GenerateBrowsableForType(@class, property) : @class.Name;
+        var senderType = isAttached
+            ? GenerateBrowsableForType(@class, property)
+            : GenerateType(@class.FullName, false);
 
         return isAttached
-            ? $@"propertyChangedCallback: static (sender, args) => On{property.Name}Changed(({senderType})sender, ({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)"
-            : $@"propertyChangedCallback: static (sender, args) => (({senderType})sender).On{property.Name}Changed(({GenerateType(property)})args.OldValue, ({GenerateType(property)})args.NewValue)";
+            ? $@"propertyChangedCallback: static (sender, args) =>
+                        On{property.Name}Changed(
+                            ({senderType})sender,
+                            ({GenerateType(property)})args.OldValue,
+                            ({GenerateType(property)})args.NewValue)"
+            : $@"propertyChangedCallback: static (sender, args) =>
+                        (({senderType})sender).On{property.Name}Changed(
+                            ({GenerateType(property)})args.OldValue,
+                            ({GenerateType(property)})args.NewValue)";
     }
 
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
@@ -118,12 +127,25 @@ namespace {@class.Namespace}
 
     public static string GenerateTypeByPlatform(Platform platform, string name)
     {
-        return platform switch
+        return (platform switch
         {
-            Platform.WPF => $"global::System.Windows.{name}",
-            Platform.UWP or Platform.Uno => $"global::Windows.UI.Xaml.{name}",
-            Platform.WinUI or Platform.UnoWinUI => $"global::Microsoft.UI.Xaml.{name}",
+            Platform.WPF => $"System.Windows.{name}",
+            Platform.UWP or Platform.Uno => $"Windows.UI.Xaml.{name}",
+            Platform.WinUI or Platform.UnoWinUI => $"Microsoft.UI.Xaml.{name}",
             _ => throw new InvalidOperationException("Platform is not supported."),
+        }).WithGlobalPrefix();
+    }
+
+    public static string GenerateType(string fullTypeName, bool isSpecialType)
+    {
+        if (isSpecialType)
+        {
+            return fullTypeName;
+        }
+
+        return fullTypeName switch
+        {
+            _ => fullTypeName.WithGlobalPrefix(),
         };
     }
 
@@ -139,17 +161,17 @@ namespace {@class.Namespace}
 
     public static string GenerateDefaultValue(DependencyPropertyData property)
     {
-        return property.DefaultValue ?? $"default({property.Type})";
+        return property.DefaultValue ?? $"default({GenerateType(property.Type, property.IsSpecialType)})";
     }
 
     public static string GenerateBrowsableForType(ClassData @class, DependencyPropertyData property)
     {
-        return property.BrowsableForType ?? GenerateDependencyObjectType(@class);
+        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(@class);
     }
 
     public static string GenerateType(DependencyPropertyData property)
     {
-        var value = property.Type;
+        var value = GenerateType(property.Type, property.IsSpecialType);
         if (!property.IsValueType)
         {
             value += "?";
@@ -158,8 +180,13 @@ namespace {@class.Namespace}
         return value;
     }
 
-    public static string GenerateXmlDocumentationFrom(string value)
+    public static string GenerateXmlDocumentationFrom(string? value, DependencyPropertyData property)
     {
+        value ??= @$"<summary>
+{(property.Description != null ? $"{property.Description}<br/>" : " ")}
+Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
+</summary>".RemoveBlankLinesWhereOnlyWhitespaces();
+
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
