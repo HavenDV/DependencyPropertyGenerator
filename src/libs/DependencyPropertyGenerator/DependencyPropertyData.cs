@@ -8,6 +8,7 @@ public readonly record struct DependencyPropertyData(
     string? DefaultValue,
     string? Description,
     string? Category,
+    string? TypeConverter,
     string? CLSCompliant,
     string? Localizability,
     string? BrowsableForType,

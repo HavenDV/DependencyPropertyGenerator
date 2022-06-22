@@ -48,6 +48,13 @@ public sealed class DependencyPropertyAttribute : Attribute
     public string? Category { get; set; }
 
     /// <summary>
+    /// Type converter of this dependency property. <br/>
+    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Type? TypeConverter { get; set; }
+
+    /// <summary>
     /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -186,6 +193,13 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
+
+    /// <summary>
+    /// Type converter of this dependency property. <br/>
+    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Type? TypeConverter { get; set; }
 
     /// <summary>
     /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>

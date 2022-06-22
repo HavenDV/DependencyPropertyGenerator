@@ -177,6 +177,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
                 var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
                 var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
+                var typeConverter = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.TypeConverter))?.Value?.ToString();
                 var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
                 var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?.Replace("Localizability.", string.Empty);
 
@@ -205,6 +206,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     DefaultValue: defaultValue,
                     Description: description,
                     Category: category,
+                    TypeConverter: typeConverter,
                     CLSCompliant: clsCompliant,
                     Localizability: localizability,
                     BrowsableForType: browsableForType,

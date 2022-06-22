@@ -26,6 +26,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
+{GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
@@ -61,6 +62,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
+{GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
@@ -71,6 +73,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
+{GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
@@ -216,6 +219,16 @@ Default value: {property.DefaultValue?.ExtractSimpleName() ?? $"default({propert
         }
 
         return $"        [global::System.ComponentModel.Description(\"{value}\")]";
+    }
+
+    public static string GenerateTypeConverterAttribute(string? value)
+    {
+        if (value == null)
+        {
+            return " ";
+        }
+
+        return $"        [global::System.ComponentModel.TypeConverter(typeof({value.WithGlobalPrefix()}))]";
     }
 
     public static string GenerateCLSCompliantAttribute(string? value)
