@@ -44,8 +44,8 @@
   <PropertyGroup Label="Source Link">
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedAllSources>true</EmbedAllSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DebugType>embedded</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup Label="Source Link">
