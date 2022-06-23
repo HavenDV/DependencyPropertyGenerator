@@ -92,13 +92,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var useUwp = constants.Contains("WINDOWS_UWP") || constants.Contains("HAS_UWP");
             var useUno = constants.Contains("HAS_UNO");
             var useUnoWinUI = constants.Contains("HAS_UNO_WINUI") || (constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI"));
-            var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI) switch
+            var useAvalonia = constants.Contains("HAS_AVALONIA");
+            var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI, useAvalonia) switch
             {
-                (_, _, _, _, true) => Platform.UnoWinUI,
-                (_, _, _, true, _) => Platform.Uno,
-                (_, _, true, _, _) => Platform.WinUI,
-                (_, true, _, _, _) => Platform.UWP,
-                (true, _, _, _, _) => Platform.WPF,
+                (_, _, _, _, _, true) => Platform.Avalonia,
+                (_, _, _, _, true, _) => Platform.UnoWinUI,
+                (_, _, _, true, _, _) => Platform.Uno,
+                (_, _, true, _, _, _) => Platform.WinUI,
+                (_, true, _, _, _, _) => Platform.UWP,
+                (true, _, _, _, _, _) => Platform.WPF,
                 _ =>                  Platform.Undefined,
             };
 
@@ -131,6 +133,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}_{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
+                }
+                if (platform == Platform.Avalonia && @class.AttachedDependencyProperties.Any())
+                {
+                    context.AddTextSource(
+                        hintName: $"{@class.Name}.StaticConstructor.generated.cs",
+                        text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.AttachedDependencyProperties));
                 }
             }
         }

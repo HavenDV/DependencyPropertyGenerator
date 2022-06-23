@@ -11,6 +11,7 @@ public class Tests : VerifyBase
         {
             Platform.WinUI or Platform.UnoWinUI => @"Microsoft.UI.Xaml",
             Platform.UWP or Platform.Uno => @"Windows.UI.Xaml",
+            Platform.Avalonia => @"Avalonia",
             _ => @"System.Windows",
         };
         
@@ -90,6 +91,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.Avalonia)]
     public Task GeneratesEnumCorrectly(Platform platform)
     {
         return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"

@@ -14,6 +14,11 @@ public static class TestHelper
         Platform platform,
         CancellationToken cancellationToken = default)
     {
+        if (platform == Platform.Avalonia)
+        {
+            source = source.Replace("static partial class", "partial class");
+        }
+        
         var referenceAssemblies = platform switch
         {
             Platform.WPF => ReferenceAssemblies.NetFramework.Net48.Wpf,
@@ -27,6 +32,8 @@ public static class TestHelper
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.3.8"))),
             Platform.UnoWinUI => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.3.8"))),
+            Platform.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.15"))),
             _ => throw new NotImplementedException(),
         };
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
@@ -60,6 +67,10 @@ public static class TestHelper
         else if (platform == Platform.UnoWinUI)
         {
             globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_UNO;HAS_WINUI");
+        }
+        else if (platform == Platform.Avalonia)
+        {
+            globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_AVALONIA");
         }
         var driver = CSharpGeneratorDriver
             .Create(generator)

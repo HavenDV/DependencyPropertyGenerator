@@ -8,4 +8,5 @@ public enum Platform
     WinUI,
     Uno,
     UnoWinUI,
+    Avalonia,
 }

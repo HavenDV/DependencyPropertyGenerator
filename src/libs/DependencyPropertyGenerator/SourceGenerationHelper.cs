@@ -41,6 +41,30 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
+    public static string GenerateStaticConstructor(ClassData @class, IReadOnlyCollection<DependencyPropertyData> properties)
+    {
+        return @$"
+using System;
+
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{GenerateModifiers(@class)} partial class {@class.Name}
+    {{
+        static {@class.Name}()
+        {{
+{properties.Select(property => @$"
+            {property.Name}Property.Changed.Subscribe(static x => On{property.Name}Changed(
+                ({GenerateBrowsableForType(@class, property)})x.Sender,
+                ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
+                ({GenerateType(property)})x.NewValue.GetValueOrDefault()));
+").Inject()}
+        }}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
     public static string GenerateAttachedDependencyProperty(ClassData @class, DependencyPropertyData property)
     {
         return @$"
@@ -48,15 +72,12 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    public{GenerateModifiers(@class)} partial class {@class.Name}{GenerateBaseType(@class)}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
-        public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
-            {GenerateDependencyPropertyType(@class)}.RegisterAttached(
-                name: ""{property.Name}"",
-                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
-                {GeneratePropertyMetadata(@class, property, true)});
+        public static readonly {GenerateAttachedPropertyType(@class, property)} {property.Name}Property =
+            {GenerateManagerType(@class)}.{GenerateRegisterAttachedMethod(@class, property)}(
+                {GenerateRegisterAttachedMethodArguments(@class, property)});
 
 {GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
@@ -180,6 +201,26 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
+    public static string GenerateBaseType(ClassData @class)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $" : {GenerateTypeByPlatform(@class.Platform, "AvaloniaObject")}";
+        }
+
+        return string.Empty;
+    }
+
+    public static string GenerateModifiers(ClassData @class)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return string.Empty;
+        }
+
+        return @class.Modifiers;
+    }
+
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
     {
         var senderType = isAttached
@@ -233,6 +274,7 @@ namespace {@class.Namespace}
             Platform.WPF => $"System.Windows.{name}",
             Platform.UWP or Platform.Uno => $"Windows.UI.Xaml.{name}",
             Platform.WinUI or Platform.UnoWinUI => $"Microsoft.UI.Xaml.{name}",
+            Platform.Avalonia => $"Avalonia.{name}",
             _ => throw new InvalidOperationException("Platform is not supported."),
         }).WithGlobalPrefix();
     }
@@ -275,6 +317,56 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
     }
 
+    public static string GenerateAttachedPropertyType(ClassData @class, DependencyPropertyData property)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(
+                @class.Platform,
+                $"AttachedProperty<{GenerateType(property)}>");
+        }
+        
+        return GenerateDependencyPropertyType(@class);
+    }
+
+    public static string GenerateManagerType(ClassData @class)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(
+                @class.Platform,
+                $"AvaloniaProperty");
+        }
+
+        return GenerateDependencyPropertyType(@class);
+    }
+
+    public static string GenerateRegisterAttachedMethod(ClassData @class, DependencyPropertyData property)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(@class, property)}, {GenerateType(property)}>";
+        }
+
+        return "RegisterAttached";
+    }
+
+    public static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $@"
+                name: ""{property.Name}"",
+                defaultValue: {GenerateDefaultValue(property)}";
+        }
+
+        return @$"
+                name: ""{property.Name}"",
+                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                {GeneratePropertyMetadata(@class, property, true)}";
+    }
+
     public static string GenerateDependencyPropertyType(ClassData @class)
     {
         return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
@@ -282,6 +374,11 @@ namespace {@class.Namespace}
 
     public static string GenerateDependencyObjectType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(@class.Platform, "IAvaloniaObject");
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "DependencyObject");
     }
 
