@@ -25,7 +25,7 @@ public class Tests : VerifyBase
     //[DataRow(Platform.WinUI)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesCorrectly(Platform platform)
+    public Task GeneratesReadmeExampleCorrectly(Platform platform)
     {
         
         return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"

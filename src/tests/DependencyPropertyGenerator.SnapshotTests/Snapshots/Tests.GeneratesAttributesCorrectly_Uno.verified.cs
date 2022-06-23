@@ -1,4 +1,4 @@
-﻿//HintName: MyControl_DependencyProperties.generated.cs
+﻿//HintName: MyControl_AttributedProperty.generated.cs
 
 #nullable enable
 

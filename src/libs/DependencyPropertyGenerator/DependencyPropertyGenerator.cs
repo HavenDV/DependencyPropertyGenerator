@@ -98,29 +98,32 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
-                if (@class.DependencyProperties.Any())
+                foreach(var property in @class.DependencyProperties)
                 {
                     context.AddTextSource(
-                        hintName: $"{@class.Name}_DependencyProperties.generated.cs",
-                        text: SourceGenerationHelper.GenerateDependencyProperties(@class));
+                        hintName: $"{@class.Name}_{property.Name}.generated.cs",
+                        text: SourceGenerationHelper.GenerateDependencyProperty(@class, property));
                 }
-                if (@class.AttachedDependencyProperties.Any())
+                foreach (var property in @class.AttachedDependencyProperties)
                 {
                     context.AddTextSource(
-                        hintName: $"{@class.Name}_AttachedDependencyProperties.generated.cs",
-                        text: SourceGenerationHelper.GenerateAttachedDependencyProperties(@class));
+                        hintName: $"{@class.Name}_{property.Name}.generated.cs",
+                        text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
                 }
-                if (platform == Platform.WPF && @class.RoutedEvents.Any(static @event => !@event.IsAttached))
+                if (platform == Platform.WPF)
                 {
-                    context.AddTextSource(
-                        hintName: $"{@class.Name}_RoutedEvents.generated.cs",
-                        text: SourceGenerationHelper.GenerateRoutedEvents(@class));
-                }
-                if (platform == Platform.WPF && @class.RoutedEvents.Any(static @event => @event.IsAttached))
-                {
-                    context.AddTextSource(
-                        hintName: $"{@class.Name}_AttachedRoutedEvents.generated.cs",
-                        text: SourceGenerationHelper.GenerateAttachedRoutedEvents(@class));
+                    foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}_{@event.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                    }
+                    foreach (var @event in @class.RoutedEvents.Where(static @event => @event.IsAttached))
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}_{@event.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
+                    }
                 }
             }
         }

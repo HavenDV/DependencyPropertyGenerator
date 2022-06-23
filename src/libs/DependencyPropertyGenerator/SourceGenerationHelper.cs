@@ -5,7 +5,7 @@ namespace H.Generators;
 
 internal class SourceGenerationHelper
 {
-    public static string GenerateDependencyProperties(ClassData @class)
+    public static string GenerateDependencyProperty(ClassData @class, DependencyPropertyData property)
     {
         return @$"
 #nullable enable
@@ -14,7 +14,6 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{@class.DependencyProperties.Select(property => $@"
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
             {GenerateDependencyPropertyType(@class)}.Register(
@@ -38,12 +37,11 @@ namespace {@class.Namespace}
         }}
 
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
-}}";
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateAttachedDependencyProperties(ClassData @class)
+    public static string GenerateAttachedDependencyProperty(ClassData @class, DependencyPropertyData property)
     {
         return @$"
 #nullable enable
@@ -52,7 +50,6 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{@class.AttachedDependencyProperties.Select(property => $@"
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
             {GenerateDependencyPropertyType(@class)}.RegisterAttached(
@@ -89,12 +86,11 @@ namespace {@class.Namespace}
         }}
 
         static partial void On{property.Name}Changed({GenerateBrowsableForType(@class, property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
-}}";
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
     
-    public static string GenerateRoutedEvents(ClassData @class)
+    public static string GenerateRoutedEvent(ClassData @class, RoutedEventData @event)
     {
         return @$"
 #nullable enable
@@ -103,7 +99,6 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{@class.RoutedEvents.Where(static @event => !@event.IsAttached).Select(@event => $@"
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
             {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
@@ -131,12 +126,11 @@ namespace {@class.Namespace}
 
             return args;
         }}
-").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
-}}";
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateAttachedRoutedEvents(ClassData @class)
+    public static string GenerateAttachedRoutedEvent(ClassData @class, RoutedEventData @event)
     {
         return @$"
 #nullable enable
@@ -145,7 +139,6 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{@class.RoutedEvents.Where(static @event => @event.IsAttached).Select(@event => $@"
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
             {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
@@ -183,9 +176,8 @@ namespace {@class.Namespace}
                 contentElement.RemoveHandler({@event.Name}Event, handler);
             }}
         }}
-").Inject().RemoveBlankLinesWhereOnlyWhitespaces()}
     }}
-}}";
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)

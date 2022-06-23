@@ -1,4 +1,4 @@
-﻿//HintName: MyControl_AttachedRoutedEvents.generated.cs
+﻿//HintName: MyControl_TrayLeftMouseDown.generated.cs
 
 #nullable enable
 
