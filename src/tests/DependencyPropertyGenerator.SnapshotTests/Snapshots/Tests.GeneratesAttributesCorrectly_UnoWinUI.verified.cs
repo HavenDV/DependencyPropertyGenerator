@@ -10,14 +10,13 @@ namespace H.Generators.IntegrationTests
         /// Description<br/>
         /// Default value: default(string)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty AttributedPropertyProperty =
-            global::System.Windows.DependencyProperty.Register(
+        public static readonly global::Microsoft.UI.Xaml.DependencyProperty AttributedPropertyProperty =
+            global::Microsoft.UI.Xaml.DependencyProperty.Register(
                 name: "AttributedProperty",
                 propertyType: typeof(string),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(string),
-                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
                             (string?)args.OldValue,
@@ -33,7 +32,6 @@ namespace H.Generators.IntegrationTests
         [global::System.ComponentModel.Bindable(true)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [global::System.CLSCompliant(false)]
-        [global::System.Windows.Localizability(global::System.Windows.LocalizationCategory.Text)]
         public string? AttributedProperty
         {
             get => (string?)GetValue(AttributedPropertyProperty);

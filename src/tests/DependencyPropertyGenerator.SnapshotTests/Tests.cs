@@ -1,22 +1,34 @@
-﻿namespace H.Generators.SnapshotTests;
+﻿using Microsoft.CodeAnalysis;
+
+namespace H.Generators.SnapshotTests;
 
 [TestClass]
 public class Tests : VerifyBase
 {
-    [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    public Task GeneratesCorrectly(Platform platform)
+    private static string GetUsings(Platform platform, params string[] values)
     {
-        var usings = platform switch
+        var prefix = platform switch
         {
-            Platform.WinUI => @"
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;",
-            _=> @"
-using System.Windows.Controls;",
+            Platform.WinUI or Platform.UnoWinUI => @"Microsoft.UI.Xaml",
+            Platform.UWP or Platform.Uno => @"Windows.UI.Xaml",
+            _ => @"System.Windows",
         };
         
-        return this.CheckSourceAsync(usings + @"
+        return string.Join(
+            Environment.NewLine,
+            values.Select(value => $"using {prefix}.{value};"));
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    //[DataRow(Platform.UWP)]
+    //[DataRow(Platform.WinUI)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesCorrectly(Platform platform)
+    {
+        
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
 
 #nullable enable
@@ -42,12 +54,14 @@ public static partial class TreeViewExtensions
 }", platform);
     }
 
-    [TestMethod]
-    public Task GeneratesCorrectlyIfHaveMultipleClassDeclarations()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesMultipleClassDeclarationsCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
-using System.Windows.Controls;
 
 #nullable enable
 
@@ -69,15 +83,17 @@ public partial class MyControl : UserControl
     partial void OnIsSpinning2Changed(bool oldValue, bool newValue)
     {
     }
-}", Platform.WPF);
+}", platform);
     }
 
-    [TestMethod]
-    public Task GeneratesEnumCorrectly()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesEnumCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
-using System.Windows.Controls;
 
 #nullable enable
 
@@ -95,15 +111,17 @@ public static partial class TreeViewExtensions
     static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
     {
     }
-}", Platform.WPF);
+}", platform);
     }
 
-    [TestMethod]
-    public Task GeneratesRoutedEventCorrectly()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesRoutedEventCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
-using System.Windows.Controls;
 
 #nullable enable
 
@@ -112,15 +130,17 @@ namespace H.Generators.IntegrationTests;
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
 public partial class MyControl : UserControl
 {
-}", Platform.WPF);
+}", platform);
     }
 
-    [TestMethod]
-    public Task GeneratesAttachedRoutedEventCorrectly()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesAttachedRoutedEventCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
-using System.Windows.Controls;
 
 #nullable enable
 
@@ -129,15 +149,17 @@ namespace H.Generators.IntegrationTests;
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
 public partial class MyControl : UserControl
 {
-}", Platform.WPF);
+}", platform);
     }
 
-    [TestMethod]
-    public Task GeneratesAttributesCorrectly()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesAttributesCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
 using DependencyPropertyGenerator;
-using System.Windows.Controls;
 using System.ComponentModel;
 
 #nullable enable
@@ -147,13 +169,13 @@ namespace H.Generators.IntegrationTests;
 [DependencyProperty<string>(""AttributedProperty"",
     Category = ""Category"",
     Description = ""Description"",
-    TypeConverter = typeof(BooleanToVisibilityConverter),
+    TypeConverter = typeof(EnumConverter),
     Bindable = true,
     DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
     CLSCompliant = false,
     Localizability = Localizability.Text)]
 public partial class MyControl : UserControl
 {
-}", Platform.WPF);
+}", platform);
     }
 }
