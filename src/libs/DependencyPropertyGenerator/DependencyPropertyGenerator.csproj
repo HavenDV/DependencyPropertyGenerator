@@ -8,15 +8,16 @@
   <PropertyGroup Label="NuGet">
     <NoWarn>$(NoWarn);NU5128;CA1724</NoWarn>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <IncludeSymbols>false</IncludeSymbols>
+    <!--<IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>-->
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Description>C# Source Generator library to generate DependencyProperty.</Description>
     <PackageTags>dependency;property;dependency property;generator;source generator</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="true" Link="Dependencies/%(FileName).dll" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\$(AssemblyName).pdb" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
   </ItemGroup>
 
