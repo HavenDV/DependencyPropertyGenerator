@@ -1,10 +1,10 @@
-﻿//HintName: MainWindow_RoutedEvents.generated.cs
+﻿//HintName: MyControl_RoutedEvents.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MainWindow
+    public partial class MyControl
     {
         /// <summary>
         /// </summary>
@@ -13,7 +13,7 @@ namespace H.Generators.IntegrationTests
                 name: "TrayLeftMouseDown",
                 routingStrategy: (global::System.Windows.RoutingStrategy)1,
                 handlerType: typeof(global::System.Windows.RoutedEventHandler),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow));
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl));
 
         /// <summary>
         /// </summary>

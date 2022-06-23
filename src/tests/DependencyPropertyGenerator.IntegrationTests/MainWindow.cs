@@ -8,7 +8,7 @@ using System.Windows.Controls;
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>("IsSpinning", DefaultValue = true, Category = "Category", Description = "Description")]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
     // Optional
     partial void OnIsSpinningChanged(bool oldValue, bool newValue)
@@ -40,7 +40,7 @@ public static partial class TreeViewExtensions
 }
 
 [RoutedEvent("TrayLeftMouseDown", RoutedEventStrategy.Bubble)]
-public partial class MainWindow
+public partial class MyControl : UserControl
 {
 }
 
@@ -52,6 +52,6 @@ public partial class MainWindow
     DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
     CLSCompliant = false,
     Localizability = Localizability.Text)]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
 }

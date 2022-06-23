@@ -1,10 +1,10 @@
-﻿//HintName: MainWindow_DependencyProperties.generated.cs
+﻿//HintName: MyControl_DependencyProperties.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MainWindow
+    public partial class MyControl
     {
         /// <summary>
         /// Description<br/>
@@ -14,12 +14,12 @@ namespace H.Generators.IntegrationTests
             global::System.Windows.DependencyProperty.Register(
                 name: "AttributedProperty",
                 propertyType: typeof(string),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(string),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MainWindow)sender).OnAttributedPropertyChanged(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
                             (string?)args.OldValue,
                             (string?)args.NewValue)));
 

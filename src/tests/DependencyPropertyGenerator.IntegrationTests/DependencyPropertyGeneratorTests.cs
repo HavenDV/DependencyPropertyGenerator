@@ -13,9 +13,9 @@ public class DependencyPropertyGeneratorTests
 
         var thread = new Thread(() =>
         {
-            var window = new MainWindow();
-            window.SetValue(MainWindow.IsSpinningProperty, true);
-            isSpinningValue = (bool)window.GetValue(MainWindow.IsSpinningProperty);
+            var window = new MyControl();
+            window.SetValue(MyControl.IsSpinningProperty, true);
+            isSpinningValue = (bool)window.GetValue(MyControl.IsSpinningProperty);
 
             var treeView = new TreeView();
             TreeViewExtensions.SetSelectedItem(treeView, new object());

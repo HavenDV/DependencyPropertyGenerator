@@ -1,10 +1,10 @@
-﻿//HintName: MainWindow_DependencyProperties.generated.cs
+﻿//HintName: MyControl_DependencyProperties.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MainWindow
+    public partial class MyControl
     {
         /// <summary>
         /// Default value: default(bool)
@@ -13,12 +13,12 @@ namespace H.Generators.IntegrationTests
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning",
                 propertyType: typeof(bool),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MainWindow)sender).OnIsSpinningChanged(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
                             (bool)args.NewValue)));
 
@@ -40,12 +40,12 @@ namespace H.Generators.IntegrationTests
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning2",
                 propertyType: typeof(bool),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MainWindow)sender).OnIsSpinning2Changed(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning2Changed(
                             (bool)args.OldValue,
                             (bool)args.NewValue)));
 

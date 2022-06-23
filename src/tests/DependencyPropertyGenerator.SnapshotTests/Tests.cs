@@ -7,17 +7,24 @@ public class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     public Task GeneratesCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(@"
+        var usings = platform switch
+        {
+            Platform.WinUI => @"
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;",
+            _=> @"
+using System.Windows.Controls;",
+        };
+        
+        return this.CheckSourceAsync(usings + @"
 using DependencyPropertyGenerator;
-using System.Windows;
-using System.Windows.Controls;
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
     // Optional
     partial void OnIsSpinningChanged(bool oldValue, bool newValue)
@@ -40,14 +47,14 @@ public static partial class TreeViewExtensions
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
-using System.Windows;
+using System.Windows.Controls;
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>(""IsSpinning"")]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
     // Optional
     partial void OnIsSpinningChanged(bool oldValue, bool newValue)
@@ -56,7 +63,7 @@ public partial class MainWindow : Window
 }
 
 [DependencyProperty<bool>(""IsSpinning2"")]
-public partial class MainWindow
+public partial class MyControl : UserControl
 {
     // Optional
     partial void OnIsSpinning2Changed(bool oldValue, bool newValue)
@@ -96,14 +103,14 @@ public static partial class TreeViewExtensions
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
-using System.Windows;
+using System.Windows.Controls;
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests;
 
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
 }", Platform.WPF);
     }
@@ -113,14 +120,14 @@ public partial class MainWindow : Window
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
-using System.Windows;
+using System.Windows.Controls;
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests;
 
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
 }", Platform.WPF);
     }
@@ -130,7 +137,6 @@ public partial class MainWindow : Window
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
-using System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
 
@@ -146,7 +152,7 @@ namespace H.Generators.IntegrationTests;
     DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
     CLSCompliant = false,
     Localizability = Localizability.Text)]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
 }", Platform.WPF);
     }
