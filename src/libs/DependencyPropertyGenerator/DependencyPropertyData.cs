@@ -10,6 +10,8 @@ public readonly record struct DependencyPropertyData(
     string? Description,
     string? Category,
     string? TypeConverter,
+    string? Bindable,
+    string? DesignerSerializationVisibility,
     string? CLSCompliant,
     string? Localizability,
     string? BrowsableForType,

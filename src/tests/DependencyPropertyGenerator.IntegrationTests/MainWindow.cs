@@ -1,4 +1,5 @@
 ﻿using DependencyPropertyGenerator;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,5 +41,17 @@ public static partial class TreeViewExtensions
 
 [RoutedEvent("TrayLeftMouseDown", RoutedEventStrategy.Bubble)]
 public partial class MainWindow
+{
+}
+
+[DependencyProperty<string>("AttributedProperty",
+    Category = "Category",
+    Description = "Description",
+    TypeConverter = typeof(BooleanToVisibilityConverter),
+    Bindable = true,
+    DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
+    CLSCompliant = false,
+    Localizability = Localizability.Text)]
+public partial class MainWindow : Window
 {
 }

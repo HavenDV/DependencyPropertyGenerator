@@ -27,6 +27,8 @@ namespace {@class.Namespace}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
+{GenerateBindableAttribute(property.Bindable)}
+{GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
@@ -63,6 +65,8 @@ namespace {@class.Namespace}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
+{GenerateBindableAttribute(property.Bindable)}
+{GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
@@ -74,6 +78,8 @@ namespace {@class.Namespace}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
+{GenerateBindableAttribute(property.Bindable)}
+{GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateBrowsableForTypeAttribute(@class, property)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
@@ -347,6 +353,21 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return GenerateXmlDocumentationFrom(value);
     }
 
+    public static string GenerateAttribute(string name, string? value)
+    {
+        if (value == null)
+        {
+            return " ";
+        }
+
+        return $"        [global::{name}({value})]";
+    }
+
+    public static string GenerateComponentModelAttribute(string name, string? value)
+    {
+        return GenerateAttribute($"System.ComponentModel.{name}", value);
+    }
+
     public static string GenerateCategoryAttribute(string? value)
     {
         if (value == null)
@@ -354,7 +375,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $"        [global::System.ComponentModel.Category(\"{value}\")]";
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.Category),
+            $"\"{value}\"");
     }
 
     public static string GenerateDescriptionAttribute(string? value)
@@ -364,7 +387,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $"        [global::System.ComponentModel.Description(\"{value}\")]";
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.Description),
+            $"\"{value}\"");
     }
 
     public static string GenerateTypeConverterAttribute(string? value)
@@ -374,17 +399,33 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $"        [global::System.ComponentModel.TypeConverter(typeof({value.WithGlobalPrefix()}))]";
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.TypeConverter),
+            $"typeof({value.WithGlobalPrefix()})");
     }
 
-    public static string GenerateCLSCompliantAttribute(string? value)
+    public static string GenerateBindableAttribute(string? value)
+    {
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.Bindable),
+            value);
+    }
+
+    public static string GenerateDesignerSerializationVisibilityAttribute(string? value)
     {
         if (value == null)
         {
             return " ";
         }
 
-        return $"        [global::System.CLSCompliant({value})]";
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.DesignerSerializationVisibility),
+            $"global::System.ComponentModel.{value}");
+    }
+
+    public static string GenerateCLSCompliantAttribute(string? value)
+{
+        return GenerateAttribute("System.CLSCompliant", value);
     }
 
     public static string GenerateLocalizabilityAttribute(string? value, Platform platform)
@@ -394,7 +435,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $"        [global::System.Windows.Localizability(global::System.Windows.LocalizationCategory.{value})]";
+        return GenerateAttribute(
+            "System.Windows.Localizability",
+            $"global::System.Windows.LocalizationCategory.{value}");
     }
     
     public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
@@ -404,7 +447,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $"        [global::System.Windows.AttachedPropertyBrowsableForType(typeof({GenerateBrowsableForType(@class, property)}))]";
+        return GenerateAttribute(
+            "System.Windows.AttachedPropertyBrowsableForType",
+            $"typeof({GenerateBrowsableForType(@class, property)})");
     }
 
     public static string GenerateOptions(DependencyPropertyData property)

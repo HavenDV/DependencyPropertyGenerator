@@ -227,6 +227,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
                     var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
                     var typeConverter = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.TypeConverter))?.Value?.ToString();
+                    var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Bindable));
+                    var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DesignerSerializationVisibility));
                     var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
                     var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?.Replace("Localizability.", string.Empty);
 
@@ -257,6 +259,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Description: description,
                         Category: category,
                         TypeConverter: typeConverter,
+                        Bindable: bindable,
+                        DesignerSerializationVisibility: designerSerializationVisibility,
                         CLSCompliant: clsCompliant,
                         Localizability: localizability,
                         BrowsableForType: browsableForType,
@@ -337,7 +341,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static string? GetPropertyFromAttributeSyntax(AttributeSyntax syntax, string name)
     {
         return syntax.ArgumentList?.Arguments
-            .FirstOrDefault(pair => pair.NameEquals?.ToFullString().StartsWith(name) == true)?
+            .FirstOrDefault(syntax =>
+            {
+                var nameEquals = syntax.NameEquals?.ToFullString()?.Trim();
+                
+                return nameEquals?.StartsWith(name) == true;
+            })?
             .Expression
             .ToFullString();
     }

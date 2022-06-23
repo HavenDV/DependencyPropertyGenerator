@@ -55,6 +55,18 @@ public sealed class DependencyPropertyAttribute : Attribute
     public Type? TypeConverter { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Bindable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+
+    /// <summary>
     /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -200,6 +212,18 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public Type? TypeConverter { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Bindable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
 
     /// <summary>
     /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
