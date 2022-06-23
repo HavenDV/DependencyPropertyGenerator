@@ -1,10 +1,11 @@
 ﻿namespace H.Generators.SnapshotTests;
 
 [TestClass]
-public class DependencyPropertyGeneratorSnapshotTests : VerifyBase
+public class Tests : VerifyBase
 {
-    [TestMethod]
-    public Task GeneratesCorrectly()
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    public Task GeneratesCorrectly(Platform platform)
     {
         return this.CheckSourceAsync(@"
 using DependencyPropertyGenerator;
@@ -31,7 +32,7 @@ public static partial class TreeViewExtensions
     static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
-}");
+}", platform);
     }
 
     [TestMethod]
@@ -61,7 +62,7 @@ public partial class MainWindow
     partial void OnIsSpinning2Changed(bool oldValue, bool newValue)
     {
     }
-}");
+}", Platform.WPF);
     }
 
     [TestMethod]
@@ -87,7 +88,7 @@ public static partial class TreeViewExtensions
     static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
     {
     }
-}");
+}", Platform.WPF);
     }
 
     [TestMethod]
@@ -104,7 +105,7 @@ namespace H.Generators.IntegrationTests;
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
 public partial class MainWindow : Window
 {
-}");
+}", Platform.WPF);
     }
 
     [TestMethod]
@@ -121,7 +122,7 @@ namespace H.Generators.IntegrationTests;
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
 public partial class MainWindow : Window
 {
-}");
+}", Platform.WPF);
     }
 
     [TestMethod]
@@ -147,6 +148,6 @@ namespace H.Generators.IntegrationTests;
     Localizability = Localizability.Text)]
 public partial class MainWindow : Window
 {
-}");
+}", Platform.WPF);
     }
 }
