@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows10.0.17763.0</TargetFrameworks>
+    <UseWinUI>true</UseWinUI>
+    <NoWarn>$(NoWarn);CS3021</NoWarn>
+  </PropertyGroup>
+
+  <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
+
+    <PropertyGroup>
+      <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
+    </PropertyGroup>
+
+  </Target>
+  
+  <ItemGroup>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants" />
+    <CompilerVisibleProperty Include="UseWPF" />
+    <CompilerVisibleProperty Include="UseWinUI" />
+  </ItemGroup>
+
+  <ItemGroup Label="Base packages">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="FluentAssertions" Version="6.7.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="GlobalUsings">
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="FluentAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

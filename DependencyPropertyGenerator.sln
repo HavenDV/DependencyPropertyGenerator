@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyPropertyGenerator.Core", "src\libs\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj", "{346F9ABA-DEA6-41F2-803F-51501424B2DE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyPropertyGenerator.IntegrationTests.WinUI", "src\tests\DependencyPropertyGenerator.IntegrationTests.WinUI\DependencyPropertyGenerator.IntegrationTests.WinUI.csproj", "{15B136C4-50C0-4018-8FC8-5C26FF6D585C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{346F9ABA-DEA6-41F2-803F-51501424B2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{346F9ABA-DEA6-41F2-803F-51501424B2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{346F9ABA-DEA6-41F2-803F-51501424B2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B136C4-50C0-4018-8FC8-5C26FF6D585C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B136C4-50C0-4018-8FC8-5C26FF6D585C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B136C4-50C0-4018-8FC8-5C26FF6D585C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B136C4-50C0-4018-8FC8-5C26FF6D585C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{1FE5FA56-ADBE-4FDC-8F04-0461ECB4A695} = {D072B855-2517-4D9E-91E6-00640704B30C}
 		{90CD41B6-94F4-48CE-A1A8-ABFAFF1B6079} = {D072B855-2517-4D9E-91E6-00640704B30C}
 		{346F9ABA-DEA6-41F2-803F-51501424B2DE} = {13016EFF-BA69-4819-99BB-9873F598D0EA}
+		{15B136C4-50C0-4018-8FC8-5C26FF6D585C} = {D072B855-2517-4D9E-91E6-00640704B30C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A795FDA-EBB6-4A3E-9387-AEB372F1E670}
