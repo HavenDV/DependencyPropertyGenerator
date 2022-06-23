@@ -73,8 +73,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
         SourceProductionContext context)
     {
-        var debuggerBreak = options.GetGlobalOption("DebuggerBreak", prefix: Name);
-        if (debuggerBreak != null)
+        if (!options.IsDesignTime() &&
+            options.GetGlobalOption("DebuggerBreak", prefix: Name) != null)
         {
             Debugger.Launch();
         }
