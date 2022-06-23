@@ -8,5 +8,6 @@ jobs:
     with:
       os: windows-latest
       generate-build-number: false
+      conventional-commits-publish-conditions: false
     secrets:
       nuget-key: ${{ secrets.NUGET_KEY }}
