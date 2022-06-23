@@ -178,4 +178,32 @@ public partial class MyControl : UserControl
 {
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesCorrectlyWithOtherAttributes(Platform platform)
+    {
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
+using DependencyPropertyGenerator;
+using System;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+
+[CLSCompliant(false)]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<bool>(""IsSpinning5"")]
+public partial class MyControl : UserControl
+{   
+    partial void OnIsSpinning5Changed(bool oldValue, bool newValue)
+    {
+    }
+}", platform);
+    }
 }

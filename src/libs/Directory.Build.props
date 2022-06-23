@@ -45,7 +45,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedAllSources>true</EmbedAllSources>
     <DebugType>embedded</DebugType>
-    <Optimize>false</Optimize>
+    <!--<Optimize>false</Optimize>-->
   </PropertyGroup>
 
   <ItemGroup Label="Source Link">

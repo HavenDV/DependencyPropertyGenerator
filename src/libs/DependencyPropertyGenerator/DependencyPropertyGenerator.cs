@@ -171,15 +171,18 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
             var routedEvents = new List<RoutedEventData>();
-            foreach (var (attributeSyntax, attribute) in group
+            var attributes = @classSymbol.GetAttributes()
+                .Where(static attribute => attribute.ConstructorArguments.ElementAtOrDefault(0).Value is string)
+                .ToDictionary(static attribute => attribute.ConstructorArguments[0].Value as string ?? string.Empty);
+            foreach (var attributeSyntax in group
                 .SelectMany(static list => list.AttributeLists)
-                .SelectMany(static list => list.Attributes)
-                .Zip(classSymbol.GetAttributes(), static (a, b) => (a, b)))
+                .SelectMany(static list => list.Attributes))
             {
+                var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
+                var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(RoutedEventAttribute))
                 {
-                    var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                     var strategy = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
@@ -207,7 +210,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
                 else
                 {
-                    var name = attribute.ConstructorArguments[0].Value as string ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
                         attribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ??
