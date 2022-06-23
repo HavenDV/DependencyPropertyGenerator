@@ -202,7 +202,7 @@ namespace {@class.Namespace}
     {
         var parameterName = (@class.Platform, isAttached) switch
         {
-            (Platform.WPF, true) or (Platform.WinUI, true) => "defaultMetadata",
+            (Platform.WPF, true) or (Platform.UWP, true) or (Platform.WinUI, true) => "defaultMetadata",
             _ => "typeMetadata",
         };
         switch (@class.Platform)
