@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -72,6 +73,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
         SourceProductionContext context)
     {
+        var debuggerBreak = options.GetGlobalOption("DebuggerBreak", prefix: Name);
+        if (debuggerBreak != null)
+        {
+            Debugger.Launch();
+        }
+        
         if (classSyntaxes.IsDefaultOrEmpty)
         {
             return;

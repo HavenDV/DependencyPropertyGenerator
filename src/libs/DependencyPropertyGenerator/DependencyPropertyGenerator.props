@@ -1,6 +1,7 @@
 ﻿<Project>
 
   <ItemGroup>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DebuggerBreak"/>
     <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
