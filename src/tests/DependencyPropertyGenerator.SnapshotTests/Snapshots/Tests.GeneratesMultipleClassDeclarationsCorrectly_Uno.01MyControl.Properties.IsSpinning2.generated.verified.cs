@@ -1,4 +1,4 @@
-﻿//HintName: MyControl_IsSpinning2.generated.cs
+﻿//HintName: MyControl.Properties.IsSpinning2.generated.cs
 
 #nullable enable
 
@@ -9,12 +9,12 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        public static readonly global::Microsoft.UI.Xaml.DependencyProperty IsSpinning2Property =
-            global::Microsoft.UI.Xaml.DependencyProperty.Register(
+        public static readonly global::Windows.UI.Xaml.DependencyProperty IsSpinning2Property =
+            global::Windows.UI.Xaml.DependencyProperty.Register(
                 name: "IsSpinning2",
                 propertyType: typeof(bool),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
+                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(bool),
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning2Changed(

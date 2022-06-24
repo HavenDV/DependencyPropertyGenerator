@@ -1,4 +1,4 @@
-﻿//HintName: TreeViewExtensions_SelectedItem.generated.cs
+﻿//HintName: TreeViewExtensions.AttachedProperties.SelectedItem.generated.cs
 
 #nullable enable
 

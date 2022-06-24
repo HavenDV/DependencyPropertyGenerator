@@ -1,4 +1,4 @@
-﻿//HintName: TreeViewExtensions_Mode.generated.cs
+﻿//HintName: TreeViewExtensions.AttachedProperties.Mode.generated.cs
 
 #nullable enable
 

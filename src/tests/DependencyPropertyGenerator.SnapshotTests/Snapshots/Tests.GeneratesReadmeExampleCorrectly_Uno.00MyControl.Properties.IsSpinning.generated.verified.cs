@@ -1,4 +1,4 @@
-﻿//HintName: MyControl_IsSpinning.generated.cs
+﻿//HintName: MyControl.Properties.IsSpinning.generated.cs
 
 #nullable enable
 

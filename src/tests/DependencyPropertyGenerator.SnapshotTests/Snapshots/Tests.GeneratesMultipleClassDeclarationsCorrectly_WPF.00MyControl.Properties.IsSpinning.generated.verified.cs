@@ -1,4 +1,4 @@
-﻿//HintName: MyControl.Properties.IsSpinning5.generated.cs
+﻿//HintName: MyControl.Properties.IsSpinning.generated.cs
 
 #nullable enable
 
@@ -9,28 +9,28 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty IsSpinning5Property =
+        public static readonly global::System.Windows.DependencyProperty IsSpinningProperty =
             global::System.Windows.DependencyProperty.Register(
-                name: "IsSpinning5",
+                name: "IsSpinning",
                 propertyType: typeof(bool),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
                             (bool)args.NewValue)));
 
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        public bool IsSpinning5
+        public bool IsSpinning
         {
-            get => (bool)GetValue(IsSpinning5Property);
-            set => SetValue(IsSpinning5Property, value);
+            get => (bool)GetValue(IsSpinningProperty);
+            set => SetValue(IsSpinningProperty, value);
         }
 
-        partial void OnIsSpinning5Changed(bool oldValue, bool newValue);
+        partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }

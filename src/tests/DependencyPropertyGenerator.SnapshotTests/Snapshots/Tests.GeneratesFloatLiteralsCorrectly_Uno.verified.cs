@@ -1,4 +1,4 @@
-﻿//HintName: MyControl_FloatProperty.generated.cs
+﻿//HintName: MyControl.Properties.FloatProperty.generated.cs
 
 #nullable enable
 

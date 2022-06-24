@@ -110,13 +110,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 foreach(var property in @class.DependencyProperties)
                 {
                     context.AddTextSource(
-                        hintName: $"{@class.Name}_{property.Name}.generated.cs",
+                        hintName: $"{@class.Name}.Properties.{property.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateDependencyProperty(@class, property));
                 }
                 foreach (var property in @class.AttachedDependencyProperties)
                 {
                     context.AddTextSource(
-                        hintName: $"{@class.Name}_{property.Name}.generated.cs",
+                        hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
                 }
                 if (platform == Platform.WPF)
@@ -124,13 +124,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
                         context.AddTextSource(
-                            hintName: $"{@class.Name}_{@event.Name}.generated.cs",
+                            hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                     foreach (var @event in @class.RoutedEvents.Where(static @event => @event.IsAttached))
                     {
                         context.AddTextSource(
-                            hintName: $"{@class.Name}_{@event.Name}.generated.cs",
+                            hintName: $"{@class.Name}.AttachedEvents.{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
                 }
