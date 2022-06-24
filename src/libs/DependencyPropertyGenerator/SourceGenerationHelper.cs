@@ -25,6 +25,7 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateBindableAttribute(property.Bindable)}
+{GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
@@ -85,6 +86,7 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateBindableAttribute(property.Bindable)}
+{GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
@@ -100,6 +102,7 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateBindableAttribute(property.Bindable)}
+{GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateBrowsableForTypeAttribute(property)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
@@ -651,6 +654,13 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
     {
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Bindable),
+            value);
+    }
+
+    public static string GenerateBrowsableAttribute(string? value)
+    {
+        return GenerateComponentModelAttribute(
+            nameof(DependencyPropertyData.Browsable),
             value);
     }
 

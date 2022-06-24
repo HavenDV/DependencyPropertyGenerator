@@ -250,6 +250,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
                     var typeConverter = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.TypeConverter))?.Value?.ToString();
                     var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Bindable));
+                    var browsable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Browsable));
                     var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DesignerSerializationVisibility));
                     var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
                     var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?
@@ -295,6 +296,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Category: category,
                         TypeConverter: typeConverter,
                         Bindable: bindable,
+                        Browsable: browsable,
                         DesignerSerializationVisibility: designerSerializationVisibility,
                         CLSCompliant: clsCompliant,
                         Localizability: localizability,

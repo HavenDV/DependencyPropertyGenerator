@@ -68,6 +68,12 @@ public sealed class DependencyPropertyAttribute : Attribute
     public bool Bindable { get; set; }
 
     /// <summary>
+    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Browsable { get; set; }
+
+    /// <summary>
     /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -256,6 +262,12 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Bindable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Browsable { get; set; }
 
     /// <summary>
     /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
