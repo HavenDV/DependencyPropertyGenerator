@@ -208,4 +208,23 @@ public partial class MyControl : UserControl
     }
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesFloatLiteralsCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
+using DependencyPropertyGenerator;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+
+[DependencyProperty<float>(""FloatProperty"", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}", platform);
+    }
 }

@@ -55,3 +55,33 @@ public partial class MyControl : UserControl
 public partial class MyControl : UserControl
 {
 }
+
+[DependencyProperty<float>("FloatProperty", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<double>("DoubleProperty", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<decimal>("DecimalProperty", DefaultValueExpression = "42")]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<uint>("UnsignedIntProperty", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<long>("LongProperty", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}
+
+[DependencyProperty<ulong>("UnsignedLongProperty", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}

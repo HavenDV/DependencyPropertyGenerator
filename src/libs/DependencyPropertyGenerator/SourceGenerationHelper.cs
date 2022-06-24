@@ -381,15 +381,15 @@ namespace {@class.Namespace}
 
         return GenerateTypeByPlatform(@class.Platform, "DependencyObject");
     }
-
+    
     public static string GenerateDefaultValue(DependencyPropertyData property)
     {
+        var type = GenerateType(property.Type, property.IsSpecialType);
         if (property.IsSpecialType && property.DefaultValueDocumentation != null)
         {
-            return property.DefaultValueDocumentation;
+            return $"({type}){property.DefaultValueDocumentation}";
         }
-
-        var type = GenerateType(property.Type, property.IsSpecialType);
+        
         return property.DefaultValue != null 
             ? $"({type}){property.DefaultValue}"
             : $"default({type})";
