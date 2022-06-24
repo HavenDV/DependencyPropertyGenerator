@@ -60,7 +60,10 @@ namespace H.Generators.IntegrationTests
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue)));
+                            (bool)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Description<br/>
@@ -102,7 +105,10 @@ namespace H.Generators.IntegrationTests
                         OnSelectedItemChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue)));
+                            (object?)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Default value: default(object)

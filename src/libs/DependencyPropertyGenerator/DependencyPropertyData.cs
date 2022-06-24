@@ -29,4 +29,8 @@ public readonly record struct DependencyPropertyData(
     bool NotDataBindable,
     bool BindsTwoWayByDefault,
     bool Journal,
-    bool SubPropertiesDoNotAffectRender);
+    bool SubPropertiesDoNotAffectRender,
+    bool IsAnimationProhibited,
+    string? DefaultUpdateSourceTrigger,
+    bool Coerce,
+    bool Validate);

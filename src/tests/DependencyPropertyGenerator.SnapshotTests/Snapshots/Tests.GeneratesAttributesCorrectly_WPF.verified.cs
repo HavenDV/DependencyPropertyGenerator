@@ -21,7 +21,10 @@ namespace H.Generators.IntegrationTests
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
                             (string?)args.OldValue,
-                            (string?)args.NewValue)));
+                            (string?)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Description<br/>

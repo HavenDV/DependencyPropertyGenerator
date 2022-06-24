@@ -5,7 +5,7 @@ namespace H.Generators.SnapshotTests;
 [TestClass]
 public class Tests : VerifyBase
 {
-    private static string GetUsings(Platform platform, params string[] values)
+    private static string GetHeader(Platform platform, params string[] values)
     {
         var prefix = platform switch
         {
@@ -14,10 +14,19 @@ public class Tests : VerifyBase
             Platform.Avalonia => @"Avalonia",
             _ => @"System.Windows",
         };
-        
-        return string.Join(
+        var usings = string.Join(
             Environment.NewLine,
-            values.Select(value => $"using {prefix}.{value};"));
+            values.Select(value => value.StartsWith("System")
+                ? $"using {value};"
+                : $"using {prefix}.{value};"));
+
+        return @$"{usings}
+using DependencyPropertyGenerator;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+";
     }
 
     [DataTestMethod]
@@ -29,13 +38,7 @@ public class Tests : VerifyBase
     public Task GeneratesReadmeExampleCorrectly(Platform platform)
     {
         
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
 public partial class MyControl : UserControl
 {
@@ -61,13 +64,7 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesMultipleClassDeclarationsCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"")]
 public partial class MyControl : UserControl
 {
@@ -94,13 +91,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task GeneratesEnumCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 public enum Mode
 {
     Mode1,
@@ -122,13 +113,7 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesRoutedEventCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
 public partial class MyControl : UserControl
 {
@@ -141,13 +126,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesAttachedRoutedEventCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
 public partial class MyControl : UserControl
 {
@@ -160,14 +139,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesAttributesCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-using System.ComponentModel;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls", "System.ComponentModel") + @"
 [DependencyProperty<string>(""AttributedProperty"",
     Category = ""Category"",
     Description = ""Description"",
@@ -187,14 +159,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesCorrectlyWithOtherAttributes(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-using System;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls", "System") + @"
 [CLSCompliant(false)]
 public partial class MyControl : UserControl
 {
@@ -215,14 +180,43 @@ public partial class MyControl : UserControl
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesFloatLiteralsCorrectly(Platform platform)
     {
-        return this.CheckSourceAsync(GetUsings(platform, "Controls") + @"
-using DependencyPropertyGenerator;
-
-#nullable enable
-
-namespace H.Generators.IntegrationTests;
-
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<float>(""FloatProperty"", DefaultValue = 42)]
+public partial class MyControl : UserControl
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesValidateAndCoerceCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<string>(""NotNullStringProperty"", DefaultValue = """", Validate = true, Coerce = true)]
+public partial class MyControl : UserControl
+{
+    private partial string? CoerceNotNullStringProperty(string? value)
+    {
+        return value ?? string.Empty;
+    }
+
+    private static partial bool IsNotNullStringPropertyValid(string? value)
+    {
+        return value != null;
+    }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesDefaultUpdateSourceTriggerCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<bool>(""ExplicitUpdateSourceTriggerProperty"", DefaultUpdateSourceTrigger = SourceTrigger.Explicit)]
 public partial class MyControl : UserControl
 {
 }", platform);

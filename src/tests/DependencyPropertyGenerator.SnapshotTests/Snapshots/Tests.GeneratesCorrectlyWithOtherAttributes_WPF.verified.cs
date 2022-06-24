@@ -20,7 +20,10 @@ namespace H.Generators.IntegrationTests
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
                             (bool)args.OldValue,
-                            (bool)args.NewValue)));
+                            (bool)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Default value: default(bool)

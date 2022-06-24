@@ -85,3 +85,22 @@ public partial class MyControl : UserControl
 public partial class MyControl : UserControl
 {
 }
+
+[DependencyProperty<string>("NotNullStringProperty", DefaultValue = "", Validate = true, Coerce = true)]
+public partial class MyControl : UserControl
+{
+    private partial string? CoerceNotNullStringProperty(string? value)
+    {
+        return value ?? string.Empty;
+    }
+
+    private static partial bool IsNotNullStringPropertyValid(string? value)
+    {
+        return value != null;
+    }
+}
+
+[DependencyProperty<bool>("ExplicitUpdateSourceTriggerProperty", DefaultUpdateSourceTrigger = SourceTrigger.Explicit)]
+public partial class MyControl : UserControl
+{
+}

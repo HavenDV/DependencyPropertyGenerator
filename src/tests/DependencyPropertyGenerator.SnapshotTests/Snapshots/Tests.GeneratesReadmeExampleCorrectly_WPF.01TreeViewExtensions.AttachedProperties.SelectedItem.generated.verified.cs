@@ -21,7 +21,10 @@ namespace H.Generators.IntegrationTests
                         OnSelectedItemChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue)));
+                            (object?)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Default value: default(object)

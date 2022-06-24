@@ -20,7 +20,10 @@ namespace H.Generators.IntegrationTests
                     propertyChangedCallback: static (sender, args) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged(
                             (float)args.OldValue,
-                            (float)args.NewValue)));
+                            (float)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Default value: 42

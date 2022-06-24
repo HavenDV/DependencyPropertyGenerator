@@ -158,6 +158,30 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public bool SubPropertiesDoNotAffectRender { get; set; }
 
     /// <summary>
+    /// WPF: true to prevent the property system from animating the property that this metadata
+    /// is applied to. Such properties will raise a run-time exception originating from
+    /// the property system if animations of them are attempted. The default is false.
+    /// </summary>
+    public bool IsAnimationProhibited { get; set; }
+
+    /// <summary>
+    /// WPF: The System.Windows.Data.UpdateSourceTrigger to use when bindings for this property
+    /// are applied that have their System.Windows.Data.UpdateSourceTrigger set to 
+    /// System.Windows.Data.UpdateSourceTrigger.Default.
+    /// </summary>
+    public SourceTrigger DefaultUpdateSourceTrigger { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for coerceValueCallback will be created.
+    /// </summary>
+    public bool Coerce { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for validateValueCallback will be created.
+    /// </summary>
+    public bool Validate { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
@@ -329,6 +353,30 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public bool SubPropertiesDoNotAffectRender { get; set; }
 
     /// <summary>
+    /// WPF: true to prevent the property system from animating the property that this metadata
+    /// is applied to. Such properties will raise a run-time exception originating from
+    /// the property system if animations of them are attempted. The default is false.
+    /// </summary>
+    public bool IsAnimationProhibited { get; set; }
+
+    /// <summary>
+    /// WPF: The System.Windows.Data.UpdateSourceTrigger to use when bindings for this property
+    /// are applied that have their System.Windows.Data.UpdateSourceTrigger set to 
+    /// System.Windows.Data.UpdateSourceTrigger.Default.
+    /// </summary>
+    public SourceTrigger DefaultUpdateSourceTrigger { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for coerceValueCallback will be created.
+    /// </summary>
+    public bool Coerce { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for validateValueCallback will be created.
+    /// </summary>
+    public bool Validate { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
@@ -497,6 +545,30 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// WPF: The subproperties on the value of this dependency property do not affect any aspect of rendering.
     /// </summary>
     public bool SubPropertiesDoNotAffectRender { get; set; }
+
+    /// <summary>
+    /// WPF: true to prevent the property system from animating the property that this metadata
+    /// is applied to. Such properties will raise a run-time exception originating from
+    /// the property system if animations of them are attempted. The default is false.
+    /// </summary>
+    public bool IsAnimationProhibited { get; set; }
+
+    /// <summary>
+    /// WPF: The System.Windows.Data.UpdateSourceTrigger to use when bindings for this property
+    /// are applied that have their System.Windows.Data.UpdateSourceTrigger set to 
+    /// System.Windows.Data.UpdateSourceTrigger.Default.
+    /// </summary>
+    public SourceTrigger DefaultUpdateSourceTrigger { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for coerceValueCallback will be created.
+    /// </summary>
+    public bool Coerce { get; set; }
+
+    /// <summary>
+    /// WPF: partial method for validateValueCallback will be created.
+    /// </summary>
+    public bool Validate { get; set; }
 
     /// <summary>
     /// 

@@ -21,7 +21,10 @@ namespace H.Generators.IntegrationTests
                         OnModeChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (global::H.Generators.IntegrationTests.Mode)args.OldValue,
-                            (global::H.Generators.IntegrationTests.Mode)args.NewValue)));
+                            (global::H.Generators.IntegrationTests.Mode)args.NewValue),
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
 
         /// <summary>
         /// Default value: Mode2

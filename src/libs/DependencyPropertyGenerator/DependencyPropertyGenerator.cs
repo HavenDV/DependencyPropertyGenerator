@@ -250,7 +250,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Bindable));
                     var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DesignerSerializationVisibility));
                     var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
-                    var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?.Replace("Localizability.", string.Empty);
+                    var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?
+                        .Replace("global::DependencyPropertyGenerator.Localizability.", string.Empty)
+                        .Replace("DependencyPropertyGenerator.Localizability.", string.Empty)
+                        .Replace("Localizability.", string.Empty);
 
                     var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.XmlDocumentation))?.Value?.ToString();
                     var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, "PropertyXmlDocumentation")?.Value?.ToString();
@@ -268,6 +271,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.BindsTwoWayByDefault)) ?? bool.FalseString;
                     var journal = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Journal)) ?? bool.FalseString;
                     var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.SubPropertiesDoNotAffectRender)) ?? bool.FalseString;
+                    var isAnimationProhibited = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsAnimationProhibited)) ?? bool.FalseString;
+                    var defaultUpdateSourceTrigger = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultUpdateSourceTrigger))?
+                        .Replace("global::DependencyPropertyGenerator.SourceTrigger.", string.Empty)
+                        .Replace("DependencyPropertyGenerator.SourceTrigger.", string.Empty)
+                        .Replace("SourceTrigger.", string.Empty);
+                    var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Coerce)) ?? bool.FalseString;
+                    var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Validate)) ?? bool.FalseString;
 
                     var value = new DependencyPropertyData(
                         Name: name,
@@ -298,7 +308,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         NotDataBindable: bool.Parse(notDataBindable),
                         BindsTwoWayByDefault: bool.Parse(bindsTwoWayByDefault),
                         Journal: bool.Parse(journal),
-                        SubPropertiesDoNotAffectRender: bool.Parse(subPropertiesDoNotAffectRender));
+                        SubPropertiesDoNotAffectRender: bool.Parse(subPropertiesDoNotAffectRender),
+                        IsAnimationProhibited: bool.Parse(isAnimationProhibited),
+                        DefaultUpdateSourceTrigger: defaultUpdateSourceTrigger,
+                        Coerce: bool.Parse(coerce),
+                        Validate: bool.Parse(validate));
 
                     if (attributeClass.StartsWith(DependencyPropertyAttribute))
                     {

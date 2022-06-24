@@ -1,4 +1,4 @@
-﻿//HintName: MyControl.Properties.IsSpinning2.generated.cs
+﻿//HintName: MyControl.Properties.ExplicitUpdateSourceTriggerProperty.generated.cs
 
 #nullable enable
 
@@ -9,31 +9,32 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty IsSpinning2Property =
+        public static readonly global::System.Windows.DependencyProperty ExplicitUpdateSourceTriggerPropertyProperty =
             global::System.Windows.DependencyProperty.Register(
-                name: "IsSpinning2",
+                name: "ExplicitUpdateSourceTriggerProperty",
                 propertyType: typeof(bool),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning2Changed(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
                             (bool)args.OldValue,
                             (bool)args.NewValue),
                     coerceValueCallback: null,
-                    isAnimationProhibited: false),
+                    isAnimationProhibited: false,
+                    defaultUpdateSourceTrigger: global::System.Windows.Data.UpdateSourceTrigger.Explicit),
                 validateValueCallback: null);
 
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        public bool IsSpinning2
+        public bool ExplicitUpdateSourceTriggerProperty
         {
-            get => (bool)GetValue(IsSpinning2Property);
-            set => SetValue(IsSpinning2Property, value);
+            get => (bool)GetValue(ExplicitUpdateSourceTriggerPropertyProperty);
+            set => SetValue(ExplicitUpdateSourceTriggerPropertyProperty, value);
         }
 
-        partial void OnIsSpinning2Changed(bool oldValue, bool newValue);
+        partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool oldValue, bool newValue);
     }
 }
