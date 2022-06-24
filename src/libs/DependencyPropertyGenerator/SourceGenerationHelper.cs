@@ -15,10 +15,11 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
-        public static readonly {GenerateDependencyPropertyType(@class)} {property.Name}Property =
-            {GenerateDependencyPropertyType(@class)}.Register(
+        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(property)} {GenerateDependencyPropertyName(property)} =
+            {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
                 {GenerateRegisterMethodArguments(@class, property)});
 
+{GenerateAdditionalPropertyForReadOnlyProperties(property)}
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
@@ -30,11 +31,11 @@ namespace {@class.Namespace}
         public {GenerateType(property)} {property.Name}
         {{
             get => ({GenerateType(property)})GetValue({property.Name}Property);
-            set => SetValue({property.Name}Property, value);
+            {GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);
         }}
 
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-{GenerateCoercePartialMethod(property, false)}
+{GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
@@ -55,7 +56,7 @@ namespace {@class.Namespace}
         {{
 {properties.Select(property => @$"
             {property.Name}Property.Changed.Subscribe(static x => On{property.Name}Changed(
-                ({GenerateBrowsableForType(@class, property)})x.Sender,
+                ({GenerateBrowsableForType(property)})x.Sender,
                 ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                 ({GenerateType(property)})x.NewValue.GetValueOrDefault()));
 ").Inject()}
@@ -74,10 +75,11 @@ namespace {@class.Namespace}
     public{GenerateModifiers(@class)} partial class {@class.Name}{GenerateBaseType(@class)}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
-        public static readonly {GenerateAttachedPropertyType(@class, property)} {property.Name}Property =
-            {GenerateManagerType(@class)}.{GenerateRegisterAttachedMethod(@class, property)}(
+        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(property)} {GenerateDependencyPropertyName(property)} =
+            {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
                 {GenerateRegisterAttachedMethodArguments(@class, property)});
 
+{GenerateAdditionalPropertyForReadOnlyProperties(property)}
 {GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
@@ -86,11 +88,11 @@ namespace {@class.Namespace}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
-        public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
+        {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Platform)} element, {GenerateType(property)} value)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            element.SetValue({property.Name}Property, value);
+            element.SetValue({GenerateDependencyPropertyName(property)}, value);
         }}
 
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
@@ -99,18 +101,18 @@ namespace {@class.Namespace}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
 {GenerateBindableAttribute(property.Bindable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
-{GenerateBrowsableForTypeAttribute(@class, property)}
+{GenerateBrowsableForTypeAttribute(property)}
 {GenerateCLSCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
-        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
+        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Platform)} element)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(@class, property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
-{GenerateCoercePartialMethod(property, true)}
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
+{GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
@@ -176,7 +178,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
-        public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class.Platform)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -193,7 +195,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
-        public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class.Platform)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -230,13 +232,13 @@ namespace {@class.Namespace}
         return @class.Modifiers;
     }
 
-    public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
+    public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)
     {
-        var senderType = isAttached
-            ? GenerateBrowsableForType(@class, property)
+        var senderType = property.IsAttached
+            ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
 
-        return isAttached
+        return property.IsAttached
             ? $@"static (sender, args) =>
                         On{property.Name}Changed(
                             ({senderType})sender,
@@ -248,18 +250,18 @@ namespace {@class.Namespace}
                             ({GenerateType(property)})args.NewValue)";
     }
 
-    public static string GenerateCoerceValueCallback(ClassData @class, DependencyPropertyData property, bool isAttached)
+    public static string GenerateCoerceValueCallback(ClassData @class, DependencyPropertyData property)
     {
         if (!property.Coerce)
         {
             return "null";
         }
 
-        var senderType = isAttached
-            ? GenerateBrowsableForType(@class, property)
+        var senderType = property.IsAttached
+            ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
 
-        return isAttached
+        return property.IsAttached
             ? $@"static (sender, args) =>
                         Coerce{property.Name}(
                             ({senderType})sender,
@@ -281,9 +283,9 @@ namespace {@class.Namespace}
                         ({GenerateType(property)})value)";
     }
 
-    public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property, bool isAttached)
+    public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property)
     {
-        var parameterName = (@class.Platform, isAttached) switch
+        var parameterName = (@class.Platform, property.IsAttached) switch
         {
             (Platform.WPF, true) or (Platform.UWP, true) or (Platform.WinUI, true) => "defaultMetadata",
             _ => "typeMetadata",
@@ -296,16 +298,16 @@ namespace {@class.Namespace}
                     return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
-                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property, isAttached)},
-                    coerceValueCallback: {GenerateCoerceValueCallback(@class, property, isAttached)},
+                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
+                    coerceValueCallback: {GenerateCoerceValueCallback(@class, property)},
                     isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower()})";
                 }
 
                 return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
-                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property, isAttached)},
-                    coerceValueCallback: {GenerateCoerceValueCallback(@class, property, isAttached)},
+                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
+                    coerceValueCallback: {GenerateCoerceValueCallback(@class, property)},
                     isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower()},
                     defaultUpdateSourceTrigger: global::System.Windows.Data.UpdateSourceTrigger.{property.DefaultUpdateSourceTrigger})";
 
@@ -316,7 +318,7 @@ namespace {@class.Namespace}
                 var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
                 return $@"{parameterName}: new {type}(
                     defaultValue: {GenerateDefaultValue(property)},
-                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property, isAttached)})";
+                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
         }
 
         throw new InvalidOperationException("Platform is not supported.");
@@ -372,16 +374,20 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
     }
 
-    public static string GenerateAttachedPropertyType(ClassData @class, DependencyPropertyData property)
+    public static string GeneratePropertyType(DependencyPropertyData property)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (property.Platform == Platform.Avalonia)
         {
             return GenerateTypeByPlatform(
-                @class.Platform,
+                property.Platform,
                 $"AttachedProperty<{GenerateType(property)}>");
         }
-        
-        return GenerateDependencyPropertyType(@class);
+        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        {
+            return GenerateTypeByPlatform(property.Platform, "DependencyPropertyKey");
+        }
+
+        return GenerateTypeByPlatform(property.Platform, "DependencyProperty");
     }
 
     public static string GenerateManagerType(ClassData @class)
@@ -393,17 +399,25 @@ namespace {@class.Namespace}
                 $"AvaloniaProperty");
         }
 
-        return GenerateDependencyPropertyType(@class);
+        return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
     }
 
-    public static string GenerateRegisterAttachedMethod(ClassData @class, DependencyPropertyData property)
+    public static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (property.IsAttached && property.Platform == Platform.Avalonia)
         {
-            return $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(@class, property)}, {GenerateType(property)}>";
+            return $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>";
+        }
+        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        {
+            return property.IsAttached
+                ? "RegisterAttachedReadOnly"
+                : "RegisterReadOnly";
         }
 
-        return "RegisterAttached";
+        return property.IsAttached
+            ? "RegisterAttached"
+            : "Register";
     }
 
     public static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
@@ -414,7 +428,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
-                {GeneratePropertyMetadata(@class, property, false)},
+                {GeneratePropertyMetadata(@class, property)},
                 validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
@@ -422,7 +436,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
-                {GeneratePropertyMetadata(@class, property, false)}";
+                {GeneratePropertyMetadata(@class, property)}";
     }
 
     public static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
@@ -439,7 +453,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
-                {GeneratePropertyMetadata(@class, property, true)},
+                {GeneratePropertyMetadata(@class, property)},
                 validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
@@ -447,22 +461,27 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
-                {GeneratePropertyMetadata(@class, property, true)}";
+                {GeneratePropertyMetadata(@class, property)}";
     }
 
-    public static string GenerateDependencyPropertyType(ClassData @class)
+    public static string GenerateDependencyPropertyName(DependencyPropertyData property)
     {
-        return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
-    }
-
-    public static string GenerateDependencyObjectType(ClassData @class)
-    {
-        if (@class.Platform == Platform.Avalonia)
+        if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
-            return GenerateTypeByPlatform(@class.Platform, "IAvaloniaObject");
+            return $"{property.Name}PropertyKey";
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "DependencyObject");
+        return $"{property.Name}Property";
+    }
+
+    public static string GenerateDependencyObjectType(Platform platform)
+    {
+        if (platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(platform, "IAvaloniaObject");
+        }
+
+        return GenerateTypeByPlatform(platform, "DependencyObject");
     }
     
     public static string GenerateDefaultValue(DependencyPropertyData property)
@@ -478,9 +497,9 @@ namespace {@class.Namespace}
             : $"default({type})";
     }
 
-    public static string GenerateBrowsableForType(ClassData @class, DependencyPropertyData property)
+    public static string GenerateBrowsableForType(DependencyPropertyData property)
     {
-        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(@class);
+        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Platform);
     }
 
     public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
@@ -525,16 +544,46 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return GenerateXmlDocumentationFrom(value);
     }
 
-    public static string GenerateCoercePartialMethod(DependencyPropertyData property, bool isAttached)
+    public static string GenerateCoercePartialMethod(DependencyPropertyData property)
     {
         if (!property.Coerce)
         {
             return " ";
         }
 
-        return isAttached
+        return property.IsAttached
             ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);"
             : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
+    }
+
+    public static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
+    {
+        if (property.Platform != Platform.WPF ||
+            !property.IsReadOnly)
+        {
+            return " ";
+        }
+
+        return $@"        public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
+            = {GenerateDependencyPropertyName(property)}.DependencyProperty;
+";
+    }
+
+    public static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
+    {
+        return property.IsReadOnly
+            ? "protected "
+            : string.Empty;
+    }
+
+    public static string GeneratePropertyModifier(DependencyPropertyData property)
+    {
+        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        {
+            return "private";
+        }
+
+        return "public";
     }
 
     public static string GenerateValidatePartialMethod(DependencyPropertyData property)
@@ -634,16 +683,16 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"global::System.Windows.LocalizationCategory.{value}");
     }
     
-    public static string GenerateBrowsableForTypeAttribute(ClassData @class, DependencyPropertyData property)
+    public static string GenerateBrowsableForTypeAttribute(DependencyPropertyData property)
     {
-        if (@class.Platform != Platform.WPF)
+        if (property.Platform != Platform.WPF)
         {
             return " ";
         }
 
         return GenerateAttribute(
             "System.Windows.AttachedPropertyBrowsableForType",
-            $"typeof({GenerateBrowsableForType(@class, property)})");
+            $"typeof({GenerateBrowsableForType(property)})");
     }
 
     public static string GenerateOptions(DependencyPropertyData property)

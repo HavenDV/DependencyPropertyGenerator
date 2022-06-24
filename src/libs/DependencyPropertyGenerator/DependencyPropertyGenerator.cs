@@ -243,6 +243,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
                         IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Type) ??
                         false;
+                    var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsReadOnly)) ?? bool.FalseString;
+                    var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttribute);
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
                     var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
@@ -286,6 +288,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsSpecialType: isSpecialType,
                         DefaultValue: defaultValue,
                         DefaultValueDocumentation: defaultValueDocumentation,
+                        IsReadOnly: bool.Parse(isReadOnly),
+                        IsAttached: isAttached,
+                        Platform: platform,
                         Description: description,
                         Category: category,
                         TypeConverter: typeConverter,
@@ -314,13 +319,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Coerce: bool.Parse(coerce),
                         Validate: bool.Parse(validate));
 
-                    if (attributeClass.StartsWith(DependencyPropertyAttribute))
-                    {
-                        dependencyProperties.Add(value);
-                    }
-                    else if (attributeClass.StartsWith(AttachedDependencyPropertyAttribute))
+                    if (isAttached)
                     {
                         attachedDependencyProperties.Add(value);
+                    }
+                    else
+                    {
+                        dependencyProperties.Add(value);
                     }
                 }
             }

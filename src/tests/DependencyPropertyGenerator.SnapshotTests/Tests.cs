@@ -221,4 +221,30 @@ public partial class MyControl : UserControl
 {
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesReadOnlyPropertyCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<bool>(""ReadOnlyProperty"", IsReadOnly = true)]
+public partial class MyControl : UserControl
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    public Task GeneratesAttachedReadOnlyPropertyCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[AttachedDependencyProperty<object, Grid>(""AttachedReadOnlyProperty"", IsReadOnly = true)]
+public static partial class GridExtensions
+{
+}", platform);
+    }
 }

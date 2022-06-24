@@ -104,3 +104,13 @@ public partial class MyControl : UserControl
 public partial class MyControl : UserControl
 {
 }
+
+[DependencyProperty<bool>("ReadOnlyProperty", IsReadOnly = true)]
+public partial class MyControl : UserControl
+{
+}
+
+[AttachedDependencyProperty<object, Grid>("AttachedReadOnlyProperty", IsReadOnly = true)]
+public static partial class GridExtensions
+{
+}

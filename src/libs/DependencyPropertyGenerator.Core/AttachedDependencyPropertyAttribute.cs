@@ -33,6 +33,13 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
+    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
+    /// the property setter will contain the protected modifier. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsReadOnly { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -228,6 +235,13 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
+    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
+    /// the property setter will contain the protected modifier. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsReadOnly { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -420,6 +434,13 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? DefaultValueExpression { get; set; }
+
+    /// <summary>
+    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
+    /// the property setter will contain the protected modifier. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsReadOnly { get; set; }
 
     /// <summary>
     /// Description of this dependency property. <br/>
