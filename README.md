@@ -143,14 +143,24 @@ to use new expressions in properties, a generator provides this capability:
 ```cs
 public readonly record struct Data();
 
-[AttachedDependencyProperty<object, TreeView>(""SelectedItem"", DefaultValueExpression = ""new Data()"")]
+[AttachedDependencyProperty<object, TreeView>("SelectedItem", DefaultValueExpression = "new Data()")]
 ```
 If your type is declared outside the namespace of an attribute declaration, you will need to specify the full name of the type, including the namespace.
 
 ### XML documentation
 If for some reason you need to save xml documentation for your properties, 
 there is an option to specify xml text for both DependencyProperty and getter/setter 
-via XmlDoc/PropertyXmlDoc attribute properties.
+via XmlDocumentation/PropertyXmlDocumentation attribute properties.
+
+### Platform detection
+For some platforms there is no automatic detection. In these cases, the generator needs a little help by adding:
+```xml
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);HAS_UNO</DefineConstants>
+    <DefineConstants>$(DefineConstants);HAS_UNO_WINUI</DefineConstants>
+    <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
+  </PropertyGroup>
+```
 
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
