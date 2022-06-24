@@ -19,6 +19,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void AddTrayLeftMouseDownHandler(global::System.Windows.DependencyObject element, global::System.Windows.RoutedEventHandler handler)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             if (element is global::System.Windows.UIElement uiElement)
             {
                 uiElement.AddHandler(TrayLeftMouseDownEvent, handler);
@@ -33,6 +35,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void RemoveTrayLeftMouseDownHandler(global::System.Windows.DependencyObject element, global::System.Windows.RoutedEventHandler handler)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             if (element is global::System.Windows.UIElement uiElement)
             {
                 uiElement.RemoveHandler(TrayLeftMouseDownEvent, handler);

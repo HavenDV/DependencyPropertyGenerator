@@ -28,6 +28,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             element.SetValue(SelectedItemProperty, value);
         }
 
@@ -37,6 +39,8 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
         public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             return (object?)element.GetValue(SelectedItemProperty);
         }
 

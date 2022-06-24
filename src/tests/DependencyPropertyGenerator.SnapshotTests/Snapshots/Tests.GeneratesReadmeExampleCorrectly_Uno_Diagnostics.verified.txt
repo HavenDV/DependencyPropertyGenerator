@@ -36,7 +36,7 @@
     Title: Type or member is obsolete,
     Severity: Warning,
     WarningLevel: 2,
-    Location: DependencyPropertyGenerator\H.Generators.DependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.SelectedItem.generated.cs: (39,50)-(39,91),
+    Location: DependencyPropertyGenerator\H.Generators.DependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.SelectedItem.generated.cs: (43,50)-(43,91),
     Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
     MessageFormat: '{0}' is obsolete: '{1}',

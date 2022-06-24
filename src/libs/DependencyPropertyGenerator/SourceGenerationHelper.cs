@@ -89,6 +89,8 @@ namespace {@class.Namespace}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static void Set{property.Name}({GenerateDependencyObjectType(@class)} element, {GenerateType(property)} value)
         {{
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             element.SetValue({property.Name}Property, value);
         }}
 
@@ -103,6 +105,8 @@ namespace {@class.Namespace}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class)} element)
         {{
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
 
@@ -173,6 +177,8 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(@event.Description)}
         public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
             {{
                 uiElement.AddHandler({@event.Name}Event, handler);
@@ -188,6 +194,8 @@ namespace {@class.Namespace}
 {GenerateDescriptionAttribute(@event.Description)}
         public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
             {{
                 uiElement.RemoveHandler({@event.Name}Event, handler);

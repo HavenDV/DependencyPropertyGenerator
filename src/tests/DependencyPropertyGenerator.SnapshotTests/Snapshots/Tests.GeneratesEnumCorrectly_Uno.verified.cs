@@ -27,6 +27,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void SetMode(global::Windows.UI.Xaml.DependencyObject element, global::H.Generators.IntegrationTests.Mode value)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             element.SetValue(ModeProperty, value);
         }
 
@@ -35,6 +37,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static global::H.Generators.IntegrationTests.Mode GetMode(global::Windows.UI.Xaml.DependencyObject element)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 

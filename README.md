@@ -11,7 +11,6 @@ Install-Package DependencyPropertyGenerator.Core // Attributes
 ## Usage
 ```cs
 using DependencyPropertyGenerator;
-using System.Windows;
 using System.Windows.Controls;
 
 #nullable enable
@@ -19,7 +18,7 @@ using System.Windows.Controls;
 namespace H.Generators.IntegrationTests;
 
 [DependencyProperty<bool>("IsSpinning", DefaultValue = true, Category = "Category", Description = "Description")]
-public partial class MainWindow : Window
+public partial class MyControl : UserControl
 {
     // Optional
     partial void OnIsSpinningChanged(bool oldValue, bool newValue)
@@ -38,13 +37,13 @@ public static partial class TreeViewExtensions
 ```
 will generate:
 ```cs
-//HintName: MainWindow_DependencyProperties.generated.cs
+//HintName: MyControl.Properties.IsSpinning.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MainWindow
+    public partial class MyControl
     {
         /// <summary>
         /// Description<br/>
@@ -54,12 +53,12 @@ namespace H.Generators.IntegrationTests
             global::System.Windows.DependencyProperty.Register(
                 name: "IsSpinning",
                 propertyType: typeof(bool),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MainWindow),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
-                    defaultValue: true,
+                    defaultValue: (bool)true,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
-                        ((global::H.Generators.IntegrationTests.MainWindow)sender).OnIsSpinningChanged(
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
                             (bool)args.NewValue)));
 
@@ -80,7 +79,7 @@ namespace H.Generators.IntegrationTests
 }
 ```
 ```cs
-//HintName: TreeViewExtensions_AttachedDependencyProperties.generated.cs
+//HintName: TreeViewExtensions.AttachedProperties.SelectedItem.generated.cs
 
 #nullable enable
 
@@ -110,6 +109,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void SetSelectedItem(global::System.Windows.DependencyObject element, object? value)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             element.SetValue(SelectedItemProperty, value);
         }
 
@@ -119,6 +120,8 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
         public static object? GetSelectedItem(global::System.Windows.DependencyObject element)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             return (object?)element.GetValue(SelectedItemProperty);
         }
 

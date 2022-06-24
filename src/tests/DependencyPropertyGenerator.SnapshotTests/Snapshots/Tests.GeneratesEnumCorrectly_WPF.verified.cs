@@ -28,6 +28,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static void SetMode(global::System.Windows.DependencyObject element, global::H.Generators.IntegrationTests.Mode value)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             element.SetValue(ModeProperty, value);
         }
 
@@ -37,6 +39,8 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
         public static global::H.Generators.IntegrationTests.Mode GetMode(global::System.Windows.DependencyObject element)
         {
+            element = element ?? throw new global::System.ArgumentNullException(nameof(element));
+
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 
