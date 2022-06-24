@@ -567,7 +567,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return $@"        public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
+        return $@" 
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+        public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.DependencyProperty;
 ";
     }

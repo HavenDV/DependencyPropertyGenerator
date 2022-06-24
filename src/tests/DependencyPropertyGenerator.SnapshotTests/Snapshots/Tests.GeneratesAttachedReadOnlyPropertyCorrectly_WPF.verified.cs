@@ -26,6 +26,9 @@ namespace H.Generators.IntegrationTests
                     isAnimationProhibited: false),
                 validateValueCallback: null);
 
+        /// <summary>
+        /// Default value: default(object)
+        /// </summary>
         public static readonly global::System.Windows.DependencyProperty AttachedReadOnlyPropertyProperty
             = AttachedReadOnlyPropertyPropertyKey.DependencyProperty;
 
