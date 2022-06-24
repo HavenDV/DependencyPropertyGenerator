@@ -170,7 +170,7 @@ To use generic attributes, you need to set up `LangVersion` in your .csproj:
 There are also non-Generic attributes here.
 
 ## Support
-Priority place for bugs: https://github.com/HavenDV/DependencyPropertyGenerator/issues
-Priority place for ideas and general questions: https://github.com/HavenDV/DependencyPropertyGenerator/discussions
+Priority place for bugs: https://github.com/HavenDV/DependencyPropertyGenerator/issues  
+Priority place for ideas and general questions: https://github.com/HavenDV/DependencyPropertyGenerator/discussions  
 I also have a Discord support channel:  
 https://discord.gg/g8u2t9dKgE
