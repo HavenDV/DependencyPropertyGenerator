@@ -38,6 +38,7 @@ namespace {@class.Namespace}
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
+{GenerateBindEventMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
@@ -117,6 +118,7 @@ namespace {@class.Namespace}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
+{GenerateBindEventMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
@@ -599,6 +601,32 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }
 
         return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
+    }
+
+    public static string GenerateBindEventMethod(DependencyPropertyData property)
+    {
+        if (string.IsNullOrWhiteSpace(property.BindEvent))
+        {
+            return " ";
+        }
+
+        var type = GenerateType(property.Type, property.IsSpecialType);
+
+        return $@"
+        static partial void On{property.Name}Changed(
+            {GenerateBrowsableForType(property)} sender,
+            {GenerateType(property)} oldValue,
+            {GenerateType(property)} newValue)
+        {{
+            if (oldValue is not default({type}))
+            {{
+                sender.{property.BindEvent} -= On{property.Name}Event;
+            }}
+            if (newValue is not default({type}))
+            {{
+                sender.{property.BindEvent} += On{property.Name}Event;
+            }}
+        }}";
     }
 
     public static string GenerateAttribute(string name, string? value)

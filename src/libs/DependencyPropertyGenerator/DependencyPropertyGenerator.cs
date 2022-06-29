@@ -262,6 +262,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, "PropertyXmlDocumentation")?.Value?.ToString();
                     var getterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.GetterXmlDocumentation))?.Value?.ToString();
                     var setterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.SetterXmlDocumentation))?.Value?.ToString();
+                    var bindEvent = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BindEvent))?.Value?.ToString();
 
                     var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsMeasure)) ?? bool.FalseString;
                     var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsArrange)) ?? bool.FalseString;
@@ -305,6 +306,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         XmlDocumentation: xmlDocumentation,
                         GetterXmlDocumentation: getterXmlDocumentation ?? propertyXmlDocumentation,
                         SetterXmlDocumentation: setterXmlDocumentation,
+                        BindEvent: bindEvent,
                         AffectsMeasure: bool.Parse(affectsMeasure),
                         AffectsArrange: bool.Parse(affectsArrange),
                         AffectsParentMeasure: bool.Parse(affectsParentMeasure),

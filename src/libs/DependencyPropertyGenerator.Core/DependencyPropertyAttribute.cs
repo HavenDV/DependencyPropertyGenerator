@@ -104,6 +104,14 @@ public sealed class DependencyPropertyAttribute : Attribute
     public string PropertyXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
+    /// For values other than default(type), will bind/rebind/remove the 
+    /// OnNameEvent(object sender, Args args) handler for the specified event. <br/>
+    /// It is recommended to specify as nameof(UIElement.Drop). <br/>
+    /// Default - string.Empty.
+    /// </summary>
+    public string BindEvent { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -298,6 +306,14 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string PropertyXmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// For values other than default(type), will bind/rebind/remove the 
+    /// OnNameEvent(object sender, Args args) handler for the specified event. <br/>
+    /// It is recommended to specify as nameof(UIElement.Drop). <br/>
+    /// Default - string.Empty.
+    /// </summary>
+    public string BindEvent { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

@@ -114,3 +114,11 @@ public partial class MyControl : UserControl
 public static partial class GridExtensions
 {
 }
+
+[AttachedDependencyProperty<object, Grid>("BindEventProperty", BindEvent = nameof(Grid.MouseWheel))]
+public static partial class GridExtensions
+{
+    private static void OnBindEventPropertyEvent(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    {
+    }
+}

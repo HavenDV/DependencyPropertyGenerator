@@ -160,6 +160,35 @@ For some platforms there is no automatic detection. In these cases, the generato
   </PropertyGroup>
 ```
 
+### Bind event
+The generator can automatically control properties that depend on events:
+```cs
+[AttachedDependencyProperty<object, Grid>("BindEventProperty", BindEvent = nameof(Grid.MouseWheel))]
+public static partial class GridExtensions
+{
+    private static void OnBindEventPropertyEvent(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    {
+    }
+}
+```
+will generate additional code:
+```cs
+static partial void OnBindEventPropertyChanged(
+    global::System.Windows.Controls.Grid sender,
+    object? oldValue,
+    object? newValue)
+{
+    if (oldValue is not default(object))
+    {
+        sender.MouseWheel -= OnBindEventPropertyEvent;
+    }
+    if (newValue is not default(object))
+    {
+        sender.MouseWheel += OnBindEventPropertyEvent;
+    }
+}
+```
+
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
 ```xml

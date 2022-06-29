@@ -247,4 +247,18 @@ public static partial class GridExtensions
 {
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    public Task GeneratesBindEventCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[AttachedDependencyProperty<object, Grid>(""BindEventProperty"", BindEvent = nameof(Grid.MouseWheel))]
+public static partial class GridExtensions
+{
+    private static void OnBindEventPropertyEvent(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    {
+    }
+}", platform);
+    }
 }
