@@ -56,11 +56,11 @@ namespace H.Generators.IntegrationTests
         {
             if (oldValue is not default(object))
             {
-                sender.MouseWheel -= OnBindEventPropertyEvent;
+                sender.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
             }
             if (newValue is not default(object))
             {
-                sender.MouseWheel += OnBindEventPropertyEvent;
+                sender.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
             }
         }
     }

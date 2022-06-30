@@ -23,7 +23,7 @@ public readonly record struct DependencyPropertyData(
     string? XmlDocumentation,
     string? SetterXmlDocumentation,
     string? GetterXmlDocumentation,
-    string? BindEvent,
+    IReadOnlyCollection<string> BindEvents,
     bool AffectsMeasure,
     bool AffectsArrange,
     bool AffectsParentMeasure,

@@ -166,7 +166,7 @@ The generator can automatically control properties that depend on events:
 [AttachedDependencyProperty<object, Grid>("BindEventProperty", BindEvent = nameof(Grid.MouseWheel))]
 public static partial class GridExtensions
 {
-    private static void OnBindEventPropertyEvent(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    private static void OnBindEventPropertyChanged_MouseWheel(object? sender, System.Windows.Input.MouseWheelEventArgs args)
     {
     }
 }
@@ -180,11 +180,11 @@ static partial void OnBindEventPropertyChanged(
 {
     if (oldValue is not default(object))
     {
-        sender.MouseWheel -= OnBindEventPropertyEvent;
+        sender.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
     }
     if (newValue is not default(object))
     {
-        sender.MouseWheel += OnBindEventPropertyEvent;
+        sender.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
     }
 }
 ```

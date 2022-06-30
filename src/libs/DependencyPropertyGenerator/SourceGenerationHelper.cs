@@ -605,28 +605,34 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     public static string GenerateBindEventMethod(DependencyPropertyData property)
     {
-        if (string.IsNullOrWhiteSpace(property.BindEvent))
+        if (!property.BindEvents.Any())
         {
             return " ";
         }
 
         var type = GenerateType(property.Type, property.IsSpecialType);
+        var sender = property.IsAttached ? "sender" : "this";
 
         return $@"
-        static partial void On{property.Name}Changed(
-            {GenerateBrowsableForType(property)} sender,
+        {(property.IsAttached ? "static " : "")}partial void On{property.Name}Changed(
+{(property.IsAttached ? @$" 
+            {GenerateBrowsableForType(property)} sender," : " ")}
             {GenerateType(property)} oldValue,
             {GenerateType(property)} newValue)
         {{
             if (oldValue is not default({type}))
             {{
-                sender.{property.BindEvent} -= On{property.Name}Event;
+{property.BindEvents.Select(@event => $@" 
+                {sender}.{@event} -= On{property.Name}Changed_{@event};
+ ").Inject()}
             }}
             if (newValue is not default({type}))
             {{
-                sender.{property.BindEvent} += On{property.Name}Event;
+{property.BindEvents.Select(@event => $@" 
+                {sender}.{@event} += On{property.Name}Changed_{@event};
+ ").Inject()}
             }}
-        }}";
+        }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
     public static string GenerateAttribute(string name, string? value)

@@ -256,7 +256,26 @@ public static partial class GridExtensions
 [AttachedDependencyProperty<object, Grid>(""BindEventProperty"", BindEvent = nameof(Grid.MouseWheel))]
 public static partial class GridExtensions
 {
-    private static void OnBindEventPropertyEvent(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    private static void OnBindEventPropertyChanged_MouseWheel(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    {
+    }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    public Task GeneratesBindEventsCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<object>(""BindEventsProperty"",
+    BindEvents = new[] { nameof(Grid.MouseEnter), nameof(Grid.MouseLeave) })]
+public partial class MyGrid : Grid
+{
+    private static void OnBindEventsPropertyChanged_MouseEnter(object? sender, System.Windows.Input.MouseEventArgs args)
+    {
+    }
+
+    private static void OnBindEventsPropertyChanged_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs args)
     {
     }
 }", platform);

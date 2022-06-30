@@ -117,11 +117,19 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
-    /// OnNameEvent(object sender, Args args) handler for the specified event. <br/>
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
     /// It is recommended to specify as nameof(UIElement.Drop). <br/>
     /// Default - string.Empty.
     /// </summary>
     public string BindEvent { get; set; } = string.Empty;
+
+    /// <summary>
+    /// For values other than default(type), will bind/rebind/remove the 
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
+    /// It is recommended to specify as nameof(UIElement.Drop). <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string[]? BindEvents { get; set; }
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -333,11 +341,19 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
-    /// OnNameEvent(object sender, Args args) handler for the specified event. <br/>
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
     /// It is recommended to specify as nameof(UIElement.Drop). <br/>
     /// Default - string.Empty.
     /// </summary>
     public string BindEvent { get; set; } = string.Empty;
+
+    /// <summary>
+    /// For values other than default(type), will bind/rebind/remove the 
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
+    /// It is recommended to specify as nameof(UIElement.Drop). <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string[]? BindEvents { get; set; }
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
@@ -548,11 +564,19 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
-    /// OnNameEvent(object sender, Args args) handler for the specified event. <br/>
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
     /// It is recommended to specify as nameof(UIElement.Drop). <br/>
     /// Default - string.Empty.
     /// </summary>
     public string BindEvent { get; set; } = string.Empty;
+
+    /// <summary>
+    /// For values other than default(type), will bind/rebind/remove the 
+    /// On{Name}Changed_{EventName}(object sender, Args args) handler for the specified event. <br/>
+    /// It is recommended to specify as nameof(UIElement.Drop). <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string[]? BindEvents { get; set; }
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
