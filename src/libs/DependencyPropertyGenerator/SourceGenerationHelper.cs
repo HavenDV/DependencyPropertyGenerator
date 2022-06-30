@@ -603,6 +603,28 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
     }
 
+    public static string GenerateOnChangedMethodDeclaration(string name, DependencyPropertyData property)
+    {
+        var modifiers = property.IsAttached ? "static " : string.Empty;
+
+        return $@" 
+        {modifiers}partial void {name}(
+{(property.IsAttached ? @$" 
+            {GenerateBrowsableForType(property)} sender," : " ")}
+            {GenerateType(property)} oldValue,
+            {GenerateType(property)} newValue)".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
+    public static string GenerateOnChangedMethodCall(string name, DependencyPropertyData property)
+    {
+        return $@" 
+            {name}(
+{(property.IsAttached ? @$" 
+                sender," : " ")}
+                oldValue,
+                newValue);".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
     public static string GenerateBindEventMethod(DependencyPropertyData property)
     {
         if (!property.BindEvents.Any())
@@ -612,14 +634,16 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
         var type = GenerateType(property.Type, property.IsSpecialType);
         var sender = property.IsAttached ? "sender" : "this";
+        var modifiers = property.IsAttached ? "static " : string.Empty;
 
         return $@"
-        {(property.IsAttached ? "static " : "")}partial void On{property.Name}Changed(
-{(property.IsAttached ? @$" 
-            {GenerateBrowsableForType(property)} sender," : " ")}
-            {GenerateType(property)} oldValue,
-            {GenerateType(property)} newValue)
+{GenerateOnChangedMethodDeclaration($"On{property.Name}Changed_BeforeBind", property)};
+{GenerateOnChangedMethodDeclaration($"On{property.Name}Changed_AfterBind", property)};
+
+{GenerateOnChangedMethodDeclaration($"On{property.Name}Changed", property)}
         {{
+{GenerateOnChangedMethodCall($"On{property.Name}Changed_BeforeBind", property)}
+
             if (oldValue is not default({type}))
             {{
 {property.BindEvents.Select(@event => $@" 
@@ -632,6 +656,8 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
                 {sender}.{@event} += On{property.Name}Changed_{@event};
  ").Inject()}
             }}
+
+{GenerateOnChangedMethodCall($"On{property.Name}Changed_AfterBind", property)}
         }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 

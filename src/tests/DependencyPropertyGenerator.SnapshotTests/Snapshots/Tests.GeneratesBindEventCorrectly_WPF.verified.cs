@@ -49,11 +49,25 @@ namespace H.Generators.IntegrationTests
 
         static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid sender, object? oldValue, object? newValue);
 
+        static partial void OnBindEventPropertyChanged_BeforeBind(
+            global::System.Windows.Controls.Grid sender,
+            object? oldValue,
+            object? newValue);
+        static partial void OnBindEventPropertyChanged_AfterBind(
+            global::System.Windows.Controls.Grid sender,
+            object? oldValue,
+            object? newValue);
+
         static partial void OnBindEventPropertyChanged(
             global::System.Windows.Controls.Grid sender,
             object? oldValue,
             object? newValue)
         {
+            OnBindEventPropertyChanged_BeforeBind(
+                sender,
+                oldValue,
+                newValue);
+
             if (oldValue is not default(object))
             {
                 sender.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
@@ -62,6 +76,11 @@ namespace H.Generators.IntegrationTests
             {
                 sender.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
             }
+
+            OnBindEventPropertyChanged_AfterBind(
+                sender,
+                oldValue,
+                newValue);
         }
     }
 }

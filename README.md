@@ -173,11 +173,25 @@ public static partial class GridExtensions
 ```
 will generate additional code:
 ```cs
+static partial void OnBindEventPropertyChanged_BeforeBind(
+    global::System.Windows.Controls.Grid sender,
+    object? oldValue,
+    object? newValue);
+static partial void OnBindEventPropertyChanged_AfterBind(
+    global::System.Windows.Controls.Grid sender,
+    object? oldValue,
+    object? newValue);
+
 static partial void OnBindEventPropertyChanged(
     global::System.Windows.Controls.Grid sender,
     object? oldValue,
     object? newValue)
 {
+    OnBindEventPropertyChanged_BeforeBind(
+        sender,
+        oldValue,
+        newValue);
+
     if (oldValue is not default(object))
     {
         sender.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
@@ -186,6 +200,11 @@ static partial void OnBindEventPropertyChanged(
     {
         sender.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
     }
+
+    OnBindEventPropertyChanged_AfterBind(
+        sender,
+        oldValue,
+        newValue);
 }
 ```
 

@@ -36,10 +36,21 @@ namespace H.Generators.IntegrationTests
 
         partial void OnBindEventsPropertyChanged(object? oldValue, object? newValue);
 
+        partial void OnBindEventsPropertyChanged_BeforeBind(
+            object? oldValue,
+            object? newValue);
+        partial void OnBindEventsPropertyChanged_AfterBind(
+            object? oldValue,
+            object? newValue);
+
         partial void OnBindEventsPropertyChanged(
             object? oldValue,
             object? newValue)
         {
+            OnBindEventsPropertyChanged_BeforeBind(
+                oldValue,
+                newValue);
+
             if (oldValue is not default(object))
             {
                 this.MouseEnter -= OnBindEventsPropertyChanged_MouseEnter;
@@ -50,6 +61,10 @@ namespace H.Generators.IntegrationTests
                 this.MouseEnter += OnBindEventsPropertyChanged_MouseEnter;
                 this.MouseLeave += OnBindEventsPropertyChanged_MouseLeave;
             }
+
+            OnBindEventsPropertyChanged_AfterBind(
+                oldValue,
+                newValue);
         }
     }
 }
