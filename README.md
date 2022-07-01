@@ -156,6 +156,8 @@ via XmlDocumentation/PropertyXmlDocumentation attribute properties.
 For some platforms there is no automatic detection. In these cases, the generator needs a little help by adding:
 ```xml
   <PropertyGroup>
+    <DefineConstants>$(DefineConstants);HAS_UNO</DefineConstants>
+    <DefineConstants>$(DefineConstants);HAS_UNO_WINUI</DefineConstants>
     <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
   </PropertyGroup>
 ```
