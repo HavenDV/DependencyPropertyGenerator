@@ -215,7 +215,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         true;
                     var isSpecialType =
                         IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 0)) ??
-                        IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Type) ??
+                        IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol) ??
                         false;
                     var defaultValue =
                         GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
@@ -228,7 +228,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value?.ToString();
                     var isBrowsableForTypeSpecialType =
                         IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
-                        IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Type) ??
+                        IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value as ITypeSymbol) ??
                         false;
                     var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsReadOnly)) ?? bool.FalseString;
                     var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttribute);
@@ -391,7 +391,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     }
 
     private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
-{
+    {
         return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
     }
 
@@ -407,9 +407,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         return syntax.ArgumentList?.Arguments
             .FirstOrDefault(syntax =>
             {
-                var nameEquals = syntax.NameEquals?.ToFullString()?.Trim();
+                var nameEquals = syntax.NameEquals?.ToFullString()?
+                    .Trim('=', ' ', '\t', '\r', '\n');
                 
-                return nameEquals?.StartsWith(name) == true;
+                return nameEquals == name;
             })?
             .Expression
             .ToFullString();

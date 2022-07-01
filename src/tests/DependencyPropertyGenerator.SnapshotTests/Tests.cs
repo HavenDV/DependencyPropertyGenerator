@@ -60,6 +60,22 @@ public static partial class TreeViewExtensions
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    public Task GeneratesNonGenericAttributesCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty(""Text"", typeof(string))]
+public partial class MyControl : UserControl
+{
+}
+
+[AttachedDependencyProperty(""AttachedProperty"", typeof(object), BrowsableForType = typeof(Grid))]
+public static partial class GridExtensions
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesMultipleClassDeclarationsCorrectly(Platform platform)
