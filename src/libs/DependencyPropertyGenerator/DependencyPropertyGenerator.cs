@@ -27,27 +27,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     {
         var syntax = (ClassDeclarationSyntax)context.Node;
 
-        foreach (var attributeListSyntax in syntax.AttributeLists)
-        {
-            foreach (var attributeSyntax in attributeListSyntax.Attributes)
-            {
-                if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
-                {
-                    continue;
-                }
-
-                var attributeContainingTypeSymbol = attributeSymbol.ContainingType;
-                var fullName = attributeContainingTypeSymbol.ToDisplayString();
-                if (fullName.StartsWith(AttachedDependencyPropertyAttribute) ||
-                    fullName.StartsWith(DependencyPropertyAttribute) ||
-                    fullName.StartsWith(RoutedEventAttribute))
-                {
-                    return syntax;
-                }
-            }
-        }
-
-        return null;
+        return syntax
+            .AttributeLists
+            .SelectMany(static list => list.Attributes)
+            .Any(attributeSyntax => IsGeneratorAttribute(attributeSyntax, context.SemanticModel))
+            ? syntax
+            : null;
     }
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -180,11 +165,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var attachedDependencyProperties = new List<DependencyPropertyData>();
             var routedEvents = new List<RoutedEventData>();
             var attributes = @classSymbol.GetAttributes()
+                .Where(IsGeneratorAttribute)
                 .Where(static attribute => attribute.ConstructorArguments.ElementAtOrDefault(0).Value is string)
                 .ToDictionary(static attribute => attribute.ConstructorArguments[0].Value as string ?? string.Empty);
             foreach (var attributeSyntax in group
                 .SelectMany(static list => list.AttributeLists)
-                .SelectMany(static list => list.Attributes))
+                .SelectMany(static list => list.Attributes)
+                .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, semanticModel)))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
                 var attribute = attributes[name];
@@ -354,6 +341,32 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
 
         return values;
+    }
+
+    private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)
+    {
+        if (semanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
+        {
+            return false;
+        }
+
+        var attributeContainingTypeSymbol = attributeSymbol.ContainingType;
+        var fullName = attributeContainingTypeSymbol.ToDisplayString();
+
+        return
+            fullName.StartsWith(AttachedDependencyPropertyAttribute) ||
+            fullName.StartsWith(DependencyPropertyAttribute) ||
+            fullName.StartsWith(RoutedEventAttribute);
+    }
+
+    private static bool IsGeneratorAttribute(AttributeData attributeData)
+{
+        var attributeClass = attributeData.AttributeClass?.ToDisplayString() ?? string.Empty;
+
+        return
+            attributeClass.StartsWith(AttachedDependencyPropertyAttribute) ||
+            attributeClass.StartsWith(DependencyPropertyAttribute) ||
+            attributeClass.StartsWith(RoutedEventAttribute);
     }
 
     private static string? GetFullClassName(Compilation compilation, ClassDeclarationSyntax classDeclarationSyntax)

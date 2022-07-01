@@ -135,3 +135,12 @@ public partial class MyGrid : Grid
     {
     }
 }
+
+[DependencyProperty<string>("Text")]
+[DesignTimeVisible(false)]
+public partial class Generatable : FrameworkElement
+{
+    partial void OnTextChanged(string? oldValue, string? newValue)
+    {
+    }
+}

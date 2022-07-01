@@ -176,6 +176,21 @@ public partial class MyControl : UserControl
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    public Task GeneratesCorrectlyWithOtherAttributes2(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform) + @"
+[DependencyProperty<string>(""Text"")]
+[System.ComponentModel.DesignTimeVisible(false)]
+public partial class Generatable : System.Windows.FrameworkElement
+{
+    partial void OnTextChanged(string? oldValue, string? newValue)
+    {
+    }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     public Task GeneratesFloatLiteralsCorrectly(Platform platform)
