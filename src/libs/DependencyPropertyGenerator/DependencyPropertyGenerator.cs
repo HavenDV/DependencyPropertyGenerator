@@ -148,7 +148,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             cancellationToken.ThrowIfCancellationRequested();
 
             var @class = group.First();
-
+            
             var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
             if (semanticModel.GetDeclaredSymbol(
                 @class, cancellationToken) is not INamedTypeSymbol classSymbol)
@@ -171,7 +171,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             foreach (var attributeSyntax in group
                 .SelectMany(static list => list.AttributeLists)
                 .SelectMany(static list => list.Attributes)
-                .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, semanticModel)))
+                .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, compilation.GetSemanticModel(attributeSyntax.SyntaxTree))))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
                 var attribute = attributes[name];
