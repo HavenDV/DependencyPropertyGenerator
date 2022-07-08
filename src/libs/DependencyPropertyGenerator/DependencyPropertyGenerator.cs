@@ -71,24 +71,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         
         try
         {
-            var constants = options.GetGlobalOption("DefineConstants", prefix: Name) ?? string.Empty;
-            var useWpf = bool.Parse(options.GetGlobalOption("UseWPF") ?? bool.FalseString) || constants.Contains("HAS_WPF");
-            var useWinUI = bool.Parse(options.GetGlobalOption("UseWinUI") ?? bool.FalseString) || constants.Contains("HAS_WINUI");
-            var useUwp = constants.Contains("WINDOWS_UWP") || constants.Contains("HAS_UWP");
-            var useUno = constants.Contains("HAS_UNO");
-            var useUnoWinUI = constants.Contains("HAS_UNO_WINUI") || (constants.Contains("HAS_UNO") && constants.Contains("HAS_WINUI"));
-            var useAvalonia = constants.Contains("HAS_AVALONIA");
-            var platform = (useWpf, useUwp, useWinUI, useUno, useUnoWinUI, useAvalonia) switch
-            {
-                (_, _, _, _, _, true) => Platform.Avalonia,
-                (_, _, _, _, true, _) => Platform.UnoWinUI,
-                (_, _, _, true, _, _) => Platform.Uno,
-                (_, _, true, _, _, _) => Platform.WinUI,
-                (_, true, _, _, _, _) => Platform.UWP,
-                (true, _, _, _, _, _) => Platform.WPF,
-                _ =>                  Platform.Undefined,
-            };
-
+            var platform = options.RecognizePlatform(prefix: Name);
             var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
