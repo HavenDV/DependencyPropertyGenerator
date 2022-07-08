@@ -17,10 +17,18 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnSelectedItemChanged();
+                        OnSelectedItemChanged(
+                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender);
+                        OnSelectedItemChanged(
+                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
+                            (object?)args.NewValue);
                         OnSelectedItemChanged(
                             (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue)));
+                            (object?)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
@@ -42,6 +50,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(SelectedItemProperty);
         }
 
+        static partial void OnSelectedItemChanged();
+        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender);
+        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, object? newValue);
         static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, object? oldValue, object? newValue);
     }
 }

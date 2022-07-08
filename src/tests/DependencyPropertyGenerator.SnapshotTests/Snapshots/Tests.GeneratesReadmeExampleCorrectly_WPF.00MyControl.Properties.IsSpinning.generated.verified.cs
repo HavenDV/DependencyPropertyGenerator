@@ -19,9 +19,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (bool)true,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue),
+                            (bool)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -38,6 +43,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(IsSpinningProperty, value);
         }
 
+        partial void OnIsSpinningChanged();
+        partial void OnIsSpinningChanged(bool newValue);
         partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }

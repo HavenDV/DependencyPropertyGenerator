@@ -17,10 +17,18 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnAttachedReadOnlyPropertyChanged();
+                        OnAttachedReadOnlyPropertyChanged(
+                            (global::Microsoft.UI.Xaml.Controls.Grid)sender);
+                        OnAttachedReadOnlyPropertyChanged(
+                            (global::Microsoft.UI.Xaml.Controls.Grid)sender,
+                            (object?)args.NewValue);
                         OnAttachedReadOnlyPropertyChanged(
                             (global::Microsoft.UI.Xaml.Controls.Grid)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue)));
+                            (object?)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
@@ -42,6 +50,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedReadOnlyPropertyProperty);
         }
 
+        static partial void OnAttachedReadOnlyPropertyChanged();
+        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender);
+        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender, object? newValue);
         static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender, object? oldValue, object? newValue);
     }
 }

@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue),
+                            (bool)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false,
                     defaultUpdateSourceTrigger: global::System.Windows.Data.UpdateSourceTrigger.Explicit),
@@ -35,6 +40,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(ExplicitUpdateSourceTriggerPropertyProperty, value);
         }
 
+        partial void OnExplicitUpdateSourceTriggerPropertyChanged();
+        partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool newValue);
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool oldValue, bool newValue);
     }
 }

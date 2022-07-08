@@ -17,9 +17,14 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(bool),
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
                             (bool)args.OldValue,
-                            (bool)args.NewValue)));
+                            (bool)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: default(bool)
@@ -30,6 +35,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(IsSpinning5Property, value);
         }
 
+        partial void OnIsSpinning5Changed();
+        partial void OnIsSpinning5Changed(bool newValue);
         partial void OnIsSpinning5Changed(bool oldValue, bool newValue);
     }
 }

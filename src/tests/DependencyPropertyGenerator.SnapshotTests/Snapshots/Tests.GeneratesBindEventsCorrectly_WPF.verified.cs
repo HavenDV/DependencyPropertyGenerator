@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnBindEventsPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnBindEventsPropertyChanged(
+                            (object?)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyGrid)sender).OnBindEventsPropertyChanged(
                             (object?)args.OldValue,
-                            (object?)args.NewValue),
+                            (object?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -34,6 +39,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(BindEventsPropertyProperty, value);
         }
 
+        partial void OnBindEventsPropertyChanged();
+        partial void OnBindEventsPropertyChanged(object? newValue);
         partial void OnBindEventsPropertyChanged(object? oldValue, object? newValue);
 
         partial void OnBindEventsPropertyChanged_BeforeBind(

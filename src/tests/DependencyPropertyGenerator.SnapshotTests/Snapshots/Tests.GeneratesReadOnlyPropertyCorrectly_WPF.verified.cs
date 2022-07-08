@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnReadOnlyPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnReadOnlyPropertyChanged(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnReadOnlyPropertyChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue),
+                            (bool)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -40,6 +45,8 @@ namespace H.Generators.IntegrationTests
             protected set => SetValue(ReadOnlyPropertyPropertyKey, value);
         }
 
+        partial void OnReadOnlyPropertyChanged();
+        partial void OnReadOnlyPropertyChanged(bool newValue);
         partial void OnReadOnlyPropertyChanged(bool oldValue, bool newValue);
     }
 }

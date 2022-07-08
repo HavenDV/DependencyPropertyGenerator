@@ -34,6 +34,9 @@ namespace H.Generators.IntegrationTests
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 
+        static partial void OnModeChanged();
+        static partial void OnModeChanged(global::Avalonia.Controls.TreeView sender);
+        static partial void OnModeChanged(global::Avalonia.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode newValue);
         static partial void OnModeChanged(global::Avalonia.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

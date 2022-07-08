@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(string),
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
+                            (string?)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
                             (string?)args.OldValue,
-                            (string?)args.NewValue)));
+                            (string?)args.NewValue);
+                    }));
 
         /// <summary>
         /// Description<br/>
@@ -38,6 +43,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(AttributedPropertyProperty, value);
         }
 
+        partial void OnAttributedPropertyChanged();
+        partial void OnAttributedPropertyChanged(string? newValue);
         partial void OnAttributedPropertyChanged(string? oldValue, string? newValue);
     }
 }

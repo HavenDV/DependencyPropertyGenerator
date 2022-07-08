@@ -17,9 +17,14 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(bool),
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue)));
+                            (bool)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: default(bool)
@@ -30,6 +35,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(ExplicitUpdateSourceTriggerPropertyProperty, value);
         }
 
+        partial void OnExplicitUpdateSourceTriggerPropertyChanged();
+        partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool newValue);
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool oldValue, bool newValue);
     }
 }

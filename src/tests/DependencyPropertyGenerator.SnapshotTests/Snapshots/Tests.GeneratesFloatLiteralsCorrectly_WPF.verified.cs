@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (float)42,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged(
+                            (float)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged(
                             (float)args.OldValue,
-                            (float)args.NewValue),
+                            (float)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -34,6 +39,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(FloatPropertyProperty, value);
         }
 
+        partial void OnFloatPropertyChanged();
+        partial void OnFloatPropertyChanged(float newValue);
         partial void OnFloatPropertyChanged(float oldValue, float newValue);
     }
 }

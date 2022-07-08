@@ -18,10 +18,18 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnAttachedPropertyChanged();
+                        OnAttachedPropertyChanged(
+                            (global::System.Windows.Controls.Grid)sender);
+                        OnAttachedPropertyChanged(
+                            (global::System.Windows.Controls.Grid)sender,
+                            (object?)args.NewValue);
                         OnAttachedPropertyChanged(
                             (global::System.Windows.Controls.Grid)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue),
+                            (object?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -47,6 +55,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedPropertyProperty);
         }
 
+        static partial void OnAttachedPropertyChanged();
+        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender);
+        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender, object? newValue);
         static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender, object? oldValue, object? newValue);
     }
 }

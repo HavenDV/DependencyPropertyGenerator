@@ -18,10 +18,18 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnSelectedItemChanged();
+                        OnSelectedItemChanged(
+                            (global::System.Windows.Controls.TreeView)sender);
+                        OnSelectedItemChanged(
+                            (global::System.Windows.Controls.TreeView)sender,
+                            (object?)args.NewValue);
                         OnSelectedItemChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue),
+                            (object?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -47,6 +55,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(SelectedItemProperty);
         }
 
+        static partial void OnSelectedItemChanged();
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? newValue);
         static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
     }
 }

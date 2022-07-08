@@ -58,9 +58,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (bool)true,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
+                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
-                            (bool)args.NewValue),
+                            (bool)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -77,6 +82,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(IsSpinningProperty, value);
         }
 
+        partial void OnIsSpinningChanged();
+        partial void OnIsSpinningChanged(bool newValue);
         partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }
@@ -102,10 +109,18 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnSelectedItemChanged();
+                        OnSelectedItemChanged(
+                            (global::System.Windows.Controls.TreeView)sender);
+                        OnSelectedItemChanged(
+                            (global::System.Windows.Controls.TreeView)sender,
+                            (object?)args.NewValue);
                         OnSelectedItemChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue),
+                            (object?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -131,6 +146,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(SelectedItemProperty);
         }
 
+        static partial void OnSelectedItemChanged();
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? newValue);
         static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
     }
 }

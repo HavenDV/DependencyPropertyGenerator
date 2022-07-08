@@ -35,7 +35,7 @@ namespace {@class.Namespace}
             {GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);
         }}
 
-        partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);
+{GenerateOnChangedMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
 {GenerateBindEventMethod(property)}
@@ -115,7 +115,7 @@ namespace {@class.Namespace}
             return ({GenerateType(property)})element.GetValue({property.Name}Property);
         }}
 
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);
+{GenerateOnChangedMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
 {GenerateBindEventMethod(property)}
@@ -245,14 +245,27 @@ namespace {@class.Namespace}
 
         return property.IsAttached
             ? $@"static (sender, args) =>
+                    {{
+                        On{property.Name}Changed();
+                        On{property.Name}Changed(
+                            ({senderType})sender);
+                        On{property.Name}Changed(
+                            ({senderType})sender,
+                            ({GenerateType(property)})args.NewValue);
                         On{property.Name}Changed(
                             ({senderType})sender,
                             ({GenerateType(property)})args.OldValue,
-                            ({GenerateType(property)})args.NewValue)"
+                            ({GenerateType(property)})args.NewValue);
+                    }}"
             : $@"static (sender, args) =>
+                    {{
+                        (({senderType})sender).On{property.Name}Changed();
+                        (({senderType})sender).On{property.Name}Changed(
+                            ({GenerateType(property)})args.NewValue);
                         (({senderType})sender).On{property.Name}Changed(
                             ({GenerateType(property)})args.OldValue,
-                            ({GenerateType(property)})args.NewValue)";
+                            ({GenerateType(property)})args.NewValue);
+                    }}";
     }
 
     public static string GenerateCoerceValueCallback(ClassData @class, DependencyPropertyData property)
@@ -547,6 +560,20 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
         return GenerateXmlDocumentationFrom(value);
+    }
+
+    public static string GenerateOnChangedMethods(DependencyPropertyData property)
+    {
+        return property.IsAttached
+            ? $@" 
+        static partial void On{property.Name}Changed();
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
+            : $@" 
+        partial void On{property.Name}Changed();
+        partial void On{property.Name}Changed({GenerateType(property)} newValue);
+        partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
     public static string GenerateCoercePartialMethod(DependencyPropertyData property)

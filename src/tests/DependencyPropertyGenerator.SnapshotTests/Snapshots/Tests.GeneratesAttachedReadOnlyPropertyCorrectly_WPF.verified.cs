@@ -18,10 +18,18 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnAttachedReadOnlyPropertyChanged();
+                        OnAttachedReadOnlyPropertyChanged(
+                            (global::System.Windows.Controls.Grid)sender);
+                        OnAttachedReadOnlyPropertyChanged(
+                            (global::System.Windows.Controls.Grid)sender,
+                            (object?)args.NewValue);
                         OnAttachedReadOnlyPropertyChanged(
                             (global::System.Windows.Controls.Grid)sender,
                             (object?)args.OldValue,
-                            (object?)args.NewValue),
+                            (object?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -53,6 +61,9 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedReadOnlyPropertyProperty);
         }
 
+        static partial void OnAttachedReadOnlyPropertyChanged();
+        static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid sender);
+        static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid sender, object? newValue);
         static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid sender, object? oldValue, object? newValue);
     }
 }

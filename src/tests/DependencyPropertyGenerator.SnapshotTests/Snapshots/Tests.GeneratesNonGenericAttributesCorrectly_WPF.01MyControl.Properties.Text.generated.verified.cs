@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(string),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnTextChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnTextChanged(
+                            (string?)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnTextChanged(
                             (string?)args.OldValue,
-                            (string?)args.NewValue),
+                            (string?)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -34,6 +39,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TextProperty, value);
         }
 
+        partial void OnTextChanged();
+        partial void OnTextChanged(string? newValue);
         partial void OnTextChanged(string? oldValue, string? newValue);
     }
 }

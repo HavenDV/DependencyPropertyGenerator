@@ -18,9 +18,14 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (string)"",
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
+                            (string?)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
                             (string?)args.OldValue,
-                            (string?)args.NewValue),
+                            (string?)args.NewValue);
+                    },
                     coerceValueCallback: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).CoerceNotNullStringProperty(
                             (string?)value),
@@ -38,6 +43,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(NotNullStringPropertyProperty, value);
         }
 
+        partial void OnNotNullStringPropertyChanged();
+        partial void OnNotNullStringPropertyChanged(string? newValue);
         partial void OnNotNullStringPropertyChanged(string? oldValue, string? newValue);
         private partial string? CoerceNotNullStringProperty(string? value);
         private static partial bool IsNotNullStringPropertyValid(string? value);

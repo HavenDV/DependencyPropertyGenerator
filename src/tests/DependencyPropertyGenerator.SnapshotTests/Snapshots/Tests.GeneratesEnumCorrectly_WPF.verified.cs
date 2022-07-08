@@ -18,10 +18,18 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnModeChanged();
+                        OnModeChanged(
+                            (global::System.Windows.Controls.TreeView)sender);
+                        OnModeChanged(
+                            (global::System.Windows.Controls.TreeView)sender,
+                            (global::H.Generators.IntegrationTests.Mode)args.NewValue);
                         OnModeChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (global::H.Generators.IntegrationTests.Mode)args.OldValue,
-                            (global::H.Generators.IntegrationTests.Mode)args.NewValue),
+                            (global::H.Generators.IntegrationTests.Mode)args.NewValue);
+                    },
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
@@ -47,6 +55,9 @@ namespace H.Generators.IntegrationTests
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 
+        static partial void OnModeChanged();
+        static partial void OnModeChanged(global::System.Windows.Controls.TreeView sender);
+        static partial void OnModeChanged(global::System.Windows.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode newValue);
         static partial void OnModeChanged(global::System.Windows.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

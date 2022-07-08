@@ -17,9 +17,14 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: (string)"",
                     propertyChangedCallback: static (sender, args) =>
+                    {
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged();
+                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
+                            (string?)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
                             (string?)args.OldValue,
-                            (string?)args.NewValue)));
+                            (string?)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: ""
@@ -30,6 +35,8 @@ namespace H.Generators.IntegrationTests
             set => SetValue(NotNullStringPropertyProperty, value);
         }
 
+        partial void OnNotNullStringPropertyChanged();
+        partial void OnNotNullStringPropertyChanged(string? newValue);
         partial void OnNotNullStringPropertyChanged(string? oldValue, string? newValue);
         private partial string? CoerceNotNullStringProperty(string? value);
         private static partial bool IsNotNullStringPropertyValid(string? value);
