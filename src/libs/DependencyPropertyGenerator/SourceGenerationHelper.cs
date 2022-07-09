@@ -681,7 +681,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }
 
         return property.IsAttached
-            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);"
+            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} sender, {GenerateType(property)} value);"
             : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
     }
 
