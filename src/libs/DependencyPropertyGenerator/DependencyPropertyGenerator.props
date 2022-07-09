@@ -5,6 +5,7 @@
     <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
+    <CompilerVisibleProperty Include="UseMaui"/>
     <CompilerVisibleProperty Include="BuildingProject" />
     <CompilerVisibleProperty Include="DesignTimeBuild" />
   </ItemGroup>

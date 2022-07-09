@@ -242,6 +242,32 @@ namespace {@class.Namespace}
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
+        if (property.Platform == Platform.MAUI)
+        {
+            return property.IsAttached
+                ? $@"static (sender, oldValue, newValue) =>
+            {{
+                On{property.Name}Changed();
+                On{property.Name}Changed(
+                    ({senderType})sender);
+                On{property.Name}Changed(
+                    ({senderType})sender,
+                    ({GenerateType(property)})newValue);
+                On{property.Name}Changed(
+                    ({senderType})sender,
+                    ({GenerateType(property)})oldValue,
+                    ({GenerateType(property)})newValue);
+            }}"
+                : $@"static (sender, oldValue, newValue) =>
+            {{
+                (({senderType})sender).On{property.Name}Changed();
+                (({senderType})sender).On{property.Name}Changed(
+                    ({GenerateType(property)})newValue);
+                (({senderType})sender).On{property.Name}Changed(
+                    ({GenerateType(property)})oldValue,
+                    ({GenerateType(property)})newValue);
+            }}";
+        }
 
         return property.IsAttached
             ? $@"static (sender, args) =>
@@ -279,6 +305,18 @@ namespace {@class.Namespace}
             ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
 
+        if (property.Platform == Platform.MAUI)
+        {
+            return property.IsAttached
+                ? $@"static (sender, value) =>
+                        Coerce{property.Name}(
+                            ({senderType})sender,
+                            ({GenerateType(property)})value)"
+                : $@"static (sender, value) =>
+                        (({senderType})sender).Coerce{property.Name}(
+                            ({GenerateType(property)})value)";
+        }
+
         return property.IsAttached
             ? $@"static (sender, args) =>
                         Coerce{property.Name}(
@@ -289,11 +327,18 @@ namespace {@class.Namespace}
                             ({GenerateType(property)})value)";
     }
 
-    public static string GenerateValidateValueCallback(DependencyPropertyData property)
+    public static string GenerateValidateValueCallback(ClassData @class, DependencyPropertyData property)
     {
-        if (!property.Coerce)
+        if (!property.Validate)
         {
             return "null";
+        }
+
+        if (property.Platform == Platform.MAUI)
+        {
+            return $@"static (sender, value) =>
+                    Is{property.Name}Valid(
+                        ({GenerateType(property)})value)";
         }
 
         return $@"static value =>
@@ -350,6 +395,7 @@ namespace {@class.Namespace}
             Platform.UWP or Platform.Uno => $"Windows.UI.Xaml.{name}",
             Platform.WinUI or Platform.UnoWinUI => $"Microsoft.UI.Xaml.{name}",
             Platform.Avalonia => $"Avalonia.{name}",
+            Platform.MAUI => $"Microsoft.Maui.Controls.{name}",
             _ => throw new InvalidOperationException("Platform is not supported."),
         }).WithGlobalPrefix();
     }
@@ -394,6 +440,14 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyType(DependencyPropertyData property)
     {
+        if (property.Platform == Platform.MAUI)
+        {
+            return GenerateTypeByPlatform(
+                property.Platform,
+                property.IsReadOnly
+                    ? "BindablePropertyKey"
+                    : "BindableProperty");
+        }
         if (property.Platform == Platform.Avalonia)
         {
             return GenerateTypeByPlatform(
@@ -410,11 +464,17 @@ namespace {@class.Namespace}
 
     public static string GenerateManagerType(ClassData @class)
     {
+        if (@class.Platform == Platform.MAUI)
+        {
+            return GenerateTypeByPlatform(
+                @class.Platform,
+                "BindableProperty");
+        }
         if (@class.Platform == Platform.Avalonia)
         {
             return GenerateTypeByPlatform(
                 @class.Platform,
-                $"AvaloniaProperty");
+                "AvaloniaProperty");
         }
 
         return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
@@ -422,6 +482,16 @@ namespace {@class.Namespace}
 
     public static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
     {
+        if (property.Platform == Platform.MAUI)
+        {
+            return property.IsAttached
+                ? property.IsReadOnly
+                    ? "CreateAttachedReadOnly"
+                    : "CreateAttached"
+                : property.IsReadOnly
+                    ? "CreateReadOnly"
+                    : "Create";
+        }
         if (property.IsAttached && property.Platform == Platform.Avalonia)
         {
             return $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>";
@@ -438,8 +508,27 @@ namespace {@class.Namespace}
             : "Register";
     }
 
+    public static string GenerateMauiRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
+    {
+        return @$"
+            propertyName: ""{property.Name}"",
+            returnType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
+            declaringType: typeof({GenerateType(@class.FullName, false)}),
+            defaultValue: {GenerateDefaultValue(property)},
+            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{(property.IsReadOnly ? "OneWayToSource" : "OneWay")},
+            validateValue: {GenerateValidateValueCallback(@class, property)},
+            propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
+            propertyChanging: null,
+            coerceValue: {GenerateCoerceValueCallback(@class, property)},
+            defaultValueCreator: null";
+    }
+
     public static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
+        if (@class.Platform == Platform.MAUI)
+        {
+            return GenerateMauiRegisterMethodArguments(@class, property);
+        }
         if (@class.Platform == Platform.WPF)
         {
             return @$"
@@ -447,7 +536,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(property)}";
+                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
         }
 
         return @$"
@@ -459,6 +548,10 @@ namespace {@class.Namespace}
 
     public static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
     {
+        if (@class.Platform == Platform.MAUI)
+        {
+            return GenerateMauiRegisterMethodArguments(@class, property);
+        }
         if (@class.Platform == Platform.Avalonia)
         {
             return $@"
@@ -472,7 +565,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(property)}";
+                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
         }
 
         return @$"
@@ -494,6 +587,10 @@ namespace {@class.Namespace}
 
     public static string GenerateDependencyObjectType(Platform platform)
     {
+        if (platform == Platform.MAUI)
+        {
+            return GenerateTypeByPlatform(platform, "BindableObject");
+        }
         if (platform == Platform.Avalonia)
         {
             return GenerateTypeByPlatform(platform, "IAvaloniaObject");
@@ -590,10 +687,20 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     public static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
     {
-        if (property.Platform != Platform.WPF ||
+        if ((property.Platform != Platform.WPF &&
+            property.Platform != Platform.MAUI) ||
             !property.IsReadOnly)
         {
             return " ";
+        }
+
+        if (property.Platform == Platform.MAUI)
+        {
+            return $@" 
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+        public static readonly {GenerateTypeByPlatform(property.Platform, "BindableProperty")} {property.Name}Property
+            = {GenerateDependencyPropertyName(property)}.DependencyProperty;
+";
         }
 
         return $@" 

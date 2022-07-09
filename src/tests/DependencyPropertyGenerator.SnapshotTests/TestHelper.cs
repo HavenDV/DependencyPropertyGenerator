@@ -18,7 +18,14 @@ public static class TestHelper
         {
             source = source.Replace("static partial class", "partial class");
         }
-        
+        if (platform == Platform.MAUI)
+        {
+            source = source
+                .Replace("MyControl", "MyGrid")
+                .Replace("UserControl", "Grid")
+                .Replace("TreeView", "Grid");
+        }
+
         var referenceAssemblies = platform switch
         {
             Platform.WPF => ReferenceAssemblies.NetFramework.Net48.Wpf,
@@ -34,6 +41,9 @@ public static class TestHelper
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.3.8"))),
             Platform.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.15"))),
+            Platform.MAUI => ReferenceAssemblies.Net.Net60Windows
+                .WithPackages(ImmutableArray.Create(
+                    new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.400"))),
             _ => throw new NotImplementedException(),
         };
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
@@ -71,6 +81,10 @@ public static class TestHelper
         else if (platform == Platform.Avalonia)
         {
             globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_AVALONIA");
+        }
+        else if (platform == Platform.MAUI)
+        {
+            globalOptions.Add("build_property.UseMaui", "true");
         }
         var driver = CSharpGeneratorDriver
             .Create(generator)

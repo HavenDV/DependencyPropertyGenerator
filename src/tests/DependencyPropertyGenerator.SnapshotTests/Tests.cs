@@ -12,6 +12,7 @@ public class Tests : VerifyBase
             Platform.WinUI or Platform.UnoWinUI => @"Microsoft.UI.Xaml",
             Platform.UWP or Platform.Uno => @"Windows.UI.Xaml",
             Platform.Avalonia => @"Avalonia",
+            Platform.MAUI => @"Microsoft.Maui",
             _ => @"System.Windows",
         };
         var usings = string.Join(
@@ -35,9 +36,9 @@ namespace H.Generators.IntegrationTests;
     //[DataRow(Platform.WinUI)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
     public Task GeneratesReadmeExampleCorrectly(Platform platform)
     {
-        
         return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
 public partial class MyControl : UserControl
@@ -222,6 +223,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
     public Task GeneratesValidateAndCoerceCorrectly(Platform platform)
     {
         return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
