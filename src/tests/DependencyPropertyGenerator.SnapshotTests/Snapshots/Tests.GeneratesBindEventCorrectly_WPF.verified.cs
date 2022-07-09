@@ -56,40 +56,40 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnBindEventPropertyChanged();
-        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid sender);
-        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid sender, object? newValue);
-        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid sender, object? oldValue, object? newValue);
+        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid grid);
+        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid grid, object? newValue);
+        static partial void OnBindEventPropertyChanged(global::System.Windows.Controls.Grid grid, object? oldValue, object? newValue);
 
         static partial void OnBindEventPropertyChanged_BeforeBind(
-            global::System.Windows.Controls.Grid sender,
+            global::System.Windows.Controls.Grid grid,
             object? oldValue,
             object? newValue);
         static partial void OnBindEventPropertyChanged_AfterBind(
-            global::System.Windows.Controls.Grid sender,
+            global::System.Windows.Controls.Grid grid,
             object? oldValue,
             object? newValue);
 
         static partial void OnBindEventPropertyChanged(
-            global::System.Windows.Controls.Grid sender,
+            global::System.Windows.Controls.Grid grid,
             object? oldValue,
             object? newValue)
         {
             OnBindEventPropertyChanged_BeforeBind(
-                sender,
+                grid,
                 oldValue,
                 newValue);
 
             if (oldValue is not default(object))
             {
-                sender.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
+                grid.MouseWheel -= OnBindEventPropertyChanged_MouseWheel;
             }
             if (newValue is not default(object))
             {
-                sender.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
+                grid.MouseWheel += OnBindEventPropertyChanged_MouseWheel;
             }
 
             OnBindEventPropertyChanged_AfterBind(
-                sender,
+                grid,
                 oldValue,
                 newValue);
         }

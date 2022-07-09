@@ -55,8 +55,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnSelectedItemChanged();
-        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid sender);
-        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid sender, object? newValue);
-        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid sender, object? oldValue, object? newValue);
+        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid grid);
+        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid grid, object? newValue);
+        static partial void OnSelectedItemChanged(global::Microsoft.Maui.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

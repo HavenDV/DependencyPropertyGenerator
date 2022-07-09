@@ -51,8 +51,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnModeChanged();
-        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender);
-        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode newValue);
-        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
+        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView);
+        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode newValue);
+        static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

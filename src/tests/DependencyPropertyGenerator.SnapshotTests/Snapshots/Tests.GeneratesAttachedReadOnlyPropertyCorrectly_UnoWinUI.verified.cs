@@ -51,8 +51,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnAttachedReadOnlyPropertyChanged();
-        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender);
-        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender, object? newValue);
-        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid sender, object? oldValue, object? newValue);
+        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid grid);
+        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid grid, object? newValue);
+        static partial void OnAttachedReadOnlyPropertyChanged(global::Microsoft.UI.Xaml.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

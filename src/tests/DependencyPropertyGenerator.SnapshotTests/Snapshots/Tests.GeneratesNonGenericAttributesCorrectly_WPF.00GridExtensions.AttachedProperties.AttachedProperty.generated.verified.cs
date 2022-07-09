@@ -56,8 +56,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnAttachedPropertyChanged();
-        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender);
-        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender, object? newValue);
-        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid sender, object? oldValue, object? newValue);
+        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid grid);
+        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid grid, object? newValue);
+        static partial void OnAttachedPropertyChanged(global::System.Windows.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

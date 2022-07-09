@@ -617,6 +617,13 @@ namespace {@class.Namespace}
         return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Platform);
     }
 
+    public static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
+    {
+        return
+            property.BrowsableForType?.ExtractSimpleName().ToParameterName() ??
+            GenerateDependencyObjectType(property.Platform).ToParameterName();
+    }
+
     public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
     {
         return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
@@ -664,9 +671,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return property.IsAttached
             ? $@" 
         static partial void On{property.Name}Changed();
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender);
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} newValue);
-        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} sender, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
             : $@" 
         partial void On{property.Name}Changed();
         partial void On{property.Name}Changed({GenerateType(property)} newValue);
@@ -681,7 +688,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }
 
         return property.IsAttached
-            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} sender, {GenerateType(property)} value);"
+            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} value);"
             : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
     }
 
@@ -744,7 +751,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $@" 
         {modifiers}partial void {name}(
 {(property.IsAttached ? @$" 
-            {GenerateBrowsableForType(property)} sender," : " ")}
+            {GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}," : " ")}
             {GenerateType(property)} oldValue,
             {GenerateType(property)} newValue)".RemoveBlankLinesWhereOnlyWhitespaces();
     }
@@ -754,7 +761,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $@" 
             {name}(
 {(property.IsAttached ? @$" 
-                sender," : " ")}
+                {GenerateBrowsableForTypeParameterName(property)}," : " ")}
                 oldValue,
                 newValue);".RemoveBlankLinesWhereOnlyWhitespaces();
     }
@@ -767,7 +774,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }
 
         var type = GenerateType(property.Type, property.IsSpecialType);
-        var sender = property.IsAttached ? "sender" : "this";
+        var sender = property.IsAttached ? GenerateBrowsableForTypeParameterName(property) : "this";
         var modifiers = property.IsAttached ? "static " : string.Empty;
 
         return $@"

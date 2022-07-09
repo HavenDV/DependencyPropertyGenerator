@@ -20,7 +20,7 @@ public partial class MyControl : UserControl
 public static partial class TreeViewExtensions
 {
     // Optional
-    static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
+    static partial void OnSelectedItemChanged(TreeView treeView, object? oldValue, object? newValue)
     {
     }
 }
@@ -34,7 +34,7 @@ public enum Mode
 [AttachedDependencyProperty<Mode, TreeView>("Mode", DefaultValue = Mode.Mode2)]
 public static partial class TreeViewExtensions
 {
-    static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
+    static partial void OnModeChanged(TreeView treeView, Mode oldValue, Mode newValue)
     {
     }
 }

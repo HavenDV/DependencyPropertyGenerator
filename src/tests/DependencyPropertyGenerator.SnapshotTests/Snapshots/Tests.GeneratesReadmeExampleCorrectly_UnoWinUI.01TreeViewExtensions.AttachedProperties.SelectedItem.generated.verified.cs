@@ -51,8 +51,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnSelectedItemChanged();
-        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender);
-        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, object? newValue);
-        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView sender, object? oldValue, object? newValue);
+        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView);
+        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, object? newValue);
+        static partial void OnSelectedItemChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, object? oldValue, object? newValue);
     }
 }
