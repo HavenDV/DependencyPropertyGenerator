@@ -619,9 +619,9 @@ namespace {@class.Namespace}
 
     public static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
     {
-        return
-            property.BrowsableForType?.ExtractSimpleName().ToParameterName() ??
-            GenerateDependencyObjectType(property.Platform).ToParameterName();
+        return (property.BrowsableForType ?? GenerateDependencyObjectType(property.Platform))
+            .ExtractSimpleName()
+            .ToParameterName();
     }
 
     public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)

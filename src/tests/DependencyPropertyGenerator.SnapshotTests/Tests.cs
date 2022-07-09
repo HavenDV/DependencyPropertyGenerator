@@ -297,6 +297,17 @@ public static partial class GridExtensions
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    public Task AttachedPropertyWithoutSecondType(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform) + @"
+[AttachedDependencyProperty<object>(""AttachedPropertyWithoutSecondType"")]
+public static partial class GridExtensions
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
     public Task GeneratesBindEventsCorrectly(Platform platform)
     {
         return this.CheckSourceAsync(GetHeader(platform, "Controls") + @"
