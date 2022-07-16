@@ -379,7 +379,7 @@ namespace {@class.Namespace}
             case Platform.Uno:
             case Platform.UnoWinUI:
                 var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
-                return $@"{parameterName}: new {type}(
+                return $@"{parameterName}: {type}.Create(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
         }

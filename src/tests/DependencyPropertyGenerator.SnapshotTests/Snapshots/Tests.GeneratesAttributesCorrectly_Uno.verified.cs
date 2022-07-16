@@ -15,7 +15,7 @@ namespace H.Generators.IntegrationTests
                 name: "AttributedProperty",
                 propertyType: typeof(string),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
+                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(string),
                     propertyChangedCallback: static (sender, args) =>
                     {

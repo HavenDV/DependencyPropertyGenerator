@@ -15,7 +15,7 @@ namespace H.Generators.IntegrationTests
                 name: "IsSpinning",
                 propertyType: typeof(bool),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
+                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: (bool)true,
                     propertyChangedCallback: static (sender, args) =>
                     {

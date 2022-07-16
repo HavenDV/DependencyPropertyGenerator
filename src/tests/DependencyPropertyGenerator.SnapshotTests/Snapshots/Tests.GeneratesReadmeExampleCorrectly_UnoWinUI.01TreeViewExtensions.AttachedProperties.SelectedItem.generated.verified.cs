@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "SelectedItem",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.TreeViewExtensions),
-                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
+                typeMetadata: global::Microsoft.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
                     {

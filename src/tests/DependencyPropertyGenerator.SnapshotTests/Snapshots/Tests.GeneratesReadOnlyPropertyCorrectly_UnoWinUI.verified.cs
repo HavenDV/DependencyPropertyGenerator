@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "ReadOnlyProperty",
                 propertyType: typeof(bool),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
+                typeMetadata: global::Microsoft.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(bool),
                     propertyChangedCallback: static (sender, args) =>
                     {
