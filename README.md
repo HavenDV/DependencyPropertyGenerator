@@ -156,14 +156,15 @@ namespace H.Generators.IntegrationTests
 
 ## Advanced usage
 ### new object/struct() expressions in DefaultValue
-While it's [generally not recommended](https://discord.com/channels/372137812037730304/669640275500466197/988522411274158131) 
+While it's [generally not recommended](https://devblogs.microsoft.com/oldnewthing/20191002-00/?p=102950) 
 to use new expressions in properties, a generator provides this capability:
 ```cs
 public readonly record struct Data();
 
 [AttachedDependencyProperty<object, TreeView>("SelectedItem", DefaultValueExpression = "new Data()")]
 ```
-If your type is declared outside the namespace of an attribute declaration, you will need to specify the full name of the type, including the namespace.
+If your type is declared outside the namespace of an attribute declaration, 
+you will need to specify the full name of the type, including the namespace.
 
 ### XML documentation
 If for some reason you need to save xml documentation for your properties, 
@@ -234,6 +235,9 @@ To use generic attributes, you need to set up `LangVersion` in your .csproj:
 <LangVersion>preview</LangVersion>
 ```
 There are also non-Generic attributes here.
+
+## Possible features
+- [Mutable default values in constructor](https://devblogs.microsoft.com/oldnewthing/20191003-00/?p=102959)
 
 ## Support
 Priority place for bugs: https://github.com/HavenDV/DependencyPropertyGenerator/issues  
