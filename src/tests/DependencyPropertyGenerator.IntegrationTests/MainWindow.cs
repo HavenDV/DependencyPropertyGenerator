@@ -144,3 +144,15 @@ public partial class Generatable : FrameworkElement
     {
     }
 }
+
+[DependencyProperty<Uri>("AquariumGraphic", AffectsRender = true,
+    DefaultValueExpression = "new System.Uri(\"http://www.contoso.com/aquarium-graphic.jpg\")")]
+public partial class Aquarium : UIElement
+{
+}
+
+[OverrideMetadata<Uri>("AquariumGraphic",
+    DefaultValueExpression = "new System.Uri(\"http://www.contoso.com/tropical-aquarium-graphic.jpg\")")]
+public partial class TropicalAquarium : Aquarium
+{
+}

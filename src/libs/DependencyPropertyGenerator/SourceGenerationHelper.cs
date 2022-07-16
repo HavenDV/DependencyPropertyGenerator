@@ -43,9 +43,49 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
+    public static string GenerateRegisterPropertyChangedCallbacksMethod(
+        ClassData @class,
+        IReadOnlyCollection<DependencyPropertyData> overrideMetadata)
+    {
+        return @$"#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{GenerateModifiers(@class)} partial class {@class.Name}
+    {{
+        private void RegisterPropertyChangedCallbacks()
+        {{
+{overrideMetadata.Select(property => {
+            var senderType = property.IsAttached
+                ? GenerateBrowsableForType(property)
+                : GenerateType(@class.FullName, false);
+
+            return @$"
+            _ = this.RegisterPropertyChangedCallback(
+                dp: {property.Name}Property,
+                callback: static (sender, dependencyProperty) =>
+                {{
+                    (({senderType})sender).On{property.Name}Changed();
+                    (({senderType})sender).On{property.Name}Changed(
+                        ({GenerateType(property)})sender.GetValue(dependencyProperty));
+                    (({senderType})sender).On{property.Name}Changed(
+                        ({GenerateType(property)})sender.GetValue(dependencyProperty),
+                        ({GenerateType(property)})sender.GetValue(dependencyProperty));
+                }});
+";
+        }).Inject()}
+        }}
+
+{overrideMetadata.Select(GenerateOnChangedMethods).Inject()}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
     public static string GenerateStaticConstructor(ClassData @class, IReadOnlyCollection<DependencyPropertyData> properties)
     {
-        return @$"
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return @$"
 using System;
 
 #nullable enable
@@ -65,6 +105,30 @@ namespace {@class.Namespace}
         }}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
+        }
+        if (@class.Platform == Platform.WPF)
+        {
+            return @$"#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{GenerateModifiers(@class)} partial class {@class.Name}
+    {{
+        static {@class.Name}()
+        {{
+{properties.Select(property => @$"
+            {property.Name}Property.OverrideMetadata(
+                forType: typeof({GenerateType(@class.FullName, false)}),
+                {GeneratePropertyMetadata(@class, property)});
+").Inject()}
+        }}
+
+{properties.Select(GenerateOnChangedMethods).Inject()}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+        }
+
+        return string.Empty;
     }
 
     public static string GenerateAttachedDependencyProperty(ClassData @class, DependencyPropertyData property)

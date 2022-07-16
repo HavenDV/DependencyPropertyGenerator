@@ -17,9 +17,11 @@ public class Tests : VerifyBase
         };
         var usings = string.Join(
             Environment.NewLine,
-            values.Select(value => value.StartsWith("System")
-                ? $"using {value};"
-                : $"using {prefix}.{value};"));
+            values.Select(value => string.IsNullOrWhiteSpace(value)
+                ? $"using {prefix};"
+                : value.StartsWith("System")
+                    ? $"using {value};"
+                    : $"using {prefix}.{value};"));
 
         return @$"{usings}
 using DependencyPropertyGenerator;
@@ -322,6 +324,25 @@ public partial class MyGrid : Grid
     private static void OnBindEventsPropertyChanged_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs args)
     {
     }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    public Task GeneratesOverrideMetadataCorrectly(Platform platform)
+    {
+        return this.CheckSourceAsync(GetHeader(platform, string.Empty, "System") + @"
+[DependencyProperty<Uri>(""AquariumGraphic"", AffectsRender = true,
+    DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
+public partial class Aquarium : UIElement
+{
+}
+
+[OverrideMetadata<Uri>(""AquariumGraphic"",
+    DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/tropical-aquarium-graphic.jpg\"")"")]
+public partial class TropicalAquarium : Aquarium
+{
 }", platform);
     }
 }

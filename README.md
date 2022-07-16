@@ -229,6 +229,10 @@ static partial void OnBindEventPropertyChanged(
 }
 ```
 
+### Override metadata
+For UWP/WinUI/Uno, a special RegisterPropertyChangedCallbacks() method will be created, 
+which you will need to call in the constructor to register property change callbacks.
+
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
 ```xml
