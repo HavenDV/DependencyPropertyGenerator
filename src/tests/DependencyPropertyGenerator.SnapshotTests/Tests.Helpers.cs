@@ -1,15 +1,41 @@
-﻿using H.Generators.Tests.Extensions;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using H.Generators.Tests.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using System.Collections.Immutable;
 
 namespace H.Generators.SnapshotTests;
 
-public static class TestHelper
+public partial class Tests : VerifyBase
 {
-    public static async Task CheckSourceAsync(
-        this VerifyBase verifier,
+    private static string GetHeader(Platform platform, params string[] values)
+    {
+        var prefix = platform switch
+        {
+            Platform.WinUI or Platform.UnoWinUI => @"Microsoft.UI.Xaml",
+            Platform.UWP or Platform.Uno => @"Windows.UI.Xaml",
+            Platform.Avalonia => @"Avalonia",
+            Platform.MAUI => @"Microsoft.Maui",
+            _ => @"System.Windows",
+        };
+        var usings = string.Join(
+            Environment.NewLine,
+            values.Select(value => string.IsNullOrWhiteSpace(value)
+                ? $"using {prefix};"
+                : value.StartsWith("System")
+                    ? $"using {value};"
+                    : $"using {prefix}.{value};"));
+
+        return @$"{usings}
+using DependencyPropertyGenerator;
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests;
+";
+    }
+
+    public async Task CheckSourceAsync(
         string source,
         Platform platform,
         CancellationToken cancellationToken = default)
@@ -32,9 +58,13 @@ public static class TestHelper
             Platform.UWP => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.NETCore.UniversalWindowsPlatform", "6.2.14"),
-                    new PackageIdentity("Microsoft.UI.Xaml", "2.7.1"))),
+                    new PackageIdentity("Microsoft.UI.Xaml", "2.7.1"),
+                    new PackageIdentity("Microsoft.Net.UWPCoreRuntimeSdk", "2.2.14"))),
             Platform.WinUI => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Microsoft.WindowsAppSDK", "1.1.1"))),
+                .WithPackages(ImmutableArray.Create(
+                    new PackageIdentity("Microsoft.WindowsAppSDK", "1.1.2"),
+                    new PackageIdentity("Microsoft.UI.Xaml", "2.7.1"),
+                    new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.22621.26"))),
             Platform.Uno => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.3.8"))),
             Platform.UnoWinUI => ReferenceAssemblies.NetStandard.NetStandard20
@@ -93,12 +123,10 @@ public static class TestHelper
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            verifier
-                .Verify(diagnostics)
+            Verify(diagnostics)
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{platform}_Diagnostics"),
-            verifier
-                .Verify(driver)
+            Verify(driver)
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{platform}"));
     }
