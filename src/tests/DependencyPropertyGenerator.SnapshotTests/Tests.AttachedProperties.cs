@@ -7,7 +7,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.Avalonia)]
-    public Task GeneratesEnumCorrectly(Platform platform)
+    public Task Enum(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 public enum Mode
@@ -29,7 +29,7 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesAttachedReadOnlyPropertyCorrectly(Platform platform)
+    public Task AttachedReadOnlyProperty(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [AttachedDependencyProperty<object, Grid>(""AttachedReadOnlyProperty"", IsReadOnly = true)]
@@ -40,7 +40,7 @@ public static partial class GridExtensions
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
-    public Task GeneratesBindEventCorrectly(Platform platform)
+    public Task BindEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [AttachedDependencyProperty<object, Grid>(""BindEventProperty"", BindEvent = nameof(Grid.MouseWheel))]

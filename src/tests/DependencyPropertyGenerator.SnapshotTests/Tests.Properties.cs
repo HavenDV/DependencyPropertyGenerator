@@ -5,7 +5,7 @@ public partial class Tests : VerifyBase
 {
     [DataTestMethod]
     [DataRow(Platform.WPF)]
-    public Task GeneratesNonGenericAttributesCorrectly(Platform platform)
+    public Task NonGenericAttributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty(""Text"", typeof(string))]
@@ -23,7 +23,7 @@ public static partial class GridExtensions
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesMultipleClassDeclarationsCorrectly(Platform platform)
+    public Task MultipleClassDeclarations(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"")]
@@ -49,7 +49,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesAttributesCorrectly(Platform platform)
+    public Task Attributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls", "System.ComponentModel") + @"
 [DependencyProperty<string>(""AttributedProperty"",
@@ -69,7 +69,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesCorrectlyWithOtherAttributes(Platform platform)
+    public Task WithOtherAttributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls", "System") + @"
 [CLSCompliant(false)]
@@ -88,7 +88,7 @@ public partial class MyControl : UserControl
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
-    public Task GeneratesCorrectlyWithOtherAttributes2(Platform platform)
+    public Task WithOtherAttributes2(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform) + @"
 [DependencyProperty<string>(""Text"")]
@@ -105,7 +105,7 @@ public partial class Generatable : System.Windows.FrameworkElement
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesFloatLiteralsCorrectly(Platform platform)
+    public Task FloatLiterals(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<float>(""FloatProperty"", DefaultValue = 42)]
@@ -119,7 +119,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
-    public Task GeneratesValidateAndCoerceCorrectly(Platform platform)
+    public Task ValidateAndCoerce(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<string>(""NotNullStringProperty"", DefaultValue = """", Validate = true, Coerce = true)]
@@ -141,7 +141,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesDefaultUpdateSourceTriggerCorrectly(Platform platform)
+    public Task DefaultUpdateSourceTrigger(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""ExplicitUpdateSourceTriggerProperty"", DefaultUpdateSourceTrigger = SourceTrigger.Explicit)]
@@ -154,7 +154,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesReadOnlyPropertyCorrectly(Platform platform)
+    public Task ReadOnlyProperty(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""ReadOnlyProperty"", IsReadOnly = true)]
@@ -165,7 +165,7 @@ public partial class MyControl : UserControl
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
-    public Task GeneratesBindEventsCorrectly(Platform platform)
+    public Task BindEvents(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<object>(""BindEventsProperty"",

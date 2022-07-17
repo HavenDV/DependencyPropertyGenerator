@@ -6,7 +6,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesRoutedEventCorrectly(Platform platform)
+    public Task RoutedEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble)]
@@ -19,7 +19,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    public Task GeneratesAttachedRoutedEventCorrectly(Platform platform)
+    public Task AttachedRoutedEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]

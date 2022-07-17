@@ -9,7 +9,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
-    public Task GeneratesReadmeExampleCorrectly(Platform platform)
+    public Task ReadmeExample(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
