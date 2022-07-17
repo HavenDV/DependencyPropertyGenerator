@@ -141,6 +141,24 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    public Task CreateDefaultValueCallback(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<string>(""SomeProperty"", CreateDefaultValueCallback = true)]
+public partial class MyGrid : Grid
+{
+    private static partial string GetSomePropertyDefaultValue()
+    {
+        return ""Hello, world"";
+    }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
     public Task DefaultUpdateSourceTrigger(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"

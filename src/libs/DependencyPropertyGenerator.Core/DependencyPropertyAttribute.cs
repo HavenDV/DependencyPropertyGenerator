@@ -199,6 +199,11 @@ public sealed class DependencyPropertyAttribute : Attribute
     public bool Validate { get; set; }
 
     /// <summary>
+    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
+    /// </summary>
+    public bool CreateDefaultValueCallback { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
@@ -409,6 +414,11 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// WPF: partial method for validateValueCallback will be created.
     /// </summary>
     public bool Validate { get; set; }
+
+    /// <summary>
+    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
+    /// </summary>
+    public bool CreateDefaultValueCallback { get; set; }
 
     /// <summary>
     /// 

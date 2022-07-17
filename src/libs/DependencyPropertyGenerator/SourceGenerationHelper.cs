@@ -38,6 +38,7 @@ namespace {@class.Namespace}
 {GenerateOnChangedMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
+{GenerateCreateDefaultValueCallbackPartialMethod(property)}
 {GenerateBindEventMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
@@ -189,6 +190,7 @@ namespace {@class.Namespace}
 {GenerateOnChangedMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
+{GenerateCreateDefaultValueCallbackPartialMethod(property)}
 {GenerateBindEventMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
@@ -427,7 +429,7 @@ namespace {@class.Namespace}
                             ({GenerateType(property)})value)";
     }
 
-    public static string GenerateValidateValueCallback(ClassData @class, DependencyPropertyData property)
+    public static string GenerateValidateValueCallback(DependencyPropertyData property)
     {
         if (!property.Validate)
         {
@@ -436,7 +438,7 @@ namespace {@class.Namespace}
 
         if (property.Platform == Platform.MAUI)
         {
-            return $@"static (sender, value) =>
+            return $@"static (_, value) =>
                     Is{property.Name}Valid(
                         ({GenerateType(property)})value)";
         }
@@ -444,6 +446,21 @@ namespace {@class.Namespace}
         return $@"static value =>
                     Is{property.Name}Valid(
                         ({GenerateType(property)})value)";
+    }
+
+    public static string GenerateCreateDefaultValueCallbackValueCallback(DependencyPropertyData property)
+    {
+        if (!property.CreateDefaultValueCallback)
+        {
+            return "null";
+        }
+
+        if (property.Platform == Platform.MAUI)
+        {
+            return $@"static _ => Get{property.Name}DefaultValue()";
+        }
+
+        return $@"static () => Get{property.Name}DefaultValue()";
     }
 
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property)
@@ -479,6 +496,13 @@ namespace {@class.Namespace}
             case Platform.Uno:
             case Platform.UnoWinUI:
                 var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
+                if (property.CreateDefaultValueCallback)
+                {
+                    return $@"{parameterName}: {type}.Create(
+                    createDefaultValueCallback: {GenerateCreateDefaultValueCallbackValueCallback(property)},
+                    propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
+                }
+
                 return $@"{parameterName}: {type}.Create(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
@@ -616,11 +640,11 @@ namespace {@class.Namespace}
             declaringType: typeof({GenerateType(@class.FullName, false)}),
             defaultValue: {GenerateDefaultValue(property)},
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{(property.IsReadOnly ? "OneWayToSource" : "OneWay")},
-            validateValue: {GenerateValidateValueCallback(@class, property)},
+            validateValue: {GenerateValidateValueCallback(property)},
             propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
             propertyChanging: null,
             coerceValue: {GenerateCoerceValueCallback(@class, property)},
-            defaultValueCreator: null";
+            defaultValueCreator: {GenerateCreateDefaultValueCallbackValueCallback(property)}";
     }
 
     public static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
@@ -636,7 +660,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
+                validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
         return @$"
@@ -665,7 +689,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
+                validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
         return @$"
@@ -841,6 +865,16 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }
 
         return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
+    }
+
+    public static string GenerateCreateDefaultValueCallbackPartialMethod(DependencyPropertyData property)
+    {
+        if (!property.CreateDefaultValueCallback)
+        {
+            return " ";
+        }
+
+        return $"        private static partial {GenerateType(property)} Get{property.Name}DefaultValue();";
     }
 
     public static string GenerateOnChangedMethodDeclaration(string name, DependencyPropertyData property)

@@ -16,7 +16,7 @@ namespace H.Generators.IntegrationTests
             declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
             defaultValue: (string)"",
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: static (sender, value) =>
+            validateValue: static (_, value) =>
                     IsNotNullStringPropertyValid(
                         (string?)value),
             propertyChanged: static (sender, oldValue, newValue) =>

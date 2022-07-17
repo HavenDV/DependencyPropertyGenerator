@@ -279,6 +279,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         .Replace("SourceTrigger.", string.Empty);
                     var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Coerce)) ?? bool.FalseString;
                     var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Validate)) ?? bool.FalseString;
+                    var createDefaultValueCallback = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CreateDefaultValueCallback)) ?? bool.FalseString;
 
                     var value = new DependencyPropertyData(
                         Name: name,
@@ -325,7 +326,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsAnimationProhibited: bool.Parse(isAnimationProhibited),
                         DefaultUpdateSourceTrigger: defaultUpdateSourceTrigger,
                         Coerce: bool.Parse(coerce),
-                        Validate: bool.Parse(validate));
+                        Validate: bool.Parse(validate),
+                        CreateDefaultValueCallback: bool.Parse(createDefaultValueCallback));
 
                     if (attributeClass.StartsWith(OverrideMetadataAttribute))
                     {

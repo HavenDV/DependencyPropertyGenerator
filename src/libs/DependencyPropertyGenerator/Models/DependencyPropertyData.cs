@@ -38,4 +38,5 @@ public readonly record struct DependencyPropertyData(
     bool IsAnimationProhibited,
     string? DefaultUpdateSourceTrigger,
     bool Coerce,
-    bool Validate);
+    bool Validate,
+    bool CreateDefaultValueCallback);
