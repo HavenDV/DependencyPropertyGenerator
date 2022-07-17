@@ -108,7 +108,8 @@ namespace {@class.Namespace}
         }
         if (@class.Platform == Platform.WPF)
         {
-            return @$"#nullable enable
+            return @$" 
+#nullable enable
 
 namespace {@class.Namespace}
 {{
@@ -189,7 +190,9 @@ namespace {@class.Namespace}
     
     public static string GenerateRoutedEvent(ClassData @class, RoutedEventData @event)
     {
-        return @$"
+        if (@class.Platform == Platform.WPF)
+        {
+            return @$" 
 #nullable enable
 
 namespace {@class.Namespace}
@@ -216,10 +219,37 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        protected {GenerateRoutedEventArgsType(@class)} Raise{@event.Name}Event()
+        protected {GenerateRoutedEventArgsType(@class)} On{@event.Name}()
         {{
             var args = new {GenerateRoutedEventArgsType(@class)}({@event.Name}Event);
             this.RaiseEvent(args);
+
+            return args;
+        }}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+        }
+
+        // According https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh972883(v=vs.140)
+        return @$" 
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+{GenerateCategoryAttribute(@event.Category)}
+{GenerateDescriptionAttribute(@event.Description)}
+        public event {GenerateRouterEventType(@class, @event)}? {@event.Name};
+
+        /// <summary>
+        /// A helper method to raise the {@event.Name} event.
+        /// </summary>
+        protected {GenerateRoutedEventArgsType(@class)} On{@event.Name}()
+        {{
+            var args = new {GenerateRoutedEventArgsType(@class)}();
+            {@event.Name}?.Invoke(this, args);
 
             return args;
         }}

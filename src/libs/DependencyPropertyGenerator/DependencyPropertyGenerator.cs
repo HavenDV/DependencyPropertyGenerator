@@ -88,15 +88,23 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
                 }
-                if ((platform == Platform.UWP ||
+                if (platform == Platform.UWP ||
                     platform == Platform.WinUI ||
                     platform == Platform.Uno ||
-                    platform == Platform.UnoWinUI) &&
-                    @class.OverrideMetadata.Any())
+                    platform == Platform.UnoWinUI)
                 {
-                    context.AddTextSource(
-                        hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
-                        text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
+                    if (@class.OverrideMetadata.Any())
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
+                            text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
+                    }
+                    foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                    }
                 }
                 if (platform == Platform.WPF)
                 {

@@ -1,5 +1,4 @@
 ﻿//HintName: MyControl.Events.TrayLeftMouseDown.generated.cs
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -26,7 +25,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the TrayLeftMouseDown event.
         /// </summary>
-        protected global::System.Windows.RoutedEventArgs RaiseTrayLeftMouseDownEvent()
+        protected global::System.Windows.RoutedEventArgs OnTrayLeftMouseDown()
         {
             var args = new global::System.Windows.RoutedEventArgs(TrayLeftMouseDownEvent);
             this.RaiseEvent(args);
