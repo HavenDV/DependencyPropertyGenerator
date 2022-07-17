@@ -9,7 +9,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        private static readonly global::System.Windows.DependencyPropertyKey AttachedReadOnlyPropertyPropertyKey =
+        internal static readonly global::System.Windows.DependencyPropertyKey AttachedReadOnlyPropertyPropertyKey =
             global::System.Windows.DependencyProperty.RegisterAttachedReadOnly(
                 name: "AttachedReadOnlyProperty",
                 propertyType: typeof(object),

@@ -117,7 +117,13 @@ namespace {@class.Namespace}
     {{
         static {@class.Name}()
         {{
-{properties.Select(property => @$"
+{properties.Where(static property => property.IsReadOnly).Select(property => @$"
+            {property.Name}Property.OverrideMetadata(
+                forType: typeof({GenerateType(@class.FullName, false)}),
+                {GeneratePropertyMetadata(@class, property)},
+                key: {property.Name}PropertyKey);
+").Inject()}
+{properties.Where(static property => !property.IsReadOnly).Select(property => @$"
             {property.Name}Property.OverrideMetadata(
                 forType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)});
@@ -788,27 +794,26 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     public static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
     {
-        if ((property.Platform != Platform.WPF &&
-            property.Platform != Platform.MAUI) ||
-            !property.IsReadOnly)
+        if (!property.IsReadOnly)
         {
             return " ";
         }
 
-        if (property.Platform == Platform.MAUI)
+        return property.Platform switch
         {
-            return $@" 
+            Platform.MAUI => $@" 
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateTypeByPlatform(property.Platform, "BindableProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.DependencyProperty;
-";
-        }
-
-        return $@" 
+",
+            // https://docs.microsoft.com/en-us/dotnet/api/system.windows.dependencypropertykey?view=windowsdesktop-6.0#examples
+            Platform.WPF => $@" 
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.DependencyProperty;
-";
+",
+            _ => " ",
+        };
     }
 
     public static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
@@ -822,7 +827,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
     {
         if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
-            return "private";
+            return "internal";
         }
 
         return "public";

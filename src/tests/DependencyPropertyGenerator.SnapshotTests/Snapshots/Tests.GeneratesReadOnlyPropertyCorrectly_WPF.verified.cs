@@ -9,7 +9,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
-        private static readonly global::System.Windows.DependencyPropertyKey ReadOnlyPropertyPropertyKey =
+        internal static readonly global::System.Windows.DependencyPropertyKey ReadOnlyPropertyPropertyKey =
             global::System.Windows.DependencyProperty.RegisterReadOnly(
                 name: "ReadOnlyProperty",
                 propertyType: typeof(bool),
