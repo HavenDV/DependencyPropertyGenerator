@@ -64,6 +64,7 @@ namespace H.Generators.IntegrationTests;
                 .ReplaceType("UIElement", "Avalonia.Input.InputElement")
                 .ReplaceType("FrameworkElement", "Avalonia.Controls.Control")
                 .Replace("static partial class", "partial class")
+                .Replace("Brush", "IBrush")
                 .Replace("PointerEntered", "PointerEnter")
                 .Replace("PointerExited", "PointerLeave")
                 .Replace("PointerRoutedEventArgs", "PointerEventArgs");
@@ -72,8 +73,10 @@ namespace H.Generators.IntegrationTests;
         {
             source = source
                 .Replace("Microsoft.Maui.Input", "Microsoft.Maui.Controls")
+                .Replace("using Microsoft.Maui.Media;", string.Empty)
                 .ReplaceType("UIElement", "Microsoft.Maui.Controls.VisualElement")
                 .ReplaceType("FrameworkElement", "Microsoft.Maui.Controls.VisualElement")
+                .ReplaceType("TextBox", "Microsoft.Maui.Controls.Entry")
                 .Replace("KeyUp", "SizeChanged")
                 .Replace("KeyEventArgs", "global::System.EventArgs")
                 .Replace("PointerEntered", "Loaded")

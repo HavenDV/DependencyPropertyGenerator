@@ -19,6 +19,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private const string DependencyPropertyAttribute = "DependencyPropertyGenerator.DependencyPropertyAttribute";
     private const string RoutedEventAttribute = "DependencyPropertyGenerator.RoutedEventAttribute";
     private const string OverrideMetadataAttribute = "DependencyPropertyGenerator.OverrideMetadataAttribute";
+    private const string AddOwnerAttribute = "DependencyPropertyGenerator.AddOwnerAttribute";
 
     #endregion
 
@@ -114,6 +115,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
+                    foreach (var addOwner in @class.AddOwner)
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.AddOwner.{addOwner.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
+                    }
                 }
                 if (platform == Platform.WPF)
                 {
@@ -122,6 +129,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         context.AddTextSource(
                             hintName: $"{@class.Name}.StaticConstructor.generated.cs",
                             text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
+                    }
+                    foreach (var addOwner in @class.AddOwner)
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.AddOwner.{addOwner.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
                     }
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
@@ -182,6 +195,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var attachedDependencyProperties = new List<DependencyPropertyData>();
             var routedEvents = new List<RoutedEventData>();
             var overrideMetadata = new List<DependencyPropertyData>();
+            var addOwner = new List<DependencyPropertyData>();
             var attributes = @classSymbol.GetAttributes()
                 .Where(IsGeneratorAttribute)
                 .Where(static attribute => attribute.ConstructorArguments.ElementAtOrDefault(0).Value is string)
@@ -192,6 +206,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, compilation.GetSemanticModel(attributeSyntax.SyntaxTree))))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
+                if (name.Contains("nameof("))
+                {
+                    name = name
+                        .Substring(name.LastIndexOf('.') + 1)
+                        .TrimEnd(')', ' ');
+                }
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(RoutedEventAttribute))
@@ -245,6 +265,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var browsableForType =
                         GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
                         GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value?.ToString();
+                    var fromType =
+                        GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
+                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.FromType))?.Value?.ToString();
                     var isBrowsableForTypeSpecialType =
                         IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
                         IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value as ITypeSymbol) ??
@@ -300,6 +323,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         DefaultValueDocumentation: defaultValueDocumentation,
                         IsReadOnly: bool.Parse(isReadOnly),
                         IsAttached: isAttached,
+                        IsAddOwner: attributeClass.StartsWith(AddOwnerAttribute),
                         Platform: platform,
                         Description: description,
                         Category: category,
@@ -310,6 +334,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         CLSCompliant: clsCompliant,
                         Localizability: localizability,
                         BrowsableForType: browsableForType,
+                        FromType: fromType,
                         IsBrowsableForTypeSpecialType: isBrowsableForTypeSpecialType,
                         XmlDocumentation: xmlDocumentation,
                         GetterXmlDocumentation: getterXmlDocumentation ?? propertyXmlDocumentation,
@@ -343,6 +368,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     {
                         overrideMetadata.Add(value);
                     }
+                    else if (attributeClass.StartsWith(AddOwnerAttribute))
+                    {
+                        addOwner.Add(value);
+                    }
                     else if (isAttached)
                     {
                         attachedDependencyProperties.Add(value);
@@ -363,7 +392,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 DependencyProperties: dependencyProperties,
                 AttachedDependencyProperties: attachedDependencyProperties,
                 RoutedEvents: routedEvents,
-                OverrideMetadata: overrideMetadata));
+                OverrideMetadata: overrideMetadata,
+                AddOwner: addOwner));
         }
 
         return values;
@@ -375,7 +405,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             fullTypeName.StartsWith(AttachedDependencyPropertyAttribute) ||
             fullTypeName.StartsWith(DependencyPropertyAttribute) ||
             fullTypeName.StartsWith(RoutedEventAttribute) ||
-            fullTypeName.StartsWith(OverrideMetadataAttribute);
+            fullTypeName.StartsWith(OverrideMetadataAttribute) ||
+            fullTypeName.StartsWith(AddOwnerAttribute);
     }
 
     private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)

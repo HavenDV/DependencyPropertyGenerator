@@ -9,4 +9,5 @@ public readonly record struct ClassData(
     IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
     IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties,
     IReadOnlyCollection<RoutedEventData> RoutedEvents,
-    IReadOnlyCollection<DependencyPropertyData> OverrideMetadata);
+    IReadOnlyCollection<DependencyPropertyData> OverrideMetadata,
+    IReadOnlyCollection<DependencyPropertyData> AddOwner);

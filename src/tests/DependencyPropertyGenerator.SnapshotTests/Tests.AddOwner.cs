@@ -1,0 +1,19 @@
+﻿namespace H.Generators.SnapshotTests;
+
+public partial class Tests : VerifyBase
+{
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task AddOwner(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, string.Empty, "Media", "Controls") + @"
+[AddOwner<Brush, Border>(nameof(Border.Background))]
+public partial class UnrelatedStateControl : UIElement
+{
+}", platform);
+    }
+}

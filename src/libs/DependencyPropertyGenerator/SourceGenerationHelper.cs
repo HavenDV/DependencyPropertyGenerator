@@ -16,8 +16,7 @@ namespace {@class.Namespace}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(property)} {GenerateDependencyPropertyName(property)} =
-            {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
-                {GenerateRegisterMethodArguments(@class, property)});
+            {GenerateDependencyPropertyCreateCall(@class, property)}
 
 {GenerateAdditionalPropertyForReadOnlyProperties(property)}
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
@@ -42,6 +41,28 @@ namespace {@class.Namespace}
 {GenerateBindEventMethod(property)}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
+    public static string GenerateDependencyPropertyCreateCall(ClassData @class, DependencyPropertyData property)
+    {
+        if (property.IsAddOwner)
+        {
+            if (@class.Platform == Platform.Avalonia)
+            {
+                return @$"
+            {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>();";
+            }
+            return @$"
+            {GenerateFromType(property)}.{property.Name}Property.AddOwner(
+                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                {GeneratePropertyMetadata(@class, property)});
+ ".RemoveBlankLinesWhereOnlyWhitespaces();
+        }
+
+        return @$"
+            {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
+                {GenerateRegisterMethodArguments(@class, property)});
+ ".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
     public static string GenerateRegisterPropertyChangedCallbacksMethod(
@@ -460,6 +481,12 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property)
     {
+        if (property.IsAddOwner &&
+            property.DefaultValue == null)
+        {
+            return "null";
+        }
+
         var parameterName = (@class.Platform, property.IsAttached) switch
         {
             (Platform.WPF, true) or (Platform.UWP, true) or (Platform.WinUI, true) => "defaultMetadata",
@@ -814,6 +841,11 @@ namespace {@class.Namespace}
         return property.DefaultValue != null 
             ? $"({type}){property.DefaultValue}"
             : $"default({type})";
+    }
+
+    public static string? GenerateFromType(DependencyPropertyData property)
+    {
+        return property.FromType?.WithGlobalPrefix();
     }
 
     public static string GenerateBrowsableForType(DependencyPropertyData property)
