@@ -6,8 +6,8 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
-    //[DataRow(Platform.Avalonia)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task OverrideMetadata(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, string.Empty, "System") + @"
@@ -28,8 +28,8 @@ public partial class TropicalAquarium : Aquarium
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
-    //[DataRow(Platform.Avalonia)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task OverrideMetadataForReadOnlyProperty(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, string.Empty, "System") + @"

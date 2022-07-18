@@ -4,8 +4,6 @@ public partial class Tests : VerifyBase
 {
     [DataTestMethod]
     [DataRow(Platform.WPF)]
-    //[DataRow(Platform.UWP)]
-    //[DataRow(Platform.WinUI)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]

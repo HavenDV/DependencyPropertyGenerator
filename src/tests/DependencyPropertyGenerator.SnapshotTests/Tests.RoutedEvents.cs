@@ -6,6 +6,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task RoutedEvent(Platform platform)
     {
@@ -20,6 +21,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task AttachedRoutedEvent(Platform platform)
     {

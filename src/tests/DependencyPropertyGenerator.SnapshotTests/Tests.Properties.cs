@@ -100,8 +100,8 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
-    //[DataRow(Platform.Avalonia)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task WithOtherAttributes2(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
@@ -207,7 +207,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task BindEvents(Platform platform)
     {

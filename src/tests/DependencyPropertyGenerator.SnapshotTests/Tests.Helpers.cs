@@ -58,8 +58,12 @@ namespace H.Generators.IntegrationTests;
         if (platform == Platform.Avalonia)
         {
             source = source
+                .ReplaceType("DispatcherObject", "Avalonia.AvaloniaObject")
+                .ReplaceType("DependencyObject", "Avalonia.AvaloniaObject")
+                .ReplaceType("Visual", "Avalonia.Interactivity.Interactive")
+                .ReplaceType("UIElement", "Avalonia.Input.InputElement")
+                .ReplaceType("FrameworkElement", "Avalonia.Controls.Control")
                 .Replace("static partial class", "partial class")
-                .Replace("UIElement", "InputElement")
                 .Replace("PointerEntered", "PointerEnter")
                 .Replace("PointerExited", "PointerLeave")
                 .Replace("PointerRoutedEventArgs", "PointerEventArgs");
@@ -67,6 +71,14 @@ namespace H.Generators.IntegrationTests;
         if (platform == Platform.MAUI)
         {
             source = source
+                .Replace("Microsoft.Maui.Input", "Microsoft.Maui.Controls")
+                .ReplaceType("UIElement", "Microsoft.Maui.Controls.VisualElement")
+                .ReplaceType("FrameworkElement", "Microsoft.Maui.Controls.VisualElement")
+                .Replace("KeyUp", "SizeChanged")
+                .Replace("KeyEventArgs", "global::System.EventArgs")
+                .Replace("PointerEntered", "Loaded")
+                .Replace("PointerExited", "Unloaded")
+                .Replace("PointerRoutedEventArgs", "global::System.EventArgs")
                 .Replace("MyControl", "MyGrid")
                 .Replace("UserControl", "Grid")
                 .Replace("TreeView", "Grid");
@@ -149,5 +161,16 @@ namespace H.Generators.IntegrationTests;
             Verify(driver)
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{platform}"));
+    }
+}
+
+internal static class StrinExtensions
+{
+    internal static string ReplaceType(this string source, string from, string to)
+    {
+        return source
+            .Replace($": {from}", $": global::{to}")
+            .Replace($"{from}.", $"global::{to}.")
+            .Replace($", {from}", $", global::{to}");
     }
 }

@@ -9,15 +9,26 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static readonly global::Avalonia.StyledProperty<object?> BindEventsPropertyProperty =
-            global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.MyUIElement, object?>(
-                name: "BindEventsProperty",
-                defaultValue: default(object),
-                inherits: false,
-                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
-                validate: null,
-                coerce: null,
-                notifying: null);
+        public static readonly global::Microsoft.Maui.Controls.BindableProperty BindEventsPropertyProperty =
+            global::Microsoft.Maui.Controls.BindableProperty.Create(
+            propertyName: "BindEventsProperty",
+            returnType: typeof(object),
+            declaringType: typeof(global::H.Generators.IntegrationTests.MyUIElement),
+            defaultValue: default(object),
+            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+            validateValue: null,
+            propertyChanged: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged();
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged(
+                    (object?)newValue);
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged(
+                    (object?)oldValue,
+                    (object?)newValue);
+            },
+            propertyChanging: null,
+            coerceValue: null,
+            defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(object)
@@ -49,13 +60,13 @@ namespace H.Generators.IntegrationTests
 
             if (oldValue is not default(object))
             {
-                this.PointerEnter -= OnBindEventsPropertyChanged_PointerEnter;
-                this.PointerLeave -= OnBindEventsPropertyChanged_PointerLeave;
+                this.Loaded -= OnBindEventsPropertyChanged_Loaded;
+                this.Unloaded -= OnBindEventsPropertyChanged_Unloaded;
             }
             if (newValue is not default(object))
             {
-                this.PointerEnter += OnBindEventsPropertyChanged_PointerEnter;
-                this.PointerLeave += OnBindEventsPropertyChanged_PointerLeave;
+                this.Loaded += OnBindEventsPropertyChanged_Loaded;
+                this.Unloaded += OnBindEventsPropertyChanged_Unloaded;
             }
 
             OnBindEventsPropertyChanged_AfterBind(
