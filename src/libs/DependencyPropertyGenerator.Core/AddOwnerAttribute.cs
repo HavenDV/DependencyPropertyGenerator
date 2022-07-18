@@ -40,6 +40,12 @@ public sealed class AddOwnerAttribute : Attribute
     public bool IsReadOnly { get; set; }
 
     /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -277,6 +283,12 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
     /// Default - <see langword="false"/>.
     /// </summary>
     public bool IsReadOnly { get; set; }
+
+    /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
 
     /// <summary>
     /// Description of this dependency property. <br/>

@@ -273,6 +273,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value as ITypeSymbol) ??
                         false;
                     var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsReadOnly)) ?? bool.FalseString;
+                    var isDirect = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsDirect)) ?? bool.FalseString;
                     var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttribute);
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
@@ -314,6 +315,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         .Replace("global::DependencyPropertyGenerator.DefaultBindingMode.", string.Empty)
                         .Replace("DefaultBindingMode.SourceTrigger.", string.Empty)
                         .Replace("DefaultBindingMode.", string.Empty);
+                    var enableDataValidation = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.EnableDataValidation)) ?? bool.FalseString;
                     var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Coerce)) ?? bool.FalseString;
                     var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Validate)) ?? bool.FalseString;
                     var createDefaultValueCallback = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CreateDefaultValueCallback)) ?? bool.FalseString;
@@ -326,6 +328,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         DefaultValue: defaultValue,
                         DefaultValueDocumentation: defaultValueDocumentation,
                         IsReadOnly: bool.Parse(isReadOnly),
+                        IsDirect: bool.Parse(isDirect),
                         IsAttached: isAttached,
                         IsAddOwner: attributeClass.StartsWith(AddOwnerAttribute),
                         Platform: platform,
@@ -365,6 +368,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsAnimationProhibited: bool.Parse(isAnimationProhibited),
                         DefaultUpdateSourceTrigger: defaultUpdateSourceTrigger,
                         DefaultBindingMode: defaultBindingMode,
+                        EnableDataValidation: bool.Parse(enableDataValidation),
                         Coerce: bool.Parse(coerce),
                         Validate: bool.Parse(validate),
                         CreateDefaultValueCallback: bool.Parse(createDefaultValueCallback));

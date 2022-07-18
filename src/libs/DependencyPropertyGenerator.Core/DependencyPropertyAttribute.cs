@@ -40,6 +40,12 @@ public sealed class DependencyPropertyAttribute : Attribute
     public bool IsReadOnly { get; set; }
 
     /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -195,12 +201,19 @@ public sealed class DependencyPropertyAttribute : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
+    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool EnableDataValidation { get; set; }
+
+    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created.
+    /// WPF: partial method for validateValueCallback will be created. <br/>
+    /// Default - <see langword="false"/>.
     /// </summary>
     public bool Validate { get; set; }
 
@@ -263,6 +276,12 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public bool IsReadOnly { get; set; }
 
     /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
@@ -418,12 +437,19 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
+    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool EnableDataValidation { get; set; }
+
+    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created.
+    /// WPF: partial method for validateValueCallback will be created. <br/>
+    /// Default - <see langword="false"/>.
     /// </summary>
     public bool Validate { get; set; }
 

@@ -8,6 +8,7 @@ public readonly record struct DependencyPropertyData(
     string? DefaultValue,
     string? DefaultValueDocumentation,
     bool IsReadOnly,
+    bool IsDirect,
     bool IsAttached,
     bool IsAddOwner,
     Platform Platform,
@@ -40,6 +41,7 @@ public readonly record struct DependencyPropertyData(
     bool IsAnimationProhibited,
     string? DefaultUpdateSourceTrigger,
     string? DefaultBindingMode,
+    bool EnableDataValidation,
     bool Coerce,
     bool Validate,
     bool CreateDefaultValueCallback);

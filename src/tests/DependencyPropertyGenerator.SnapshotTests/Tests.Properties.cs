@@ -224,6 +224,36 @@ public partial class MyGrid : Grid
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
+    public Task Direct(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<bool>(""IsSpinning"", IsDirect = true)]
+public partial class MyGrid : Grid
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task DirectReadOnly(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<bool>(""IsSpinning"", IsDirect = true, IsReadOnly = true, EnableDataValidation = true)]
+public partial class MyGrid : Grid
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task BindEvents(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"

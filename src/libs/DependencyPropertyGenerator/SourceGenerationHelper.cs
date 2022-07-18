@@ -15,9 +15,10 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
-        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(property)} {GenerateDependencyPropertyName(property)} =
+        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateDependencyPropertyCreateCall(@class, property)}
 
+{GenerateAdditionalFieldForDirectProperties(property)}
 {GenerateAdditionalPropertyForReadOnlyProperties(property)}
 {GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
 {GenerateCategoryAttribute(property.Category)}
@@ -30,8 +31,8 @@ namespace {@class.Namespace}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
         {{
-            get => ({GenerateType(property)})GetValue({property.Name}Property);
-            {GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);
+            {GenerateGetter(property)}
+            {GenerateSetter(property)}
         }}
 
 {GenerateOnChangedMethods(property)}
@@ -44,12 +45,49 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
+    public static string GenerateGetter(DependencyPropertyData property)
+    {
+        if (property.IsDirect && property.Platform == Platform.Avalonia)
+        {
+            return @$"get => _{property.Name.ToParameterName()};";
+        }
+
+        return @$"get => ({GenerateType(property)})GetValue({property.Name}Property);";
+    }
+
+    public static string GenerateSetter(DependencyPropertyData property)
+    {
+        if (property.IsDirect && property.Platform == Platform.Avalonia)
+        {
+            return @$"private set
+            {{
+                var oldValue = _{property.Name.ToParameterName()};
+                SetAndRaise({property.Name}Property, ref _{property.Name.ToParameterName()}, value);
+                On{property.Name}Changed();
+                On{property.Name}Changed(
+                    ({GenerateType(property)})value);
+                On{property.Name}Changed(
+                    ({GenerateType(property)})oldValue,
+                    ({GenerateType(property)})value);
+            }}";
+        }
+
+        return @$"{GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);";
+    }
+
     public static string GenerateDependencyPropertyCreateCall(ClassData @class, DependencyPropertyData property)
     {
         if (property.IsAddOwner)
         {
             if (@class.Platform == Platform.Avalonia)
             {
+                if (property.IsDirect)
+                {
+                    return @$"
+            {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>(
+                {GenerateAvaloniaRegisterMethodArguments(@class, property)});";
+                }
+
                 return @$"
             {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>();";
             }
@@ -172,7 +210,7 @@ namespace {@class.Namespace}
     public{GenerateModifiers(@class)} partial class {@class.Name}{GenerateBaseType(@class)}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
-        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(property)} {GenerateDependencyPropertyName(property)} =
+        {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
                 {GenerateRegisterAttachedMethodArguments(@class, property)});
 
@@ -669,7 +707,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
     }
 
-    public static string GeneratePropertyType(DependencyPropertyData property)
+    public static string GeneratePropertyType(ClassData @class, DependencyPropertyData property)
     {
         if (property.Platform == Platform.MAUI)
         {
@@ -681,13 +719,17 @@ namespace {@class.Namespace}
         }
         if (property.Platform == Platform.Avalonia)
         {
-            return property.IsAttached
+            return property.IsDirect
                 ? GenerateTypeByPlatform(
                     property.Platform,
-                    $"AttachedProperty<{GenerateType(property)}>")
-                : GenerateTypeByPlatform(
-                    property.Platform,
-                    $"StyledProperty<{GenerateType(property)}>");
+                    $"DirectProperty<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>")
+                : property.IsAttached
+                    ? GenerateTypeByPlatform(
+                        property.Platform,
+                        $"AttachedProperty<{GenerateType(property)}>")
+                    : GenerateTypeByPlatform(
+                        property.Platform,
+                        $"StyledProperty<{GenerateType(property)}>");
         }
         if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
@@ -739,9 +781,11 @@ namespace {@class.Namespace}
         }
         if (property.Platform == Platform.Avalonia)
         {
-            return property.IsAttached
-                ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
-                : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
+            return property.IsDirect
+                ? $"RegisterDirect<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>"
+                : property.IsAttached
+                    ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
+                    : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
         }
         if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
@@ -782,6 +826,27 @@ namespace {@class.Namespace}
         var defaultBindingMode = property.DefaultBindingMode is null or "Default"
             ? "OneWay"
             : property.DefaultBindingMode;
+
+        if (property.IsDirect && property.IsAddOwner)
+        {
+            return $@"
+                getter: static sender => sender.{property.Name},
+                setter: {(property.IsReadOnly ? "null" : $"static (sender, value) => sender.{property.Name} = value")},
+                unsetValue: {GenerateDefaultValue(property)},
+                defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
+                enableDataValidation: {(property.EnableDataValidation ? "true" : "false")}";
+        }
+
+        if (property.IsDirect)
+        {
+            return $@"
+                name: ""{property.Name}"",
+                getter: static sender => sender.{property.Name},
+                setter: {(property.IsReadOnly ? "null" : $"static (sender, value) => sender.{property.Name} = value")},
+                unsetValue: {GenerateDefaultValue(property)},
+                defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
+                enableDataValidation: {(property.EnableDataValidation ? "true" : "false")}";
+        }
 
         if (property.IsAttached)
         {
@@ -1017,6 +1082,22 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
     }
 
+    public static string GenerateAdditionalFieldForDirectProperties(DependencyPropertyData property)
+    {
+        if (!property.IsDirect)
+        {
+            return " ";
+        }
+
+        return property.Platform switch
+        {
+            Platform.Avalonia => $@" 
+        private {GenerateType(property)} _{property.Name.ToParameterName()} = {GenerateDefaultValue(property)};
+",
+            _ => " ",
+        };
+    }
+
     public static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
     {
         if (!property.IsReadOnly)
@@ -1043,9 +1124,11 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     public static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
     {
-        return property.IsReadOnly
-            ? "protected "
-            : string.Empty;
+        return property.IsDirect && property.Platform == Platform.Avalonia
+            ? "private "
+            : property.IsReadOnly
+                ? "protected "
+                : string.Empty;
     }
 
     public static string GeneratePropertyModifier(DependencyPropertyData property)
