@@ -39,6 +39,7 @@ public readonly record struct DependencyPropertyData(
     bool SubPropertiesDoNotAffectRender,
     bool IsAnimationProhibited,
     string? DefaultUpdateSourceTrigger,
+    string? DefaultBindingMode,
     bool Coerce,
     bool Validate,
     bool CreateDefaultValueCallback);

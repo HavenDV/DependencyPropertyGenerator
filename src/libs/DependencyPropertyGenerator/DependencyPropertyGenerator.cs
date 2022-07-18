@@ -310,6 +310,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         .Replace("global::DependencyPropertyGenerator.SourceTrigger.", string.Empty)
                         .Replace("DependencyPropertyGenerator.SourceTrigger.", string.Empty)
                         .Replace("SourceTrigger.", string.Empty);
+                    var defaultBindingMode = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultBindingMode))?
+                        .Replace("global::DependencyPropertyGenerator.DefaultBindingMode.", string.Empty)
+                        .Replace("DefaultBindingMode.SourceTrigger.", string.Empty)
+                        .Replace("DefaultBindingMode.", string.Empty);
                     var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Coerce)) ?? bool.FalseString;
                     var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Validate)) ?? bool.FalseString;
                     var createDefaultValueCallback = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CreateDefaultValueCallback)) ?? bool.FalseString;
@@ -360,6 +364,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         SubPropertiesDoNotAffectRender: bool.Parse(subPropertiesDoNotAffectRender),
                         IsAnimationProhibited: bool.Parse(isAnimationProhibited),
                         DefaultUpdateSourceTrigger: defaultUpdateSourceTrigger,
+                        DefaultBindingMode: defaultBindingMode,
                         Coerce: bool.Parse(coerce),
                         Validate: bool.Parse(validate),
                         CreateDefaultValueCallback: bool.Parse(createDefaultValueCallback));

@@ -209,6 +209,21 @@ public partial class MyControl : UserControl
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
+    public Task DefaultBindingMode(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[DependencyProperty<bool>(""IsSpinning"", DefaultBindingMode = DefaultBindingMode.OneTime)]
+public partial class MyGrid : Grid
+{
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task BindEvents(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"

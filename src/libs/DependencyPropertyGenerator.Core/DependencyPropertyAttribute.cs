@@ -189,6 +189,12 @@ public sealed class DependencyPropertyAttribute : Attribute
     public SourceTrigger DefaultUpdateSourceTrigger { get; set; }
 
     /// <summary>
+    /// Avalonia/MAUI: Default BindingMode. <br/>
+    /// Default - <see cref="DefaultBindingMode.Default"/>.
+    /// </summary>
+    public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
+
+    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
@@ -404,6 +410,12 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// System.Windows.Data.UpdateSourceTrigger.Default.
     /// </summary>
     public SourceTrigger DefaultUpdateSourceTrigger { get; set; }
+
+    /// <summary>
+    /// Avalonia/MAUI: Default BindingMode. <br/>
+    /// Default - <see cref="DefaultBindingMode.Default"/>.
+    /// </summary>
+    public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.

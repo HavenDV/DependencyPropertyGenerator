@@ -757,12 +757,18 @@ namespace {@class.Namespace}
 
     public static string GenerateMauiRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
+        var defaultBindingMode = property.DefaultBindingMode is null or "Default"
+            ? property.IsReadOnly
+                ? "OneWayToSource"
+                : "OneWay"
+            : property.DefaultBindingMode;
+
         return @$"
             propertyName: ""{property.Name}"",
             returnType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
             declaringType: typeof({GenerateType(@class.FullName, false)}),
             defaultValue: {GenerateDefaultValue(property)},
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{(property.IsReadOnly ? "OneWayToSource" : "OneWay")},
+            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{defaultBindingMode},
             validateValue: {GenerateValidateValueCallback(property)},
             propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
             propertyChanging: {GeneratePropertyChangingCallback(@class, property)},
@@ -773,13 +779,17 @@ namespace {@class.Namespace}
     // https://docs.avaloniaui.net/docs/authoring-controls/defining-properties
     public static string GenerateAvaloniaRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
+        var defaultBindingMode = property.DefaultBindingMode is null or "Default"
+            ? "OneWay"
+            : property.DefaultBindingMode;
+
         if (property.IsAttached)
         {
             return $@"
                 name: ""{property.Name}"",
                 defaultValue: {GenerateDefaultValue(property)},
                 inherits: {(property.Inherits ? "true" : "false")},
-                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
                 validate: {GenerateValidateValueCallback(property)},
                 coerce: {GenerateCoerceValueCallback(@class, property)}";
         }
@@ -788,7 +798,7 @@ namespace {@class.Namespace}
                 name: ""{property.Name}"",
                 defaultValue: {GenerateDefaultValue(property)},
                 inherits: {(property.Inherits ? "true" : "false")},
-                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
                 validate: {GenerateValidateValueCallback(property)},
                 coerce: {GenerateCoerceValueCallback(@class, property)},
                 notifying: null";
