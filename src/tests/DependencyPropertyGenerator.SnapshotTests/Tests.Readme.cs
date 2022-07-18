@@ -9,6 +9,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task ReadmeExample(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"

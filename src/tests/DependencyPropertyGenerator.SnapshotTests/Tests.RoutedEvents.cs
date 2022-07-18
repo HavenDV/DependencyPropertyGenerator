@@ -6,6 +6,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.Avalonia)]
     public Task RoutedEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -19,6 +20,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.Avalonia)]
     public Task AttachedRoutedEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"

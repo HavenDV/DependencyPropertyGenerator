@@ -198,7 +198,8 @@ namespace {@class.Namespace}
     
     public static string GenerateRoutedEvent(ClassData @class, RoutedEventData @event)
     {
-        if (@class.Platform == Platform.WPF)
+        // https://docs.avaloniaui.net/docs/input/routed-events
+        if (@class.Platform == Platform.WPF || @class.Platform == Platform.Avalonia)
         {
             return @$" 
 #nullable enable
@@ -209,11 +210,8 @@ namespace {@class.Namespace}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
-            {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
-                name: ""{@event.Name}"",
-                routingStrategy: ({GenerateRoutingStrategyType(@class)}){@event.Strategy},
-                handlerType: typeof({GenerateRouterEventType(@class, @event)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}));
+            {GenerateEventManagerType(@class)}.{GenerateRegisterMethod(@class)}(
+                {GenerateRegisterRoutedEventMethodArguments(@class, @event)});
 
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
@@ -238,7 +236,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
         }
 
-        // According https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh972883(v=vs.140)
+        // https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh972883(v=vs.140)
         return @$" 
 #nullable enable
 
@@ -276,11 +274,8 @@ namespace {@class.Namespace}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
-            {GenerateEventManagerType(@class)}.RegisterRoutedEvent(
-                name: ""{@event.Name}"",
-                routingStrategy: ({GenerateRoutingStrategyType(@class)}){@event.Strategy},
-                handlerType: typeof({GenerateRouterEventType(@class, @event)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}));
+            {GenerateEventManagerType(@class)}.{GenerateRegisterMethod(@class)}(
+                {GenerateRegisterRoutedEventMethodArguments(@class, @event)});
 
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
@@ -539,26 +534,51 @@ namespace {@class.Namespace}
 
     public static string GenerateRoutedEventType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $"{GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEvent")}<{GenerateRoutedEventArgsType(@class)}>";
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "RoutedEvent");
     }
 
     public static string GenerateRoutedEventArgsType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEventArgs");
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "RoutedEventArgs");
     }
 
     public static string GenerateRoutedEventHandlerType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $"global::System.EventHandler<{GenerateRoutedEventArgsType(@class)}>";
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "RoutedEventHandler");
     }
 
     public static string GenerateEventManagerType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEvent");
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "EventManager");
     }
 
     public static string GenerateRoutingStrategyType(ClassData @class)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateTypeByPlatform(@class.Platform, $"Interactivity.RoutingStrategies");
+        }
+
         return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
     }
 
@@ -574,9 +594,13 @@ namespace {@class.Namespace}
         }
         if (property.Platform == Platform.Avalonia)
         {
-            return GenerateTypeByPlatform(
-                property.Platform,
-                $"AttachedProperty<{GenerateType(property)}>");
+            return property.IsAttached
+                ? GenerateTypeByPlatform(
+                    property.Platform,
+                    $"AttachedProperty<{GenerateType(property)}>")
+                : GenerateTypeByPlatform(
+                    property.Platform,
+                    $"StyledProperty<{GenerateType(property)}>");
         }
         if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
@@ -604,6 +628,16 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
     }
 
+    public static string GenerateRegisterMethod(ClassData @class)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return $"Register<{GenerateType(@class.FullName, false)}, {GenerateRoutedEventArgsType(@class)}>";
+        }
+
+        return "RegisterRoutedEvent";
+    }
+
     public static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
     {
         if (property.Platform == Platform.MAUI)
@@ -616,9 +650,11 @@ namespace {@class.Namespace}
                     ? "CreateReadOnly"
                     : "Create";
         }
-        if (property.IsAttached && property.Platform == Platform.Avalonia)
+        if (property.Platform == Platform.Avalonia)
         {
-            return $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>";
+            return property.IsAttached
+                ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
+                : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
         }
         if (property.IsReadOnly && property.Platform == Platform.WPF)
         {
@@ -647,8 +683,36 @@ namespace {@class.Namespace}
             defaultValueCreator: {GenerateCreateDefaultValueCallbackValueCallback(property)}";
     }
 
+    // https://docs.avaloniaui.net/docs/authoring-controls/defining-properties
+    public static string GenerateAvaloniaRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
+    {
+        if (property.IsAttached)
+        {
+            return $@"
+                name: ""{property.Name}"",
+                defaultValue: {GenerateDefaultValue(property)},
+                inherits: {(property.Inherits ? "true" : "false")},
+                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                validate: {GenerateValidateValueCallback(property)},
+                coerce: {GenerateCoerceValueCallback(@class, property)}";
+        }
+
+        return @$"
+                name: ""{property.Name}"",
+                defaultValue: {GenerateDefaultValue(property)},
+                inherits: {(property.Inherits ? "true" : "false")},
+                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                validate: {GenerateValidateValueCallback(property)},
+                coerce: {GenerateCoerceValueCallback(@class, property)},
+                notifying: null";
+    }
+
     public static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return GenerateAvaloniaRegisterMethodArguments(@class, property);
+        }
         if (@class.Platform == Platform.MAUI)
         {
             return GenerateMauiRegisterMethodArguments(@class, property);
@@ -678,9 +742,7 @@ namespace {@class.Namespace}
         }
         if (@class.Platform == Platform.Avalonia)
         {
-            return $@"
-                name: ""{property.Name}"",
-                defaultValue: {GenerateDefaultValue(property)}";
+            return GenerateAvaloniaRegisterMethodArguments(@class, property);
         }
         if (@class.Platform == Platform.WPF)
         {
@@ -697,6 +759,22 @@ namespace {@class.Namespace}
                 propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
                 {GeneratePropertyMetadata(@class, property)}";
+    }
+
+    public static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, RoutedEventData @event)
+    {
+        if (@class.Platform == Platform.Avalonia)
+        {
+            return @$"
+            name: ""{@event.Name}"",
+            routingStrategy: {GenerateRoutingStrategyType(@class)}.{@event.Strategy}";
+        }
+
+        return @$"
+                name: ""{@event.Name}"",
+                routingStrategy: {GenerateRoutingStrategyType(@class)}.{@event.Strategy},
+                handlerType: typeof({GenerateRouterEventType(@class, @event)}),
+                ownerType: typeof({GenerateType(@class.FullName, false)})";
     }
 
     public static string GenerateDependencyPropertyName(DependencyPropertyData property)

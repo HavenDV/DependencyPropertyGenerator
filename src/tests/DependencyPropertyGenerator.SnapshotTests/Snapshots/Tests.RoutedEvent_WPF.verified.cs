@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         public static readonly global::System.Windows.RoutedEvent TrayLeftMouseDownEvent =
             global::System.Windows.EventManager.RegisterRoutedEvent(
                 name: "TrayLeftMouseDown",
-                routingStrategy: (global::System.Windows.RoutingStrategy)1,
+                routingStrategy: global::System.Windows.RoutingStrategy.Bubble,
                 handlerType: typeof(global::System.Windows.RoutedEventHandler),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl));
 

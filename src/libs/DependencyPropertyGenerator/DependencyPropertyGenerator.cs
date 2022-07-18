@@ -106,6 +106,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
+                if (platform == Platform.Avalonia)
+                {
+                    foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                    }
+                }
                 if (platform == Platform.WPF)
                 {
                     if (@class.OverrideMetadata.Any())
@@ -187,7 +196,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(RoutedEventAttribute))
                 {
-                    var strategy = attribute.ConstructorArguments[1].Value?.ToString() ?? string.Empty;
+                    var strategy = attributeSyntax.ArgumentList?.Arguments[1].ToFullString()?
+                        .Replace("RoutedEventStrategy.", string.Empty) ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
                         GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Type))?.Value?.ToString();

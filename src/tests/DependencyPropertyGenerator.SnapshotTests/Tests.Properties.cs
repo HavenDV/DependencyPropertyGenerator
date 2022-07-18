@@ -119,6 +119,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task ValidateAndCoerce(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"

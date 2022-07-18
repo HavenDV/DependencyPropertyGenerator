@@ -12,7 +12,11 @@ namespace H.Generators.IntegrationTests
         public static readonly global::Avalonia.AttachedProperty<global::H.Generators.IntegrationTests.Mode> ModeProperty =
             global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.TreeViewExtensions, global::Avalonia.Controls.TreeView, global::H.Generators.IntegrationTests.Mode>(
                 name: "Mode",
-                defaultValue: (global::H.Generators.IntegrationTests.Mode)1);
+                defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
+                inherits: false,
+                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                validate: null,
+                coerce: null);
 
         /// <summary>
         /// Default value: Mode2
