@@ -9,35 +9,31 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty SomePropertyProperty =
-            global::System.Windows.DependencyProperty.RegisterAttached(
+        public static readonly global::Windows.UI.Xaml.DependencyProperty SomePropertyProperty =
+            global::Windows.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "SomeProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-                defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(object),
-                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                     {
                         OnSomePropertyChanged();
                         OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender);
+                            (global::Windows.UI.Xaml.DependencyObject)sender);
                         OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender,
+                            (global::Windows.UI.Xaml.DependencyObject)sender,
                             (object?)args.NewValue);
                         OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender,
+                            (global::Windows.UI.Xaml.DependencyObject)sender,
                             (object?)args.OldValue,
                             (object?)args.NewValue);
-                    },
-                    coerceValueCallback: null,
-                    isAnimationProhibited: false),
-                validateValueCallback: null);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static void SetSomeProperty(global::System.Windows.DependencyObject element, object? value)
+        public static void SetSomeProperty(global::Windows.UI.Xaml.DependencyObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -47,8 +43,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.DependencyObject))]
-        public static object? GetSomeProperty(global::System.Windows.DependencyObject element)
+        public static object? GetSomeProperty(global::Windows.UI.Xaml.DependencyObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -56,8 +51,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnSomePropertyChanged();
-        static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject);
-        static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject, object? newValue);
-        static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject, object? oldValue, object? newValue);
+        static partial void OnSomePropertyChanged(global::Windows.UI.Xaml.DependencyObject dependencyObject);
+        static partial void OnSomePropertyChanged(global::Windows.UI.Xaml.DependencyObject dependencyObject, object? newValue);
+        static partial void OnSomePropertyChanged(global::Windows.UI.Xaml.DependencyObject dependencyObject, object? oldValue, object? newValue);
     }
 }

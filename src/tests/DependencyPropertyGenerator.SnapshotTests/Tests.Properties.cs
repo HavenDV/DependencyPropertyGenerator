@@ -5,6 +5,10 @@ public partial class Tests : VerifyBase
 {
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task NonGenericAttributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -23,6 +27,8 @@ public static partial class GridExtensions
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task MultipleClassDeclarations(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -49,6 +55,8 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task Attributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls", "System.ComponentModel") + @"
@@ -69,6 +77,8 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task WithOtherAttributes(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls", "System") + @"
@@ -88,12 +98,16 @@ public partial class MyControl : UserControl
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    //[DataRow(Platform.MAUI)]
+    //[DataRow(Platform.Avalonia)]
     public Task WithOtherAttributes2(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform) + @"
+        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 [System.ComponentModel.DesignTimeVisible(false)]
-public partial class Generatable : System.Windows.FrameworkElement
+public partial class Generatable : FrameworkElement
 {
     partial void OnTextChanged(string? oldValue, string? newValue)
     {
@@ -105,6 +119,8 @@ public partial class Generatable : System.Windows.FrameworkElement
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task FloatLiterals(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -143,6 +159,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task CreateDefaultValueCallback(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -160,6 +177,8 @@ public partial class MyGrid : Grid
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task DefaultUpdateSourceTrigger(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -173,6 +192,8 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task ReadOnlyProperty(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -184,18 +205,22 @@ public partial class MyControl : UserControl
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task BindEvents(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"
 [DependencyProperty<object>(""BindEventsProperty"",
-    BindEvents = new[] { nameof(Grid.MouseEnter), nameof(Grid.MouseLeave) })]
-public partial class MyGrid : Grid
+    BindEvents = new[] { nameof(UIElement.PointerEntered), nameof(UIElement.PointerExited) })]
+public partial class MyUIElement : UIElement
 {
-    private static void OnBindEventsPropertyChanged_MouseEnter(object? sender, System.Windows.Input.MouseEventArgs args)
+    private static void OnBindEventsPropertyChanged_PointerEntered(object? sender, PointerRoutedEventArgs args)
     {
     }
 
-    private static void OnBindEventsPropertyChanged_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs args)
+    private static void OnBindEventsPropertyChanged_PointerExited(object? sender, PointerRoutedEventArgs args)
     {
     }
 }", platform);

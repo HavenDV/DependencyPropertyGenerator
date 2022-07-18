@@ -6,6 +6,7 @@ public partial class Tests : VerifyBase
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task Enum(Platform platform)
     {
@@ -29,6 +30,8 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
+    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task AttachedReadOnlyProperty(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -40,13 +43,17 @@ public static partial class GridExtensions
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task BindEvent(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
-[AttachedDependencyProperty<object, Grid>(""BindEventProperty"", BindEvent = nameof(Grid.MouseWheel))]
-public static partial class GridExtensions
+        return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"
+[AttachedDependencyProperty<object, UIElement>(""BindEventProperty"", BindEvent = nameof(UIElement.KeyUp))]
+public static partial class UIElementExtensions
 {
-    private static void OnBindEventPropertyChanged_MouseWheel(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+    private static void OnBindEventPropertyChanged_KeyUp(object? sender, KeyEventArgs args)
     {
     }
 }", platform);
@@ -54,10 +61,14 @@ public static partial class GridExtensions
 
     [DataTestMethod]
     [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task AttachedPropertyWithoutSecondType(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform) + @"
-[AttachedDependencyProperty<object>(""AttachedPropertyWithoutSecondType"")]
+[AttachedDependencyProperty<object>(""SomeProperty"")]
 public static partial class GridExtensions
 {
 }", platform);

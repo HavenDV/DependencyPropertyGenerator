@@ -40,9 +40,29 @@ namespace H.Generators.IntegrationTests;
         Platform platform,
         CancellationToken cancellationToken = default)
     {
+        if (platform == Platform.WPF)
+        {
+            source = source
+                .Replace("PointerEntered", "MouseEnter")
+                .Replace("PointerExited", "MouseLeave")
+                .Replace("PointerRoutedEventArgs", "MouseEventArgs");
+        }
+        if (platform == Platform.Uno ||
+            platform == Platform.UnoWinUI ||
+            platform == Platform.WinUI ||
+            platform == Platform.UWP)
+        {
+            source = source
+                .Replace("KeyEventArgs", "KeyRoutedEventArgs");
+        }
         if (platform == Platform.Avalonia)
         {
-            source = source.Replace("static partial class", "partial class");
+            source = source
+                .Replace("static partial class", "partial class")
+                .Replace("UIElement", "InputElement")
+                .Replace("PointerEntered", "PointerEnter")
+                .Replace("PointerExited", "PointerLeave")
+                .Replace("PointerRoutedEventArgs", "PointerEventArgs");
         }
         if (platform == Platform.MAUI)
         {

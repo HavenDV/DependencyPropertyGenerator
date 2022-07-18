@@ -9,14 +9,13 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty BindEventsPropertyProperty =
-            global::System.Windows.DependencyProperty.Register(
+        public static readonly global::Windows.UI.Xaml.DependencyProperty BindEventsPropertyProperty =
+            global::Windows.UI.Xaml.DependencyProperty.Register(
                 name: "BindEventsProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyUIElement),
-                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(object),
-                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                     {
                         ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged();
@@ -25,10 +24,7 @@ namespace H.Generators.IntegrationTests
                         ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged(
                             (object?)args.OldValue,
                             (object?)args.NewValue);
-                    },
-                    coerceValueCallback: null,
-                    isAnimationProhibited: false),
-                validateValueCallback: null);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
@@ -60,13 +56,13 @@ namespace H.Generators.IntegrationTests
 
             if (oldValue is not default(object))
             {
-                this.MouseEnter -= OnBindEventsPropertyChanged_MouseEnter;
-                this.MouseLeave -= OnBindEventsPropertyChanged_MouseLeave;
+                this.PointerEntered -= OnBindEventsPropertyChanged_PointerEntered;
+                this.PointerExited -= OnBindEventsPropertyChanged_PointerExited;
             }
             if (newValue is not default(object))
             {
-                this.MouseEnter += OnBindEventsPropertyChanged_MouseEnter;
-                this.MouseLeave += OnBindEventsPropertyChanged_MouseLeave;
+                this.PointerEntered += OnBindEventsPropertyChanged_PointerEntered;
+                this.PointerExited += OnBindEventsPropertyChanged_PointerExited;
             }
 
             OnBindEventsPropertyChanged_AfterBind(

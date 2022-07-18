@@ -9,35 +9,31 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static readonly global::System.Windows.DependencyProperty BindEventPropertyProperty =
-            global::System.Windows.DependencyProperty.RegisterAttached(
+        public static readonly global::Windows.UI.Xaml.DependencyProperty BindEventPropertyProperty =
+            global::Windows.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "BindEventProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.UIElementExtensions),
-                defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     defaultValue: default(object),
-                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                     {
                         OnBindEventPropertyChanged();
                         OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender);
+                            (global::Windows.UI.Xaml.UIElement)sender);
                         OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender,
+                            (global::Windows.UI.Xaml.UIElement)sender,
                             (object?)args.NewValue);
                         OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender,
+                            (global::Windows.UI.Xaml.UIElement)sender,
                             (object?)args.OldValue,
                             (object?)args.NewValue);
-                    },
-                    coerceValueCallback: null,
-                    isAnimationProhibited: false),
-                validateValueCallback: null);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static void SetBindEventProperty(global::System.Windows.DependencyObject element, object? value)
+        public static void SetBindEventProperty(global::Windows.UI.Xaml.DependencyObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -47,8 +43,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.UIElement))]
-        public static object? GetBindEventProperty(global::System.Windows.DependencyObject element)
+        public static object? GetBindEventProperty(global::Windows.UI.Xaml.DependencyObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -56,21 +51,21 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnBindEventPropertyChanged();
-        static partial void OnBindEventPropertyChanged(global::System.Windows.UIElement uIElement);
-        static partial void OnBindEventPropertyChanged(global::System.Windows.UIElement uIElement, object? newValue);
-        static partial void OnBindEventPropertyChanged(global::System.Windows.UIElement uIElement, object? oldValue, object? newValue);
+        static partial void OnBindEventPropertyChanged(global::Windows.UI.Xaml.UIElement uIElement);
+        static partial void OnBindEventPropertyChanged(global::Windows.UI.Xaml.UIElement uIElement, object? newValue);
+        static partial void OnBindEventPropertyChanged(global::Windows.UI.Xaml.UIElement uIElement, object? oldValue, object? newValue);
 
         static partial void OnBindEventPropertyChanged_BeforeBind(
-            global::System.Windows.UIElement uIElement,
+            global::Windows.UI.Xaml.UIElement uIElement,
             object? oldValue,
             object? newValue);
         static partial void OnBindEventPropertyChanged_AfterBind(
-            global::System.Windows.UIElement uIElement,
+            global::Windows.UI.Xaml.UIElement uIElement,
             object? oldValue,
             object? newValue);
 
         static partial void OnBindEventPropertyChanged(
-            global::System.Windows.UIElement uIElement,
+            global::Windows.UI.Xaml.UIElement uIElement,
             object? oldValue,
             object? newValue)
         {
