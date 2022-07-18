@@ -779,7 +779,9 @@ namespace {@class.Namespace}
 
     public static string GenerateDependencyPropertyName(DependencyPropertyData property)
     {
-        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        if (property.IsReadOnly &&
+            (property.Platform == Platform.WPF ||
+            property.Platform == Platform.MAUI))
         {
             return $"{property.Name}PropertyKey";
         }
@@ -900,13 +902,13 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         {
             return " ";
         }
-
+        
         return property.Platform switch
         {
             Platform.MAUI => $@" 
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
         public static readonly {GenerateTypeByPlatform(property.Platform, "BindableProperty")} {property.Name}Property
-            = {GenerateDependencyPropertyName(property)}.DependencyProperty;
+            = {GenerateDependencyPropertyName(property)}.BindableProperty;
 ",
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.dependencypropertykey?view=windowsdesktop-6.0#examples
             Platform.WPF => $@" 

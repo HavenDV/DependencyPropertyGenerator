@@ -192,7 +192,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task ReadOnlyProperty(Platform platform)
     {

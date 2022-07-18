@@ -30,7 +30,7 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.WPF)]
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
-    //[DataRow(Platform.MAUI)]
+    [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
     public Task AttachedReadOnlyProperty(Platform platform)
     {

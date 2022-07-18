@@ -9,7 +9,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey AttachedReadOnlyPropertyProperty =
+        public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey AttachedReadOnlyPropertyPropertyKey =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttachedReadOnly(
             propertyName: "AttachedReadOnlyProperty",
             returnType: typeof(object),
@@ -38,7 +38,7 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty AttachedReadOnlyPropertyProperty
-            = AttachedReadOnlyPropertyProperty.DependencyProperty;
+            = AttachedReadOnlyPropertyPropertyKey.BindableProperty;
 
         /// <summary>
         /// Default value: default(object)
@@ -47,7 +47,7 @@ namespace H.Generators.IntegrationTests
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            element.SetValue(AttachedReadOnlyPropertyProperty, value);
+            element.SetValue(AttachedReadOnlyPropertyPropertyKey, value);
         }
 
         /// <summary>
