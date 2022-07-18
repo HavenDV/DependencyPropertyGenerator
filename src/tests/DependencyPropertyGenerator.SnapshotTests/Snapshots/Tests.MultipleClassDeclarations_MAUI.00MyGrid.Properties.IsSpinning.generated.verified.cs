@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (bool)oldValue,
                     (bool)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanging(
+                    (bool)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanging(
+                    (bool)oldValue,
+                    (bool)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -42,5 +50,8 @@ namespace H.Generators.IntegrationTests
         partial void OnIsSpinningChanged();
         partial void OnIsSpinningChanged(bool newValue);
         partial void OnIsSpinningChanged(bool oldValue, bool newValue);
+        partial void OnIsSpinningChanging();
+        partial void OnIsSpinningChanging(bool newValue);
+        partial void OnIsSpinningChanging(bool oldValue, bool newValue);
     }
 }

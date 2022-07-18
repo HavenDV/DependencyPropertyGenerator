@@ -28,7 +28,15 @@ namespace H.Generators.IntegrationTests
                     (string?)oldValue,
                     (string?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging(
+                    (string?)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging(
+                    (string?)oldValue,
+                    (string?)newValue);
+            },
             coerceValue: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyGrid)sender).CoerceNotNullStringProperty(
                             (string?)value),
@@ -46,6 +54,9 @@ namespace H.Generators.IntegrationTests
         partial void OnNotNullStringPropertyChanged();
         partial void OnNotNullStringPropertyChanged(string? newValue);
         partial void OnNotNullStringPropertyChanged(string? oldValue, string? newValue);
+        partial void OnNotNullStringPropertyChanging();
+        partial void OnNotNullStringPropertyChanging(string? newValue);
+        partial void OnNotNullStringPropertyChanging(string? oldValue, string? newValue);
         private partial string? CoerceNotNullStringProperty(string? value);
         private static partial bool IsNotNullStringPropertyValid(string? value);
     }

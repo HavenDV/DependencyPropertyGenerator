@@ -30,7 +30,19 @@ namespace H.Generators.IntegrationTests
                     (object?)oldValue,
                     (object?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                OnAttachedPropertyChanging();
+                OnAttachedPropertyChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender);
+                OnAttachedPropertyChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender,
+                    (object?)newValue);
+                OnAttachedPropertyChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender,
+                    (object?)oldValue,
+                    (object?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -58,5 +70,9 @@ namespace H.Generators.IntegrationTests
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid);
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid, object? newValue);
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid, object? oldValue, object? newValue);
+        static partial void OnAttachedPropertyChanging();
+        static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid);
+        static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid, object? newValue);
+        static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

@@ -35,6 +35,7 @@ namespace {@class.Namespace}
         }}
 
 {GenerateOnChangedMethods(property)}
+{GenerateOnChangingMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
 {GenerateCreateDefaultValueCallbackPartialMethod(property)}
@@ -52,6 +53,7 @@ namespace {@class.Namespace}
                 return @$"
             {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>();";
             }
+
             return @$"
             {GenerateFromType(property)}.{property.Name}Property.AddOwner(
                 ownerType: typeof({GenerateType(@class.FullName, false)}),
@@ -209,6 +211,7 @@ namespace {@class.Namespace}
         }}
 
 {GenerateOnChangedMethods(property)}
+{GenerateOnChangingMethods(property)}
 {GenerateCoercePartialMethod(property)}
 {GenerateValidatePartialMethod(property)}
 {GenerateCreateDefaultValueCallbackPartialMethod(property)}
@@ -407,6 +410,63 @@ namespace {@class.Namespace}
                         (({senderType})sender).On{property.Name}Changed(
                             ({GenerateType(property)})args.NewValue);
                         (({senderType})sender).On{property.Name}Changed(
+                            ({GenerateType(property)})args.OldValue,
+                            ({GenerateType(property)})args.NewValue);
+                    }}";
+    }
+
+    public static string GeneratePropertyChangingCallback(ClassData @class, DependencyPropertyData property)
+    {
+        var senderType = property.IsAttached
+            ? GenerateBrowsableForType(property)
+            : GenerateType(@class.FullName, false);
+        if (property.Platform == Platform.MAUI)
+        {
+            return property.IsAttached
+                ? $@"static (sender, oldValue, newValue) =>
+            {{
+                On{property.Name}Changing();
+                On{property.Name}Changing(
+                    ({senderType})sender);
+                On{property.Name}Changing(
+                    ({senderType})sender,
+                    ({GenerateType(property)})newValue);
+                On{property.Name}Changing(
+                    ({senderType})sender,
+                    ({GenerateType(property)})oldValue,
+                    ({GenerateType(property)})newValue);
+            }}"
+                : $@"static (sender, oldValue, newValue) =>
+            {{
+                (({senderType})sender).On{property.Name}Changing();
+                (({senderType})sender).On{property.Name}Changing(
+                    ({GenerateType(property)})newValue);
+                (({senderType})sender).On{property.Name}Changing(
+                    ({GenerateType(property)})oldValue,
+                    ({GenerateType(property)})newValue);
+            }}";
+        }
+
+        return property.IsAttached
+            ? $@"static (sender, args) =>
+                    {{
+                        On{property.Name}Changing();
+                        On{property.Name}Changing(
+                            ({senderType})sender);
+                        On{property.Name}Changing(
+                            ({senderType})sender,
+                            ({GenerateType(property)})args.NewValue);
+                        On{property.Name}Changing(
+                            ({senderType})sender,
+                            ({GenerateType(property)})args.OldValue,
+                            ({GenerateType(property)})args.NewValue);
+                    }}"
+            : $@"static (sender, args) =>
+                    {{
+                        (({senderType})sender).On{property.Name}Changing();
+                        (({senderType})sender).On{property.Name}Changing(
+                            ({GenerateType(property)})args.NewValue);
+                        (({senderType})sender).On{property.Name}Changing(
                             ({GenerateType(property)})args.OldValue,
                             ({GenerateType(property)})args.NewValue);
                     }}";
@@ -705,7 +765,7 @@ namespace {@class.Namespace}
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{(property.IsReadOnly ? "OneWayToSource" : "OneWay")},
             validateValue: {GenerateValidateValueCallback(property)},
             propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
-            propertyChanging: null,
+            propertyChanging: {GeneratePropertyChangingCallback(@class, property)},
             coerceValue: {GenerateCoerceValueCallback(@class, property)},
             defaultValueCreator: {GenerateCreateDefaultValueCallbackValueCallback(property)}";
     }
@@ -914,6 +974,25 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         partial void On{property.Name}Changed();
         partial void On{property.Name}Changed({GenerateType(property)} newValue);
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
+    }
+
+    public static string GenerateOnChangingMethods(DependencyPropertyData property)
+    {
+        if (property.Platform != Platform.MAUI)
+        {
+            return " ";
+        }
+
+        return property.IsAttached
+            ? $@" 
+        static partial void On{property.Name}Changing();
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
+            : $@" 
+        partial void On{property.Name}Changing();
+        partial void On{property.Name}Changing({GenerateType(property)} newValue);
+        partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
     public static string GenerateCoercePartialMethod(DependencyPropertyData property)

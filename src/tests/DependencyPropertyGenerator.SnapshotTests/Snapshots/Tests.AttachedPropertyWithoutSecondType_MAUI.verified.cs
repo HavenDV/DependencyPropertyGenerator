@@ -30,7 +30,19 @@ namespace H.Generators.IntegrationTests
                     (object?)oldValue,
                     (object?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                OnSomePropertyChanging();
+                OnSomePropertyChanging(
+                    (global::Microsoft.Maui.Controls.BindableObject)sender);
+                OnSomePropertyChanging(
+                    (global::Microsoft.Maui.Controls.BindableObject)sender,
+                    (object?)newValue);
+                OnSomePropertyChanging(
+                    (global::Microsoft.Maui.Controls.BindableObject)sender,
+                    (object?)oldValue,
+                    (object?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -58,5 +70,9 @@ namespace H.Generators.IntegrationTests
         static partial void OnSomePropertyChanged(global::Microsoft.Maui.Controls.BindableObject bindableObject);
         static partial void OnSomePropertyChanged(global::Microsoft.Maui.Controls.BindableObject bindableObject, object? newValue);
         static partial void OnSomePropertyChanged(global::Microsoft.Maui.Controls.BindableObject bindableObject, object? oldValue, object? newValue);
+        static partial void OnSomePropertyChanging();
+        static partial void OnSomePropertyChanging(global::Microsoft.Maui.Controls.BindableObject bindableObject);
+        static partial void OnSomePropertyChanging(global::Microsoft.Maui.Controls.BindableObject bindableObject, object? newValue);
+        static partial void OnSomePropertyChanging(global::Microsoft.Maui.Controls.BindableObject bindableObject, object? oldValue, object? newValue);
     }
 }

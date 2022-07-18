@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (global::System.Uri?)oldValue,
                     (global::System.Uri?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging();
+                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging(
+                    (global::System.Uri?)newValue);
+                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging(
+                    (global::System.Uri?)oldValue,
+                    (global::System.Uri?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -48,5 +56,8 @@ namespace H.Generators.IntegrationTests
         partial void OnAquariumGraphicChanged();
         partial void OnAquariumGraphicChanged(global::System.Uri? newValue);
         partial void OnAquariumGraphicChanged(global::System.Uri? oldValue, global::System.Uri? newValue);
+        partial void OnAquariumGraphicChanging();
+        partial void OnAquariumGraphicChanging(global::System.Uri? newValue);
+        partial void OnAquariumGraphicChanging(global::System.Uri? oldValue, global::System.Uri? newValue);
     }
 }

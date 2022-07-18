@@ -30,7 +30,19 @@ namespace H.Generators.IntegrationTests
                     (global::H.Generators.IntegrationTests.Mode)oldValue,
                     (global::H.Generators.IntegrationTests.Mode)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                OnModeChanging();
+                OnModeChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender);
+                OnModeChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender,
+                    (global::H.Generators.IntegrationTests.Mode)newValue);
+                OnModeChanging(
+                    (global::Microsoft.Maui.Controls.Grid)sender,
+                    (global::H.Generators.IntegrationTests.Mode)oldValue,
+                    (global::H.Generators.IntegrationTests.Mode)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -58,5 +70,9 @@ namespace H.Generators.IntegrationTests
         static partial void OnModeChanged(global::Microsoft.Maui.Controls.Grid grid);
         static partial void OnModeChanged(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode newValue);
         static partial void OnModeChanged(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
+        static partial void OnModeChanging();
+        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid);
+        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode newValue);
+        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (string?)oldValue,
                     (string?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanging(
+                    (string?)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanging(
+                    (string?)oldValue,
+                    (string?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: static _ => GetSomePropertyDefaultValue());
 
@@ -42,6 +50,9 @@ namespace H.Generators.IntegrationTests
         partial void OnSomePropertyChanged();
         partial void OnSomePropertyChanged(string? newValue);
         partial void OnSomePropertyChanged(string? oldValue, string? newValue);
+        partial void OnSomePropertyChanging();
+        partial void OnSomePropertyChanging(string? newValue);
+        partial void OnSomePropertyChanging(string? oldValue, string? newValue);
         private static partial string? GetSomePropertyDefaultValue();
     }
 }

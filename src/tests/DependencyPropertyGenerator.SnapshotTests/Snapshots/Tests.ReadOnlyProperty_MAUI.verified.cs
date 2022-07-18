@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (bool)oldValue,
                     (bool)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnReadOnlyPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnReadOnlyPropertyChanging(
+                    (bool)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnReadOnlyPropertyChanging(
+                    (bool)oldValue,
+                    (bool)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -48,5 +56,8 @@ namespace H.Generators.IntegrationTests
         partial void OnReadOnlyPropertyChanged();
         partial void OnReadOnlyPropertyChanged(bool newValue);
         partial void OnReadOnlyPropertyChanged(bool oldValue, bool newValue);
+        partial void OnReadOnlyPropertyChanging();
+        partial void OnReadOnlyPropertyChanging(bool newValue);
+        partial void OnReadOnlyPropertyChanging(bool oldValue, bool newValue);
     }
 }

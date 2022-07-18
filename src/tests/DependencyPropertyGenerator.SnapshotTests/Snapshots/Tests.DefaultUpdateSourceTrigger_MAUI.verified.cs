@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (bool)oldValue,
                     (bool)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging(
+                    (bool)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging(
+                    (bool)oldValue,
+                    (bool)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -42,5 +50,8 @@ namespace H.Generators.IntegrationTests
         partial void OnExplicitUpdateSourceTriggerPropertyChanged();
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool newValue);
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool oldValue, bool newValue);
+        partial void OnExplicitUpdateSourceTriggerPropertyChanging();
+        partial void OnExplicitUpdateSourceTriggerPropertyChanging(bool newValue);
+        partial void OnExplicitUpdateSourceTriggerPropertyChanging(bool oldValue, bool newValue);
     }
 }

@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (float)oldValue,
                     (float)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnFloatPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnFloatPropertyChanging(
+                    (float)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnFloatPropertyChanging(
+                    (float)oldValue,
+                    (float)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -42,5 +50,8 @@ namespace H.Generators.IntegrationTests
         partial void OnFloatPropertyChanged();
         partial void OnFloatPropertyChanged(float newValue);
         partial void OnFloatPropertyChanged(float oldValue, float newValue);
+        partial void OnFloatPropertyChanging();
+        partial void OnFloatPropertyChanging(float newValue);
+        partial void OnFloatPropertyChanging(float oldValue, float newValue);
     }
 }

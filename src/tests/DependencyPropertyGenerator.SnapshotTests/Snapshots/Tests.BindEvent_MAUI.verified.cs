@@ -30,7 +30,19 @@ namespace H.Generators.IntegrationTests
                     (object?)oldValue,
                     (object?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                OnBindEventPropertyChanging();
+                OnBindEventPropertyChanging(
+                    (global::Microsoft.Maui.Controls.VisualElement)sender);
+                OnBindEventPropertyChanging(
+                    (global::Microsoft.Maui.Controls.VisualElement)sender,
+                    (object?)newValue);
+                OnBindEventPropertyChanging(
+                    (global::Microsoft.Maui.Controls.VisualElement)sender,
+                    (object?)oldValue,
+                    (object?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -58,6 +70,10 @@ namespace H.Generators.IntegrationTests
         static partial void OnBindEventPropertyChanged(global::Microsoft.Maui.Controls.VisualElement visualElement);
         static partial void OnBindEventPropertyChanged(global::Microsoft.Maui.Controls.VisualElement visualElement, object? newValue);
         static partial void OnBindEventPropertyChanged(global::Microsoft.Maui.Controls.VisualElement visualElement, object? oldValue, object? newValue);
+        static partial void OnBindEventPropertyChanging();
+        static partial void OnBindEventPropertyChanging(global::Microsoft.Maui.Controls.VisualElement visualElement);
+        static partial void OnBindEventPropertyChanging(global::Microsoft.Maui.Controls.VisualElement visualElement, object? newValue);
+        static partial void OnBindEventPropertyChanging(global::Microsoft.Maui.Controls.VisualElement visualElement, object? oldValue, object? newValue);
 
         static partial void OnBindEventPropertyChanged_BeforeBind(
             global::Microsoft.Maui.Controls.VisualElement visualElement,

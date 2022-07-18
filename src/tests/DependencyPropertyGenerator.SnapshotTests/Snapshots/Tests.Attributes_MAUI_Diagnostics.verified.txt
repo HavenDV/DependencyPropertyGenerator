@@ -4,7 +4,7 @@
     Title: Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
     Severity: Warning,
     WarningLevel: 2,
-    Location: DependencyPropertyGenerator\H.Generators.DependencyPropertyGenerator\MyGrid.Properties.AttributedProperty.generated.cs: (42,23)-(42,41),
+    Location: DependencyPropertyGenerator\H.Generators.DependencyPropertyGenerator\MyGrid.Properties.AttributedProperty.generated.cs: (50,23)-(50,41),
     Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
     MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,

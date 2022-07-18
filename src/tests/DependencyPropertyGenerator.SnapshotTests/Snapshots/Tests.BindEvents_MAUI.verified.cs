@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (object?)oldValue,
                     (object?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging(
+                    (object?)newValue);
+                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging(
+                    (object?)oldValue,
+                    (object?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -42,6 +50,9 @@ namespace H.Generators.IntegrationTests
         partial void OnBindEventsPropertyChanged();
         partial void OnBindEventsPropertyChanged(object? newValue);
         partial void OnBindEventsPropertyChanged(object? oldValue, object? newValue);
+        partial void OnBindEventsPropertyChanging();
+        partial void OnBindEventsPropertyChanging(object? newValue);
+        partial void OnBindEventsPropertyChanging(object? oldValue, object? newValue);
 
         partial void OnBindEventsPropertyChanged_BeforeBind(
             object? oldValue,

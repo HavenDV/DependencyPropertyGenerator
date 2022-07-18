@@ -26,7 +26,15 @@ namespace H.Generators.IntegrationTests
                     (string?)oldValue,
                     (string?)newValue);
             },
-            propertyChanging: null,
+            propertyChanging: static (sender, oldValue, newValue) =>
+            {
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging();
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging(
+                    (string?)newValue);
+                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging(
+                    (string?)oldValue,
+                    (string?)newValue);
+            },
             coerceValue: null,
             defaultValueCreator: null);
 
@@ -42,5 +50,8 @@ namespace H.Generators.IntegrationTests
         partial void OnTextChanged();
         partial void OnTextChanged(string? newValue);
         partial void OnTextChanged(string? oldValue, string? newValue);
+        partial void OnTextChanging();
+        partial void OnTextChanging(string? newValue);
+        partial void OnTextChanging(string? oldValue, string? newValue);
     }
 }
