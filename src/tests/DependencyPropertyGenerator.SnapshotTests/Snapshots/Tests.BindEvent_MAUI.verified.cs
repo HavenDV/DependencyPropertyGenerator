@@ -1,10 +1,10 @@
-﻿//HintName: UIElementExtensions.AttachedProperties.BindEventProperty.generated.cs
+﻿//HintName: VisualElementExtensions.AttachedProperties.BindEventProperty.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public static partial class UIElementExtensions
+    public static partial class VisualElementExtensions
     {
         /// <summary>
         /// Default value: default(object)
@@ -13,7 +13,7 @@ namespace H.Generators.IntegrationTests
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
             propertyName: "BindEventProperty",
             returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.UIElementExtensions),
+            declaringType: typeof(global::H.Generators.IntegrationTests.VisualElementExtensions),
             defaultValue: default(object),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,

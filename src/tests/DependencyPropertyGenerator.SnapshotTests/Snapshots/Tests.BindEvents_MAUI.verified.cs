@@ -1,10 +1,10 @@
-﻿//HintName: MyUIElement.Properties.BindEventsProperty.generated.cs
+﻿//HintName: MyVisualElement.Properties.BindEventsProperty.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyUIElement
+    public partial class MyVisualElement
     {
         /// <summary>
         /// Default value: default(object)
@@ -13,25 +13,25 @@ namespace H.Generators.IntegrationTests
             global::Microsoft.Maui.Controls.BindableProperty.Create(
             propertyName: "BindEventsProperty",
             returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyUIElement),
+            declaringType: typeof(global::H.Generators.IntegrationTests.MyVisualElement),
             defaultValue: default(object),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged();
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged(
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged();
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
                     (object?)newValue);
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanged(
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
                     (object?)oldValue,
                     (object?)newValue);
             },
             propertyChanging: static (sender, oldValue, newValue) =>
             {
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging();
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging(
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging();
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging(
                     (object?)newValue);
-                ((global::H.Generators.IntegrationTests.MyUIElement)sender).OnBindEventsPropertyChanging(
+                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging(
                     (object?)oldValue,
                     (object?)newValue);
             },

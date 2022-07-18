@@ -72,19 +72,22 @@ namespace H.Generators.IntegrationTests;
         if (platform == Platform.MAUI)
         {
             source = source
-                .Replace("Microsoft.Maui.Input", "Microsoft.Maui.Controls")
+                .Replace("using Microsoft.Maui.Input;", string.Empty)
+                .Replace("using Microsoft.Maui.Controls;", string.Empty)
                 .Replace("using Microsoft.Maui.Media;", string.Empty)
-                .ReplaceType("UIElement", "Microsoft.Maui.Controls.VisualElement")
-                .ReplaceType("FrameworkElement", "Microsoft.Maui.Controls.VisualElement")
-                .ReplaceType("TextBox", "Microsoft.Maui.Controls.Entry")
+                .Replace("UIElement", "VisualElement")
+                .Replace("FrameworkElement", "VisualElement")
+                .Replace("TextBox", "Entry")
+                .Replace("UserControl", "Grid")
+                .Replace("TreeView", "Grid")
+                .Replace("MyControl", "MyGrid")
                 .Replace("KeyUp", "SizeChanged")
                 .Replace("KeyEventArgs", "global::System.EventArgs")
                 .Replace("PointerEntered", "Loaded")
                 .Replace("PointerExited", "Unloaded")
-                .Replace("PointerRoutedEventArgs", "global::System.EventArgs")
-                .Replace("MyControl", "MyGrid")
-                .Replace("UserControl", "Grid")
-                .Replace("TreeView", "Grid");
+                .Replace("PointerRoutedEventArgs", "global::System.EventArgs");
+            source = @$"using Microsoft.Maui.Controls;
+{source}";
         }
 
         var referenceAssemblies = platform switch

@@ -4,7 +4,7 @@
     Title: Unnecessary using directive,
     Severity: Hidden,
     WarningLevel: 1,
-    Location: : (0,0)-(0,21),
+    Location: : (1,0)-(1,21),
     Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
     MessageFormat: Unnecessary using directive.,
