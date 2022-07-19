@@ -15,7 +15,7 @@ namespace H.Generators.IntegrationTests
             returnType: typeof(object),
             declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
             defaultValue: default(object),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.TwoWay,
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {

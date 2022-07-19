@@ -1360,9 +1360,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         {
             values.Add(nameof(property.NotDataBindable));
         }
-        if (property.BindsTwoWayByDefault)
+        if (property.DefaultBindingMode == "TwoWay")
         {
-            values.Add(nameof(property.BindsTwoWayByDefault));
+            values.Add("BindsTwoWayByDefault");
         }
         if (property.Journal)
         {

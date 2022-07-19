@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "SelectedItem",
                 defaultValue: default(object),
                 inherits: false,
-                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                defaultBindingMode: global::Avalonia.Data.BindingMode.TwoWay,
                 validate: null,
                 coerce: null);
 

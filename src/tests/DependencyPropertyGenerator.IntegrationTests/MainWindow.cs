@@ -16,7 +16,7 @@ public partial class MyControl : UserControl
     }
 }
 
-[AttachedDependencyProperty<object, TreeView>("SelectedItem", BindsTwoWayByDefault = true)]
+[AttachedDependencyProperty<object, TreeView>("SelectedItem", DefaultBindingMode = DefaultBindingMode.TwoWay)]
 public static partial class TreeViewExtensions
 {
     // Optional

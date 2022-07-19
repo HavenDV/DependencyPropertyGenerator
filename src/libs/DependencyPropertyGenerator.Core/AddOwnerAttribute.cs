@@ -178,11 +178,6 @@ public sealed class AddOwnerAttribute : Attribute
     public bool NotDataBindable { get; set; }
 
     /// <summary>
-    /// WPF: The System.Windows.Data.BindingMode for data bindings on this dependency property defaults to System.Windows.Data.BindingMode.TwoWay.
-    /// </summary>
-    public bool BindsTwoWayByDefault { get; set; }
-
-    /// <summary>
     /// WPF: The values of this dependency property should be saved or restored by journaling processes, or when navigating by Uniform resource identifiers (URIs).
     /// </summary>
     public bool Journal { get; set; }
@@ -208,6 +203,7 @@ public sealed class AddOwnerAttribute : Attribute
 
     /// <summary>
     /// Avalonia/MAUI: Default BindingMode. <br/>
+    /// WPF: Only Default/TwoWay is supported. <br/>
     /// Default - <see cref="DefaultBindingMode.Default"/>.
     /// </summary>
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
@@ -423,11 +419,6 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
     public bool NotDataBindable { get; set; }
 
     /// <summary>
-    /// WPF: The System.Windows.Data.BindingMode for data bindings on this dependency property defaults to System.Windows.Data.BindingMode.TwoWay.
-    /// </summary>
-    public bool BindsTwoWayByDefault { get; set; }
-
-    /// <summary>
     /// WPF: The values of this dependency property should be saved or restored by journaling processes, or when navigating by Uniform resource identifiers (URIs).
     /// </summary>
     public bool Journal { get; set; }
@@ -453,6 +444,7 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
 
     /// <summary>
     /// Avalonia/MAUI: Default BindingMode. <br/>
+    /// WPF: Only Default/TwoWay is supported. <br/>
     /// Default - <see cref="DefaultBindingMode.Default"/>.
     /// </summary>
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;

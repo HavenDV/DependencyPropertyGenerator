@@ -303,7 +303,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Inherits)) ?? bool.FalseString;
                     var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.OverridesInheritanceBehavior)) ?? bool.FalseString;
                     var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.NotDataBindable)) ?? bool.FalseString;
-                    var bindsTwoWayByDefault = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.BindsTwoWayByDefault)) ?? bool.FalseString;
                     var journal = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Journal)) ?? bool.FalseString;
                     var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.SubPropertiesDoNotAffectRender)) ?? bool.FalseString;
                     var isAnimationProhibited = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsAnimationProhibited)) ?? bool.FalseString;
@@ -362,7 +361,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Inherits: bool.Parse(inherits),
                         OverridesInheritanceBehavior: bool.Parse(overridesInheritanceBehavior),
                         NotDataBindable: bool.Parse(notDataBindable),
-                        BindsTwoWayByDefault: bool.Parse(bindsTwoWayByDefault),
                         Journal: bool.Parse(journal),
                         SubPropertiesDoNotAffectRender: bool.Parse(subPropertiesDoNotAffectRender),
                         IsAnimationProhibited: bool.Parse(isAnimationProhibited),

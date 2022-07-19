@@ -35,7 +35,6 @@ public readonly record struct DependencyPropertyData(
     bool Inherits,
     bool OverridesInheritanceBehavior,
     bool NotDataBindable,
-    bool BindsTwoWayByDefault,
     bool Journal,
     bool SubPropertiesDoNotAffectRender,
     bool IsAnimationProhibited,
