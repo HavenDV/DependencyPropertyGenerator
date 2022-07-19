@@ -10,10 +10,19 @@ namespace H.Generators.IntegrationTests
     {
         static GridExtensions()
         {
-            SomePropertyProperty.Changed.Subscribe(static x => OnSomePropertyChanged(
-                (global::Avalonia.IAvaloniaObject)x.Sender,
-                (object?)x.OldValue.GetValueOrDefault(),
-                (object?)x.NewValue.GetValueOrDefault()));
+            SomePropertyProperty.Changed.Subscribe(static x =>
+            {
+                OnSomePropertyChanged();
+                OnSomePropertyChanged(
+                    (global::Avalonia.IAvaloniaObject)x.Sender);
+                OnSomePropertyChanged(
+                    (global::Avalonia.IAvaloniaObject)x.Sender,
+                    (object?)x.NewValue.GetValueOrDefault());
+                OnSomePropertyChanged(
+                    (global::Avalonia.IAvaloniaObject)x.Sender,
+                    (object?)x.OldValue.GetValueOrDefault(),
+                    (object?)x.NewValue.GetValueOrDefault());
+            });
         }
     }
 }

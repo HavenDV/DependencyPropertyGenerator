@@ -10,18 +10,18 @@ namespace H.Generators.IntegrationTests
     {
         static TreeViewExtensions()
         {
-            ModeProperty.Changed.Subscribe(static x =>
+            SelectedItemProperty.Changed.Subscribe(static x =>
             {
-                OnModeChanged();
-                OnModeChanged(
+                OnSelectedItemChanged();
+                OnSelectedItemChanged(
                     (global::Avalonia.Controls.TreeView)x.Sender);
-                OnModeChanged(
+                OnSelectedItemChanged(
                     (global::Avalonia.Controls.TreeView)x.Sender,
-                    (global::H.Generators.IntegrationTests.Mode)x.NewValue.GetValueOrDefault());
-                OnModeChanged(
+                    (object?)x.NewValue.GetValueOrDefault());
+                OnSelectedItemChanged(
                     (global::Avalonia.Controls.TreeView)x.Sender,
-                    (global::H.Generators.IntegrationTests.Mode)x.OldValue.GetValueOrDefault(),
-                    (global::H.Generators.IntegrationTests.Mode)x.NewValue.GetValueOrDefault());
+                    (object?)x.OldValue.GetValueOrDefault(),
+                    (object?)x.NewValue.GetValueOrDefault());
             });
         }
     }

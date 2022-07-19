@@ -10,10 +10,19 @@ namespace H.Generators.IntegrationTests
     {
         static UIElementExtensions()
         {
-            BindEventPropertyProperty.Changed.Subscribe(static x => OnBindEventPropertyChanged(
-                (global::Avalonia.Input.InputElement)x.Sender,
-                (object?)x.OldValue.GetValueOrDefault(),
-                (object?)x.NewValue.GetValueOrDefault()));
+            BindEventPropertyProperty.Changed.Subscribe(static x =>
+            {
+                OnBindEventPropertyChanged();
+                OnBindEventPropertyChanged(
+                    (global::Avalonia.Input.InputElement)x.Sender);
+                OnBindEventPropertyChanged(
+                    (global::Avalonia.Input.InputElement)x.Sender,
+                    (object?)x.NewValue.GetValueOrDefault());
+                OnBindEventPropertyChanged(
+                    (global::Avalonia.Input.InputElement)x.Sender,
+                    (object?)x.OldValue.GetValueOrDefault(),
+                    (object?)x.NewValue.GetValueOrDefault());
+            });
         }
     }
 }

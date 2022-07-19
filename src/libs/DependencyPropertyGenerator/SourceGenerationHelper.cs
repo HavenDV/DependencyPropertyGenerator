@@ -143,7 +143,9 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateStaticConstructor(ClassData @class, IReadOnlyCollection<DependencyPropertyData> properties)
+    public static string GenerateStaticConstructor(
+        ClassData @class,
+        IReadOnlyCollection<DependencyPropertyData> properties)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -158,11 +160,31 @@ namespace {@class.Namespace}
     {{
         static {@class.Name}()
         {{
-{properties.Select(property => @$"
-            {property.Name}Property.Changed.Subscribe(static x => On{property.Name}Changed(
-                ({GenerateBrowsableForType(property)})x.Sender,
-                ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
-                ({GenerateType(property)})x.NewValue.GetValueOrDefault()));
+{properties.Where(static property => !property.IsAttached).Select(property => @$"
+            {property.Name}Property.Changed.Subscribe(static x =>
+            {{
+                (({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed();
+                (({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed(
+                    ({GenerateType(property)})x.NewValue.GetValueOrDefault());
+                (({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed(
+                    ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
+                    ({GenerateType(property)})x.NewValue.GetValueOrDefault());
+            }});
+").Inject()}
+{properties.Where(static property => property.IsAttached).Select(property => @$"
+            {property.Name}Property.Changed.Subscribe(static x =>
+            {{
+                On{property.Name}Changed();
+                On{property.Name}Changed(
+                    ({GenerateBrowsableForType(property)})x.Sender);
+                On{property.Name}Changed(
+                    ({GenerateBrowsableForType(property)})x.Sender,
+                    ({GenerateType(property)})x.NewValue.GetValueOrDefault());
+                On{property.Name}Changed(
+                    ({GenerateBrowsableForType(property)})x.Sender,
+                    ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
+                    ({GenerateType(property)})x.NewValue.GetValueOrDefault());
+            }});
 ").Inject()}
         }}
     }}

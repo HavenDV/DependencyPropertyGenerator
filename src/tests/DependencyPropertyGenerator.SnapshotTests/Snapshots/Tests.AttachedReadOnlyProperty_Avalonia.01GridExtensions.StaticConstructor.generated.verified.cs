@@ -10,10 +10,19 @@ namespace H.Generators.IntegrationTests
     {
         static GridExtensions()
         {
-            AttachedReadOnlyPropertyProperty.Changed.Subscribe(static x => OnAttachedReadOnlyPropertyChanged(
-                (global::Avalonia.Controls.Grid)x.Sender,
-                (object?)x.OldValue.GetValueOrDefault(),
-                (object?)x.NewValue.GetValueOrDefault()));
+            AttachedReadOnlyPropertyProperty.Changed.Subscribe(static x =>
+            {
+                OnAttachedReadOnlyPropertyChanged();
+                OnAttachedReadOnlyPropertyChanged(
+                    (global::Avalonia.Controls.Grid)x.Sender);
+                OnAttachedReadOnlyPropertyChanged(
+                    (global::Avalonia.Controls.Grid)x.Sender,
+                    (object?)x.NewValue.GetValueOrDefault());
+                OnAttachedReadOnlyPropertyChanged(
+                    (global::Avalonia.Controls.Grid)x.Sender,
+                    (object?)x.OldValue.GetValueOrDefault(),
+                    (object?)x.NewValue.GetValueOrDefault());
+            });
         }
     }
 }

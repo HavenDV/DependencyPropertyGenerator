@@ -149,11 +149,18 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
                 }
-                if (platform == Platform.Avalonia && @class.AttachedDependencyProperties.Any())
+                if (platform == Platform.Avalonia &&
+                    (@class.DependencyProperties.Where(static property => !property.IsDirect).Any() ||
+                    @class.AttachedDependencyProperties.Where(static property => !property.IsDirect).Any()))
                 {
                     context.AddTextSource(
                         hintName: $"{@class.Name}.StaticConstructor.generated.cs",
-                        text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.AttachedDependencyProperties));
+                        text: SourceGenerationHelper.GenerateStaticConstructor(
+                            @class,
+                            @class.AttachedDependencyProperties
+                                .Where(static property => !property.IsDirect)
+                                .Concat(@class.DependencyProperties.Where(static property => !property.IsDirect))
+                                .ToArray()));
                 }
             }
         }
