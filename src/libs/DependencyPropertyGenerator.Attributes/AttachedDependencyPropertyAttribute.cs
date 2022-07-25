@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
-
-namespace DependencyPropertyGenerator;
+﻿namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will generates attached dependency property using DependencyProperty.RegisterAttached.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
 public sealed class AttachedDependencyPropertyAttribute : Attribute
 {
     /// <summary>
@@ -237,6 +236,7 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
 public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 {
     /// <summary>
@@ -467,6 +467,7 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 /// <typeparam name="TBrowsableForType">The type for which the extension is intended.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
 public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : Attribute
 {
     /// <summary>

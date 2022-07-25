@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
-
-namespace DependencyPropertyGenerator;
+﻿namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will generates routed event using EventManager.RegisterRoutedEvent.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
 public sealed class RoutedEventAttribute : Attribute
 {
     /// <summary>
@@ -77,6 +76,7 @@ public sealed class RoutedEventAttribute : Attribute
 /// </summary>
 /// <typeparam name="T">Type of this routed event.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
 public sealed class RoutedEventAttribute<T> : Attribute
 {
     /// <summary>

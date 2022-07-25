@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" />
     <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" />
   </ItemGroup>
 

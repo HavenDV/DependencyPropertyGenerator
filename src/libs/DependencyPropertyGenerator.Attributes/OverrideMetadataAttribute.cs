@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-
-namespace DependencyPropertyGenerator;
+﻿namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-add-an-owner-type-for-a-dependency-property?view=netframeworkdesktop-4.8
+/// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
+/// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class AddOwnerAttribute : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class OverrideMetadataAttribute : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -33,93 +33,11 @@ public sealed class AddOwnerAttribute : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
-    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
+    /// The property will create through RegisterReadOnly (if the platform supports it) and 
     /// the property setter will contain the protected modifier. <br/>
     /// Default - <see langword="false"/>.
     /// </summary>
     public bool IsReadOnly { get; set; }
-
-    /// <summary>
-    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
-    /// Default - <see langword="false"/>.
-    /// </summary>
-    public bool IsDirect { get; set; }
-
-    /// <summary>
-    /// Description of this dependency property. <br/>
-    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
-    /// This will also be used in the xml documentation if not explicitly specified. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// Category of this dependency property. <br/>
-    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public string? Category { get; set; }
-
-    /// <summary>
-    /// Type converter of this dependency property. <br/>
-    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public Type? TypeConverter { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool Bindable { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool Browsable { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool CLSCompliant { get; set; }
-
-    /// <summary>
-    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public Localizability Localizability { get; set; }
-
-    /// <summary>
-    /// The type that owns the original Dependency Property. <br/>
-    /// Required.
-    /// </summary>
-    public Type? FromType { get; }
-
-    /// <summary>
-    /// The dependency property xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string XmlDocumentation { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property getter xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string GetterXmlDocumentation { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property setter xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -219,40 +137,33 @@ public sealed class AddOwnerAttribute : Attribute
     public bool Validate { get; set; }
 
     /// <summary>
-    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
-    /// </summary>
-    public bool CreateDefaultValueCallback { get; set; }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>
-    /// <param name="fromType"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public AddOwnerAttribute(
+    public OverrideMetadataAttribute(
         string name,
-        Type type,
-        Type fromType)
+        Type type)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Type = type ?? throw new ArgumentNullException(nameof(type));
-        FromType = fromType ?? throw new ArgumentNullException(nameof(fromType));
     }
 }
 
 /// <summary>
-/// https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-add-an-owner-type-for-a-dependency-property?view=netframeworkdesktop-4.8
+/// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
+/// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
-/// <typeparam name="TFromType">The type for which the extension is intended.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class AddOwnerAttribute<T, TFromType> : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class OverrideMetadataAttribute<T> : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
     /// </summary>
-    public string Name { get; }
+	public string Name { get; }
 
     /// <summary>
     /// Type of this dependency property.
@@ -264,7 +175,7 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
     /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
     /// Default - <see langword="default(type)"/>.
     /// </summary>
-    public T? DefaultValue { get; set; }
+    public object? DefaultValue { get; set; }
 
     /// <summary>
     /// Default value expression of this dependency property. <br/>
@@ -274,93 +185,11 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
-    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
+    /// The property will create through RegisterReadOnly (if the platform supports it) and 
     /// the property setter will contain the protected modifier. <br/>
     /// Default - <see langword="false"/>.
     /// </summary>
     public bool IsReadOnly { get; set; }
-
-    /// <summary>
-    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
-    /// Default - <see langword="false"/>.
-    /// </summary>
-    public bool IsDirect { get; set; }
-
-    /// <summary>
-    /// Description of this dependency property. <br/>
-    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
-    /// This will also be used in the xml documentation if not explicitly specified. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// Category of this dependency property. <br/>
-    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public string? Category { get; set; }
-
-    /// <summary>
-    /// Type converter of this dependency property. <br/>
-    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public Type? TypeConverter { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool Bindable { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool Browsable { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
-
-    /// <summary>
-    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public bool CLSCompliant { get; set; }
-
-    /// <summary>
-    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public Localizability Localizability { get; set; }
-
-    /// <summary>
-    /// The type that owns the original Dependency Property. <br/>
-    /// Required.
-    /// </summary>
-    public Type? FromType { get; }
-
-    /// <summary>
-    /// The dependency property xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string XmlDocumentation { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property getter xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string GetterXmlDocumentation { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The property setter xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -460,20 +289,14 @@ public sealed class AddOwnerAttribute<T, TFromType> : Attribute
     public bool Validate { get; set; }
 
     /// <summary>
-    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
-    /// </summary>
-    public bool CreateDefaultValueCallback { get; set; }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public AddOwnerAttribute(
+    public OverrideMetadataAttribute(
         string name)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Type = typeof(T);
-        FromType = typeof(TFromType);
     }
 }

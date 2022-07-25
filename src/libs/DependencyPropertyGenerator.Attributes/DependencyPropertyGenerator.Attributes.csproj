@@ -2,15 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net4.5.1</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Label="NuGet">
-    <Description>Core library for DependencyProperty Generator.</Description>
-    <PackageTags>dependency;property;dependency property;generator;source generator</PackageTags>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup Label="Usings">
     <Using Remove="System.Net.Http"/>
+    <Using Include="System.Diagnostics"/>
+    <Using Include="System.ComponentModel"/>
   </ItemGroup>
 
 </Project>

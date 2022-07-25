@@ -2,9 +2,10 @@
 Dependency property and routed event source generator for WPF/UWP/WinUI/Uno/Avalonia/MAUI platforms. 
 
 ## Install
-```
-Install-Package DependencyPropertyGenerator // Generator
-Install-Package DependencyPropertyGenerator.Core // Attributes
+```xml
+<!-- compile assets are required for attributes. -->
+<!-- ExcludeAssets="runtime" excludes DependencyPropertyGenerator.Attributes.dll from your output. -->
+<PackageReference Include="DependencyPropertyGenerator" Version="1.0.0" PrivateAssets="all" ExcludeAssets="runtime" />
 ```
 
 ## Usage

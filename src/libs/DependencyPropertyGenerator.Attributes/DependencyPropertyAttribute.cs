@@ -1,11 +1,11 @@
 ﻿namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
-/// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
+/// Will generates attached dependency property using DependencyProperty.Register.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class OverrideMetadataAttribute : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class DependencyPropertyAttribute : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -37,6 +37,76 @@ public sealed class OverrideMetadataAttribute : Attribute
     /// Default - <see langword="false"/>.
     /// </summary>
     public bool IsReadOnly { get; set; }
+
+    /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
+
+    /// <summary>
+    /// Description of this dependency property. <br/>
+    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// This will also be used in the xml documentation if not explicitly specified. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Category of this dependency property. <br/>
+    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Category { get; set; }
+
+    /// <summary>
+    /// Type converter of this dependency property. <br/>
+    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Type? TypeConverter { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Bindable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Browsable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter/setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -126,14 +196,26 @@ public sealed class OverrideMetadataAttribute : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
+    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool EnableDataValidation { get; set; }
+
+    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created.
+    /// WPF: partial method for validateValueCallback will be created. <br/>
+    /// Default - <see langword="false"/>.
     /// </summary>
     public bool Validate { get; set; }
+
+    /// <summary>
+    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
+    /// </summary>
+    public bool CreateDefaultValueCallback { get; set; }
 
     /// <summary>
     /// 
@@ -141,7 +223,7 @@ public sealed class OverrideMetadataAttribute : Attribute
     /// <param name="name"></param>
     /// <param name="type"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public OverrideMetadataAttribute(
+    public DependencyPropertyAttribute(
         string name,
         Type type)
     {
@@ -151,17 +233,17 @@ public sealed class OverrideMetadataAttribute : Attribute
 }
 
 /// <summary>
-/// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
-/// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
+/// Will generates attached dependency property using DependencyProperty.Register.
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class OverrideMetadataAttribute<T> : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class DependencyPropertyAttribute<T> : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
     /// </summary>
-	public string Name { get; }
+    public string Name { get; }
 
     /// <summary>
     /// Type of this dependency property.
@@ -173,7 +255,7 @@ public sealed class OverrideMetadataAttribute<T> : Attribute
     /// If you need to pass a new() expression, use <see cref="DefaultValueExpression"/>. <br/>
     /// Default - <see langword="default(type)"/>.
     /// </summary>
-    public object? DefaultValue { get; set; }
+    public T? DefaultValue { get; set; }
 
     /// <summary>
     /// Default value expression of this dependency property. <br/>
@@ -188,6 +270,76 @@ public sealed class OverrideMetadataAttribute<T> : Attribute
     /// Default - <see langword="false"/>.
     /// </summary>
     public bool IsReadOnly { get; set; }
+
+    /// <summary>
+    /// Avalonia: Direct properties are a lightweight version of styled properties. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsDirect { get; set; }
+
+    /// <summary>
+    /// Description of this dependency property. <br/>
+    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// This will also be used in the xml documentation if not explicitly specified. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Category of this dependency property. <br/>
+    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public string? Category { get; set; }
+
+    /// <summary>
+    /// Type converter of this dependency property. <br/>
+    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Type? TypeConverter { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Bindable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool Browsable { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+
+    /// <summary>
+    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public bool CLSCompliant { get; set; }
+
+    /// <summary>
+    /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
+    /// Default - <see langword="null"/>.
+    /// </summary>
+    public Localizability Localizability { get; set; }
+
+    /// <summary>
+    /// The dependency property xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string XmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property getter/setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string PropertyXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -277,21 +429,33 @@ public sealed class OverrideMetadataAttribute<T> : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
+    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool EnableDataValidation { get; set; }
+
+    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created.
+    /// WPF: partial method for validateValueCallback will be created. <br/>
+    /// Default - <see langword="false"/>.
     /// </summary>
     public bool Validate { get; set; }
+
+    /// <summary>
+    /// UWP/WinUI/Uno/MAUI: partial method for createDefaultValueCallback will be created.
+    /// </summary>
+    public bool CreateDefaultValueCallback { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public OverrideMetadataAttribute(
+    public DependencyPropertyAttribute(
         string name)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));

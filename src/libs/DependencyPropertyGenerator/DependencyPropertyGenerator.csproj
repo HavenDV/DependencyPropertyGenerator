@@ -15,13 +15,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
+    <PackageReference Include="H.Generators.Extensions" Version="1.7.5" PrivateAssets="all" />
+    <ProjectReference Include="..\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
-    <PackageReference Include="H.Generators.Extensions" Version="1.7.5" PrivateAssets="all" />
+    <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/netstandard2.0/$(AssemblyName).Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/netstandard2.0/$(AssemblyName).Attributes.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/net4.5.1/$(AssemblyName).Attributes.dll" Pack="true" PackagePath="lib/net451" Visible="false" />
+    <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/net4.5.1/$(AssemblyName).Attributes.xml" Pack="true" PackagePath="lib/net451" Visible="false" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,11 @@ using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using AttachedDependencyPropertyAttribute = DependencyPropertyGenerator.AttachedDependencyPropertyAttribute;
+using DependencyPropertyAttribute = DependencyPropertyGenerator.DependencyPropertyAttribute;
+using RoutedEventAttribute = DependencyPropertyGenerator.RoutedEventAttribute;
+using OverrideMetadataAttribute = DependencyPropertyGenerator.OverrideMetadataAttribute;
+using AddOwnerAttribute = DependencyPropertyGenerator.AddOwnerAttribute;
 
 namespace H.Generators;
 
@@ -15,11 +20,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     public const string Name = nameof(DependencyPropertyGenerator);
     public const string Id = "DPG";
 
-    private const string AttachedDependencyPropertyAttribute = "DependencyPropertyGenerator.AttachedDependencyPropertyAttribute";
-    private const string DependencyPropertyAttribute = "DependencyPropertyGenerator.DependencyPropertyAttribute";
-    private const string RoutedEventAttribute = "DependencyPropertyGenerator.RoutedEventAttribute";
-    private const string OverrideMetadataAttribute = "DependencyPropertyGenerator.OverrideMetadataAttribute";
-    private const string AddOwnerAttribute = "DependencyPropertyGenerator.AddOwnerAttribute";
+    private static string AttachedDependencyPropertyAttributeFullName => typeof(AttachedDependencyPropertyAttribute).FullName;
+    private static string DependencyPropertyAttributeFullName => typeof(DependencyPropertyAttribute).FullName;
+    private static string RoutedEventAttributeFullName => typeof(RoutedEventAttribute).FullName;
+    private static string OverrideMetadataAttributeFullName => typeof(OverrideMetadataAttribute).FullName;
+    private static string AddOwnerAttributeFullName => typeof(AddOwnerAttribute).FullName;
 
     #endregion
 
@@ -221,20 +226,20 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
-                if (attributeClass.StartsWith(RoutedEventAttribute))
+                if (attributeClass.StartsWith(RoutedEventAttributeFullName))
                 {
                     var strategy = attributeSyntax.ArgumentList?.Arguments[1].ToFullString()?
                         .Replace("RoutedEventStrategy.", string.Empty) ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Type))?.Value?.ToString();
-                    var isAttached = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventData.IsAttached)) ?? bool.FalseString;
+                        GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Type))?.Value?.ToString();
+                    var isAttached = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.IsAttached)) ?? bool.FalseString;
                     
-                    var description = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Description))?.Value?.ToString();
-                    var category = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.Category))?.Value?.ToString();
+                    var description = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Description))?.Value?.ToString();
+                    var category = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Category))?.Value?.ToString();
 
-                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.XmlDocumentation))?.Value?.ToString();
-                    var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventData.EventXmlDocumentation))?.Value?.ToString();
+                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.XmlDocumentation))?.Value?.ToString();
+                    var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.EventXmlDocumentation))?.Value?.ToString();
 
                     var value = new RoutedEventData(
                         Name: name,
@@ -265,66 +270,66 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         false;
                     var defaultValue =
                         GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.DefaultValue))?.Value?.ToString();
+                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.DefaultValue))?.Value?.ToString();
                     var defaultValueDocumentation =
                         GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
-                        GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultValue));
+                        GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DefaultValue));
                     var browsableForType =
                         GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value?.ToString();
+                        GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.BrowsableForType))?.Value?.ToString();
                     var fromType =
                         GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.FromType))?.Value?.ToString();
+                        GetPropertyFromAttributeData(attribute, nameof(AddOwnerAttribute.FromType))?.Value?.ToString();
                     var isBrowsableForTypeSpecialType =
                         IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 1)) ??
-                        IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BrowsableForType))?.Value as ITypeSymbol) ??
+                        IsSpecialType(GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.BrowsableForType))?.Value as ITypeSymbol) ??
                         false;
-                    var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsReadOnly)) ?? bool.FalseString;
-                    var isDirect = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsDirect)) ?? bool.FalseString;
-                    var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttribute);
+                    var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.IsReadOnly)) ?? bool.FalseString;
+                    var isDirect = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.IsDirect)) ?? bool.FalseString;
+                    var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttributeFullName);
 
-                    var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Description))?.Value?.ToString();
-                    var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.Category))?.Value?.ToString();
-                    var typeConverter = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.TypeConverter))?.Value?.ToString();
-                    var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Bindable));
-                    var browsable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Browsable));
-                    var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DesignerSerializationVisibility));
-                    var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CLSCompliant));
-                    var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Localizability))?
+                    var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.Description))?.Value?.ToString();
+                    var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.Category))?.Value?.ToString();
+                    var typeConverter = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.TypeConverter))?.Value?.ToString();
+                    var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Bindable));
+                    var browsable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Browsable));
+                    var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DesignerSerializationVisibility));
+                    var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.CLSCompliant));
+                    var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Localizability))?
                         .Replace("global::DependencyPropertyGenerator.Localizability.", string.Empty)
                         .Replace("DependencyPropertyGenerator.Localizability.", string.Empty)
                         .Replace("Localizability.", string.Empty);
 
-                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.XmlDocumentation))?.Value?.ToString();
+                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.XmlDocumentation))?.Value?.ToString();
                     var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, "PropertyXmlDocumentation")?.Value?.ToString();
-                    var getterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.GetterXmlDocumentation))?.Value?.ToString();
-                    var setterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.SetterXmlDocumentation))?.Value?.ToString();
+                    var getterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.GetterXmlDocumentation))?.Value?.ToString();
+                    var setterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.SetterXmlDocumentation))?.Value?.ToString();
                     var bindEvent = GetPropertyFromAttributeData(attribute, "BindEvent")?.Value?.ToString();
-                    var bindEvents = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyData.BindEvents));
+                    var bindEvents = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.BindEvents));
 
-                    var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsMeasure)) ?? bool.FalseString;
-                    var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsArrange)) ?? bool.FalseString;
-                    var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsParentMeasure)) ?? bool.FalseString;
-                    var affectsParentArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsParentArrange)) ?? bool.FalseString;
-                    var affectsRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.AffectsRender)) ?? bool.FalseString;
-                    var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Inherits)) ?? bool.FalseString;
-                    var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.OverridesInheritanceBehavior)) ?? bool.FalseString;
-                    var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.NotDataBindable)) ?? bool.FalseString;
-                    var journal = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Journal)) ?? bool.FalseString;
-                    var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.SubPropertiesDoNotAffectRender)) ?? bool.FalseString;
-                    var isAnimationProhibited = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.IsAnimationProhibited)) ?? bool.FalseString;
-                    var defaultUpdateSourceTrigger = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultUpdateSourceTrigger))?
+                    var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsMeasure)) ?? bool.FalseString;
+                    var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsArrange)) ?? bool.FalseString;
+                    var affectsParentMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsParentMeasure)) ?? bool.FalseString;
+                    var affectsParentArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsParentArrange)) ?? bool.FalseString;
+                    var affectsRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsRender)) ?? bool.FalseString;
+                    var inherits = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Inherits)) ?? bool.FalseString;
+                    var overridesInheritanceBehavior = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.OverridesInheritanceBehavior)) ?? bool.FalseString;
+                    var notDataBindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.NotDataBindable)) ?? bool.FalseString;
+                    var journal = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Journal)) ?? bool.FalseString;
+                    var subPropertiesDoNotAffectRender = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.SubPropertiesDoNotAffectRender)) ?? bool.FalseString;
+                    var isAnimationProhibited = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.IsAnimationProhibited)) ?? bool.FalseString;
+                    var defaultUpdateSourceTrigger = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DefaultUpdateSourceTrigger))?
                         .Replace("global::DependencyPropertyGenerator.SourceTrigger.", string.Empty)
                         .Replace("DependencyPropertyGenerator.SourceTrigger.", string.Empty)
                         .Replace("SourceTrigger.", string.Empty);
-                    var defaultBindingMode = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.DefaultBindingMode))?
+                    var defaultBindingMode = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DefaultBindingMode))?
                         .Replace("global::DependencyPropertyGenerator.DefaultBindingMode.", string.Empty)
                         .Replace("DefaultBindingMode.SourceTrigger.", string.Empty)
                         .Replace("DefaultBindingMode.", string.Empty);
-                    var enableDataValidation = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.EnableDataValidation)) ?? bool.FalseString;
-                    var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Coerce)) ?? bool.FalseString;
-                    var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.Validate)) ?? bool.FalseString;
-                    var createDefaultValueCallback = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyData.CreateDefaultValueCallback)) ?? bool.FalseString;
+                    var enableDataValidation = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.EnableDataValidation)) ?? bool.FalseString;
+                    var coerce = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Coerce)) ?? bool.FalseString;
+                    var validate = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Validate)) ?? bool.FalseString;
+                    var createDefaultValueCallback = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.CreateDefaultValueCallback)) ?? bool.FalseString;
 
                     var value = new DependencyPropertyData(
                         Name: name,
@@ -336,7 +341,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsReadOnly: bool.Parse(isReadOnly),
                         IsDirect: bool.Parse(isDirect),
                         IsAttached: isAttached,
-                        IsAddOwner: attributeClass.StartsWith(AddOwnerAttribute),
+                        IsAddOwner: attributeClass.StartsWith(AddOwnerAttributeFullName),
                         Platform: platform,
                         Description: description,
                         Category: category,
@@ -378,11 +383,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Validate: bool.Parse(validate),
                         CreateDefaultValueCallback: bool.Parse(createDefaultValueCallback));
 
-                    if (attributeClass.StartsWith(OverrideMetadataAttribute))
+                    if (attributeClass.StartsWith(OverrideMetadataAttributeFullName))
                     {
                         overrideMetadata.Add(value);
                     }
-                    else if (attributeClass.StartsWith(AddOwnerAttribute))
+                    else if (attributeClass.StartsWith(AddOwnerAttributeFullName))
                     {
                         addOwner.Add(value);
                     }
@@ -416,11 +421,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static bool IsGeneratorAttribute(string fullTypeName)
     {
         return
-            fullTypeName.StartsWith(AttachedDependencyPropertyAttribute) ||
-            fullTypeName.StartsWith(DependencyPropertyAttribute) ||
-            fullTypeName.StartsWith(RoutedEventAttribute) ||
-            fullTypeName.StartsWith(OverrideMetadataAttribute) ||
-            fullTypeName.StartsWith(AddOwnerAttribute);
+            fullTypeName.StartsWith(AttachedDependencyPropertyAttributeFullName) ||
+            fullTypeName.StartsWith(DependencyPropertyAttributeFullName) ||
+            fullTypeName.StartsWith(RoutedEventAttributeFullName) ||
+            fullTypeName.StartsWith(OverrideMetadataAttributeFullName) ||
+            fullTypeName.StartsWith(AddOwnerAttributeFullName);
     }
 
     private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)

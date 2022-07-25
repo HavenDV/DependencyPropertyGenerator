@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
-
-namespace DependencyPropertyGenerator;
+﻿namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will generates attached dependency property using DependencyProperty.Register.
+/// https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-add-an-owner-type-for-a-dependency-property?view=netframeworkdesktop-4.8
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class DependencyPropertyAttribute : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class AddOwnerAttribute : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -33,7 +32,7 @@ public sealed class DependencyPropertyAttribute : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
-    /// The property will create through RegisterReadOnly (if the platform supports it) and 
+    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
     /// the property setter will contain the protected modifier. <br/>
     /// Default - <see langword="false"/>.
     /// </summary>
@@ -98,16 +97,28 @@ public sealed class DependencyPropertyAttribute : Attribute
     public Localizability Localizability { get; set; }
 
     /// <summary>
+    /// The type that owns the original Dependency Property. <br/>
+    /// Required.
+    /// </summary>
+    public Type? FromType { get; }
+
+    /// <summary>
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter/setter xml documentation. <br/>
+    /// The property getter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDocumentation { get; set; } = string.Empty;
+    public string GetterXmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -197,19 +208,12 @@ public sealed class DependencyPropertyAttribute : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
-    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
-    /// Default - <see langword="false"/>.
-    /// </summary>
-    public bool EnableDataValidation { get; set; }
-
-    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created. <br/>
-    /// Default - <see langword="false"/>.
+    /// WPF: partial method for validateValueCallback will be created.
     /// </summary>
     public bool Validate { get; set; }
 
@@ -223,22 +227,27 @@ public sealed class DependencyPropertyAttribute : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>
+    /// <param name="fromType"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public DependencyPropertyAttribute(
+    public AddOwnerAttribute(
         string name,
-        Type type)
+        Type type,
+        Type fromType)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Type = type ?? throw new ArgumentNullException(nameof(type));
+        FromType = fromType ?? throw new ArgumentNullException(nameof(fromType));
     }
 }
 
 /// <summary>
-/// Will generates attached dependency property using DependencyProperty.Register.
+/// https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-add-an-owner-type-for-a-dependency-property?view=netframeworkdesktop-4.8
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
+/// <typeparam name="TFromType">The type for which the extension is intended.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public sealed class DependencyPropertyAttribute<T> : Attribute
+[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class AddOwnerAttribute<T, TFromType> : Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -265,7 +274,7 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public string? DefaultValueExpression { get; set; }
 
     /// <summary>
-    /// The property will create through RegisterReadOnly (if the platform supports it) and 
+    /// The property will create through RegisterAttachedReadOnly (if the platform supports it) and 
     /// the property setter will contain the protected modifier. <br/>
     /// Default - <see langword="false"/>.
     /// </summary>
@@ -330,16 +339,28 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public Localizability Localizability { get; set; }
 
     /// <summary>
+    /// The type that owns the original Dependency Property. <br/>
+    /// Required.
+    /// </summary>
+    public Type? FromType { get; }
+
+    /// <summary>
     /// The dependency property xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
-    /// The property getter/setter xml documentation. <br/>
+    /// The property getter xml documentation. <br/>
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
-    public string PropertyXmlDocumentation { get; set; } = string.Empty;
+    public string GetterXmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The property setter xml documentation. <br/>
+    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
+    /// </summary>
+    public string SetterXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
     /// For values other than default(type), will bind/rebind/remove the 
@@ -429,19 +450,12 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     public DefaultBindingMode DefaultBindingMode { get; set; } = DefaultBindingMode.Default;
 
     /// <summary>
-    /// Avalonia-DirectProperty: Whether the property is interested in data validation. <br/>
-    /// Default - <see langword="false"/>.
-    /// </summary>
-    public bool EnableDataValidation { get; set; }
-
-    /// <summary>
     /// WPF: partial method for coerceValueCallback will be created.
     /// </summary>
     public bool Coerce { get; set; }
 
     /// <summary>
-    /// WPF: partial method for validateValueCallback will be created. <br/>
-    /// Default - <see langword="false"/>.
+    /// WPF: partial method for validateValueCallback will be created.
     /// </summary>
     public bool Validate { get; set; }
 
@@ -455,10 +469,11 @@ public sealed class DependencyPropertyAttribute<T> : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public DependencyPropertyAttribute(
+    public AddOwnerAttribute(
         string name)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Type = typeof(T);
+        FromType = typeof(TFromType);
     }
 }

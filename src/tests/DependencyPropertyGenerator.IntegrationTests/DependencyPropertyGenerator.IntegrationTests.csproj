@@ -15,9 +15,9 @@
   </Target>
   
   <ItemGroup>
-    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="UseWPF"/>
-    <CompilerVisibleProperty Include="UseWinUI"/>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants" />
+    <CompilerVisibleProperty Include="UseWPF" />
+    <CompilerVisibleProperty Include="UseWinUI" />
   </ItemGroup>
 
   <ItemGroup Label="Base packages">
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Core\DependencyPropertyGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" OutputItemType="Analyzer" />
     <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
