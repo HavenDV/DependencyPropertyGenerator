@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "BindEventProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.UIElementExtensions),
-                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
                     {

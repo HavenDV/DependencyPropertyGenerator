@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "NotNullStringProperty",
                 propertyType: typeof(string),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: (string)"",
                     propertyChangedCallback: static (sender, args) =>
                     {

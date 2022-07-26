@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "FloatProperty",
                 propertyType: typeof(float),
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: (float)42,
                     propertyChangedCallback: static (sender, args) =>
                     {

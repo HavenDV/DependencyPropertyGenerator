@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "Text",
                 propertyType: typeof(string),
                 ownerType: typeof(global::H.Generators.IntegrationTests.Generatable),
-                typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(string),
                     propertyChangedCallback: static (sender, args) =>
                     {

@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "Mode",
                 propertyType: typeof(global::H.Generators.IntegrationTests.Mode),
                 ownerType: typeof(global::H.Generators.IntegrationTests.TreeViewExtensions),
-                typeMetadata: global::Microsoft.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
                     propertyChangedCallback: static (sender, args) =>
                     {

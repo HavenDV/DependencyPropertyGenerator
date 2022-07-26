@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "AttachedProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-                typeMetadata: global::Microsoft.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
                     {

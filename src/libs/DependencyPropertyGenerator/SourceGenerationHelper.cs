@@ -645,7 +645,13 @@ namespace {@class.Namespace}
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
                 }
 
-                return $@"{parameterName}: {type}.Create(
+                // fix for NotImplementedException: The member PropertyMetadata PropertyMetadata.Create(object defaultValue, PropertyChangedCallback propertyChangedCallback) is not implemented in Uno.
+                var create = property.Platform switch
+                {
+                    Platform.Uno or Platform.UnoWinUI => $"new {type}",
+                    _ => $"{type}.Create",
+                };
+                return $@"{parameterName}: {create}(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
         }

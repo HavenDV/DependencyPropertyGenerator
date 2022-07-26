@@ -14,7 +14,7 @@ namespace H.Generators.IntegrationTests
                 name: "AquariumGraphic",
                 propertyType: typeof(global::System.Uri),
                 ownerType: typeof(global::H.Generators.IntegrationTests.Aquarium),
-                typeMetadata: global::Microsoft.UI.Xaml.PropertyMetadata.Create(
+                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
                     propertyChangedCallback: static (sender, args) =>
                     {
