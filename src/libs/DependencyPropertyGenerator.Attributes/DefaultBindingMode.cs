@@ -1,4 +1,6 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Describes the direction of the data flow in a binding.

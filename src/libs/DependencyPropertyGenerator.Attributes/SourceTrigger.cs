@@ -1,4 +1,6 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Describes the timing of binding source updates.

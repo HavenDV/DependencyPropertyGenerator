@@ -17,5 +17,14 @@
     </PropertyGroup>
 
   </Target>
+
+  <PropertyGroup>
+    <DependencyPropertyGenerator_EmbedAttributes>false</DependencyPropertyGenerator_EmbedAttributes>
+    <DependencyPropertyGenerator_EmbeddedAttributesVisible>true</DependencyPropertyGenerator_EmbeddedAttributesVisible>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(DependencyPropertyGenerator_EmbedAttributes)">
+    <Compile Include="$(MSBuildThisFileDirectory)*.cs" Visible="$(DependencyPropertyGenerator_EmbeddedAttributesVisible)" />
+  </ItemGroup>
   
 </Project>

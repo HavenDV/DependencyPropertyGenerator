@@ -1,11 +1,13 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will generates routed event using EventManager.RegisterRoutedEvent.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class RoutedEventAttribute : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class RoutedEventAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this routed event.
@@ -21,7 +23,7 @@ public sealed class RoutedEventAttribute : Attribute
     /// Type of this routed event. <br/>
     /// Default - typeof(RoutedEventHandler).
     /// </summary>
-    public Type? Type { get; set; }
+    public global::System.Type? Type { get; set; }
 
     /// <summary>
     /// Will generates attached routed event. <br/>
@@ -31,7 +33,7 @@ public sealed class RoutedEventAttribute : Attribute
 
     /// <summary>
     /// Description of this routed event. <br/>
-    /// The event will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// The event will contain a <see cref="global::System.ComponentModel.DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -39,7 +41,7 @@ public sealed class RoutedEventAttribute : Attribute
 
     /// <summary>
     /// Category of this routed event. <br/>
-    /// The event will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// The event will contain a <see cref="global::System.ComponentModel.CategoryAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
@@ -61,12 +63,12 @@ public sealed class RoutedEventAttribute : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="strategy"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public RoutedEventAttribute(
         string name,
         RoutedEventStrategy strategy)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Strategy = strategy;
     }
 }
@@ -75,9 +77,9 @@ public sealed class RoutedEventAttribute : Attribute
 /// Will generates routed event using EventManager.RegisterRoutedEvent.
 /// </summary>
 /// <typeparam name="T">Type of this routed event.</typeparam>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class RoutedEventAttribute<T> : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class RoutedEventAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this routed event.
@@ -93,7 +95,7 @@ public sealed class RoutedEventAttribute<T> : Attribute
     /// Type of this routed event. <br/>
     /// Default - typeof(RoutedEventHandler).
     /// </summary>
-    public Type? Type { get; set; }
+    public global::System.Type? Type { get; set; }
 
     /// <summary>
     /// Will generates attached routed event. <br/>
@@ -103,7 +105,7 @@ public sealed class RoutedEventAttribute<T> : Attribute
 
     /// <summary>
     /// Description of this routed event. <br/>
-    /// The event will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// The event will contain a <see cref="global::System.ComponentModel.DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -111,7 +113,7 @@ public sealed class RoutedEventAttribute<T> : Attribute
 
     /// <summary>
     /// Category of this routed event. <br/>
-    /// The event will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// The event will contain a <see cref="global::System.ComponentModel.CategoryAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
@@ -133,12 +135,12 @@ public sealed class RoutedEventAttribute<T> : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="strategy"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public RoutedEventAttribute(
         string name,
         RoutedEventStrategy strategy)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Strategy = strategy;
         Type = typeof(T);
     }

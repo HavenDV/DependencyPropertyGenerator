@@ -1,4 +1,6 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Indicates the routing strategy of a routed event.

@@ -3,12 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net4.5.1</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <NoWarn>$(NoWarn);IDE0001;IDE0190</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup Label="Usings">
-    <Using Remove="System.Net.Http"/>
-    <Using Include="System.Diagnostics"/>
-    <Using Include="System.ComponentModel"/>
-  </ItemGroup>
 
 </Project>

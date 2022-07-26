@@ -1,4 +1,6 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Specifies the category value of a System.Windows.LocalizabilityAttribute 

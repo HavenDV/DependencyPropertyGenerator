@@ -1,11 +1,13 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will generates attached dependency property using DependencyProperty.RegisterAttached.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class AttachedDependencyPropertyAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -15,7 +17,7 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     /// <summary>
     /// Type of this dependency property.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Default value of this dependency property. <br/>
@@ -40,7 +42,7 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 
     /// <summary>
     /// Description of this dependency property. <br/>
-    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -48,38 +50,38 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 
     /// <summary>
     /// Category of this dependency property. <br/>
-    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.CategoryAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
 
     /// <summary>
     /// Type converter of this dependency property. <br/>
-    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.TypeConverterAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public Type? TypeConverter { get; set; }
+    public global::System.Type? TypeConverter { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BindableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Bindable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BrowsableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Browsable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DesignerSerializationVisibilityAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+    public global::System.ComponentModel.DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool CLSCompliant { get; set; }
@@ -94,7 +96,7 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
-    public Type? BrowsableForType { get; set; }
+    public global::System.Type? BrowsableForType { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>
@@ -221,13 +223,13 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public AttachedDependencyPropertyAttribute(
         string name,
-        Type type)
+        global::System.Type type)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        Type = type ?? throw new ArgumentNullException(nameof(type));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
+        Type = type ?? throw new global::System.ArgumentNullException(nameof(type));
     }
 }
 
@@ -235,9 +237,9 @@ public sealed class AttachedDependencyPropertyAttribute : Attribute
 /// Will generates attached dependency property using DependencyProperty.RegisterAttached.
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class AttachedDependencyPropertyAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -247,7 +249,7 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     /// <summary>
     /// Type of this dependency property.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Default value of this dependency property. <br/>
@@ -272,7 +274,7 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 
     /// <summary>
     /// Description of this dependency property. <br/>
-    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -280,38 +282,38 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 
     /// <summary>
     /// Category of this dependency property. <br/>
-    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.CategoryAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
 
     /// <summary>
     /// Type converter of this dependency property. <br/>
-    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.TypeConverterAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public Type? TypeConverter { get; set; }
+    public global::System.Type? TypeConverter { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BindableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Bindable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BrowsableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Browsable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DesignerSerializationVisibilityAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+    public global::System.ComponentModel.DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool CLSCompliant { get; set; }
@@ -326,7 +328,7 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
-    public Type? BrowsableForType { get; set; }
+    public global::System.Type? BrowsableForType { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>
@@ -452,11 +454,11 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public AttachedDependencyPropertyAttribute(
         string name)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Type = typeof(T);
     }
 }
@@ -466,9 +468,9 @@ public sealed class AttachedDependencyPropertyAttribute<T> : Attribute
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 /// <typeparam name="TBrowsableForType">The type for which the extension is intended.</typeparam>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -478,7 +480,7 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// <summary>
     /// Type of this dependency property.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Default value of this dependency property. <br/>
@@ -503,7 +505,7 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
 
     /// <summary>
     /// Description of this dependency property. <br/>
-    /// The property will contain a <see cref="DescriptionAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DescriptionAttribute"/> with this value. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
@@ -511,38 +513,38 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
 
     /// <summary>
     /// Category of this dependency property. <br/>
-    /// The property will contain a <see cref="CategoryAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.CategoryAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public string? Category { get; set; }
 
     /// <summary>
     /// Type converter of this dependency property. <br/>
-    /// The property will contain a <see cref="TypeConverterAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.TypeConverterAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public Type? TypeConverter { get; set; }
+    public global::System.Type? TypeConverter { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BindableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BindableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Bindable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="BrowsableAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.BrowsableAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool Browsable { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="DesignerSerializationVisibilityAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.ComponentModel.DesignerSerializationVisibilityAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
+    public global::System.ComponentModel.DesignerSerializationVisibility DesignerSerializationVisibility { get; set; }
 
     /// <summary>
-    /// The property will contain a <see cref="CLSCompliantAttribute"/> with this value. <br/>
+    /// The property will contain a <see cref="global::System.CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
     public bool CLSCompliant { get; set; }
@@ -557,7 +559,7 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// The type for which the extension is intended. <br/>
     /// Default - DependencyObject.
     /// </summary>
-    public Type? BrowsableForType { get; set; }
+    public global::System.Type? BrowsableForType { get; set; }
 
     /// <summary>
     /// The dependency property xml documentation. <br/>
@@ -683,11 +685,11 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public AttachedDependencyPropertyAttribute(
         string name)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Type = typeof(T);
         BrowsableForType = typeof(TBrowsableForType);
     }

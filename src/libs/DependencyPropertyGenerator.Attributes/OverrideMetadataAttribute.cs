@@ -1,12 +1,14 @@
-﻿namespace DependencyPropertyGenerator;
+﻿#nullable enable
+
+namespace DependencyPropertyGenerator;
 
 /// <summary>
 /// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
 /// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class OverrideMetadataAttribute : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class OverrideMetadataAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -16,7 +18,7 @@ public sealed class OverrideMetadataAttribute : Attribute
     /// <summary>
     /// Type of this dependency property.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Default value of this dependency property. <br/>
@@ -141,13 +143,13 @@ public sealed class OverrideMetadataAttribute : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public OverrideMetadataAttribute(
         string name,
-        Type type)
+        global::System.Type type)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        Type = type ?? throw new ArgumentNullException(nameof(type));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
+        Type = type ?? throw new global::System.ArgumentNullException(nameof(type));
     }
 }
 
@@ -156,9 +158,9 @@ public sealed class OverrideMetadataAttribute : Attribute
 /// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
-public sealed class OverrideMetadataAttribute<T> : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+public sealed class OverrideMetadataAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -168,7 +170,7 @@ public sealed class OverrideMetadataAttribute<T> : Attribute
     /// <summary>
     /// Type of this dependency property.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Default value of this dependency property. <br/>
@@ -292,11 +294,11 @@ public sealed class OverrideMetadataAttribute<T> : Attribute
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public OverrideMetadataAttribute(
         string name)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Type = typeof(T);
     }
 }
