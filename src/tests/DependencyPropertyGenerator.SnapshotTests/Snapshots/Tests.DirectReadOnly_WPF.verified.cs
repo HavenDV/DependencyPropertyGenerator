@@ -17,15 +17,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(bool),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged();
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged(
-                            (bool)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged(
-                            (bool)args.OldValue,
-                            (bool)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);

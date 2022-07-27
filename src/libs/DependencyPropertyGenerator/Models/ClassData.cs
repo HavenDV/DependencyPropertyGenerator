@@ -6,6 +6,7 @@ public readonly record struct ClassData(
     string FullName,
     string Modifiers,
     Platform Platform,
+    IReadOnlyCollection<string> Methods,
     IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
     IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties,
     IReadOnlyCollection<RoutedEventData> RoutedEvents,

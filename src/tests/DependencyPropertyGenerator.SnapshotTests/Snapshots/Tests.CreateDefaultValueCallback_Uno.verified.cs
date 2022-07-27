@@ -16,15 +16,7 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyGrid),
                 typeMetadata: global::Windows.UI.Xaml.PropertyMetadata.Create(
                     createDefaultValueCallback: static () => GetSomePropertyDefaultValue(),
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanged();
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanged(
-                            (string?)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnSomePropertyChanged(
-                            (string?)args.OldValue,
-                            (string?)args.NewValue);
-                    }));
+                    propertyChangedCallback: null));
 
         /// <summary>
         /// Default value: default(string)

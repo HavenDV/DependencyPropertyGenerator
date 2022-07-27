@@ -17,24 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: default(object),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged();
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
-                    (object?)newValue);
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging();
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging(
-                    (object?)newValue);
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanging(
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

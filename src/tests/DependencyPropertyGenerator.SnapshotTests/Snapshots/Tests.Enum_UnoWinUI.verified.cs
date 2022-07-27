@@ -18,12 +18,6 @@ namespace H.Generators.IntegrationTests
                     defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        OnModeChanged();
-                        OnModeChanged(
-                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender);
-                        OnModeChanged(
-                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
-                            (global::H.Generators.IntegrationTests.Mode)args.NewValue);
                         OnModeChanged(
                             (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
                             (global::H.Generators.IntegrationTests.Mode)args.OldValue,

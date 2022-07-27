@@ -18,9 +18,6 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(bool),
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
-                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
                             (bool)args.OldValue,
                             (bool)args.NewValue);

@@ -19,30 +19,12 @@ namespace H.Generators.IntegrationTests
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {
-                OnModeChanged();
-                OnModeChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnModeChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Mode)newValue);
                 OnModeChanged(
                     (global::Microsoft.Maui.Controls.Grid)sender,
                     (global::H.Generators.IntegrationTests.Mode)oldValue,
                     (global::H.Generators.IntegrationTests.Mode)newValue);
             },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                OnModeChanging();
-                OnModeChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnModeChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Mode)newValue);
-                OnModeChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Mode)oldValue,
-                    (global::H.Generators.IntegrationTests.Mode)newValue);
-            },
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

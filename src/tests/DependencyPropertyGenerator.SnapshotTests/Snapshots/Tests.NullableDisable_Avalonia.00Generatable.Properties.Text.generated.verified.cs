@@ -1,22 +1,23 @@
-﻿//HintName: MyControl.Properties.Text.generated.cs
+﻿//HintName: Generatable.Properties.Text.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyControl
+    public partial class Generatable
     {
         /// <summary>
         /// Default value: default(string)
         /// </summary>
-        public static readonly global::Microsoft.UI.Xaml.DependencyProperty TextProperty =
-            global::Microsoft.UI.Xaml.DependencyProperty.Register(
+        public static readonly global::Avalonia.StyledProperty<string?> TextProperty =
+            global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.Generatable, string?>(
                 name: "Text",
-                propertyType: typeof(string),
-                ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
-                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
-                    defaultValue: default(string),
-                    propertyChangedCallback: null));
+                defaultValue: default(string),
+                inherits: false,
+                defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
+                validate: null,
+                coerce: null,
+                notifying: null);
 
         /// <summary>
         /// Default value: default(string)

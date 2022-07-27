@@ -19,9 +19,6 @@ namespace H.Generators.IntegrationTests
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
-                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinning5Changed(
                             (bool)args.OldValue,
                             (bool)args.NewValue);

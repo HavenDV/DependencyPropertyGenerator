@@ -8,7 +8,10 @@ namespace H.Generators.SnapshotTests;
 
 public partial class Tests : VerifyBase
 {
-    private static string GetHeader(Platform platform, params string[] values)
+    private static string GetHeader(
+        Platform platform,
+        bool nullable,
+        params string[] values)
     {
         var prefix = platform switch
         {
@@ -29,10 +32,17 @@ public partial class Tests : VerifyBase
         return @$"{usings}
 using DependencyPropertyGenerator;
 
-#nullable enable
+#nullable {(nullable ? "enable" : "disable")}
 
 namespace H.Generators.IntegrationTests;
 ";
+    }
+
+    private static string GetHeader(
+        Platform platform,
+        params string[] values)
+    {
+        return GetHeader(platform, true, values);
     }
 
     public async Task CheckSourceAsync(

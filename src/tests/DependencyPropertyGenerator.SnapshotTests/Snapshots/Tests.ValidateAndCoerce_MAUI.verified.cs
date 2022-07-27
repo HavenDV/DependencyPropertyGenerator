@@ -19,24 +19,8 @@ namespace H.Generators.IntegrationTests
             validateValue: static (_, value) =>
                     IsNotNullStringPropertyValid(
                         (string?)value),
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanged();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanged(
-                    (string?)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanged(
-                    (string?)oldValue,
-                    (string?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging(
-                    (string?)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnNotNullStringPropertyChanging(
-                    (string?)oldValue,
-                    (string?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyGrid)sender).CoerceNotNullStringProperty(
                             (string?)value),

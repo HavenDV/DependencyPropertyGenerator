@@ -12,12 +12,6 @@ namespace H.Generators.IntegrationTests
         {
             SelectedItemProperty.Changed.Subscribe(static x =>
             {
-                OnSelectedItemChanged();
-                OnSelectedItemChanged(
-                    (global::Avalonia.Controls.TreeView)x.Sender);
-                OnSelectedItemChanged(
-                    (global::Avalonia.Controls.TreeView)x.Sender,
-                    (object?)x.NewValue.GetValueOrDefault());
                 OnSelectedItemChanged(
                     (global::Avalonia.Controls.TreeView)x.Sender,
                     (object?)x.OldValue.GetValueOrDefault(),

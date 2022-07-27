@@ -16,19 +16,7 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        OnAttachedPropertyChanged();
-                        OnAttachedPropertyChanged(
-                            (global::Microsoft.UI.Xaml.Controls.Grid)sender);
-                        OnAttachedPropertyChanged(
-                            (global::Microsoft.UI.Xaml.Controls.Grid)sender,
-                            (object?)args.NewValue);
-                        OnAttachedPropertyChanged(
-                            (global::Microsoft.UI.Xaml.Controls.Grid)sender,
-                            (object?)args.OldValue,
-                            (object?)args.NewValue);
-                    }));
+                    propertyChangedCallback: null));
 
         /// <summary>
         /// Default value: default(object)

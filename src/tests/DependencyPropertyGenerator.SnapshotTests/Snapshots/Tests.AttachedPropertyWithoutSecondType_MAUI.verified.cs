@@ -17,32 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: default(object),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                OnSomePropertyChanged();
-                OnSomePropertyChanged(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender);
-                OnSomePropertyChanged(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender,
-                    (object?)newValue);
-                OnSomePropertyChanged(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                OnSomePropertyChanging();
-                OnSomePropertyChanging(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender);
-                OnSomePropertyChanging(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender,
-                    (object?)newValue);
-                OnSomePropertyChanging(
-                    (global::Microsoft.Maui.Controls.BindableObject)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

@@ -17,15 +17,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: (float)42,
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged(
-                            (float)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnFloatPropertyChanged(
-                            (float)args.OldValue,
-                            (float)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);

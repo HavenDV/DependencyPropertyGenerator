@@ -19,22 +19,10 @@ namespace H.Generators.IntegrationTests
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changed();
                 ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changed(
                     (bool)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changed(
-                    (bool)oldValue,
-                    (bool)newValue);
             },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changing();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changing(
-                    (bool)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinning2Changing(
-                    (bool)oldValue,
-                    (bool)newValue);
-            },
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

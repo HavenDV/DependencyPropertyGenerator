@@ -36,7 +36,7 @@ public static partial class GridExtensions
 public partial class MyControl : UserControl
 {
     // Optional
-    partial void OnIsSpinningChanged(bool oldValue, bool newValue)
+    partial void OnIsSpinningChanged()
     {
     }
 }
@@ -45,7 +45,7 @@ public partial class MyControl : UserControl
 public partial class MyControl : UserControl
 {
     // Optional
-    partial void OnIsSpinning2Changed(bool oldValue, bool newValue)
+    partial void OnIsSpinning2Changed(bool newValue)
     {
     }
 }", platform);
@@ -110,6 +110,24 @@ public partial class MyControl : UserControl
 public partial class Generatable : FrameworkElement
 {
     partial void OnTextChanged(string? oldValue, string? newValue)
+    {
+    }
+}", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task NullableDisable(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, false, string.Empty) + @"
+[DependencyProperty<string>(""Text"")]
+public partial class Generatable : FrameworkElement
+{
+    partial void OnTextChanged(string oldValue, string newValue)
     {
     }
 }", platform);

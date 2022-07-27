@@ -17,32 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: default(object),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                OnAttachedReadOnlyPropertyChanged();
-                OnAttachedReadOnlyPropertyChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnAttachedReadOnlyPropertyChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)newValue);
-                OnAttachedReadOnlyPropertyChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                OnAttachedReadOnlyPropertyChanging();
-                OnAttachedReadOnlyPropertyChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnAttachedReadOnlyPropertyChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)newValue);
-                OnAttachedReadOnlyPropertyChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

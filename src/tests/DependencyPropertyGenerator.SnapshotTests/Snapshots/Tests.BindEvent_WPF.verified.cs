@@ -17,19 +17,7 @@ namespace H.Generators.IntegrationTests
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        OnBindEventPropertyChanged();
-                        OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender);
-                        OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender,
-                            (object?)args.NewValue);
-                        OnBindEventPropertyChanged(
-                            (global::System.Windows.UIElement)sender,
-                            (object?)args.OldValue,
-                            (object?)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);

@@ -17,19 +17,7 @@ namespace H.Generators.IntegrationTests
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        OnAttachedReadOnlyPropertyChanged();
-                        OnAttachedReadOnlyPropertyChanged(
-                            (global::System.Windows.Controls.Grid)sender);
-                        OnAttachedReadOnlyPropertyChanged(
-                            (global::System.Windows.Controls.Grid)sender,
-                            (object?)args.NewValue);
-                        OnAttachedReadOnlyPropertyChanged(
-                            (global::System.Windows.Controls.Grid)sender,
-                            (object?)args.OldValue,
-                            (object?)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);

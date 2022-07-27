@@ -126,6 +126,23 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}.AddOwner.{addOwner.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
                     }
+                    if (@class.DependencyProperties.Where(static property => !property.IsDirect).Any() ||
+                        @class.AttachedDependencyProperties.Where(static property => !property.IsDirect).Any())
+                    {
+                        var text = SourceGenerationHelper.GenerateStaticConstructor(
+                            @class,
+                            @class.AttachedDependencyProperties
+                                .Where(static property => !property.IsDirect)
+                                .Concat(@class.DependencyProperties.Where(static property => !property.IsDirect))
+                                .ToArray());
+
+                        if (!string.IsNullOrWhiteSpace(text))
+                        {
+                            context.AddTextSource(
+                                hintName: $"{@class.Name}.StaticConstructor.generated.cs",
+                                text: text);
+                        }
+                    }
                 }
                 if (platform == Platform.WPF)
                 {
@@ -153,19 +170,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}.AttachedEvents.{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
-                }
-                if (platform == Platform.Avalonia &&
-                    (@class.DependencyProperties.Where(static property => !property.IsDirect).Any() ||
-                    @class.AttachedDependencyProperties.Where(static property => !property.IsDirect).Any()))
-                {
-                    context.AddTextSource(
-                        hintName: $"{@class.Name}.StaticConstructor.generated.cs",
-                        text: SourceGenerationHelper.GenerateStaticConstructor(
-                            @class,
-                            @class.AttachedDependencyProperties
-                                .Where(static property => !property.IsDirect)
-                                .Concat(@class.DependencyProperties.Where(static property => !property.IsDirect))
-                                .ToArray()));
                 }
             }
         }
@@ -202,7 +206,16 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
             var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
-
+            var methods = classSymbol
+                .GetMembers()
+                .OfType<IMethodSymbol>()
+                // Roslyn bug?
+                //.Where(static value => value.PartialImplementationPart != null)
+                .Select(static value => value.ToDisplayString()
+                    .Replace(value.ReceiverType?.ToDisplayString(), string.Empty)
+                    .Replace("?", string.Empty)
+                    .TrimStart('.'))
+                .ToArray();
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
             var routedEvents = new List<RoutedEventData>();
@@ -408,6 +421,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 FullName: fullClassName,
                 Modifiers: classModifiers,
                 Platform: platform,
+                Methods: methods,
                 DependencyProperties: dependencyProperties,
                 AttachedDependencyProperties: attachedDependencyProperties,
                 RoutedEvents: routedEvents,

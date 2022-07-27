@@ -16,15 +16,7 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.Aquarium),
                 typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged();
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                            (global::System.Uri?)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                            (global::System.Uri?)args.OldValue,
-                            (global::System.Uri?)args.NewValue);
-                    }));
+                    propertyChangedCallback: null));
 
         /// <summary>
         /// Default value: jpg")

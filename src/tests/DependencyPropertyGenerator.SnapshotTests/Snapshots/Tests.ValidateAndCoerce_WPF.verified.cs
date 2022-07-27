@@ -17,15 +17,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: (string)"",
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
-                            (string?)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnNotNullStringPropertyChanged(
-                            (string?)args.OldValue,
-                            (string?)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).CoerceNotNullStringProperty(
                             (string?)value),

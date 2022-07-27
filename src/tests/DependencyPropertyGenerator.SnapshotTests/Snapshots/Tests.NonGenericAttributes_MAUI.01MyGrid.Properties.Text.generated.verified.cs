@@ -17,24 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: default(string),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanged();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanged(
-                    (string?)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanged(
-                    (string?)oldValue,
-                    (string?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging(
-                    (string?)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnTextChanging(
-                    (string?)oldValue,
-                    (string?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

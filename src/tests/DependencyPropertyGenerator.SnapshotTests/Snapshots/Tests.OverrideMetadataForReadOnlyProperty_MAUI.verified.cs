@@ -17,24 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged();
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                    (global::System.Uri?)newValue);
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                    (global::System.Uri?)oldValue,
-                    (global::System.Uri?)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging();
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging(
-                    (global::System.Uri?)newValue);
-                ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanging(
-                    (global::System.Uri?)oldValue,
-                    (global::System.Uri?)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

@@ -18,12 +18,6 @@ namespace H.Generators.IntegrationTests
                     defaultValue: default(object),
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        OnSelectedItemChanged();
-                        OnSelectedItemChanged(
-                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender);
-                        OnSelectedItemChanged(
-                            (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
-                            (object?)args.NewValue);
                         OnSelectedItemChanged(
                             (global::Microsoft.UI.Xaml.Controls.TreeView)sender,
                             (object?)args.OldValue,

@@ -17,19 +17,7 @@ namespace H.Generators.IntegrationTests
                 defaultMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: default(object),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        OnSomePropertyChanged();
-                        OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender);
-                        OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender,
-                            (object?)args.NewValue);
-                        OnSomePropertyChanged(
-                            (global::System.Windows.DependencyObject)sender,
-                            (object?)args.OldValue,
-                            (object?)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);

@@ -17,15 +17,7 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyControl),
                 typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(string),
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
-                            (string?)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnAttributedPropertyChanged(
-                            (string?)args.OldValue,
-                            (string?)args.NewValue);
-                    }));
+                    propertyChangedCallback: null));
 
         /// <summary>
         /// Description<br/>

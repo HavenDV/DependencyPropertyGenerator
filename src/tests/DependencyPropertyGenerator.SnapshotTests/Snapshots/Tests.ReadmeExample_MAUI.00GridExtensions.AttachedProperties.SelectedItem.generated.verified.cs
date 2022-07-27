@@ -19,30 +19,12 @@ namespace H.Generators.IntegrationTests
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {
-                OnSelectedItemChanged();
-                OnSelectedItemChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnSelectedItemChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)newValue);
                 OnSelectedItemChanged(
                     (global::Microsoft.Maui.Controls.Grid)sender,
                     (object?)oldValue,
                     (object?)newValue);
             },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                OnSelectedItemChanging();
-                OnSelectedItemChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender);
-                OnSelectedItemChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)newValue);
-                OnSelectedItemChanging(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

@@ -12,12 +12,6 @@ namespace H.Generators.IntegrationTests
         {
             ModeProperty.Changed.Subscribe(static x =>
             {
-                OnModeChanged();
-                OnModeChanged(
-                    (global::Avalonia.Controls.TreeView)x.Sender);
-                OnModeChanged(
-                    (global::Avalonia.Controls.TreeView)x.Sender,
-                    (global::H.Generators.IntegrationTests.Mode)x.NewValue.GetValueOrDefault());
                 OnModeChanged(
                     (global::Avalonia.Controls.TreeView)x.Sender,
                     (global::H.Generators.IntegrationTests.Mode)x.OldValue.GetValueOrDefault(),

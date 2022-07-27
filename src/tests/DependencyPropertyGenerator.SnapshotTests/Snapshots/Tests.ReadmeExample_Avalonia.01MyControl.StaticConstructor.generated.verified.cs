@@ -12,9 +12,6 @@ namespace H.Generators.IntegrationTests
         {
             IsSpinningProperty.Changed.Subscribe(static x =>
             {
-                ((global::H.Generators.IntegrationTests.MyControl)x.Sender).OnIsSpinningChanged();
-                ((global::H.Generators.IntegrationTests.MyControl)x.Sender).OnIsSpinningChanged(
-                    (bool)x.NewValue.GetValueOrDefault());
                 ((global::H.Generators.IntegrationTests.MyControl)x.Sender).OnIsSpinningChanged(
                     (bool)x.OldValue.GetValueOrDefault(),
                     (bool)x.NewValue.GetValueOrDefault());

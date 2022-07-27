@@ -16,15 +16,7 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.MyGrid),
                 typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(bool),
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged();
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged(
-                            (bool)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.MyGrid)sender).OnIsSpinningChanged(
-                            (bool)args.OldValue,
-                            (bool)args.NewValue);
-                    }));
+                    propertyChangedCallback: null));
 
         /// <summary>
         /// Default value: default(bool)

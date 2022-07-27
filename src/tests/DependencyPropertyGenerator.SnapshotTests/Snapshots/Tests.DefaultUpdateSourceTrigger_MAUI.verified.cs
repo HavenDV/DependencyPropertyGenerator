@@ -17,24 +17,8 @@ namespace H.Generators.IntegrationTests
             defaultValue: default(bool),
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanged();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
-                    (bool)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanged(
-                    (bool)oldValue,
-                    (bool)newValue);
-            },
-            propertyChanging: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging();
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging(
-                    (bool)newValue);
-                ((global::H.Generators.IntegrationTests.MyGrid)sender).OnExplicitUpdateSourceTriggerPropertyChanging(
-                    (bool)oldValue,
-                    (bool)newValue);
-            },
+            propertyChanged: null,
+            propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 

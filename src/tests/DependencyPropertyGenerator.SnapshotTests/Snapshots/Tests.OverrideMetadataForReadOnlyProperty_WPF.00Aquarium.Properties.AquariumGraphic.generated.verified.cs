@@ -17,15 +17,7 @@ namespace H.Generators.IntegrationTests
                 typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
-                    propertyChangedCallback: static (sender, args) =>
-                    {
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged();
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                            (global::System.Uri?)args.NewValue);
-                        ((global::H.Generators.IntegrationTests.Aquarium)sender).OnAquariumGraphicChanged(
-                            (global::System.Uri?)args.OldValue,
-                            (global::System.Uri?)args.NewValue);
-                    },
+                    propertyChangedCallback: null,
                     coerceValueCallback: null,
                     isAnimationProhibited: false),
                 validateValueCallback: null);
