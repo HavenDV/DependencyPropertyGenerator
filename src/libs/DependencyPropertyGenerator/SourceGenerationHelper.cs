@@ -168,6 +168,8 @@ namespace {@class.Namespace}
         DependencyPropertyData property)
     {
         var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods($"On{property.Name}Changed", @class, property);
+        isChanged2 |= !property.IsAttached && property.BindEvents.Any();
+        isChanged3 |= property.IsAttached && property.BindEvents.Any();
         if (!isChanged0 &&
             !isChanged1 &&
             !isChanged2 &&
@@ -479,6 +481,8 @@ namespace {@class.Namespace}
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)
     {
         var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods($"On{property.Name}Changed", @class, property);
+        isChanged2 |= !property.IsAttached && property.BindEvents.Any();
+        isChanged3 |= property.IsAttached && property.BindEvents.Any();
         if (!isChanged0 &&
             !isChanged1 &&
             !isChanged2 &&

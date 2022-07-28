@@ -16,7 +16,13 @@ namespace H.Generators.IntegrationTests
                 ownerType: typeof(global::H.Generators.IntegrationTests.UIElementExtensions),
                 typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
-                    propertyChangedCallback: null));
+                    propertyChangedCallback: static (sender, args) =>
+                    {
+                        OnBindEventPropertyChanged(
+                            (global::Microsoft.UI.Xaml.UIElement)sender,
+                            (object?)args.OldValue,
+                            (object?)args.NewValue);
+                    }));
 
         /// <summary>
         /// Default value: default(object)
