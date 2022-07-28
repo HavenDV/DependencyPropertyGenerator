@@ -59,9 +59,6 @@ namespace H.Generators.IntegrationTests
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged();
-                        ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
-                            (bool)args.NewValue);
                         ((global::H.Generators.IntegrationTests.MyControl)sender).OnIsSpinningChanged(
                             (bool)args.OldValue,
                             (bool)args.NewValue);
@@ -110,12 +107,6 @@ namespace H.Generators.IntegrationTests
                     flags: global::System.Windows.FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     propertyChangedCallback: static (sender, args) =>
                     {
-                        OnSelectedItemChanged();
-                        OnSelectedItemChanged(
-                            (global::System.Windows.Controls.TreeView)sender);
-                        OnSelectedItemChanged(
-                            (global::System.Windows.Controls.TreeView)sender,
-                            (object?)args.NewValue);
                         OnSelectedItemChanged(
                             (global::System.Windows.Controls.TreeView)sender,
                             (object?)args.OldValue,
@@ -147,9 +138,9 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnSelectedItemChanged();
-        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender);
-        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? newValue);
-        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView sender, object? oldValue, object? newValue);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView treeView);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView treeView, object? newValue);
+        static partial void OnSelectedItemChanged(global::System.Windows.Controls.TreeView treeView, object? oldValue, object? newValue);
     }
 }
 ```
