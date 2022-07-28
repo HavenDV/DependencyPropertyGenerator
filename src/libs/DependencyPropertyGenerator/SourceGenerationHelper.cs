@@ -163,13 +163,27 @@ namespace {@class.Namespace}
         return (isChanged0, isChanged1, isChanged2, isChanged3);
     }
 
+    public static (string Name, bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckOnChangedMethods(
+        ClassData @class,
+        DependencyPropertyData property)
+    {
+        var isCustom = !string.IsNullOrWhiteSpace(property.OnChanged);
+        var name = isCustom
+            ? property.OnChanged
+            : $"On{property.Name}Changed";
+
+        var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods(name, @class, property);
+        isChanged2 |= !isCustom && !property.IsAttached && property.BindEvents.Any();
+        isChanged3 |= !isCustom && property.IsAttached && property.BindEvents.Any();
+
+        return (name, isChanged0, isChanged1, isChanged2, isChanged3);
+    }
+
     public static string GenerateAvaloniaStaticConstructorPropertyChanged(
         ClassData @class,
         DependencyPropertyData property)
     {
-        var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods($"On{property.Name}Changed", @class, property);
-        isChanged2 |= !property.IsAttached && property.BindEvents.Any();
-        isChanged3 |= property.IsAttached && property.BindEvents.Any();
+        var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
         if (!isChanged0 &&
             !isChanged1 &&
             !isChanged2 &&
@@ -182,13 +196,13 @@ namespace {@class.Namespace}
             ? @$"
             {property.Name}Property.Changed.Subscribe(static x =>
             {{
-                {(isChanged0 ? @$"On{property.Name}Changed();" : "")}
-                {(isChanged1 ? @$"On{property.Name}Changed(
+                {(isChanged0 ? @$"{name}();" : "")}
+                {(isChanged1 ? @$"{name}(
                     ({GenerateBrowsableForType(property)})x.Sender);" : "")}
-                {(isChanged2 ? @$"On{property.Name}Changed(
+                {(isChanged2 ? @$"{name}(
                     ({GenerateBrowsableForType(property)})x.Sender,
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
-                {(isChanged3 ? @$"On{property.Name}Changed(
+                {(isChanged3 ? @$"{name}(
                     ({GenerateBrowsableForType(property)})x.Sender,
                     ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
@@ -197,10 +211,10 @@ namespace {@class.Namespace}
             : @$"
             {property.Name}Property.Changed.Subscribe(static x =>
             {{
-                {(isChanged0 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed();" : "")}
-                {(isChanged1 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed(
+                {(isChanged0 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}();" : "")}
+                {(isChanged1 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}(
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
-                {(isChanged2 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).On{property.Name}Changed(
+                {(isChanged2 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}(
                     ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
             }});
@@ -480,9 +494,7 @@ namespace {@class.Namespace}
 
     public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)
     {
-        var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods($"On{property.Name}Changed", @class, property);
-        isChanged2 |= !property.IsAttached && property.BindEvents.Any();
-        isChanged3 |= property.IsAttached && property.BindEvents.Any();
+        var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
         if (!isChanged0 &&
             !isChanged1 &&
             !isChanged2 &&
@@ -499,23 +511,23 @@ namespace {@class.Namespace}
             return property.IsAttached
                 ? $@"static (sender, oldValue, newValue) =>
             {{
-                {(isChanged0 ? @$"On{property.Name}Changed();" : "")}
-                {(isChanged1 ? @$"On{property.Name}Changed(
+                {(isChanged0 ? @$"{name}();" : "")}
+                {(isChanged1 ? @$"{name}(
                     ({senderType})sender);" : "")}
-                {(isChanged2 ? @$"On{property.Name}Changed(
+                {(isChanged2 ? @$"{name}(
                     ({senderType})sender,
                     ({GenerateType(property)})newValue);" : "")}
-                {(isChanged3 ? @$"On{property.Name}Changed(
+                {(isChanged3 ? @$"{name}(
                     ({senderType})sender,
                     ({GenerateType(property)})oldValue,
                     ({GenerateType(property)})newValue);" : "")}
             }}"
                 : $@"static (sender, oldValue, newValue) =>
             {{
-                {(isChanged0 ? @$"(({senderType})sender).On{property.Name}Changed();" : "")}
-                {(isChanged1 ? @$"(({senderType})sender).On{property.Name}Changed(
+                {(isChanged0 ? @$"(({senderType})sender).{name}();" : "")}
+                {(isChanged1 ? @$"(({senderType})sender).{name}(
                     ({GenerateType(property)})newValue);" : "")}
-                {(isChanged2 ? @$"(({senderType})sender).On{property.Name}Changed(
+                {(isChanged2 ? @$"(({senderType})sender).{name}(
                     ({GenerateType(property)})oldValue,
                     ({GenerateType(property)})newValue);" : "")}
             }}";
@@ -524,23 +536,23 @@ namespace {@class.Namespace}
         return property.IsAttached
             ? $@"static (sender, args) =>
                     {{
-                        {(isChanged0 ? @$"On{property.Name}Changed();" : "")}
-                        {(isChanged1 ? @$"On{property.Name}Changed(
+                        {(isChanged0 ? @$"{name}();" : "")}
+                        {(isChanged1 ? @$"{name}(
                             ({senderType})sender);" : "")}
-                        {(isChanged2 ? @$"On{property.Name}Changed(
+                        {(isChanged2 ? @$"{name}(
                             ({senderType})sender,
                             ({GenerateType(property)})args.NewValue);" : "")}
-                        {(isChanged3 ? @$"On{property.Name}Changed(
+                        {(isChanged3 ? @$"{name}(
                             ({senderType})sender,
                             ({GenerateType(property)})args.OldValue,
                             ({GenerateType(property)})args.NewValue);" : "")}
                     }}"
             : $@"static (sender, args) =>
                     {{
-                        {(isChanged0 ? @$"(({senderType})sender).On{property.Name}Changed();" : "")}
-                        {(isChanged1 ? @$"(({senderType})sender).On{property.Name}Changed(
+                        {(isChanged0 ? @$"(({senderType})sender).{name}();" : "")}
+                        {(isChanged1 ? @$"(({senderType})sender).{name}(
                             ({GenerateType(property)})args.NewValue);" : "")}
-                        {(isChanged2 ? @$"(({senderType})sender).On{property.Name}Changed(
+                        {(isChanged2 ? @$"(({senderType})sender).{name}(
                             ({GenerateType(property)})args.OldValue,
                             ({GenerateType(property)})args.NewValue);" : "")}
                     }}";
@@ -1147,6 +1159,11 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     public static string GenerateOnChangedMethods(DependencyPropertyData property)
     {
+        if (!string.IsNullOrWhiteSpace(property.OnChanged))
+        {
+            return " ";
+        }
+
         return property.IsAttached
             ? $@" 
         static partial void On{property.Name}Changed();

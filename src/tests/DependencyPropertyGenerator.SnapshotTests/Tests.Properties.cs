@@ -288,4 +288,22 @@ public partial class MyUIElement : UIElement
     }
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task CustomOnChanged(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+[DependencyProperty<string>(""Text"", OnChanged = nameof(OnMyTextChanged))]
+public partial class Generatable : FrameworkElement
+{
+    protected virtual void OnMyTextChanged(string? value)
+    {
+    }
+}", platform);
+    }
 }

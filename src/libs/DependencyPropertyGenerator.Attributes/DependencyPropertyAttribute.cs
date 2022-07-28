@@ -127,6 +127,11 @@ public sealed class DependencyPropertyAttribute : global::System.Attribute
     public string[]? BindEvents { get; set; }
 
     /// <summary>
+    /// Allows to set a custom name for the OnChanged method call, allowing this method to be non-partial.
+    /// </summary>
+    public string OnChanged { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -358,6 +363,11 @@ public sealed class DependencyPropertyAttribute<T> : global::System.Attribute
     /// Default - <see langword="null"/>.
     /// </summary>
     public string[]? BindEvents { get; set; }
+
+    /// <summary>
+    /// Allows to set a custom name for the OnChanged method call, allowing this method to be non-partial.
+    /// </summary>
+    public string OnChanged { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

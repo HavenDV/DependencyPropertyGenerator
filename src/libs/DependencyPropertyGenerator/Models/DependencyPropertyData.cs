@@ -27,6 +27,7 @@ public readonly record struct DependencyPropertyData(
     string? SetterXmlDocumentation,
     string? GetterXmlDocumentation,
     IReadOnlyCollection<string> BindEvents,
+    string OnChanged,
     bool AffectsMeasure,
     bool AffectsArrange,
     bool AffectsParentMeasure,

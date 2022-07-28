@@ -133,6 +133,11 @@ public sealed class AttachedDependencyPropertyAttribute : global::System.Attribu
     public string[]? BindEvents { get; set; }
 
     /// <summary>
+    /// Allows to set a custom name for the OnChanged method call, allowing this method to be non-partial.
+    /// </summary>
+    public string OnChanged { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -365,6 +370,11 @@ public sealed class AttachedDependencyPropertyAttribute<T> : global::System.Attr
     public string[]? BindEvents { get; set; }
 
     /// <summary>
+    /// Allows to set a custom name for the OnChanged method call, allowing this method to be non-partial.
+    /// </summary>
+    public string OnChanged { get; set; } = string.Empty;
+
+    /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.
     /// </summary>
     public bool AffectsMeasure { get; set; }
@@ -594,6 +604,11 @@ public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : 
     /// Default - <see langword="null"/>.
     /// </summary>
     public string[]? BindEvents { get; set; }
+
+    /// <summary>
+    /// Allows to set a custom name for the OnChanged method call, allowing this method to be non-partial.
+    /// </summary>
+    public string OnChanged { get; set; } = string.Empty;
 
     /// <summary>
     /// WPF: The measure pass of layout compositions is affected by value changes to this dependency property.

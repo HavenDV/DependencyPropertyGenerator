@@ -231,12 +231,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, compilation.GetSemanticModel(attributeSyntax.SyntaxTree))))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
-                if (name.Contains("nameof("))
-                {
-                    name = name
-                        .Substring(name.LastIndexOf('.') + 1)
-                        .TrimEnd(')', ' ');
-                }
+                name = RemoveNameof(name);
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(RoutedEventAttributeFullName))
@@ -282,10 +277,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol) ??
                         false;
                     var defaultValue =
-                        GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
+                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.DefaultValueExpression))?.Value?.ToString() ??
                         GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.DefaultValue))?.Value?.ToString();
                     var defaultValueDocumentation =
-                        GetPropertyFromAttributeData(attribute, "DefaultValueExpression")?.Value?.ToString() ??
+                        GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.DefaultValueExpression))?.Value?.ToString() ??
                         GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DefaultValue));
                     var browsableForType =
                         GetGenericTypeArgumentFromAttributeData(attribute, 1)?.ToDisplayString() ??
@@ -314,11 +309,12 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         .Replace("Localizability.", string.Empty);
 
                     var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.XmlDocumentation))?.Value?.ToString();
-                    var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, "PropertyXmlDocumentation")?.Value?.ToString();
+                    var propertyXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.PropertyXmlDocumentation))?.Value?.ToString();
                     var getterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.GetterXmlDocumentation))?.Value?.ToString();
                     var setterXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(AttachedDependencyPropertyAttribute.SetterXmlDocumentation))?.Value?.ToString();
-                    var bindEvent = GetPropertyFromAttributeData(attribute, "BindEvent")?.Value?.ToString();
+                    var bindEvent = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.BindEvent))?.Value?.ToString();
                     var bindEvents = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.BindEvents));
+                    var onChanged = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.OnChanged))?.Value?.ToString();
 
                     var affectsMeasure = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsMeasure)) ?? bool.FalseString;
                     var affectsArrange = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.AffectsArrange)) ?? bool.FalseString;
@@ -378,6 +374,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                                     .Where(value => !string.IsNullOrWhiteSpace(value))
                                     .ToArray() ?? Array.Empty<string>()
                                 : Array.Empty<string>(),
+                        OnChanged: onChanged ?? string.Empty,
                         AffectsMeasure: bool.Parse(affectsMeasure),
                         AffectsArrange: bool.Parse(affectsArrange),
                         AffectsParentMeasure: bool.Parse(affectsParentMeasure),
@@ -430,6 +427,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
 
         return values;
+    }
+
+    private static string RemoveNameof(string value)
+    {
+        return value.Contains("nameof(")
+            ? value
+                .Substring(value.LastIndexOf('.') + 1)
+                .TrimEnd(')', ' ')
+            : value;
     }
 
     private static bool IsGeneratorAttribute(string fullTypeName)
