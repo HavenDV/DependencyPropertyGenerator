@@ -83,16 +83,10 @@ public static partial class GridExtensions
     public Task CustomOnChangedAttached(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
-public enum Mode
+[AttachedDependencyProperty<int, Grid>(""RowCount"", OnChanged = nameof(OnRowCountChanged), DefaultValue = -1)]
+public static partial class GridHelpers
 {
-    Mode1,
-    Mode2,
-}
-
-[AttachedDependencyProperty<Mode, TreeView>(""Mode"", OnChanged = nameof(OnModeChanged))]
-public static partial class TreeViewExtensions
-{
-    private static void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
+    static void OnRowCountChanged(Grid grid, int newValue)
     {
     }
 }", platform);

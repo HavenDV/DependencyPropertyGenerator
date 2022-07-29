@@ -1,56 +1,55 @@
-﻿//HintName: GridExtensions.AttachedProperties.Mode.generated.cs
+﻿//HintName: GridHelpers.AttachedProperties.RowCount.generated.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    public static partial class GridExtensions
+    public static partial class GridHelpers
     {
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: -1
         /// </summary>
-        public static readonly global::Microsoft.Maui.Controls.BindableProperty ModeProperty =
+        public static readonly global::Microsoft.Maui.Controls.BindableProperty RowCountProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "Mode",
-            returnType: typeof(global::H.Generators.IntegrationTests.Mode),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: default(global::H.Generators.IntegrationTests.Mode),
+            propertyName: "RowCount",
+            returnType: typeof(int),
+            declaringType: typeof(global::H.Generators.IntegrationTests.GridHelpers),
+            defaultValue: (int)-1,
             defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
             validateValue: null,
             propertyChanged: static (sender, oldValue, newValue) =>
             {
-                OnModeChanged(
+                OnRowCountChanged(
                     (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Mode)oldValue,
-                    (global::H.Generators.IntegrationTests.Mode)newValue);
+                    (int)newValue);
             },
             propertyChanging: null,
             coerceValue: null,
             defaultValueCreator: null);
 
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: -1
         /// </summary>
-        public static void SetMode(global::Microsoft.Maui.Controls.BindableObject element, global::H.Generators.IntegrationTests.Mode value)
+        public static void SetRowCount(global::Microsoft.Maui.Controls.BindableObject element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            element.SetValue(ModeProperty, value);
+            element.SetValue(RowCountProperty, value);
         }
 
         /// <summary>
-        /// Default value: default(Mode)
+        /// Default value: -1
         /// </summary>
-        public static global::H.Generators.IntegrationTests.Mode GetMode(global::Microsoft.Maui.Controls.BindableObject element)
+        public static int GetRowCount(global::Microsoft.Maui.Controls.BindableObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
+            return (int)element.GetValue(RowCountProperty);
         }
 
-        static partial void OnModeChanging();
-        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid);
-        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode newValue);
-        static partial void OnModeChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
+        static partial void OnRowCountChanging();
+        static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid);
+        static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid, int newValue);
+        static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid, int oldValue, int newValue);
     }
 }

@@ -151,14 +151,21 @@ namespace {@class.Namespace}
         var type = GenerateType(property)
             .Replace("global::", string.Empty)
             .Replace("?", string.Empty);
-        var senderType = property.IsAttached
+        var senderType = (property.IsAttached
             ? GenerateBrowsableForType(property)
-            : GenerateType(@class.FullName, false);
+            : GenerateType(@class.FullName, false))
+            .Replace("global::", string.Empty);
 
-        var isChanged0 = IsMethodExists(@class.Methods, $"{name}()");
-        var isChanged1 = IsMethodExists(@class.Methods, $"{name}({type})");
-        var isChanged2 = IsMethodExists(@class.Methods, $"{name}({type}, {type})");
-        var isChanged3 = IsMethodExists(@class.Methods, $"{name}({senderType.Replace("global::", string.Empty)}, {type}, {type})");
+        var isChanged0 =
+            IsMethodExists(@class.Methods, $"{name}()");
+        var isChanged1 =
+            IsMethodExists(@class.Methods, $"{name}({type})") ||
+            IsMethodExists(@class.Methods, $"{name}({senderType})");
+        var isChanged2 =
+            IsMethodExists(@class.Methods, $"{name}({type}, {type})") ||
+            IsMethodExists(@class.Methods, $"{name}({senderType}, {type})");
+        var isChanged3 =
+            IsMethodExists(@class.Methods, $"{name}({senderType}, {type}, {type})");
 
         return (isChanged0, isChanged1, isChanged2, isChanged3);
     }
