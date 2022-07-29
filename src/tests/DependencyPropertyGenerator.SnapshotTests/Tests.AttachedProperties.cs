@@ -73,4 +73,28 @@ public static partial class GridExtensions
 {
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task CustomOnChangedAttached(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+public enum Mode
+{
+    Mode1,
+    Mode2,
+}
+
+[AttachedDependencyProperty<Mode, TreeView>(""Mode"", OnChanged = nameof(OnModeChanged))]
+public static partial class TreeViewExtensions
+{
+    private static void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
+    {
+    }
+}", platform);
+    }
 }
