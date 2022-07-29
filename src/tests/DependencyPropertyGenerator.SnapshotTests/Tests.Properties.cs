@@ -306,4 +306,19 @@ public partial class Generatable : FrameworkElement
     }
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task NullableValueType(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+[DependencyProperty<int?>(""Property"")]
+public partial class Generatable : FrameworkElement
+{
+}", platform);
+    }
 }

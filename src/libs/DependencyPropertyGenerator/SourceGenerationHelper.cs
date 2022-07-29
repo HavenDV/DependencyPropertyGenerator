@@ -777,6 +777,17 @@ namespace {@class.Namespace}
         };
     }
 
+    public static string GenerateType(DependencyPropertyData property)
+    {
+        var value = GenerateType(property.Type, property.IsSpecialType);
+        if (!property.IsValueType)
+        {
+            value += "?";
+        }
+
+        return value;
+    }
+
     public static string GenerateRoutedEventType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
@@ -1118,17 +1129,6 @@ namespace {@class.Namespace}
     public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
     {
         return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
-    }
-
-    public static string GenerateType(DependencyPropertyData property)
-    {
-        var value = GenerateType(property.Type, property.IsSpecialType);
-        if (!property.IsValueType)
-        {
-            value += "?";
-        }
-
-        return value;
     }
 
     public static string GenerateXmlDocumentationFrom(string value)

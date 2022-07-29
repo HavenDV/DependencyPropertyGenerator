@@ -486,7 +486,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             return null;
         }
 
-        return symbol.SpecialType != SpecialType.None;
+        return
+            symbol.SpecialType != SpecialType.None ||
+            (symbol.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T &&
+            symbol.BaseType != null &&
+            symbol.BaseType.SpecialType != SpecialType.None);
     }
 
     private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
