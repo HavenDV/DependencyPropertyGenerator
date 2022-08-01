@@ -2,10 +2,6 @@
 
   <Import Project="..\Directory.Build.props" />
 
-  <PropertyGroup Label="Common">
-    <InvariantGlobalization>true</InvariantGlobalization>
-  </PropertyGroup>
-
   <PropertyGroup Label="Signing">
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)src\key.snk</AssemblyOriginatorKeyFile>
