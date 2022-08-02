@@ -158,11 +158,11 @@ If your type is declared outside the namespace of an attribute declaration,
 you will need to specify the full name of the type, including the namespace.
 
 ### XML documentation
-The easiest way to add documentation is the Description parameter.
-It will add a System.ComponentModel.Description attribute to the property and will also be used in the xml documentation.  
+The easiest way to add documentation is the `Description` parameter.
+It will add a `System.ComponentModel.Description` attribute to the property and will also be used in the xml documentation.  
 If for some reason you need to save raw xml documentation for your properties, 
 there is an option to specify raw xml text for both DependencyProperty and getter/setter 
-via XmlDocumentation/PropertyXmlDocumentation attribute properties.
+via `XmlDocumentation`/`PropertyXmlDocumentation` attribute properties.
 
 ### Platform detection
 For some platforms there is no automatic detection. In these cases, the generator needs a little help by adding:
@@ -223,7 +223,7 @@ static partial void OnBindEventPropertyChanged(
 ```
 
 ### Override metadata
-For UWP/WinUI/Uno, a special RegisterPropertyChangedCallbacks() method will be created, 
+For UWP/WinUI/Uno, a special `RegisterPropertyChangedCallbacks()` method will be created, 
 which you will need to call in the constructor to register property change callbacks.
 
 ## Notes
