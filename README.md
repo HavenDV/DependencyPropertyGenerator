@@ -158,8 +158,10 @@ If your type is declared outside the namespace of an attribute declaration,
 you will need to specify the full name of the type, including the namespace.
 
 ### XML documentation
-If for some reason you need to save xml documentation for your properties, 
-there is an option to specify xml text for both DependencyProperty and getter/setter 
+The easiest way to add documentation is the Description parameter.
+It will add a System.ComponentModel.Description attribute to the property and will also be used in the xml documentation.  
+If for some reason you need to save raw xml documentation for your properties, 
+there is an option to specify raw xml text for both DependencyProperty and getter/setter 
 via XmlDocumentation/PropertyXmlDocumentation attribute properties.
 
 ### Platform detection
