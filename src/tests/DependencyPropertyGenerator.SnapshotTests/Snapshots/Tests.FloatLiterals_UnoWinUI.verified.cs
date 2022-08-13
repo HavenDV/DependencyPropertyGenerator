@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
+        /// Identifies the <see cref="FloatProperty"/> dependency property.<br/>
         /// Default value: 42
         /// </summary>
         public static readonly global::Microsoft.UI.Xaml.DependencyProperty FloatPropertyProperty =

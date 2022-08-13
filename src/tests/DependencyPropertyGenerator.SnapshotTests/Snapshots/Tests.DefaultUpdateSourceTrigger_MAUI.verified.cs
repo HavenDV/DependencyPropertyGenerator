@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyGrid
     {
         /// <summary>
+        /// Identifies the <see cref="ExplicitUpdateSourceTriggerProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty ExplicitUpdateSourceTriggerPropertyProperty =

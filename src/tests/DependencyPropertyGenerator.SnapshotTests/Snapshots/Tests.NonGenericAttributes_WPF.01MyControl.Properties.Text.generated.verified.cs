@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
+        /// Identifies the <see cref="Text"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty TextProperty =

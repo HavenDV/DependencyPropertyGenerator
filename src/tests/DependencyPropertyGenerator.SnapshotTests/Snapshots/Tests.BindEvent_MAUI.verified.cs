@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class VisualElementExtensions
     {
         /// <summary>
+        /// Identifies the <see cref="BindEventProperty"/> dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty BindEventPropertyProperty =

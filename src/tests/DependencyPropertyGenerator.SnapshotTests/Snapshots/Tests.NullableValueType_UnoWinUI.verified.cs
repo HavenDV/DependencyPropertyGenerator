@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class Generatable
     {
         /// <summary>
+        /// Identifies the <see cref="Property"/> dependency property.<br/>
         /// Default value: default(int?)
         /// </summary>
         public static readonly global::Microsoft.UI.Xaml.DependencyProperty PropertyProperty =

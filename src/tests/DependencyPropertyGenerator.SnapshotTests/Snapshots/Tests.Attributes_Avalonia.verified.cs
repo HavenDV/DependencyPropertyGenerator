@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
-        /// Description<br/>
+        /// Identifies the <see cref="AttributedProperty"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
         public static readonly global::Avalonia.StyledProperty<string?> AttributedPropertyProperty =

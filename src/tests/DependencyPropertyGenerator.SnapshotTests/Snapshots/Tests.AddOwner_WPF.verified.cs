@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class UnrelatedStateControl
     {
         /// <summary>
+        /// Identifies the <see cref="Background"/> dependency property.<br/>
         /// Default value: default(Brush)
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty BackgroundProperty =

@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class TreeViewExtensions
     {
         /// <summary>
+        /// Identifies the <see cref="Mode"/> dependency property.<br/>
         /// Default value: Mode2
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty ModeProperty =

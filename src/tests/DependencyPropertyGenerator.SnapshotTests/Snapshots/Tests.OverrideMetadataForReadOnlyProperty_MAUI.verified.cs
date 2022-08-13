@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class Aquarium
     {
         /// <summary>
+        /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>
         /// Default value: jpg")
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey AquariumGraphicPropertyKey =
@@ -23,6 +24,7 @@ namespace H.Generators.IntegrationTests
             defaultValueCreator: null);
 
         /// <summary>
+        /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>
         /// Default value: jpg")
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty AquariumGraphicProperty

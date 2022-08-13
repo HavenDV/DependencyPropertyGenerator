@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
-        /// Description<br/>
+        /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
         /// Default value: true
         /// </summary>
         public static readonly global::Windows.UI.Xaml.DependencyProperty IsSpinningProperty =

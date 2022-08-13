@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class GridHelpers : global::Avalonia.AvaloniaObject
     {
         /// <summary>
+        /// Identifies the <see cref="RowCount"/> dependency property.<br/>
         /// Default value: -1
         /// </summary>
         public static readonly global::Avalonia.AttachedProperty<int> RowCountProperty =

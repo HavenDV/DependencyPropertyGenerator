@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class UIElementExtensions : global::Avalonia.AvaloniaObject
     {
         /// <summary>
+        /// Identifies the <see cref="BindEventProperty"/> dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Avalonia.AttachedProperty<object?> BindEventPropertyProperty =

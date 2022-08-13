@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class UnrelatedStateControl
     {
         /// <summary>
+        /// Identifies the <see cref="Background"/> dependency property.<br/>
         /// Default value: default(IBrush)
         /// </summary>
         public static readonly global::Avalonia.StyledProperty<global::Avalonia.Media.IBrush?> BackgroundProperty =

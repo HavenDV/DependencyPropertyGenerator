@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyGrid
     {
         /// <summary>
+        /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         internal static readonly global::System.Windows.DependencyPropertyKey IsSpinningPropertyKey =
@@ -23,6 +24,7 @@ namespace H.Generators.IntegrationTests
                 validateValueCallback: null);
 
         /// <summary>
+        /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty IsSpinningProperty

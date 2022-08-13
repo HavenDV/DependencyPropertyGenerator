@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
+        /// Identifies the <see cref="IsSpinning2"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::Avalonia.StyledProperty<bool> IsSpinning2Property =

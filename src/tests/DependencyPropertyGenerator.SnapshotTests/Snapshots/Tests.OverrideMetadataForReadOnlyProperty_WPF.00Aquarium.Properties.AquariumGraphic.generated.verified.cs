@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class Aquarium
     {
         /// <summary>
+        /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>
         /// Default value: jpg")
         /// </summary>
         internal static readonly global::System.Windows.DependencyPropertyKey AquariumGraphicPropertyKey =
@@ -23,6 +24,7 @@ namespace H.Generators.IntegrationTests
                 validateValueCallback: null);
 
         /// <summary>
+        /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>
         /// Default value: jpg")
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty AquariumGraphicProperty

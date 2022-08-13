@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyGrid
     {
         /// <summary>
+        /// Identifies the <see cref="NotNullStringProperty"/> dependency property.<br/>
         /// Default value: ""
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty NotNullStringPropertyProperty =

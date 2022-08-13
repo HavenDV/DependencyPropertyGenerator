@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyControl
     {
         /// <summary>
+        /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         internal static readonly global::System.Windows.DependencyPropertyKey ReadOnlyPropertyPropertyKey =
@@ -23,6 +24,7 @@ namespace H.Generators.IntegrationTests
                 validateValueCallback: null);
 
         /// <summary>
+        /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty ReadOnlyPropertyProperty

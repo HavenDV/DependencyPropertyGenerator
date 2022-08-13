@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class UnrelatedStateControl
     {
         /// <summary>
+        /// Identifies the <see cref="Text"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
         public static readonly global::Avalonia.DirectProperty<global::H.Generators.IntegrationTests.UnrelatedStateControl, string?> TextProperty =

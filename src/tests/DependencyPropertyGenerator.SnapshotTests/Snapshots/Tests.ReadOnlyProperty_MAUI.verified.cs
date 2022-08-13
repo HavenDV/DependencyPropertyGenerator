@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyGrid
     {
         /// <summary>
+        /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey ReadOnlyPropertyPropertyKey =
@@ -23,6 +24,7 @@ namespace H.Generators.IntegrationTests
             defaultValueCreator: null);
 
         /// <summary>
+        /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty ReadOnlyPropertyProperty

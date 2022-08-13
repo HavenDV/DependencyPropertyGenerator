@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class MyGrid
     {
         /// <summary>
+        /// Identifies the <see cref="SomeProperty"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty SomePropertyProperty =

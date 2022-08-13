@@ -14,13 +14,13 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
         {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateDependencyPropertyCreateCall(@class, property)}
 
 {GenerateAdditionalFieldForDirectProperties(property)}
 {GenerateAdditionalPropertyForReadOnlyProperties(property)}
-{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property, isProperty: true)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
@@ -307,13 +307,13 @@ namespace {@class.Namespace}
 {{
     public{GenerateModifiers(@class)} partial class {@class.Name}{GenerateBaseType(@class)}
     {{
-{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
         {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
                 {GenerateRegisterAttachedMethodArguments(@class, property)});
 
 {GenerateAdditionalPropertyForReadOnlyProperties(property)}
-{GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.SetterXmlDocumentation, property, isProperty: true)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
@@ -329,7 +329,7 @@ namespace {@class.Namespace}
             element.SetValue({GenerateDependencyPropertyName(property)}, value);
         }}
 
-{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.GetterXmlDocumentation, property, isProperty: true)}
 {GenerateCategoryAttribute(property.Category)}
 {GenerateDescriptionAttribute(property.Description)}
 {GenerateTypeConverterAttribute(property.TypeConverter)}
@@ -1145,10 +1145,16 @@ namespace {@class.Namespace}
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
-    public static string GenerateXmlDocumentationFrom(string? value, DependencyPropertyData property)
+    public static string GenerateXmlDocumentationFrom(
+        string? value,
+        DependencyPropertyData property,
+        bool isProperty)
     {
+        var body = isProperty
+            ? property.Description != null ? $"{property.Description}<br/>" : " "
+            : $"Identifies the <see cref=\"{property.Name}\"/> dependency property.<br/>";
         value ??= @$"<summary>
-{(property.Description != null ? $"{property.Description}<br/>" : " ")}
+{body}
 Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
@@ -1240,13 +1246,13 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return property.Platform switch
         {
             Platform.MAUI => $@" 
-{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
         public static readonly {GenerateTypeByPlatform(property.Platform, "BindableProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.BindableProperty;
 ",
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.dependencypropertykey?view=windowsdesktop-6.0#examples
             Platform.WPF => $@" 
-{GenerateXmlDocumentationFrom(property.XmlDocumentation, property)}
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
         public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.DependencyProperty;
 ",
