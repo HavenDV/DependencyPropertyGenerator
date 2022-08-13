@@ -1,5 +1,6 @@
 ﻿using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
+using System.Globalization;
 
 namespace H.Generators;
 
@@ -721,7 +722,7 @@ namespace {@class.Namespace}
                     flags: {GenerateOptions(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
                     coerceValueCallback: {GenerateCoerceValueCallback(@class, property)},
-                    isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower()})";
+                    isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower(CultureInfo.InvariantCulture)})";
                 }
 
                 return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
@@ -729,7 +730,7 @@ namespace {@class.Namespace}
                     flags: {GenerateOptions(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
                     coerceValueCallback: {GenerateCoerceValueCallback(@class, property)},
-                    isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower()},
+                    isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower(CultureInfo.InvariantCulture)},
                     defaultUpdateSourceTrigger: global::System.Windows.Data.UpdateSourceTrigger.{property.DefaultUpdateSourceTrigger})";
 
             case Platform.UWP:

@@ -234,7 +234,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 name = RemoveNameof(name);
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
-                if (attributeClass.StartsWith(RoutedEventAttributeFullName))
+                if (attributeClass.StartsWith(RoutedEventAttributeFullName, StringComparison.InvariantCulture))
                 {
                     var strategy = attributeSyntax.ArgumentList?.Arguments[1].ToFullString()?
                         .Replace("RoutedEventStrategy.", string.Empty) ?? string.Empty;
@@ -294,7 +294,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         false;
                     var isReadOnly = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.IsReadOnly)) ?? bool.FalseString;
                     var isDirect = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.IsDirect)) ?? bool.FalseString;
-                    var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttributeFullName);
+                    var isAttached = attributeClass.StartsWith(AttachedDependencyPropertyAttributeFullName, StringComparison.InvariantCulture);
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.Description))?.Value?.ToString();
                     var category = GetPropertyFromAttributeData(attribute, nameof(DependencyPropertyAttribute.Category))?.Value?.ToString();
@@ -350,7 +350,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         IsReadOnly: bool.Parse(isReadOnly),
                         IsDirect: bool.Parse(isDirect),
                         IsAttached: isAttached,
-                        IsAddOwner: attributeClass.StartsWith(AddOwnerAttributeFullName),
+                        IsAddOwner: attributeClass.StartsWith(AddOwnerAttributeFullName, StringComparison.InvariantCulture),
                         Platform: platform,
                         Description: description,
                         Category: category,
@@ -393,11 +393,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Validate: bool.Parse(validate),
                         CreateDefaultValueCallback: bool.Parse(createDefaultValueCallback));
 
-                    if (attributeClass.StartsWith(OverrideMetadataAttributeFullName))
+                    if (attributeClass.StartsWith(OverrideMetadataAttributeFullName, StringComparison.InvariantCulture))
                     {
                         overrideMetadata.Add(value);
                     }
-                    else if (attributeClass.StartsWith(AddOwnerAttributeFullName))
+                    else if (attributeClass.StartsWith(AddOwnerAttributeFullName, StringComparison.InvariantCulture))
                     {
                         addOwner.Add(value);
                     }
@@ -441,11 +441,11 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static bool IsGeneratorAttribute(string fullTypeName)
     {
         return
-            fullTypeName.StartsWith(AttachedDependencyPropertyAttributeFullName) ||
-            fullTypeName.StartsWith(DependencyPropertyAttributeFullName) ||
-            fullTypeName.StartsWith(RoutedEventAttributeFullName) ||
-            fullTypeName.StartsWith(OverrideMetadataAttributeFullName) ||
-            fullTypeName.StartsWith(AddOwnerAttributeFullName);
+            fullTypeName.StartsWith(AttachedDependencyPropertyAttributeFullName, StringComparison.InvariantCulture) ||
+            fullTypeName.StartsWith(DependencyPropertyAttributeFullName, StringComparison.InvariantCulture) ||
+            fullTypeName.StartsWith(RoutedEventAttributeFullName, StringComparison.InvariantCulture) ||
+            fullTypeName.StartsWith(OverrideMetadataAttributeFullName, StringComparison.InvariantCulture) ||
+            fullTypeName.StartsWith(AddOwnerAttributeFullName, StringComparison.InvariantCulture);
     }
 
     private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)
