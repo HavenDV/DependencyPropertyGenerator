@@ -173,6 +173,7 @@ For some platforms there is no automatic detection. In these cases, the generato
     <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
   </PropertyGroup>
 ```
+Automatic detection of Uno [was added in Uno 4.5](https://github.com/unoplatform/uno/pull/9443).
 
 ### Bind event
 The generator can automatically control properties that depend on events:
