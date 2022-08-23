@@ -94,17 +94,35 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
                 }
-                if (platform == Platform.UWP ||
-                    platform == Platform.WinUI ||
-                    platform == Platform.Uno ||
-                    platform == Platform.UnoWinUI)
+
+                if (@class.OverrideMetadata.Any())
                 {
-                    if (@class.OverrideMetadata.Any())
+                    if (platform == Platform.WPF)
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.StaticConstructor.generated.cs",
+                            text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
+                    }
+                    else if (
+                        platform == Platform.UWP ||
+                        platform == Platform.WinUI ||
+                        platform == Platform.Uno ||
+                        platform == Platform.UnoWinUI)
                     {
                         context.AddTextSource(
                             hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
                             text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
                     }
+                    else
+                    {
+                        throw new PlatformNotSupportedException();
+                    }
+                }
+                if (platform == Platform.UWP ||
+                    platform == Platform.WinUI ||
+                    platform == Platform.Uno ||
+                    platform == Platform.UnoWinUI)
+                {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
                         context.AddTextSource(
@@ -146,12 +164,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 }
                 if (platform == Platform.WPF)
                 {
-                    if (@class.OverrideMetadata.Any())
-                    {
-                        context.AddTextSource(
-                            hintName: $"{@class.Name}.StaticConstructor.generated.cs",
-                            text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
-                    }
                     foreach (var addOwner in @class.AddOwner)
                     {
                         context.AddTextSource(

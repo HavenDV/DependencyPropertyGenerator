@@ -123,17 +123,26 @@ namespace {@class.Namespace}
                 ? GenerateBrowsableForType(property)
                 : GenerateType(@class.FullName, false);
 
+            var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
+            if (!isChanged0 &&
+                !isChanged1 &&
+                !isChanged2 &&
+                !isChanged3)
+            {
+                return " ";
+            }
+
             return @$"
             _ = this.RegisterPropertyChangedCallback(
                 dp: {property.Name}Property,
                 callback: static (sender, dependencyProperty) =>
                 {{
-                    (({senderType})sender).On{property.Name}Changed();
-                    (({senderType})sender).On{property.Name}Changed(
-                        ({GenerateType(property)})sender.GetValue(dependencyProperty));
-                    (({senderType})sender).On{property.Name}Changed(
+                    {(isChanged0 ? @$"(({senderType})sender).{name}();" : "")}
+                    {(isChanged1 ? @$"(({senderType})sender).{name}(
+                        ({GenerateType(property)})sender.GetValue(dependencyProperty));" : "")}
+                    {(isChanged2 ? @$"(({senderType})sender).{name}(
                         ({GenerateType(property)})sender.GetValue(dependencyProperty),
-                        ({GenerateType(property)})sender.GetValue(dependencyProperty));
+                        ({GenerateType(property)})sender.GetValue(dependencyProperty));" : "")}
                 }});
 ";
         }).Inject()}

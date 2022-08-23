@@ -21,6 +21,9 @@ public partial class Aquarium : UIElement
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/tropical-aquarium-graphic.jpg\"")"")]
 public partial class TropicalAquarium : Aquarium
 {
+    partial void OnAquariumGraphicChanged()
+    {
+    }
 }", platform);
     }
 
@@ -43,6 +46,9 @@ public partial class Aquarium : UIElement
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/tropical-aquarium-graphic.jpg\"")"")]
 public partial class TropicalAquarium : Aquarium
 {
+    partial void OnAquariumGraphicChanged()
+    {
+    }
 }", platform);
     }
 }

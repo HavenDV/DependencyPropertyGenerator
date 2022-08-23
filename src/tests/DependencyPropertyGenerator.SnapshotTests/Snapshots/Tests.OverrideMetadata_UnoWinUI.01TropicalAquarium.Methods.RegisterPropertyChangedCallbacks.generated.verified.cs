@@ -12,11 +12,6 @@ namespace H.Generators.IntegrationTests
                 callback: static (sender, dependencyProperty) =>
                 {
                     ((global::H.Generators.IntegrationTests.TropicalAquarium)sender).OnAquariumGraphicChanged();
-                    ((global::H.Generators.IntegrationTests.TropicalAquarium)sender).OnAquariumGraphicChanged(
-                        (global::System.Uri?)sender.GetValue(dependencyProperty));
-                    ((global::H.Generators.IntegrationTests.TropicalAquarium)sender).OnAquariumGraphicChanged(
-                        (global::System.Uri?)sender.GetValue(dependencyProperty),
-                        (global::System.Uri?)sender.GetValue(dependencyProperty));
                 });
         }
 
