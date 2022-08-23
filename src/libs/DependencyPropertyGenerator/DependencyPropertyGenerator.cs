@@ -113,10 +113,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
                             text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
                     }
-                    else
-                    {
-                        throw new PlatformNotSupportedException();
-                    }
                 }
                 if (platform == Platform.UWP ||
                     platform == Platform.WinUI ||
