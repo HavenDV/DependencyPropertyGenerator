@@ -59,6 +59,13 @@ public sealed class RoutedEventAttribute : global::System.Attribute
     public string EventXmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
+    /// WinRT events are disabled by default due to a series of issues with them in Windows 10:<br/>
+    /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/36"/> <br/>
+    /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/31"/> <br/>
+    /// </summary>
+    public bool WinRTEvents { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
@@ -129,6 +136,13 @@ public sealed class RoutedEventAttribute<T> : global::System.Attribute
     /// Default - "&lt;summary&gt;&lt;/summary&gt;".
     /// </summary>
     public string EventXmlDocumentation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// WinRT events are disabled by default due to a series of issues with them in Windows 10:<br/>
+    /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/36"/> <br/>
+    /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/31"/> <br/>
+    /// </summary>
+    public bool WinRTEvents { get; set; }
 
     /// <summary>
     /// 

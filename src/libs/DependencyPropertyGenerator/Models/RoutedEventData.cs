@@ -8,4 +8,5 @@ public readonly record struct RoutedEventData(
     string? Description,
     string? Category,
     string? XmlDocumentation,
-    string? EventXmlDocumentation);
+    string? EventXmlDocumentation,
+    bool WinRTEvents);

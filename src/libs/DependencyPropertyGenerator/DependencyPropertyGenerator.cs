@@ -257,6 +257,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.XmlDocumentation))?.Value?.ToString();
                     var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.EventXmlDocumentation))?.Value?.ToString();
 
+                    var winRTEvents = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.WinRTEvents)) ?? bool.FalseString;
+
                     var value = new RoutedEventData(
                         Name: name,
                         Strategy: strategy,
@@ -265,7 +267,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Description: description,
                         Category: category,
                         XmlDocumentation: xmlDocumentation,
-                        EventXmlDocumentation: eventXmlDocumentation);
+                        EventXmlDocumentation: eventXmlDocumentation,
+                        WinRTEvents: bool.Parse(winRTEvents));
                     
                     routedEvents.Add(value);
                     continue;

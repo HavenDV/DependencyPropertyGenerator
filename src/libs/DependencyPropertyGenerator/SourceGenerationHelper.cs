@@ -406,6 +406,15 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
         }
 
+        if (!@event.WinRTEvents)
+        {
+            return @"
+// WinRT events are disabled by default due to a series of issues with them in Windows 10:
+// https://github.com/HavenDV/H.NotifyIcon/issues/36
+// https://github.com/HavenDV/H.NotifyIcon/issues/31
+// Use the WinRTEvents = true option to enable them.";
+        }
+
         // https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh972883(v=vs.140)
         return @$" 
 #nullable enable
