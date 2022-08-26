@@ -408,11 +408,26 @@ namespace {@class.Namespace}
 
         if (!@event.WinRTEvents)
         {
-            return @"
-// WinRT events are disabled by default due to a series of issues with them in Windows 10:
-// https://github.com/HavenDV/H.NotifyIcon/issues/36
-// https://github.com/HavenDV/H.NotifyIcon/issues/31
-// Use the WinRTEvents = true option to enable them.";
+            return @$" 
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+        /// <summary>
+        /// A helper method to raise the {@event.Name} event. <br/>
+        /// WinRT events are disabled by default due to a series of issues with them in Windows 10:
+        /// https://github.com/HavenDV/H.NotifyIcon/issues/36
+        /// https://github.com/HavenDV/H.NotifyIcon/issues/31
+        /// Use the WinRTEvents = true option to enable them.
+        /// </summary>
+        protected {GenerateRoutedEventArgsType(@class)}? On{@event.Name}()
+        {{
+            return null;
+        }}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
         }
 
         // https://docs.microsoft.com/en-us/previous-versions/windows/apps/hh972883(v=vs.140)
