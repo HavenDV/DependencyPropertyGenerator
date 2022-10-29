@@ -7,7 +7,8 @@ Dependency property and routed event source generator for WPF/UWP/WinUI/Uno/Aval
 <!-- ExcludeAssets="runtime" excludes DependencyPropertyGenerator.Attributes.dll from your output. -->
 <PackageReference Include="DependencyPropertyGenerator" Version="1.0.0" PrivateAssets="all" ExcludeAssets="runtime" />
 ```
-
+> **_NOTE:_**  When installing via NuGet just replace `<IncludeAssets>runtime` with `<IncludeAssets>compile` for it to work properly.
+ 
 ## Usage
 ```cs
 using DependencyPropertyGenerator;
