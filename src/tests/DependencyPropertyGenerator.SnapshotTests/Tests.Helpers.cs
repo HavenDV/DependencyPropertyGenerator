@@ -171,7 +171,29 @@ namespace H.Generators.IntegrationTests;
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            Verify(diagnostics)
+            Verify(diagnostics
+                    .Select(static diagnostic => diagnostic.Location.ToString().Contains('\\') || diagnostic.Location.ToString().Contains('/')
+                        ? Diagnostic.Create(
+                            id: diagnostic.Id,
+                            category: diagnostic.Descriptor.Category,
+                            message: diagnostic.GetMessage(),
+                            severity: diagnostic.Severity,
+                            defaultSeverity: diagnostic.DefaultSeverity,
+                            isEnabledByDefault: diagnostic.Descriptor.IsEnabledByDefault,
+                            warningLevel: diagnostic.WarningLevel,
+                            title: diagnostic.Descriptor.Title,
+                            description: diagnostic.Descriptor.Description,
+                            isSuppressed: diagnostic.IsSuppressed,
+                            helpLink: diagnostic.Descriptor.HelpLinkUri,
+                            location: Location.Create(
+                                filePath: string.Empty,
+                                textSpan: diagnostic.Location.SourceSpan,
+                                lineSpan: diagnostic.Location.GetLineSpan().Span),
+                            additionalLocations: diagnostic.AdditionalLocations,
+                            properties: diagnostic.Properties,
+                            customTags: diagnostic.Descriptor.CustomTags)
+                        : diagnostic)
+                    .ToArray())
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{platform}_Diagnostics"),
             Verify(driver)
@@ -180,7 +202,7 @@ namespace H.Generators.IntegrationTests;
     }
 }
 
-internal static class StrinExtensions
+internal static class StringExtensions
 {
     internal static string ReplaceType(this string source, string from, string to)
     {
