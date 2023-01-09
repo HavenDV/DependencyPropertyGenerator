@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class GridExtensions
     {
         /// <summary>
-        /// Identifies the <see cref="AttachedReadOnlyProperty"/> dependency property.<br/>
+        /// Identifies the AttachedReadOnlyProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         internal static readonly global::System.Windows.DependencyPropertyKey AttachedReadOnlyPropertyPropertyKey =
@@ -24,7 +24,7 @@ namespace H.Generators.IntegrationTests
                 validateValueCallback: null);
 
         /// <summary>
-        /// Identifies the <see cref="AttachedReadOnlyProperty"/> dependency property.<br/>
+        /// Identifies the AttachedReadOnlyProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty AttachedReadOnlyPropertyProperty

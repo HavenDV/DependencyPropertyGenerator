@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class TreeViewExtensions : global::Avalonia.AvaloniaObject
     {
         /// <summary>
-        /// Identifies the <see cref="Mode"/> dependency property.<br/>
+        /// Identifies the Mode dependency property.<br/>
         /// Default value: Mode2
         /// </summary>
         public static readonly global::Avalonia.AttachedProperty<global::H.Generators.IntegrationTests.Mode> ModeProperty =

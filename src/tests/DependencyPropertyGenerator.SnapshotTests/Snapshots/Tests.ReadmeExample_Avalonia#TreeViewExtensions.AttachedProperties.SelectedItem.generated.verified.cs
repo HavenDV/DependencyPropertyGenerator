@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public partial class TreeViewExtensions : global::Avalonia.AvaloniaObject
     {
         /// <summary>
-        /// Identifies the <see cref="SelectedItem"/> dependency property.<br/>
+        /// Identifies the SelectedItem dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Avalonia.AttachedProperty<object?> SelectedItemProperty =

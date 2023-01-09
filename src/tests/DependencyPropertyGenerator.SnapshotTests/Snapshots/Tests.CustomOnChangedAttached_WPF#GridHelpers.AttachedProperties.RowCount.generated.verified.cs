@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class GridHelpers
     {
         /// <summary>
-        /// Identifies the <see cref="RowCount"/> dependency property.<br/>
+        /// Identifies the RowCount dependency property.<br/>
         /// Default value: -1
         /// </summary>
         public static readonly global::System.Windows.DependencyProperty RowCountProperty =

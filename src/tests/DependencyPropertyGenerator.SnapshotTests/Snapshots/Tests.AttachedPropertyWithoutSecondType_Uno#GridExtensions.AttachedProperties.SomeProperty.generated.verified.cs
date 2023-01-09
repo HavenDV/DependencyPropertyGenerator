@@ -7,7 +7,7 @@ namespace H.Generators.IntegrationTests
     public static partial class GridExtensions
     {
         /// <summary>
-        /// Identifies the <see cref="SomeProperty"/> dependency property.<br/>
+        /// Identifies the SomeProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Windows.UI.Xaml.DependencyProperty SomePropertyProperty =

@@ -1185,9 +1185,12 @@ namespace {@class.Namespace}
         DependencyPropertyData property,
         bool isProperty)
     {
+        var name = property.IsAttached
+            ? property.Name
+            : $"<see cref=\"{property.Name}\"/>";
         var body = isProperty
             ? property.Description != null ? $"{property.Description}<br/>" : " "
-            : $"Identifies the <see cref=\"{property.Name}\"/> dependency property.<br/>";
+            : $"Identifies the {name} dependency property.<br/>";
         value ??= @$"<summary>
 {body}
 Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.Type?.ExtractSimpleName())})"}
