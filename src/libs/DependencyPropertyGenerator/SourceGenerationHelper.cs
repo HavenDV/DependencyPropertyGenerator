@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace H.Generators;
 
-internal class SourceGenerationHelper
+internal static class SourceGenerationHelper
 {
     public static string GenerateDependencyProperty(ClassData @class, DependencyPropertyData property)
     {
