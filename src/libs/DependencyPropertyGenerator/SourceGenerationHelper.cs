@@ -1,6 +1,7 @@
 ﻿using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using System.Globalization;
+using System.Net;
 
 namespace H.Generators;
 
@@ -1175,7 +1176,7 @@ namespace {@class.Namespace}
     public static string GenerateXmlDocumentationFrom(string value)
     {
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
+        
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
@@ -1189,7 +1190,7 @@ namespace {@class.Namespace}
             : $"Identifies the <see cref=\"{property.Name}\"/> dependency property.<br/>";
         value ??= @$"<summary>
 {body}
-Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({property.Type?.ExtractSimpleName()})"}
+Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.Type?.ExtractSimpleName())})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
         return GenerateXmlDocumentationFrom(value);

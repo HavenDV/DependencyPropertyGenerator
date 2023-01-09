@@ -321,4 +321,19 @@ public partial class Generatable : FrameworkElement
 {
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task Dictionary(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+[DependencyProperty<System.Collections.Generic.Dictionary<string, string>>(""Headers"", DefaultBindingMode = DefaultBindingMode.TwoWay)]
+public partial class Generatable : FrameworkElement
+{
+}", platform);
+    }
 }
