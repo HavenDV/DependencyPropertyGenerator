@@ -1429,9 +1429,15 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
+        var isMultilineString =
+            value.Contains('\r') ||
+            value.Contains('\n');
+        
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Description),
-            $"\"{value}\"");
+            isMultilineString 
+                    ? $"@\"{value}\""
+                    : $"\"{value}\"");
     }
 
     public static string GenerateTypeConverterAttribute(string? value)

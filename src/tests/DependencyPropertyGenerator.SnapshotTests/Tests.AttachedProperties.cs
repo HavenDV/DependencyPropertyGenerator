@@ -80,6 +80,24 @@ public static partial class GridExtensions
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
     [DataRow(Platform.Avalonia)]
+    public Task MultilineDescription(Platform platform)
+    {
+        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+[AttachedDependencyProperty<string, Grid>(""UserAgentSuffix"",
+	Description = @""A suffix that is added to the default user agent, surrounded by square brackets.
+Can be used to identify the web view as belonging to a certain app/version on the server side."")]
+public static partial class GridExtensions
+{
+}
+", platform);
+    }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
     public Task CustomOnChangedAttached(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
