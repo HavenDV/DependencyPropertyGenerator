@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using Avalonia.Controls;
 
 namespace H.Generators.IntegrationTests;
 
@@ -18,7 +18,7 @@ public class DependencyPropertyGeneratorTests
             {
                 var window = new MyControl();
                 window.SetValue(MyControl.IsSpinningProperty, true);
-                isSpinningValue = (bool)window.GetValue(MyControl.IsSpinningProperty);
+                isSpinningValue = window.GetValue(MyControl.IsSpinningProperty);
 
                 var treeView = new TreeView();
                 TreeViewExtensions.SetSelectedItem(treeView, new object());
@@ -29,7 +29,7 @@ public class DependencyPropertyGeneratorTests
                 exception = e;
             }
         });
-        thread.SetApartmentState(ApartmentState.STA);
+        //thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
         thread.Join();
 

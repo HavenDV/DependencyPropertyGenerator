@@ -1,9 +1,13 @@
 ﻿using DependencyPropertyGenerator;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
+using Avalonia.Controls;
 
 #nullable enable
+
+// ReSharper disable UnusedParameterInPartialMethod
+// ReSharper disable RedundantExtendsListEntry
+// ReSharper disable UnusedType.Global
+// ReSharper disable IdentifierTypo
 
 namespace H.Generators.IntegrationTests;
 
@@ -17,7 +21,7 @@ public partial class MyControl : UserControl
 }
 
 [AttachedDependencyProperty<object, TreeView>("SelectedItem", DefaultBindingMode = DefaultBindingMode.TwoWay)]
-public static partial class TreeViewExtensions
+public partial class TreeViewExtensions
 {
     // Optional
     static partial void OnSelectedItemChanged(TreeView treeView, object? oldValue, object? newValue)
@@ -32,7 +36,7 @@ public enum Mode
 }
 
 [AttachedDependencyProperty<Mode, TreeView>("Mode", DefaultValue = Mode.Mode2)]
-public static partial class TreeViewExtensions
+public partial class TreeViewExtensions
 {
     static partial void OnModeChanged(TreeView treeView, Mode oldValue, Mode newValue)
     {
@@ -47,7 +51,6 @@ public partial class MyControl : UserControl
 [DependencyProperty<string>("AttributedProperty",
     Category = "Category",
     Description = "Description",
-    TypeConverter = typeof(BooleanToVisibilityConverter),
     Bindable = true,
     DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
     CLSCompliant = false,
@@ -89,7 +92,7 @@ public partial class MyControl : UserControl
 [DependencyProperty<string>("NotNullStringProperty", DefaultValue = "", Validate = true, Coerce = true)]
 public partial class MyControl : UserControl
 {
-    private partial string? CoerceNotNullStringProperty(string? value)
+    private partial string CoerceNotNullStringProperty(string? value)
     {
         return value ?? string.Empty;
     }
@@ -111,34 +114,34 @@ public partial class MyControl : UserControl
 }
 
 [AttachedDependencyProperty<object, Grid>("AttachedReadOnlyProperty", IsReadOnly = true)]
-public static partial class GridExtensions
+public partial class GridExtensions
 {
 }
 
-[AttachedDependencyProperty<object, Grid>("BindEventProperty", BindEvent = nameof(Grid.MouseWheel))]
-public static partial class GridExtensions
-{
-    private static void OnBindEventPropertyChanged_MouseWheel(object? sender, System.Windows.Input.MouseWheelEventArgs args)
-    {
-    }
-}
+// [AttachedDependencyProperty<object, Grid>("BindEventProperty", BindEvent = nameof(Grid.MouseWheel))]
+// public static partial class GridExtensions
+// {
+//     private static void OnBindEventPropertyChanged_MouseWheel(object? sender, System.Windows.Input.MouseWheelEventArgs args)
+//     {
+//     }
+// }
 
-[DependencyProperty<object>("BindEventsProperty",
-    BindEvents = new[] { nameof(Grid.MouseEnter), nameof(Grid.MouseLeave) })]
-public partial class MyGrid : Grid
-{
-    private static void OnBindEventsPropertyChanged_MouseEnter(object? sender, System.Windows.Input.MouseEventArgs args)
-    {
-    }
-
-    private static void OnBindEventsPropertyChanged_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs args)
-    {
-    }
-}
+// [DependencyProperty<object>("BindEventsProperty",
+//     BindEvents = new[] { nameof(Grid.MouseEnter), nameof(Grid.MouseLeave) })]
+// public partial class MyGrid : Grid
+// {
+//     private static void OnBindEventsPropertyChanged_MouseEnter(object? sender, System.Windows.Input.MouseEventArgs args)
+//     {
+//     }
+//
+//     private static void OnBindEventsPropertyChanged_MouseLeave(object? sender, System.Windows.Input.MouseEventArgs args)
+//     {
+//     }
+// }
 
 [DependencyProperty<string>("Text")]
 [DesignTimeVisible(false)]
-public partial class Generatable : FrameworkElement
+public partial class Generatable : Control
 {
     partial void OnTextChanged(string? oldValue, string? newValue)
     {
@@ -147,12 +150,13 @@ public partial class Generatable : FrameworkElement
 
 [DependencyProperty<Uri>("AquariumGraphic", AffectsRender = true,
     DefaultValueExpression = "new System.Uri(\"http://www.contoso.com/aquarium-graphic.jpg\")")]
-public partial class Aquarium : UIElement
+public partial class Aquarium : Control
 {
 }
 
 [OverrideMetadata<Uri>("AquariumGraphic",
     DefaultValueExpression = "new System.Uri(\"http://www.contoso.com/tropical-aquarium-graphic.jpg\")")]
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class TropicalAquarium : Aquarium
 {
 }

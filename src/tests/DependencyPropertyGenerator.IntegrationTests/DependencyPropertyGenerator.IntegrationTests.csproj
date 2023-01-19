@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0-windows</TargetFrameworks>
-    <UseWPF>true</UseWPF>
-    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <TargetFramework>net7.0</TargetFramework>
     <NoWarn>$(NoWarn);CS3021</NoWarn>
+    <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
   </PropertyGroup>
 
   <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
@@ -22,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Base packages">
+    <PackageReference Include="Avalonia" Version="0.10.18" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
