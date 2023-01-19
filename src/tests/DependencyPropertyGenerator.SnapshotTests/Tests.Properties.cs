@@ -1,7 +1,7 @@
 ﻿namespace H.Generators.SnapshotTests;
 
 [TestClass]
-public partial class Tests : VerifyBase
+public partial class Tests
 {
     [DataTestMethod]
     [DataRow(Platform.WPF)]

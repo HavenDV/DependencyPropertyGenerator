@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="Base packages">
+    <PackageReference Include="H.Generators.Extensions" Version="1.8.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
