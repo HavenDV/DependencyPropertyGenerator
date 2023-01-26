@@ -11,7 +11,7 @@ public partial class Tests
     public Task RoutedEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
-[RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, WinRTEvents = true)]
+[RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, WinRtEvents = true)]
 public partial class MyControl : UserControl
 {
 }", platform);

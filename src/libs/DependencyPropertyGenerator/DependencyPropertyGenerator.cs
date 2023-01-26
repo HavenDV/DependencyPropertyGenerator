@@ -17,8 +17,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    public const string Name = nameof(DependencyPropertyGenerator);
-    public const string Id = "DPG";
+    private const string Name = nameof(DependencyPropertyGenerator);
+    private const string Id = "DPG";
 
     private static string AttachedDependencyPropertyAttributeFullName => typeof(AttachedDependencyPropertyAttribute).FullName;
     private static string DependencyPropertyAttributeFullName => typeof(DependencyPropertyAttribute).FullName;
@@ -220,7 +220,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 // Roslyn bug?
                 //.Where(static value => value.PartialImplementationPart != null)
                 .Select(static value => value.ToDisplayString()
-                    .Replace(value.ReceiverType?.ToDisplayString(), string.Empty)
+                    .Replace(value.ReceiverType?.ToDisplayString() ?? string.Empty, string.Empty)
                     .Replace("?", string.Empty)
                     .TrimStart('.'))
                 .ToArray();
@@ -238,13 +238,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .SelectMany(static list => list.Attributes)
                 .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, compilation.GetSemanticModel(attributeSyntax.SyntaxTree))))
             {
-                var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
+                var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString().Trim('"') ?? string.Empty;
                 name = RemoveNameof(name);
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(RoutedEventAttributeFullName, StringComparison.InvariantCulture))
                 {
-                    var strategy = attributeSyntax.ArgumentList?.Arguments[1].ToFullString()?
+                    var strategy = attributeSyntax.ArgumentList?.Arguments[1].ToFullString()
                         .Replace("RoutedEventStrategy.", string.Empty) ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
@@ -257,7 +257,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.XmlDocumentation))?.Value?.ToString();
                     var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.EventXmlDocumentation))?.Value?.ToString();
 
-                    var winRTEvents = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.WinRTEvents)) ?? bool.FalseString;
+                    var winRtEvents = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.WinRtEvents)) ?? bool.FalseString;
 
                     var value = new RoutedEventData(
                         Name: name,
@@ -268,10 +268,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Category: category,
                         XmlDocumentation: xmlDocumentation,
                         EventXmlDocumentation: eventXmlDocumentation,
-                        WinRTEvents: bool.Parse(winRTEvents));
+                        WinRTEvents: bool.Parse(winRtEvents));
                     
                     routedEvents.Add(value);
-                    continue;
                 }
                 else
                 {
@@ -313,7 +312,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     var bindable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Bindable));
                     var browsable = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Browsable));
                     var designerSerializationVisibility = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.DesignerSerializationVisibility));
-                    var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.CLSCompliant));
+                    var clsCompliant = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.ClsCompliant));
                     var localizability = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(DependencyPropertyAttribute.Localizability))?
                         .Replace("global::DependencyPropertyGenerator.Localizability.", string.Empty)
                         .Replace("DependencyPropertyGenerator.Localizability.", string.Empty)
@@ -380,10 +379,10 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         BindEvents: bindEvent != null
                             ? new[] { bindEvent }
                             : bindEvents?.Kind == TypedConstantKind.Array
-                                ? bindEvents?.Values
+                                ? bindEvents.Value.Values
                                     .Select(static value => value.Value?.ToString() ?? string.Empty)
                                     .Where(value => !string.IsNullOrWhiteSpace(value))
-                                    .ToArray() ?? Array.Empty<string>()
+                                    .ToArray()
                                 : Array.Empty<string>(),
                         OnChanged: onChanged ?? string.Empty,
                         AffectsMeasure: bool.Parse(affectsMeasure),
@@ -519,9 +518,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static string? GetPropertyFromAttributeSyntax(AttributeSyntax syntax, string name)
     {
         return syntax.ArgumentList?.Arguments
-            .FirstOrDefault(syntax =>
+            .FirstOrDefault(x =>
             {
-                var nameEquals = syntax.NameEquals?.ToFullString()?
+                var nameEquals = x.NameEquals?.ToFullString()
                     .Trim('=', ' ', '\t', '\r', '\n');
                 
                 return nameEquals == name;

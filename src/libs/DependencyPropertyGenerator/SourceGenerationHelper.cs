@@ -1,5 +1,4 @@
 ﻿using H.Generators.Extensions;
-using Microsoft.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 
@@ -29,7 +28,7 @@ namespace {@class.Namespace}
 {GenerateBindableAttribute(property.Bindable)}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
-{GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
         {{
@@ -47,9 +46,9 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateGetter(DependencyPropertyData property)
+    private static string GenerateGetter(DependencyPropertyData property)
     {
-        if (property.IsDirect && property.Platform == Platform.Avalonia)
+        if (property is { IsDirect: true, Platform: Platform.Avalonia })
         {
             return @$"get => _{property.Name.ToParameterName()};";
         }
@@ -57,9 +56,9 @@ namespace {@class.Namespace}
         return @$"get => ({GenerateType(property)})GetValue({property.Name}Property);";
     }
 
-    public static string GenerateSetter(DependencyPropertyData property)
+    private static string GenerateSetter(DependencyPropertyData property)
     {
-        if (property.IsDirect && property.Platform == Platform.Avalonia)
+        if (property is { IsDirect: true, Platform: Platform.Avalonia })
         {
             return @$"private set
             {{
@@ -77,7 +76,7 @@ namespace {@class.Namespace}
         return @$"{GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);";
     }
 
-    public static string GenerateDependencyPropertyCreateCall(ClassData @class, DependencyPropertyData property)
+    private static string GenerateDependencyPropertyCreateCall(ClassData @class, DependencyPropertyData property)
     {
         if (property.IsAddOwner)
         {
@@ -154,7 +153,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static (bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckMethods(
+    private static (bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckMethods(
         string name,
         ClassData @class,
         DependencyPropertyData property)
@@ -181,7 +180,7 @@ namespace {@class.Namespace}
         return (isChanged0, isChanged1, isChanged2, isChanged3);
     }
 
-    public static (string Name, bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckOnChangedMethods(
+    private static (string Name, bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckOnChangedMethods(
         ClassData @class,
         DependencyPropertyData property)
     {
@@ -197,7 +196,7 @@ namespace {@class.Namespace}
         return (name, isChanged0, isChanged1, isChanged2, isChanged3);
     }
 
-    public static string GenerateAvaloniaStaticConstructorPropertyChanged(
+    private static string GenerateAvaloniaStaticConstructorPropertyChanged(
         ClassData @class,
         DependencyPropertyData property)
     {
@@ -331,7 +330,7 @@ namespace {@class.Namespace}
 {GenerateBindableAttribute(property.Bindable)}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
-{GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Platform)} element, {GenerateType(property)} value)
         {{
@@ -348,7 +347,7 @@ namespace {@class.Namespace}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateBrowsableForTypeAttribute(property)}
-{GenerateCLSCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.CLSCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Platform)} element)
         {{
@@ -509,7 +508,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateBaseType(ClassData @class)
+    private static string GenerateBaseType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -519,7 +518,7 @@ namespace {@class.Namespace}
         return string.Empty;
     }
 
-    public static string GenerateModifiers(ClassData @class)
+    private static string GenerateModifiers(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -534,7 +533,7 @@ namespace {@class.Namespace}
         return methods.Contains(signature);
     }
 
-    public static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)
+    private static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)
     {
         var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
         if (!isChanged0 &&
@@ -600,7 +599,7 @@ namespace {@class.Namespace}
                     }}";
     }
 
-    public static string GeneratePropertyChangingCallback(ClassData @class, DependencyPropertyData property)
+    private static string GeneratePropertyChangingCallback(ClassData @class, DependencyPropertyData property)
     {
         var (isChanging0, isChanging1, isChanging2, isChanging3) = CheckMethods($"On{property.Name}Changing", @class, property);
         if (!isChanging0 &&
@@ -666,7 +665,7 @@ namespace {@class.Namespace}
                     }}";
     }
 
-    public static string GenerateCoerceValueCallback(ClassData @class, DependencyPropertyData property)
+    private static string GenerateCoerceValueCallback(ClassData @class, DependencyPropertyData property)
     {
         if (!property.Coerce)
         {
@@ -699,7 +698,7 @@ namespace {@class.Namespace}
                             ({GenerateType(property)})value)";
     }
 
-    public static string GenerateValidateValueCallback(DependencyPropertyData property)
+    private static string GenerateValidateValueCallback(DependencyPropertyData property)
     {
         if (!property.Validate)
         {
@@ -718,7 +717,7 @@ namespace {@class.Namespace}
                         ({GenerateType(property)})value)";
     }
 
-    public static string GenerateCreateDefaultValueCallbackValueCallback(DependencyPropertyData property)
+    private static string GenerateCreateDefaultValueCallbackValueCallback(DependencyPropertyData property)
     {
         if (!property.CreateDefaultValueCallback)
         {
@@ -733,10 +732,9 @@ namespace {@class.Namespace}
         return $@"static () => Get{property.Name}DefaultValue()";
     }
 
-    public static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property)
+    private static string GeneratePropertyMetadata(ClassData @class, DependencyPropertyData property)
     {
-        if (property.IsAddOwner &&
-            property.DefaultValue == null)
+        if (property is { IsAddOwner: true, DefaultValue: null })
         {
             return "null";
         }
@@ -793,7 +791,7 @@ namespace {@class.Namespace}
         throw new InvalidOperationException("Platform is not supported.");
     }
 
-    public static string GenerateTypeByPlatform(Platform platform, string name)
+    private static string GenerateTypeByPlatform(Platform platform, string name)
     {
         return (platform switch
         {
@@ -806,7 +804,7 @@ namespace {@class.Namespace}
         }).WithGlobalPrefix();
     }
 
-    public static string GenerateType(string fullTypeName, bool isSpecialType)
+    private static string GenerateType(string fullTypeName, bool isSpecialType)
     {
         if (isSpecialType)
         {
@@ -819,7 +817,7 @@ namespace {@class.Namespace}
         };
     }
 
-    public static string GenerateType(DependencyPropertyData property)
+    private static string GenerateType(DependencyPropertyData property)
     {
         var value = GenerateType(property.Type, property.IsSpecialType);
         if (!property.IsValueType)
@@ -830,7 +828,7 @@ namespace {@class.Namespace}
         return value;
     }
 
-    public static string GenerateRoutedEventType(ClassData @class)
+    private static string GenerateRoutedEventType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -840,7 +838,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutedEvent");
     }
 
-    public static string GenerateRoutedEventArgsType(ClassData @class)
+    private static string GenerateRoutedEventArgsType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -850,7 +848,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutedEventArgs");
     }
 
-    public static string GenerateRoutedEventHandlerType(ClassData @class)
+    private static string GenerateRoutedEventHandlerType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -860,7 +858,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutedEventHandler");
     }
 
-    public static string GenerateEventManagerType(ClassData @class)
+    private static string GenerateEventManagerType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -870,7 +868,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "EventManager");
     }
 
-    public static string GenerateRoutingStrategyType(ClassData @class)
+    private static string GenerateRoutingStrategyType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -880,7 +878,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
     }
 
-    public static string GeneratePropertyType(ClassData @class, DependencyPropertyData property)
+    private static string GeneratePropertyType(ClassData @class, DependencyPropertyData property)
     {
         if (property.Platform == Platform.MAUI)
         {
@@ -904,7 +902,7 @@ namespace {@class.Namespace}
                         property.Platform,
                         $"StyledProperty<{GenerateType(property)}>");
         }
-        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        if (property is { IsReadOnly: true, Platform: Platform.WPF })
         {
             return GenerateTypeByPlatform(property.Platform, "DependencyPropertyKey");
         }
@@ -912,7 +910,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(property.Platform, "DependencyProperty");
     }
 
-    public static string GenerateManagerType(ClassData @class)
+    private static string GenerateManagerType(ClassData @class)
     {
         if (@class.Platform == Platform.MAUI)
         {
@@ -930,7 +928,7 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
     }
 
-    public static string GenerateRegisterMethod(ClassData @class)
+    private static string GenerateRegisterMethod(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -940,7 +938,7 @@ namespace {@class.Namespace}
         return "RegisterRoutedEvent";
     }
 
-    public static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
+    private static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
     {
         if (property.Platform == Platform.MAUI)
         {
@@ -960,7 +958,7 @@ namespace {@class.Namespace}
                     ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
                     : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
         }
-        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        if (property is { IsReadOnly: true, Platform: Platform.WPF })
         {
             return property.IsAttached
                 ? "RegisterAttachedReadOnly"
@@ -972,7 +970,7 @@ namespace {@class.Namespace}
             : "Register";
     }
 
-    public static string GenerateMauiRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
+    private static string GenerateMauiRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
         var defaultBindingMode = property.DefaultBindingMode is null or "Default"
             ? property.IsReadOnly
@@ -994,13 +992,13 @@ namespace {@class.Namespace}
     }
 
     // https://docs.avaloniaui.net/docs/authoring-controls/defining-properties
-    public static string GenerateAvaloniaRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
+    private static string GenerateAvaloniaRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
         var defaultBindingMode = property.DefaultBindingMode is null or "Default"
             ? "OneWay"
             : property.DefaultBindingMode;
 
-        if (property.IsDirect && property.IsAddOwner)
+        if (property is { IsDirect: true, IsAddOwner: true })
         {
             return $@"
                 getter: static sender => sender.{property.Name},
@@ -1042,7 +1040,7 @@ namespace {@class.Namespace}
                 notifying: null";
     }
 
-    public static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
+    private static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -1069,7 +1067,7 @@ namespace {@class.Namespace}
                 {GeneratePropertyMetadata(@class, property)}";
     }
 
-    public static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
+    private static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
     {
         if (@class.Platform == Platform.MAUI)
         {
@@ -1096,7 +1094,7 @@ namespace {@class.Namespace}
                 {GeneratePropertyMetadata(@class, property)}";
     }
 
-    public static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, RoutedEventData @event)
+    private static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, RoutedEventData @event)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -1112,11 +1110,9 @@ namespace {@class.Namespace}
                 ownerType: typeof({GenerateType(@class.FullName, false)})";
     }
 
-    public static string GenerateDependencyPropertyName(DependencyPropertyData property)
+    private static string GenerateDependencyPropertyName(DependencyPropertyData property)
     {
-        if (property.IsReadOnly &&
-            (property.Platform == Platform.WPF ||
-            property.Platform == Platform.MAUI))
+        if (property is { IsReadOnly: true, Platform: Platform.WPF or Platform.MAUI })
         {
             return $"{property.Name}PropertyKey";
         }
@@ -1124,7 +1120,7 @@ namespace {@class.Namespace}
         return $"{property.Name}Property";
     }
 
-    public static string GenerateDependencyObjectType(Platform platform)
+    private static string GenerateDependencyObjectType(Platform platform)
     {
         if (platform == Platform.MAUI)
         {
@@ -1138,10 +1134,10 @@ namespace {@class.Namespace}
         return GenerateTypeByPlatform(platform, "DependencyObject");
     }
     
-    public static string GenerateDefaultValue(DependencyPropertyData property)
+    private static string GenerateDefaultValue(DependencyPropertyData property)
     {
         var type = GenerateType(property.Type, property.IsSpecialType);
-        if (property.IsSpecialType && property.DefaultValueDocumentation != null)
+        if (property is { IsSpecialType: true, DefaultValueDocumentation: { } })
         {
             return $"({type}){property.DefaultValueDocumentation}";
         }
@@ -1151,36 +1147,36 @@ namespace {@class.Namespace}
             : $"default({type})";
     }
 
-    public static string? GenerateFromType(DependencyPropertyData property)
+    private static string? GenerateFromType(DependencyPropertyData property)
     {
         return property.FromType?.WithGlobalPrefix();
     }
 
-    public static string GenerateBrowsableForType(DependencyPropertyData property)
+    private static string GenerateBrowsableForType(DependencyPropertyData property)
     {
         return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Platform);
     }
 
-    public static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
+    private static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
     {
         return (property.BrowsableForType ?? GenerateDependencyObjectType(property.Platform))
             .ExtractSimpleName()
             .ToParameterName();
     }
 
-    public static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
+    private static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
     {
         return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
     }
 
-    public static string GenerateXmlDocumentationFrom(string value)
+    private static string GenerateXmlDocumentationFrom(string value)
     {
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
-    public static string GenerateXmlDocumentationFrom(
+    private static string GenerateXmlDocumentationFrom(
         string? value,
         DependencyPropertyData property,
         bool isProperty)
@@ -1193,13 +1189,13 @@ namespace {@class.Namespace}
             : $"Identifies the {name} dependency property.<br/>";
         value ??= @$"<summary>
 {body}
-Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.Type?.ExtractSimpleName())})"}
+Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.Type.ExtractSimpleName())})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
         return GenerateXmlDocumentationFrom(value);
     }
 
-    public static string GenerateXmlDocumentationFrom(string? value, RoutedEventData @event)
+    private static string GenerateXmlDocumentationFrom(string? value, RoutedEventData @event)
     {
         value ??= @$"<summary>
 {(@event.Description != null ? $"{@event.Description}" : " ")}
@@ -1208,7 +1204,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return GenerateXmlDocumentationFrom(value);
     }
 
-    public static string GenerateOnChangedMethods(DependencyPropertyData property)
+    private static string GenerateOnChangedMethods(DependencyPropertyData property)
     {
         if (!string.IsNullOrWhiteSpace(property.OnChanged))
         {
@@ -1227,7 +1223,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
-    public static string GenerateOnChangingMethods(DependencyPropertyData property)
+    private static string GenerateOnChangingMethods(DependencyPropertyData property)
     {
         if (property.Platform != Platform.MAUI)
         {
@@ -1246,7 +1242,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
-    public static string GenerateCoercePartialMethod(DependencyPropertyData property)
+    private static string GenerateCoercePartialMethod(DependencyPropertyData property)
     {
         if (!property.Coerce)
         {
@@ -1258,7 +1254,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
     }
 
-    public static string GenerateAdditionalFieldForDirectProperties(DependencyPropertyData property)
+    private static string GenerateAdditionalFieldForDirectProperties(DependencyPropertyData property)
     {
         if (!property.IsDirect)
         {
@@ -1274,7 +1270,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         };
     }
 
-    public static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
+    private static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
     {
         if (!property.IsReadOnly)
         {
@@ -1298,18 +1294,18 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         };
     }
 
-    public static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
+    private static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
     {
-        return property.IsDirect && property.Platform == Platform.Avalonia
+        return property is { IsDirect: true, Platform: Platform.Avalonia }
             ? "private "
             : property.IsReadOnly
                 ? "protected "
                 : string.Empty;
     }
 
-    public static string GeneratePropertyModifier(DependencyPropertyData property)
+    private static string GeneratePropertyModifier(DependencyPropertyData property)
     {
-        if (property.IsReadOnly && property.Platform == Platform.WPF)
+        if (property is { IsReadOnly: true, Platform: Platform.WPF })
         {
             return "internal";
         }
@@ -1317,7 +1313,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return "public";
     }
 
-    public static string GenerateValidatePartialMethod(DependencyPropertyData property)
+    private static string GenerateValidatePartialMethod(DependencyPropertyData property)
     {
         if (!property.Validate)
         {
@@ -1327,7 +1323,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
     }
 
-    public static string GenerateCreateDefaultValueCallbackPartialMethod(DependencyPropertyData property)
+    private static string GenerateCreateDefaultValueCallbackPartialMethod(DependencyPropertyData property)
     {
         if (!property.CreateDefaultValueCallback)
         {
@@ -1337,7 +1333,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $"        private static partial {GenerateType(property)} Get{property.Name}DefaultValue();";
     }
 
-    public static string GenerateOnChangedMethodDeclaration(string name, DependencyPropertyData property)
+    private static string GenerateOnChangedMethodDeclaration(string name, DependencyPropertyData property)
     {
         var modifiers = property.IsAttached ? "static " : string.Empty;
 
@@ -1349,7 +1345,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             {GenerateType(property)} newValue)".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateOnChangedMethodCall(string name, DependencyPropertyData property)
+    private static string GenerateOnChangedMethodCall(string name, DependencyPropertyData property)
     {
         return $@" 
             {name}(
@@ -1359,7 +1355,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
                 newValue);".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateBindEventMethod(DependencyPropertyData property)
+    private static string GenerateBindEventMethod(DependencyPropertyData property)
     {
         if (!property.BindEvents.Any())
         {
@@ -1368,7 +1364,6 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
         var type = GenerateType(property.Type, property.IsSpecialType);
         var sender = property.IsAttached ? GenerateBrowsableForTypeParameterName(property) : "this";
-        var modifiers = property.IsAttached ? "static " : string.Empty;
 
         return $@"
 {GenerateOnChangedMethodDeclaration($"On{property.Name}Changed_BeforeBind", property)};
@@ -1395,7 +1390,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateAttribute(string name, string? value)
+    private static string GenerateAttribute(string name, string? value)
     {
         if (value == null)
         {
@@ -1405,12 +1400,12 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return $"        [global::{name}({value})]";
     }
 
-    public static string GenerateComponentModelAttribute(string name, string? value)
+    private static string GenerateComponentModelAttribute(string name, string? value)
     {
         return GenerateAttribute($"System.ComponentModel.{name}", value);
     }
 
-    public static string GenerateCategoryAttribute(string? value)
+    private static string GenerateCategoryAttribute(string? value)
     {
         if (value == null)
         {
@@ -1422,7 +1417,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"\"{value}\"");
     }
 
-    public static string GenerateDescriptionAttribute(string? value)
+    private static string GenerateDescriptionAttribute(string? value)
     {
         if (value == null)
         {
@@ -1440,7 +1435,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
                     : $"\"{value}\"");
     }
 
-    public static string GenerateTypeConverterAttribute(string? value)
+    private static string GenerateTypeConverterAttribute(string? value)
     {
         if (value == null)
         {
@@ -1452,21 +1447,21 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"typeof({value.WithGlobalPrefix()})");
     }
 
-    public static string GenerateBindableAttribute(string? value)
+    private static string GenerateBindableAttribute(string? value)
     {
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Bindable),
             value);
     }
 
-    public static string GenerateBrowsableAttribute(string? value)
+    private static string GenerateBrowsableAttribute(string? value)
     {
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Browsable),
             value);
     }
 
-    public static string GenerateDesignerSerializationVisibilityAttribute(string? value)
+    private static string GenerateDesignerSerializationVisibilityAttribute(string? value)
     {
         if (value == null)
         {
@@ -1478,12 +1473,12 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"global::System.ComponentModel.{value}");
     }
 
-    public static string GenerateCLSCompliantAttribute(string? value)
+    private static string GenerateClsCompliantAttribute(string? value)
 {
         return GenerateAttribute("System.CLSCompliant", value);
     }
 
-    public static string GenerateLocalizabilityAttribute(string? value, Platform platform)
+    private static string GenerateLocalizabilityAttribute(string? value, Platform platform)
     {
         if (value == null || platform != Platform.WPF)
         {
@@ -1495,7 +1490,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"global::System.Windows.LocalizationCategory.{value}");
     }
     
-    public static string GenerateBrowsableForTypeAttribute(DependencyPropertyData property)
+    private static string GenerateBrowsableForTypeAttribute(DependencyPropertyData property)
     {
         if (property.Platform != Platform.WPF)
         {
@@ -1507,7 +1502,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"typeof({GenerateBrowsableForType(property)})");
     }
 
-    public static string GenerateOptions(DependencyPropertyData property)
+    private static string GenerateOptions(DependencyPropertyData property)
     {
         var values = new List<string>();
         if (property.AffectsMeasure)

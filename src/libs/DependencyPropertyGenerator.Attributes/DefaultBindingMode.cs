@@ -53,5 +53,5 @@ public enum DefaultBindingMode
     /// and then check the Boolean value of the System.Windows.FrameworkPropertyMetadata.BindsTwoWayByDefault
     /// property.
     /// </summary>
-    Default = 4
+    Default = 4,
 }

@@ -1,4 +1,7 @@
-﻿#nullable enable
+﻿// ReSharper disable RedundantNameQualifier
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+#nullable enable
 
 namespace DependencyPropertyGenerator;
 
@@ -7,7 +10,7 @@ namespace DependencyPropertyGenerator;
 /// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class OverrideMetadataAttribute : global::System.Attribute
 {
     /// <summary>
@@ -108,7 +111,7 @@ public sealed class OverrideMetadataAttribute : global::System.Attribute
     public bool Journal { get; set; }
 
     /// <summary>
-    /// WPF: The subproperties on the value of this dependency property do not affect any aspect of rendering.
+    /// WPF: The sub properties on the value of this dependency property do not affect any aspect of rendering.
     /// </summary>
     public bool SubPropertiesDoNotAffectRender { get; set; }
 
@@ -164,7 +167,7 @@ public sealed class OverrideMetadataAttribute : global::System.Attribute
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class OverrideMetadataAttribute<T> : global::System.Attribute
 {
     /// <summary>
@@ -265,7 +268,7 @@ public sealed class OverrideMetadataAttribute<T> : global::System.Attribute
     public bool Journal { get; set; }
 
     /// <summary>
-    /// WPF: The subproperties on the value of this dependency property do not affect any aspect of rendering.
+    /// WPF: The sub properties on the value of this dependency property do not affect any aspect of rendering.
     /// </summary>
     public bool SubPropertiesDoNotAffectRender { get; set; }
 

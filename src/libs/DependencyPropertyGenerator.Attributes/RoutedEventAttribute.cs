@@ -1,4 +1,7 @@
-﻿#nullable enable
+﻿// ReSharper disable RedundantNameQualifier
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+#nullable enable
 
 namespace DependencyPropertyGenerator;
 
@@ -6,7 +9,7 @@ namespace DependencyPropertyGenerator;
 /// Will generates routed event using EventManager.RegisterRoutedEvent.
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class RoutedEventAttribute : global::System.Attribute
 {
     /// <summary>
@@ -63,7 +66,7 @@ public sealed class RoutedEventAttribute : global::System.Attribute
     /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/36"/> <br/>
     /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/31"/> <br/>
     /// </summary>
-    public bool WinRTEvents { get; set; }
+    public bool WinRtEvents { get; set; }
 
     /// <summary>
     /// 
@@ -85,7 +88,7 @@ public sealed class RoutedEventAttribute : global::System.Attribute
 /// </summary>
 /// <typeparam name="T">Type of this routed event.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class RoutedEventAttribute<T> : global::System.Attribute
 {
     /// <summary>
@@ -142,7 +145,7 @@ public sealed class RoutedEventAttribute<T> : global::System.Attribute
     /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/36"/> <br/>
     /// <see href="https://github.com/HavenDV/H.NotifyIcon/issues/31"/> <br/>
     /// </summary>
-    public bool WinRTEvents { get; set; }
+    public bool WinRtEvents { get; set; }
 
     /// <summary>
     /// 

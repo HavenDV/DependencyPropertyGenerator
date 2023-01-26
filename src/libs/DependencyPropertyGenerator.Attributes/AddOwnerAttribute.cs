@@ -1,4 +1,7 @@
-﻿#nullable enable
+﻿// ReSharper disable RedundantNameQualifier
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+#nullable enable
 
 namespace DependencyPropertyGenerator;
 
@@ -6,7 +9,7 @@ namespace DependencyPropertyGenerator;
 /// https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-add-an-owner-type-for-a-dependency-property?view=netframeworkdesktop-4.8
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class AddOwnerAttribute : global::System.Attribute
 {
     /// <summary>
@@ -90,7 +93,7 @@ public sealed class AddOwnerAttribute : global::System.Attribute
     /// The property will contain a <see cref="global::System.CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public bool CLSCompliant { get; set; }
+    public bool ClsCompliant { get; set; }
 
     /// <summary>
     /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
@@ -189,7 +192,7 @@ public sealed class AddOwnerAttribute : global::System.Attribute
     public bool Journal { get; set; }
 
     /// <summary>
-    /// WPF: The subproperties on the value of this dependency property do not affect any aspect of rendering.
+    /// WPF: The sub properties on the value of this dependency property do not affect any aspect of rendering.
     /// </summary>
     public bool SubPropertiesDoNotAffectRender { get; set; }
 
@@ -253,7 +256,7 @@ public sealed class AddOwnerAttribute : global::System.Attribute
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 /// <typeparam name="TFromType">The type for which the extension is intended.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
-[global::System.Diagnostics.Conditional("DEPENDENCYPROPERTYGENERATOR_ATTRIBUTES")]
+[global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
 public sealed class AddOwnerAttribute<T, TFromType> : global::System.Attribute
 {
     /// <summary>
@@ -337,7 +340,7 @@ public sealed class AddOwnerAttribute<T, TFromType> : global::System.Attribute
     /// The property will contain a <see cref="global::System.CLSCompliantAttribute"/> with this value. <br/>
     /// Default - <see langword="null"/>.
     /// </summary>
-    public bool CLSCompliant { get; set; }
+    public bool ClsCompliant { get; set; }
 
     /// <summary>
     /// The property will contain a System.Windows.LocalizabilityAttribute with this value. <br/>
@@ -436,7 +439,7 @@ public sealed class AddOwnerAttribute<T, TFromType> : global::System.Attribute
     public bool Journal { get; set; }
 
     /// <summary>
-    /// WPF: The subproperties on the value of this dependency property do not affect any aspect of rendering.
+    /// WPF: The sub properties on the value of this dependency property do not affect any aspect of rendering.
     /// </summary>
     public bool SubPropertiesDoNotAffectRender { get; set; }
 

@@ -66,7 +66,7 @@ public partial class MyControl : UserControl
     TypeConverter = typeof(EnumConverter),
     Bindable = true,
     DesignerSerializationVisibility = DesignerSerializationVisibility.Hidden,
-    CLSCompliant = false,
+    ClsCompliant = false,
     Localizability = Localizability.Text)]
 public partial class MyControl : UserControl
 {
