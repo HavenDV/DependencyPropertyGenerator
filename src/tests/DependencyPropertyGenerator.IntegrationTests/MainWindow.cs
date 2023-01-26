@@ -92,7 +92,7 @@ public partial class MyControl : UserControl
 [DependencyProperty<string>("NotNullStringProperty", DefaultValue = "", Validate = true, Coerce = true)]
 public partial class MyControl : UserControl
 {
-    private partial string CoerceNotNullStringProperty(string? value)
+    private partial string? CoerceNotNullStringProperty(string? value)
     {
         return value ?? string.Empty;
     }
