@@ -18,7 +18,7 @@ public readonly record struct DependencyPropertyData(
     string? Bindable,
     string? Browsable,
     string? DesignerSerializationVisibility,
-    string? CLSCompliant,
+    string? ClsCompliant,
     string? Localizability,
     string? BrowsableForType,
     string? FromType,

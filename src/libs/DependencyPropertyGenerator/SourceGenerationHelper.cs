@@ -28,7 +28,7 @@ namespace {@class.Namespace}
 {GenerateBindableAttribute(property.Bindable)}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
-{GenerateClsCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public {GenerateType(property)} {property.Name}
         {{
@@ -330,7 +330,7 @@ namespace {@class.Namespace}
 {GenerateBindableAttribute(property.Bindable)}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
-{GenerateClsCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Platform)} element, {GenerateType(property)} value)
         {{
@@ -347,7 +347,7 @@ namespace {@class.Namespace}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateBrowsableForTypeAttribute(property)}
-{GenerateClsCompliantAttribute(property.CLSCompliant)}
+{GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Platform)} element)
         {{
@@ -366,7 +366,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
     
-    public static string GenerateRoutedEvent(ClassData @class, RoutedEventData @event)
+    public static string GenerateRoutedEvent(ClassData @class, EventData @event)
     {
         // https://docs.avaloniaui.net/docs/input/routed-events
         if (@class.Platform == Platform.WPF || @class.Platform == Platform.Avalonia)
@@ -406,7 +406,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
         }
 
-        if (!@event.WinRTEvents)
+        if (!@event.WinRtEvents)
         {
             return @$" 
 #nullable enable
@@ -1094,7 +1094,7 @@ namespace {@class.Namespace}
                 {GeneratePropertyMetadata(@class, property)}";
     }
 
-    private static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, RoutedEventData @event)
+    private static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, EventData @event)
     {
         if (@class.Platform == Platform.Avalonia)
         {
@@ -1164,7 +1164,7 @@ namespace {@class.Namespace}
             .ToParameterName();
     }
 
-    private static string GenerateRouterEventType(ClassData @class, RoutedEventData @event)
+    private static string GenerateRouterEventType(ClassData @class, EventData @event)
     {
         return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
     }
@@ -1195,7 +1195,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return GenerateXmlDocumentationFrom(value);
     }
 
-    private static string GenerateXmlDocumentationFrom(string? value, RoutedEventData @event)
+    private static string GenerateXmlDocumentationFrom(string? value, EventData @event)
     {
         value ??= @$"<summary>
 {(@event.Description != null ? $"{@event.Description}" : " ")}

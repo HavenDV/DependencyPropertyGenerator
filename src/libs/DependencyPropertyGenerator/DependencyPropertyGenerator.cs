@@ -103,21 +103,14 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             hintName: $"{@class.Name}.StaticConstructor.generated.cs",
                             text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
                     }
-                    else if (
-                        platform == Platform.UWP ||
-                        platform == Platform.WinUI ||
-                        platform == Platform.Uno ||
-                        platform == Platform.UnoWinUI)
+                    else if (platform is Platform.UWP or Platform.WinUI or Platform.Uno or Platform.UnoWinUI)
                     {
                         context.AddTextSource(
                             hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
                             text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
                     }
                 }
-                if (platform == Platform.UWP ||
-                    platform == Platform.WinUI ||
-                    platform == Platform.Uno ||
-                    platform == Platform.UnoWinUI)
+                if (platform is Platform.UWP or Platform.WinUI or Platform.Uno or Platform.UnoWinUI)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
@@ -259,7 +252,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
                     var winRtEvents = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.WinRtEvents)) ?? bool.FalseString;
 
-                    var value = new RoutedEventData(
+                    var value = new EventData(
                         Name: name,
                         Strategy: strategy,
                         Type: type,
@@ -268,7 +261,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Category: category,
                         XmlDocumentation: xmlDocumentation,
                         EventXmlDocumentation: eventXmlDocumentation,
-                        WinRTEvents: bool.Parse(winRtEvents));
+                        WinRtEvents: bool.Parse(winRtEvents));
                     
                     routedEvents.Add(value);
                 }
@@ -368,7 +361,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Bindable: bindable,
                         Browsable: browsable,
                         DesignerSerializationVisibility: designerSerializationVisibility,
-                        CLSCompliant: clsCompliant,
+                        ClsCompliant: clsCompliant,
                         Localizability: localizability,
                         BrowsableForType: browsableForType,
                         FromType: fromType,

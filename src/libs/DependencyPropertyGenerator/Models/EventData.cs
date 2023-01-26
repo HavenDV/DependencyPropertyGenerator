@@ -1,6 +1,6 @@
 ﻿namespace H.Generators;
 
-public readonly record struct RoutedEventData(
+public readonly record struct EventData(
     string Name,
     string Strategy,
     string? Type,
@@ -9,4 +9,4 @@ public readonly record struct RoutedEventData(
     string? Category,
     string? XmlDocumentation,
     string? EventXmlDocumentation,
-    bool WinRTEvents);
+    bool WinRtEvents);
