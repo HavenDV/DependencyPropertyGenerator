@@ -459,7 +459,15 @@ namespace {@class.Namespace}
     
     public static string GenerateWeakEvent(ClassData @class, EventData @event)
     {
+        var additionalParameters = string.IsNullOrWhiteSpace(@event.Type)
+            ? string.Empty
+            : $", {GenerateEventArgsType(@event)} args";
+        var args = string.IsNullOrWhiteSpace(@event.Type)
+            ? "System.EventArgs.Empty".WithGlobalPrefix()
+            : "args!";
+        
         // https://github.com/dotnet/maui/issues/2703
+        // https://github.com/dotnet/maui/pull/12950
         return @$" 
 #nullable enable
 
@@ -479,9 +487,9 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-	    internal static void Raise{@event.Name}Event(object? sender, {GenerateEventArgsType(@event)} args)
+	    internal static void Raise{@event.Name}Event(object? sender{additionalParameters})
 	    {{
-		    {@event.Name}WeakEventManager.HandleEvent(sender!, args!, eventName: nameof({@event.Name}));
+		    {@event.Name}WeakEventManager.HandleEvent(sender!, {args}, eventName: nameof({@event.Name}));
 	    }}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();

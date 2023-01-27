@@ -17,9 +17,9 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the Completed event.
         /// </summary>
-	    internal static void RaiseCompletedEvent(object? sender, global::System.EventArgs args)
+	    internal static void RaiseCompletedEvent(object? sender)
 	    {
-		    CompletedWeakEventManager.HandleEvent(sender!, args!, eventName: nameof(Completed));
+		    CompletedWeakEventManager.HandleEvent(sender!, global::System.EventArgs.Empty, eventName: nameof(Completed));
 	    }
     }
 }
