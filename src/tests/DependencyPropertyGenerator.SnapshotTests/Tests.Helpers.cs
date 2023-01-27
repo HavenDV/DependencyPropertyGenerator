@@ -45,7 +45,7 @@ namespace H.Generators.IntegrationTests;
         return GetHeader(platform, true, values);
     }
 
-    public async Task CheckSourceAsync(
+    private async Task CheckSourceAsync(
         string source,
         Platform platform,
         CancellationToken cancellationToken = default)
@@ -106,22 +106,21 @@ namespace H.Generators.IntegrationTests;
             Platform.UWP => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.NETCore.UniversalWindowsPlatform", "6.2.14"),
-                    new PackageIdentity("Microsoft.UI.Xaml", "2.7.1"),
+                    new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
                     new PackageIdentity("Microsoft.Net.UWPCoreRuntimeSdk", "2.2.14"))),
             Platform.WinUI => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
-                    new PackageIdentity("Microsoft.WindowsAppSDK", "1.1.2"),
-                    new PackageIdentity("Microsoft.UI.Xaml", "2.7.1"),
-                    new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.22621.26"))),
+                    new PackageIdentity("Microsoft.WindowsAppSDK", "1.2.230118.102"),
+                    new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
+                    new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.22621.28"))),
             Platform.Uno => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.3.8"))),
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.7.30"))),
             Platform.UnoWinUI => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.3.8"))),
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.7.30"))),
             Platform.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.15"))),
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))),
             Platform.MAUI => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(
-                    new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.400"))),
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"))),
             _ => throw new NotImplementedException(),
         };
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
