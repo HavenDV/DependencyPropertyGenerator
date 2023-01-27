@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using AttachedDependencyPropertyAttribute = DependencyPropertyGenerator.AttachedDependencyPropertyAttribute;
 using DependencyPropertyAttribute = DependencyPropertyGenerator.DependencyPropertyAttribute;
 using RoutedEventAttribute = DependencyPropertyGenerator.RoutedEventAttribute;
+using WeakEventAttribute = DependencyPropertyGenerator.WeakEventAttribute;
 using OverrideMetadataAttribute = DependencyPropertyGenerator.OverrideMetadataAttribute;
 using AddOwnerAttribute = DependencyPropertyGenerator.AddOwnerAttribute;
 
@@ -23,6 +24,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static string AttachedDependencyPropertyAttributeFullName => typeof(AttachedDependencyPropertyAttribute).FullName;
     private static string DependencyPropertyAttributeFullName => typeof(DependencyPropertyAttribute).FullName;
     private static string RoutedEventAttributeFullName => typeof(RoutedEventAttribute).FullName;
+    private static string WeakEventAttributeFullName => typeof(WeakEventAttribute).FullName;
     private static string OverrideMetadataAttributeFullName => typeof(OverrideMetadataAttribute).FullName;
     private static string AddOwnerAttributeFullName => typeof(AddOwnerAttribute).FullName;
 
@@ -117,6 +119,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         context.AddTextSource(
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                    }
+                }
+                if (platform is Platform.MAUI)
+                {
+                    foreach (var @event in @class.WeakEvents)
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.WeakEvents.{@event.Name}.generated.cs",
+                            text: SourceGenerationHelper.GenerateWeakEvent(@class, @event));
                     }
                 }
                 if (platform == Platform.Avalonia)
@@ -219,7 +230,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .ToArray();
             var dependencyProperties = new List<DependencyPropertyData>();
             var attachedDependencyProperties = new List<DependencyPropertyData>();
-            var routedEvents = new List<RoutedEventData>();
+            var routedEvents = new List<EventData>();
+            var weakEvents = new List<EventData>();
             var overrideMetadata = new List<DependencyPropertyData>();
             var addOwner = new List<DependencyPropertyData>();
             var attributes = @classSymbol.GetAttributes()
@@ -241,7 +253,16 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         .Replace("RoutedEventStrategy.", string.Empty) ?? string.Empty;
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Type))?.Value?.ToString();
+                        GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Type))?.Value?.ToString() ??
+                        string.Empty;
+                    var isValueType =
+                        GetGenericTypeArgumentFromAttributeData(attribute, 0)?.IsValueType ??
+                        attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
+                        true;
+                    var isSpecialType =
+                        IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 0)) ??
+                        IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol) ??
+                        false;
                     var isAttached = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(RoutedEventAttribute.IsAttached)) ?? bool.FalseString;
                     
                     var description = GetPropertyFromAttributeData(attribute, nameof(RoutedEventAttribute.Description))?.Value?.ToString();
@@ -256,6 +277,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         Name: name,
                         Strategy: strategy,
                         Type: type,
+                        IsValueType: isValueType,
+                        IsSpecialType: isSpecialType,
                         IsAttached: bool.Parse(isAttached),
                         Description: description,
                         Category: category,
@@ -264,6 +287,43 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         WinRtEvents: bool.Parse(winRtEvents));
                     
                     routedEvents.Add(value);
+                }
+                else if (attributeClass.StartsWith(WeakEventAttributeFullName, StringComparison.InvariantCulture))
+                {
+                    var type =
+                        GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
+                        GetPropertyFromAttributeData(attribute, nameof(WeakEventAttribute.Type))?.Value?.ToString() ??
+                        string.Empty;
+                    var isValueType =
+                        GetGenericTypeArgumentFromAttributeData(attribute, 0)?.IsValueType ??
+                        attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
+                        true;
+                    var isSpecialType =
+                        IsSpecialType(GetGenericTypeArgumentFromAttributeData(attribute, 0)) ??
+                        IsSpecialType(attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol) ??
+                        false;
+                    var isStatic = GetPropertyFromAttributeSyntax(attributeSyntax, nameof(WeakEventAttribute.IsStatic)) ?? bool.FalseString;
+                    
+                    var description = GetPropertyFromAttributeData(attribute, nameof(WeakEventAttribute.Description))?.Value?.ToString();
+                    var category = GetPropertyFromAttributeData(attribute, nameof(WeakEventAttribute.Category))?.Value?.ToString();
+
+                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(WeakEventAttribute.XmlDocumentation))?.Value?.ToString();
+                    var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(WeakEventAttribute.EventXmlDocumentation))?.Value?.ToString();
+
+                    var value = new EventData(
+                        Name: name,
+                        Strategy: string.Empty,
+                        Type: type,
+                        IsValueType: isValueType,
+                        IsSpecialType: isSpecialType,
+                        IsAttached: bool.Parse(isStatic),
+                        Description: description,
+                        Category: category,
+                        XmlDocumentation: xmlDocumentation,
+                        EventXmlDocumentation: eventXmlDocumentation,
+                        WinRtEvents: false);
+                    
+                    weakEvents.Add(value);
                 }
                 else
                 {
@@ -425,6 +485,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 DependencyProperties: dependencyProperties,
                 AttachedDependencyProperties: attachedDependencyProperties,
                 RoutedEvents: routedEvents,
+                WeakEvents: weakEvents,
                 OverrideMetadata: overrideMetadata,
                 AddOwner: addOwner));
         }
@@ -447,6 +508,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             fullTypeName.StartsWith(AttachedDependencyPropertyAttributeFullName, StringComparison.InvariantCulture) ||
             fullTypeName.StartsWith(DependencyPropertyAttributeFullName, StringComparison.InvariantCulture) ||
             fullTypeName.StartsWith(RoutedEventAttributeFullName, StringComparison.InvariantCulture) ||
+            fullTypeName.StartsWith(WeakEventAttributeFullName, StringComparison.InvariantCulture) ||
             fullTypeName.StartsWith(OverrideMetadataAttributeFullName, StringComparison.InvariantCulture) ||
             fullTypeName.StartsWith(AddOwnerAttributeFullName, StringComparison.InvariantCulture);
     }

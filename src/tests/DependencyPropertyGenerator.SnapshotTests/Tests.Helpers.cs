@@ -120,7 +120,9 @@ namespace H.Generators.IntegrationTests;
             Platform.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))),
             Platform.MAUI => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"))),
+                .WithPackages(ImmutableArray.Create(
+                    new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"),
+                    new PackageIdentity("Microsoft.Maui.Core.Ref.any", "6.0.550"))),
             _ => throw new NotImplementedException(),
         };
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);

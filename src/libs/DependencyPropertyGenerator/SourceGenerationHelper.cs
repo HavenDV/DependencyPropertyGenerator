@@ -456,8 +456,38 @@ namespace {@class.Namespace}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
+    
+    public static string GenerateWeakEvent(ClassData @class, EventData @event)
+    {
+        // https://github.com/dotnet/maui/issues/2703
+        return @$" 
+#nullable enable
 
-    public static string GenerateAttachedRoutedEvent(ClassData @class, RoutedEventData @event)
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+	    private static global::Microsoft.Maui.WeakEventManager {@event.Name}WeakEventManager {{ get; }} = new global::Microsoft.Maui.WeakEventManager();
+	    
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+	    public static event {GenerateEventHandlerType(@event)}? {@event.Name}
+	    {{
+		    add => {@event.Name}WeakEventManager.AddEventHandler(value);
+		    remove => {@event.Name}WeakEventManager.RemoveEventHandler(value);
+	    }}
+
+        /// <summary>
+        /// A helper method to raise the {@event.Name} event.
+        /// </summary>
+	    internal static void Raise{@event.Name}Event(object? sender, {GenerateEventArgsType(@event)} args)
+	    {{
+		    {@event.Name}WeakEventManager.HandleEvent(sender!, args!, eventName: nameof({@event.Name}));
+	    }}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
+    public static string GenerateAttachedRoutedEvent(ClassData @class, EventData @event)
     {
         return @$"
 #nullable enable
@@ -828,6 +858,17 @@ namespace {@class.Namespace}
         return value;
     }
 
+    private static string GenerateType(EventData @event)
+    {
+        var value = GenerateType(@event.Type, @event.IsSpecialType);
+        if (!@event.IsValueType)
+        {
+            value += "?";
+        }
+
+        return value;
+    }
+
     private static string GenerateRoutedEventType(ClassData @class)
     {
         if (@class.Platform == Platform.Avalonia)
@@ -856,6 +897,26 @@ namespace {@class.Namespace}
         }
 
         return GenerateTypeByPlatform(@class.Platform, "RoutedEventHandler");
+    }
+
+    private static string GenerateEventHandlerType(EventData @event)
+    {
+        if (string.IsNullOrWhiteSpace(@event.Type))
+        {
+            return "global::System.EventHandler";
+        }
+        
+        return $"global::System.EventHandler<{GenerateType(@event)}>";
+    }
+
+    private static string GenerateEventArgsType(EventData @event)
+    {
+        if (string.IsNullOrWhiteSpace(@event.Type))
+        {
+            return "global::System.EventArgs";
+        }
+        
+        return GenerateType(@event);
     }
 
     private static string GenerateEventManagerType(ClassData @class)
@@ -1166,7 +1227,12 @@ namespace {@class.Namespace}
 
     private static string GenerateRouterEventType(ClassData @class, EventData @event)
     {
-        return @event.Type?.WithGlobalPrefix() ?? GenerateRoutedEventHandlerType(@class);
+        if (string.IsNullOrWhiteSpace(@event.Type))
+        {
+            return GenerateRoutedEventHandlerType(@class);
+        }
+        
+        return @event.Type.WithGlobalPrefix();
     }
 
     private static string GenerateXmlDocumentationFrom(string value)
