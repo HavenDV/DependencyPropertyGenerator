@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task ReadmeExample(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
 public partial class MyControl : UserControl
 {

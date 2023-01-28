@@ -45,10 +45,11 @@ namespace H.Generators.IntegrationTests;
         return GetHeader(platform, true, values);
     }
 
-    private async Task CheckSourceAsync(
+    private async Task CheckSourceAsync<T>(
         string source,
         Platform platform,
         CancellationToken cancellationToken = default)
+        where T : IIncrementalGenerator, new()
     {
         if (platform == Platform.WPF)
         {
@@ -135,7 +136,7 @@ namespace H.Generators.IntegrationTests;
             references: references
                 .Add(MetadataReference.CreateFromFile(typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-        var generator = new DependencyPropertyGenerator();
+        var generator = new T();
         var globalOptions = new Dictionary<string, string>();
         if (platform == Platform.WPF)
         {
@@ -143,7 +144,7 @@ namespace H.Generators.IntegrationTests;
         }
         else if (platform == Platform.UWP)
         {
-            globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "WINDOWS_UWP");
+            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "WINDOWS_UWP");
         }
         else if (platform == Platform.WinUI)
         {
@@ -151,16 +152,17 @@ namespace H.Generators.IntegrationTests;
         }
         else if (platform == Platform.Uno)
         {
-            globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_UNO");
+            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO");
         }
         else if (platform == Platform.UnoWinUI)
         {
-            globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_UNO;HAS_WINUI");
+            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO;HAS_WINUI");
         }
         else if (platform == Platform.Avalonia)
         {
-            globalOptions.Add("build_property.DependencyPropertyGenerator_DefineConstants", "HAS_AVALONIA");
+            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_AVALONIA");
         }
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
         else if (platform == Platform.MAUI)
         {
             globalOptions.Add("build_property.UseMaui", "true");

@@ -11,7 +11,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task NonGenericAttributes(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty(""Text"", typeof(string))]
 public partial class MyControl : UserControl
 {
@@ -31,7 +31,7 @@ public static partial class GridExtensions
     [DataRow(Platform.Avalonia)]
     public Task MultipleClassDeclarations(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"")]
 public partial class MyControl : UserControl
 {
@@ -59,7 +59,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task Attributes(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls", "System.ComponentModel") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls", "System.ComponentModel") + @"
 [DependencyProperty<string>(""AttributedProperty"",
     Category = ""Category"",
     Description = ""Description"",
@@ -81,7 +81,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task WithOtherAttributes(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls", "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls", "System") + @"
 [CLSCompliant(false)]
 public partial class MyControl : UserControl
 {
@@ -104,7 +104,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task WithOtherAttributes2(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 [System.ComponentModel.DesignTimeVisible(false)]
 public partial class Generatable : FrameworkElement
@@ -123,7 +123,7 @@ public partial class Generatable : FrameworkElement
     [DataRow(Platform.Avalonia)]
     public Task NullableDisable(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, false, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, false, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 public partial class Generatable : FrameworkElement
 {
@@ -141,7 +141,7 @@ public partial class Generatable : FrameworkElement
     [DataRow(Platform.Avalonia)]
     public Task FloatLiterals(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<float>(""FloatProperty"", DefaultValue = 42)]
 public partial class MyControl : UserControl
 {
@@ -156,7 +156,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task ValidateAndCoerce(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<string>(""NotNullStringProperty"", DefaultValue = """", Validate = true, Coerce = true)]
 public partial class MyControl : UserControl
 {
@@ -180,7 +180,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task CreateDefaultValueCallback(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<string>(""SomeProperty"", CreateDefaultValueCallback = true)]
 public partial class MyGrid : Grid
 {
@@ -199,7 +199,7 @@ public partial class MyGrid : Grid
     [DataRow(Platform.Avalonia)]
     public Task DefaultUpdateSourceTrigger(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""ExplicitUpdateSourceTriggerProperty"", DefaultUpdateSourceTrigger = SourceTrigger.Explicit)]
 public partial class MyControl : UserControl
 {
@@ -214,7 +214,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task ReadOnlyProperty(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""ReadOnlyProperty"", IsReadOnly = true)]
 public partial class MyControl : UserControl
 {
@@ -229,7 +229,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task DefaultBindingMode(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultBindingMode = DefaultBindingMode.OneTime)]
 public partial class MyGrid : Grid
 {
@@ -244,7 +244,7 @@ public partial class MyGrid : Grid
     [DataRow(Platform.Avalonia)]
     public Task Direct(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", IsDirect = true)]
 public partial class MyGrid : Grid
 {
@@ -259,7 +259,7 @@ public partial class MyGrid : Grid
     [DataRow(Platform.Avalonia)]
     public Task DirectReadOnly(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", IsDirect = true, IsReadOnly = true, EnableDataValidation = true)]
 public partial class MyGrid : Grid
 {
@@ -274,7 +274,7 @@ public partial class MyGrid : Grid
     [DataRow(Platform.Avalonia)]
     public Task BindEvents(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "Input") + @"
 [DependencyProperty<object>(""BindEventsProperty"",
     BindEvents = new[] { nameof(UIElement.PointerEntered), nameof(UIElement.PointerExited) })]
 public partial class MyUIElement : UIElement
@@ -297,7 +297,7 @@ public partial class MyUIElement : UIElement
     [DataRow(Platform.Avalonia)]
     public Task CustomOnChanged(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
 [DependencyProperty<string>(""Text"", OnChanged = nameof(OnMyTextChanged))]
 public partial class Generatable : FrameworkElement
 {
@@ -315,7 +315,7 @@ public partial class Generatable : FrameworkElement
     [DataRow(Platform.Avalonia)]
     public Task NullableValueType(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
 [DependencyProperty<int?>(""Property"")]
 public partial class Generatable : FrameworkElement
 {
@@ -330,7 +330,7 @@ public partial class Generatable : FrameworkElement
     [DataRow(Platform.Avalonia)]
     public Task Dictionary(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
 [DependencyProperty<System.Collections.Generic.Dictionary<string, string>>(""Headers"", DefaultBindingMode = DefaultBindingMode.TwoWay)]
 public partial class Generatable : FrameworkElement
 {

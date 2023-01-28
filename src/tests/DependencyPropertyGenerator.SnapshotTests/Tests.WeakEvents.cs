@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task StaticWeakEvent(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
 [WeakEvent(""Completed"", IsStatic = true)]
 public partial class MyControl : UserControl
 {
@@ -25,7 +25,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task StaticWeakEventWithType(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
 [WeakEvent<string>(""UrlChanged"", IsStatic = true)]
 public partial class MyControl : UserControl
 {

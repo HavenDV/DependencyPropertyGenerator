@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task OverrideMetadata(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", AffectsRender = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement
@@ -35,7 +35,7 @@ public partial class TropicalAquarium : Aquarium
     [DataRow(Platform.Avalonia)]
     public Task OverrideMetadataForReadOnlyProperty(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", IsReadOnly = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement

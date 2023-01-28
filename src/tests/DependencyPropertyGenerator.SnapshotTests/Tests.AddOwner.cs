@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task AddOwner(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "Media", "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "Media", "Controls") + @"
 [AddOwner<Brush, Border>(nameof(Border.Background))]
 public partial class UnrelatedStateControl : UIElement
 {
@@ -25,7 +25,7 @@ public partial class UnrelatedStateControl : UIElement
     [DataRow(Platform.Avalonia)]
     public Task AddOwnerDirect(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "Controls") + @"
 [AddOwner<string, TextBox>(nameof(TextBox.Text), IsDirect = true)]
 public partial class UnrelatedStateControl : UIElement
 {

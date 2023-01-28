@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task Enum(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 public enum Mode
 {
     Mode1,
@@ -34,7 +34,7 @@ public static partial class TreeViewExtensions
     [DataRow(Platform.Avalonia)]
     public Task AttachedReadOnlyProperty(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [AttachedDependencyProperty<object, Grid>(""AttachedReadOnlyProperty"", IsReadOnly = true)]
 public static partial class GridExtensions
 {
@@ -49,7 +49,7 @@ public static partial class GridExtensions
     [DataRow(Platform.Avalonia)]
     public Task BindEvent(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, string.Empty, "Input") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "Input") + @"
 [AttachedDependencyProperty<object, UIElement>(""BindEventProperty"", BindEvent = nameof(UIElement.KeyUp))]
 public static partial class UIElementExtensions
 {
@@ -67,7 +67,7 @@ public static partial class UIElementExtensions
     [DataRow(Platform.Avalonia)]
     public Task AttachedPropertyWithoutSecondType(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform) + @"
 [AttachedDependencyProperty<object>(""SomeProperty"")]
 public static partial class GridExtensions
 {
@@ -82,7 +82,7 @@ public static partial class GridExtensions
     [DataRow(Platform.Avalonia)]
     public Task MultilineDescription(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [AttachedDependencyProperty<string, Grid>(""UserAgentSuffix"",
 	Description = @""A suffix that is added to the default user agent, surrounded by square brackets.
 Can be used to identify the web view as belonging to a certain app/version on the server side."")]
@@ -100,7 +100,7 @@ public static partial class GridExtensions
     [DataRow(Platform.Avalonia)]
     public Task CustomOnChangedAttached(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
 [AttachedDependencyProperty<int, Grid>(""RowCount"", OnChanged = nameof(OnRowCountChanged), DefaultValue = -1)]
 public static partial class GridHelpers
 {

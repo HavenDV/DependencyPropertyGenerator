@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Platform.Avalonia)]
     public Task RoutedEvent(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, WinRtEvents = true)]
 public partial class MyControl : UserControl
 {
@@ -25,7 +25,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Avalonia)]
     public Task AttachedRoutedEvent(Platform platform)
     {
-        return CheckSourceAsync(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(platform, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
 public partial class MyControl : UserControl
 {
