@@ -10,12 +10,16 @@
 
     <PropertyGroup>
       <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
+      <RoutedEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</RoutedEventGenerator_DefineConstants>
+      <WeakEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</WeakEventGenerator_DefineConstants>
     </PropertyGroup>
 
   </Target>
   
   <ItemGroup>
     <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants" />
+    <CompilerVisibleProperty Include="RoutedEventGenerator_DefineConstants" />
+    <CompilerVisibleProperty Include="WeakEventGenerator_DefineConstants" />
     <CompilerVisibleProperty Include="UseWPF" />
     <CompilerVisibleProperty Include="UseWinUI" />
   </ItemGroup>
