@@ -7,7 +7,7 @@ public partial class Tests
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
-    //[DataRow(Platform.Avalonia)]
+    [DataRow(Platform.Avalonia)]
     public Task StaticWeakEvent(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
@@ -22,7 +22,7 @@ public partial class MyControl : UserControl
     [DataRow(Platform.Uno)]
     [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
-    //[DataRow(Platform.Avalonia)]
+    [DataRow(Platform.Avalonia)]
     public Task StaticWeakEventWithType(Platform platform)
     {
         return CheckSourceAsync(GetHeader(platform, "Controls") + @"
