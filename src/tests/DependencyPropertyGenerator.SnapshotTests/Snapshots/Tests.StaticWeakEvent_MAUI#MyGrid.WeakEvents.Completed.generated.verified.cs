@@ -19,7 +19,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
 	    internal static void RaiseCompletedEvent(object? sender)
 	    {
-		    CompletedWeakEventManager.HandleEvent(sender!, global::System.EventArgs.Empty, eventName: nameof(Completed));
+		    CompletedWeakEventManager.HandleEvent(sender!, global::System.EventArgs.Empty!, eventName: nameof(Completed));
 	    }
     }
 }

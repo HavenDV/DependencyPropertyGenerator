@@ -464,11 +464,101 @@ namespace {@class.Namespace}
             : $", {GenerateEventArgsType(@event)} args";
         var args = string.IsNullOrWhiteSpace(@event.Type)
             ? "System.EventArgs.Empty".WithGlobalPrefix()
-            : "args!";
+            : "args";
         
-        // https://github.com/dotnet/maui/issues/2703
-        // https://github.com/dotnet/maui/pull/12950
-        return @$" 
+        switch (@class.Platform)
+        {
+            // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns
+            case Platform.WPF:
+            {
+                return @$" 
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    public{@class.Modifiers} partial class {@class.Name}
+    {{
+        private class {@event.Name}WeakEventManager : global::System.Windows.WeakEventManager
+        {{
+            private {@event.Name}WeakEventManager()
+            {{
+            }}
+
+            public static void AddHandler(object? source, {GenerateEventHandlerType(@event)}? handler)
+            {{
+                if (source == null)
+                    throw new global::System.ArgumentNullException(nameof(source));
+                if (handler == null)
+                    throw new global::System.ArgumentNullException(nameof(handler));
+
+                CurrentManager.ProtectedAddHandler(source, handler);
+            }}
+
+            public static void RemoveHandler(object? source, {GenerateEventHandlerType(@event)}? handler)
+            {{
+                if (source == null)
+                    throw new global::System.ArgumentNullException(nameof(source));
+                if (handler == null)
+                    throw new global::System.ArgumentNullException(nameof(handler));
+
+                CurrentManager.ProtectedRemoveHandler(source, handler);
+            }}
+
+            internal static {@event.Name}WeakEventManager CurrentManager
+            {{
+                get
+                {{
+                    var managerType = typeof({@event.Name}WeakEventManager);
+                    var manager = ({@event.Name}WeakEventManager)GetCurrentManager(managerType);
+                    if (manager == null)
+                    {{
+                        manager = new {@event.Name}WeakEventManager();
+                        SetCurrentManager(managerType, manager);
+                    }}
+
+                    return manager;
+                }}
+            }}
+
+            protected override void StartListening(object? source)
+            {{
+                {@class.Name}.{@event.Name} += On{@event.Name};
+            }}
+
+            protected override void StopListening(object? source)
+            {{
+                {@class.Name}.{@event.Name} -= On{@event.Name};
+            }}
+
+            internal void On{@event.Name}(object? sender, {GenerateEventArgsType(@event)} args)
+            {{
+                DeliverEvent(sender, args);
+            }}
+        }}
+
+{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+	    public static event {GenerateEventHandlerType(@event)}? {@event.Name}
+	    {{
+		    add => {@event.Name}WeakEventManager.AddHandler(null, value);
+		    remove => {@event.Name}WeakEventManager.RemoveHandler(null, value);
+	    }}
+
+        /// <summary>
+        /// A helper method to raise the {@event.Name} event.
+        /// </summary>
+	    internal static void Raise{@event.Name}Event(object? sender{additionalParameters})
+	    {{
+		    {@event.Name}WeakEventManager.CurrentManager.On{@event.Name}(sender, {args});
+	    }}
+    }}
+}}".RemoveBlankLinesWhereOnlyWhitespaces();
+            }
+            
+            // https://github.com/dotnet/maui/issues/2703
+            // https://github.com/dotnet/maui/pull/12950
+            case Platform.MAUI:
+            {
+                return @$" 
 #nullable enable
 
 namespace {@class.Namespace}
@@ -489,10 +579,20 @@ namespace {@class.Namespace}
         /// </summary>
 	    internal static void Raise{@event.Name}Event(object? sender{additionalParameters})
 	    {{
-		    {@event.Name}WeakEventManager.HandleEvent(sender!, {args}, eventName: nameof({@event.Name}));
+		    {@event.Name}WeakEventManager.HandleEvent(sender!, {args}!, eventName: nameof({@event.Name}));
 	    }}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
+            }
+
+            case Platform.UWP:
+            case Platform.WinUI:
+            case Platform.Uno:
+            case Platform.UnoWinUI:
+            case Platform.Avalonia:
+            default:
+                return string.Empty;
+        }
     }
 
     public static string GenerateAttachedRoutedEvent(ClassData @class, EventData @event)

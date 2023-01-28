@@ -3,9 +3,9 @@
 public partial class Tests
 {
     [DataTestMethod]
-    //[DataRow(Platform.WPF)]
-    //[DataRow(Platform.Uno)]
-    //[DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
     //[DataRow(Platform.Avalonia)]
     public Task StaticWeakEvent(Platform platform)
@@ -18,9 +18,9 @@ public partial class MyControl : UserControl
     }
     
     [DataTestMethod]
-    //[DataRow(Platform.WPF)]
-    //[DataRow(Platform.Uno)]
-    //[DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
     [DataRow(Platform.MAUI)]
     //[DataRow(Platform.Avalonia)]
     public Task StaticWeakEventWithType(Platform platform)

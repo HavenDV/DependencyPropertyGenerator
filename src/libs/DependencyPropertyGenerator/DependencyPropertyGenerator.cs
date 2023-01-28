@@ -121,7 +121,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
-                if (platform is Platform.MAUI)
+                if (platform is Platform.MAUI or Platform.WPF)
                 {
                     foreach (var @event in @class.WeakEvents)
                     {
