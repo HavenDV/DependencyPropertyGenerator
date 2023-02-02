@@ -205,6 +205,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
             var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
+            var isStaticClass = classSymbol.IsStatic;
             var methods = classSymbol
                 .GetMembers()
                 .OfType<IMethodSymbol>()
@@ -384,6 +385,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 Name: className,
                 FullName: fullClassName,
                 Modifiers: classModifiers,
+                IsStatic: isStaticClass,
                 Platform: platform,
                 Methods: methods,
                 DependencyProperties: dependencyProperties,

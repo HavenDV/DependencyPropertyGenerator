@@ -465,12 +465,19 @@ namespace {@class.Namespace}
         var args = string.IsNullOrWhiteSpace(@event.Type)
             ? "System.EventArgs.Empty".WithGlobalPrefix()
             : "args";
+        var modifiers = @event.IsAttached
+            ? " static"
+            : string.Empty;
         
         switch (@class.Platform)
         {
             // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns
             case Platform.WPF:
             {
+                var source = @event.IsAttached
+                    ? @class.Name
+                    : $"(source as {@class.Name})!";
+                
                 return @$" 
 #nullable enable
 
@@ -522,12 +529,12 @@ namespace {@class.Namespace}
 
             protected override void StartListening(object? source)
             {{
-                {@class.Name}.{@event.Name} += On{@event.Name};
+                {source}.{@event.Name} += On{@event.Name};
             }}
 
             protected override void StopListening(object? source)
             {{
-                {@class.Name}.{@event.Name} -= On{@event.Name};
+                {source}.{@event.Name} -= On{@event.Name};
             }}
 
             internal void On{@event.Name}(object? sender, {GenerateEventArgsType(@event)} args)
@@ -537,7 +544,7 @@ namespace {@class.Namespace}
         }}
 
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
-	    public static event {GenerateEventHandlerType(@event)}? {@event.Name}
+	    public{modifiers} event {GenerateEventHandlerType(@event)}? {@event.Name}
 	    {{
 		    add => {@event.Name}WeakEventManager.AddHandler(null, value);
 		    remove => {@event.Name}WeakEventManager.RemoveHandler(null, value);
@@ -546,7 +553,7 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-	    internal static void Raise{@event.Name}Event(object? sender{additionalParameters})
+	    internal{modifiers} void Raise{@event.Name}Event(object? sender{additionalParameters})
 	    {{
 		    {@event.Name}WeakEventManager.CurrentManager.On{@event.Name}(sender, {args});
 	    }}
@@ -565,10 +572,10 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-	    private static global::Microsoft.Maui.WeakEventManager {@event.Name}WeakEventManager {{ get; }} = new global::Microsoft.Maui.WeakEventManager();
+	    private{modifiers} global::Microsoft.Maui.WeakEventManager {@event.Name}WeakEventManager {{ get; }} = new global::Microsoft.Maui.WeakEventManager();
 	    
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
-	    public static event {GenerateEventHandlerType(@event)}? {@event.Name}
+	    public{modifiers} event {GenerateEventHandlerType(@event)}? {@event.Name}
 	    {{
 		    add => {@event.Name}WeakEventManager.AddEventHandler(value);
 		    remove => {@event.Name}WeakEventManager.RemoveEventHandler(value);
@@ -577,7 +584,7 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-	    internal static void Raise{@event.Name}Event(object? sender{additionalParameters})
+	    internal{modifiers} void Raise{@event.Name}Event(object? sender{additionalParameters})
 	    {{
 		    {@event.Name}WeakEventManager.HandleEvent(sender!, {args}!, eventName: nameof({@event.Name}));
 	    }}

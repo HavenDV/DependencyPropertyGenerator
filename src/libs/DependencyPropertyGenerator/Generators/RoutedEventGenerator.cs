@@ -126,6 +126,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
             var fullClassName = classSymbol.ToString();
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
+            var isStaticClass = classSymbol.IsStatic;
             var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
             var methods = classSymbol
                 .GetMembers()
@@ -199,6 +200,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
                 Name: className,
                 FullName: fullClassName,
                 Modifiers: classModifiers,
+                IsStatic: isStaticClass,
                 Platform: platform,
                 Methods: methods,
                 DependencyProperties: Array.Empty<DependencyPropertyData>(),

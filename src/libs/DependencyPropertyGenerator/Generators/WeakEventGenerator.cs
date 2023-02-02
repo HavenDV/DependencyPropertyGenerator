@@ -119,6 +119,7 @@ public class WeakEventGenerator : IIncrementalGenerator
             var fullClassName = classSymbol.ToString();
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
+            var isStaticClass = classSymbol.IsStatic;
             var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
             var methods = classSymbol
                 .GetMembers()
@@ -175,7 +176,7 @@ public class WeakEventGenerator : IIncrementalGenerator
                     Type: type,
                     IsValueType: isValueType,
                     IsSpecialType: isSpecialType,
-                    IsAttached: bool.Parse(isStatic),
+                    IsAttached: bool.Parse(isStatic) || isStaticClass,
                     Description: description,
                     Category: category,
                     XmlDocumentation: xmlDocumentation,
@@ -190,6 +191,7 @@ public class WeakEventGenerator : IIncrementalGenerator
                 Name: className,
                 FullName: fullClassName,
                 Modifiers: classModifiers,
+                IsStatic: isStaticClass,
                 Platform: platform,
                 Methods: methods,
                 DependencyProperties: Array.Empty<DependencyPropertyData>(),
