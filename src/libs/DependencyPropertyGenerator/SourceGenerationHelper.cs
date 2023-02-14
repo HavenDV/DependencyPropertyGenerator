@@ -167,15 +167,15 @@ namespace {@class.Namespace}
             .Replace("global::", string.Empty);
 
         var isChanged0 =
-            IsMethodExists(@class.Methods, $"{name}()");
+            IsMethodExists(@class, $"{name}()");
         var isChanged1 =
-            IsMethodExists(@class.Methods, $"{name}({type})") ||
-            IsMethodExists(@class.Methods, $"{name}({senderType})");
+            IsMethodExists(@class, $"{name}({type})") ||
+            IsMethodExists(@class, $"{name}({senderType})");
         var isChanged2 =
-            IsMethodExists(@class.Methods, $"{name}({type}, {type})") ||
-            IsMethodExists(@class.Methods, $"{name}({senderType}, {type})");
+            IsMethodExists(@class, $"{name}({type}, {type})") ||
+            IsMethodExists(@class, $"{name}({senderType}, {type})");
         var isChanged3 =
-            IsMethodExists(@class.Methods, $"{name}({senderType}, {type}, {type})");
+            IsMethodExists(@class, $"{name}({senderType}, {type}, {type})");
 
         return (isChanged0, isChanged1, isChanged2, isChanged3);
     }
@@ -673,9 +673,9 @@ namespace {@class.Namespace}
         return @class.Modifiers;
     }
 
-    private static bool IsMethodExists(IReadOnlyCollection<string> methods, string signature)
+    private static bool IsMethodExists(ClassData @class, string signature)
     {
-        return methods.Contains(signature);
+        return @class.Methods.Contains($"{@class.FullName}.{signature}");
     }
 
     private static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)

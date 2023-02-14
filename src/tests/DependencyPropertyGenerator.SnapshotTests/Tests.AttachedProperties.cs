@@ -109,4 +109,22 @@ public static partial class GridHelpers
     }
 }", platform);
     }
+
+    [DataTestMethod]
+    [DataRow(Platform.WPF)]
+    [DataRow(Platform.Uno)]
+    [DataRow(Platform.UnoWinUI)]
+    [DataRow(Platform.MAUI)]
+    [DataRow(Platform.Avalonia)]
+    public Task SameClassAsTypeParameter(Platform platform)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+[AttachedDependencyProperty<Test, Grid>(""TestProp"", OnChanged = nameof(TestChanged))]
+public partial class Test
+{
+    private static void TestChanged(Grid grid, Test? newValue)
+    {
+    }
+}", platform);
+    }
 }

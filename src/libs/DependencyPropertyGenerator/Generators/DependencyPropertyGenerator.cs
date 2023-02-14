@@ -212,7 +212,6 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 // Roslyn bug?
                 //.Where(static value => value.PartialImplementationPart != null)
                 .Select(static value => value.ToDisplayString()
-                    .Replace(value.ReceiverType?.ToDisplayString() ?? string.Empty, string.Empty)
                     .Replace("?", string.Empty)
                     .TrimStart('.'))
                 .ToArray();
