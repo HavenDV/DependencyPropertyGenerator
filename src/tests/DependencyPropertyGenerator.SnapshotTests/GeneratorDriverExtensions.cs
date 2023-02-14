@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace H.Generators.SnapshotTests;
 
-internal static class GeneratorDriverExteniosns
+internal static class GeneratorDriverExtensions
 {
     public static GeneratorDriver RunGeneratorsAndUpdateCompilation(
         this GeneratorDriver driver,

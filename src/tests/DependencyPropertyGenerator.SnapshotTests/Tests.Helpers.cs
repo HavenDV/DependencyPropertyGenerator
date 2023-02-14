@@ -3,6 +3,7 @@ using H.Generators.Tests.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using System.Collections.Immutable;
+using H.Generators.Extensions;
 
 namespace H.Generators.SnapshotTests;
 
@@ -174,29 +175,7 @@ namespace H.Generators.IntegrationTests;
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            Verify(diagnostics
-                    .Select(static diagnostic => diagnostic.Location.ToString().Contains('\\') || diagnostic.Location.ToString().Contains('/')
-                        ? Diagnostic.Create(
-                            id: diagnostic.Id,
-                            category: diagnostic.Descriptor.Category,
-                            message: diagnostic.GetMessage(),
-                            severity: diagnostic.Severity,
-                            defaultSeverity: diagnostic.DefaultSeverity,
-                            isEnabledByDefault: diagnostic.Descriptor.IsEnabledByDefault,
-                            warningLevel: diagnostic.WarningLevel,
-                            title: diagnostic.Descriptor.Title,
-                            description: diagnostic.Descriptor.Description,
-                            isSuppressed: diagnostic.IsSuppressed,
-                            helpLink: diagnostic.Descriptor.HelpLinkUri,
-                            location: Location.Create(
-                                filePath: string.Empty,
-                                textSpan: diagnostic.Location.SourceSpan,
-                                lineSpan: diagnostic.Location.GetLineSpan().Span),
-                            additionalLocations: diagnostic.AdditionalLocations,
-                            properties: diagnostic.Properties,
-                            customTags: diagnostic.Descriptor.CustomTags)
-                        : diagnostic)
-                    .ToArray())
+            Verify(diagnostics.NormalizeLocations())
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{platform}_Diagnostics"),
             Verify(driver)
