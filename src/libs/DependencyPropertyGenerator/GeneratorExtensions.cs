@@ -16,12 +16,11 @@ public static class GeneratorExtensions
             : value;
     }
 
-    public static string? GetFullClassName(this Compilation compilation, ClassDeclarationSyntax classDeclarationSyntax)
+    public static string? GetFullClassName(this SemanticModel semanticModel, ClassDeclarationSyntax classDeclarationSyntax)
     {
-        compilation = compilation ?? throw new ArgumentNullException(nameof(compilation));
+        semanticModel = semanticModel ?? throw new ArgumentNullException(nameof(semanticModel));
         classDeclarationSyntax = classDeclarationSyntax ?? throw new ArgumentNullException(nameof(classDeclarationSyntax));
         
-        var semanticModel = compilation.GetSemanticModel(classDeclarationSyntax.SyntaxTree);
         if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
         {
             return null;

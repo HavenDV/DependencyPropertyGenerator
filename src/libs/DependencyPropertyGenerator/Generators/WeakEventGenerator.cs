@@ -22,7 +22,7 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     #region Methods
 
-    private static ClassDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+    private static (SemanticModel, ClassDeclarationSyntax? Syntax) GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
     {
         var syntax = (ClassDeclarationSyntax)context.Node;
 
@@ -30,8 +30,8 @@ public class WeakEventGenerator : IIncrementalGenerator
             .AttributeLists
             .SelectMany(static list => list.Attributes)
             .Any(attributeSyntax => attributeSyntax.WhereFullNameIs(context.SemanticModel, IsGeneratorAttribute))
-            ? syntax
-            : null;
+            ? (context.SemanticModel, syntax)
+            : (context.SemanticModel, null);
     }
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -40,21 +40,19 @@ public class WeakEventGenerator : IIncrementalGenerator
             .CreateSyntaxProvider(
                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
                 transform: static (context, _) => GetSemanticTargetForGeneration(context))
-            .Where(static syntax => syntax is not null);
+            .Where(static x => x.Syntax is not null);
 
-        var compilationAndClasses = context.CompilationProvider
-            .Combine(context.AnalyzerConfigOptionsProvider)
+        var compilationAndClasses = context.AnalyzerConfigOptionsProvider
             .Combine(classes.Collect());
 
         context.RegisterSourceOutput(
             compilationAndClasses,
-            static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right!, context));
+            static (context, source) => Execute(source.Left, source.Right!, context));
     }
 
     private static void Execute(
-        Compilation compilation,
         AnalyzerConfigOptionsProvider options,
-        ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
+        ImmutableArray<(SemanticModel, ClassDeclarationSyntax)> classSyntaxes,
         SourceProductionContext context)
     {
         if (!options.IsDesignTime() &&
@@ -76,7 +74,7 @@ public class WeakEventGenerator : IIncrementalGenerator
                 return;
             }
             
-            var classes = GetTypesToGenerate(compilation, framework, classSyntaxes, context.CancellationToken);
+            var classes = GetTypesToGenerate(framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 foreach (var @event in @class.WeakEvents)
@@ -97,19 +95,16 @@ public class WeakEventGenerator : IIncrementalGenerator
     }
 
     private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
-        Compilation compilation,
         Framework framework,
-        IEnumerable<ClassDeclarationSyntax> classes,
+        IEnumerable<(SemanticModel SemanticModel, ClassDeclarationSyntax Syntax)> classes,
         CancellationToken cancellationToken)
     {
         var values = new List<ClassData>();
-        foreach (var group in classes.GroupBy(compilation.GetFullClassName))
+        foreach (var group in classes.GroupBy(static data => data.SemanticModel.GetFullClassName(data.Syntax)))
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var @class = group.First();
-            
-            var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
+            var (semanticModel, @class) = group.First();
             if (semanticModel.GetDeclaredSymbol(
                 @class, cancellationToken) is not INamedTypeSymbol classSymbol)
             {
@@ -137,9 +132,9 @@ public class WeakEventGenerator : IIncrementalGenerator
                 .Where(static attribute => attribute.ConstructorArguments.ElementAtOrDefault(0).Value is string)
                 .ToDictionary(static attribute => attribute.ConstructorArguments[0].Value as string ?? string.Empty);
             foreach (var attributeSyntax in group
-                .SelectMany(static list => list.AttributeLists)
+                .SelectMany(static list => list.Syntax.AttributeLists)
                 .SelectMany(static list => list.Attributes)
-                .Where(attributeSyntax => attributeSyntax.WhereFullNameIs(compilation.GetSemanticModel(attributeSyntax.SyntaxTree), IsGeneratorAttribute)))
+                .Where(attributeSyntax => attributeSyntax.WhereFullNameIs(semanticModel, IsGeneratorAttribute)))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString().Trim('"') ?? string.Empty;
                 name = name.RemoveNameof();

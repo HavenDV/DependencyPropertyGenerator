@@ -28,7 +28,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     #region Methods
 
-    private static ClassDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+    private static (SemanticModel, ClassDeclarationSyntax? Syntax) GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
     {
         var syntax = (ClassDeclarationSyntax)context.Node;
 
@@ -36,8 +36,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             .AttributeLists
             .SelectMany(static list => list.Attributes)
             .Any(attributeSyntax => attributeSyntax.WhereFullNameIs(context.SemanticModel, IsGeneratorAttribute))
-            ? syntax
-            : null;
+            ? (context.SemanticModel, syntax)
+            : (context.SemanticModel, null);
     }
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -46,66 +46,65 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
             .CreateSyntaxProvider(
                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
                 transform: static (context, _) => GetSemanticTargetForGeneration(context))
-            .Where(static syntax => syntax is not null);
+            .Where(static x => x.Syntax is not null);
 
-        var compilationAndClasses = context.CompilationProvider
-            .Combine(context.AnalyzerConfigOptionsProvider)
+        var compilationAndClasses = context.AnalyzerConfigOptionsProvider
             .Combine(classes.Collect());
 
         context.RegisterSourceOutput(
             compilationAndClasses,
-            static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right!, context));
+            static (context, source) => Execute(source.Left, source.Right!, context));
             
         // context.RegisterSourceOutput(
-        //     context.CompilationProvider
-        //         .Combine(context.AnalyzerConfigOptionsProvider)
+        //     context.AnalyzerConfigOptionsProvider
+        //             .Select(static (options, _) => options.RecognizeFramework(prefix: Name))
         //         .Combine(context.SyntaxProvider
         //             .ForAttributeWithMetadataName(
         //                 fullyQualifiedMetadataName: AttachedDependencyPropertyAttributeFullName,
         //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
-        //             .Where(static syntax => syntax is not null)
-        //             .Collect()),
-        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
-        // context.RegisterSourceOutput(
-        //     context.CompilationProvider
-        //         .Combine(context.AnalyzerConfigOptionsProvider)
-        //         .Combine(context.SyntaxProvider
-        //             .ForAttributeWithMetadataName(
-        //                 fullyQualifiedMetadataName: DependencyPropertyAttributeFullName,
-        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
-        //             .Where(static syntax => syntax is not null)
-        //             .Collect()),
-        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
-        // context.RegisterSourceOutput(
-        //     context.CompilationProvider
-        //         .Combine(context.AnalyzerConfigOptionsProvider)
-        //         .Combine(context.SyntaxProvider
-        //             .ForAttributeWithMetadataName(
-        //                 fullyQualifiedMetadataName: OverrideMetadataAttributeFullName,
-        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
-        //             .Where(static syntax => syntax is not null)
-        //             .Collect()),
-        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
-        // context.RegisterSourceOutput(
-        //     context.CompilationProvider
-        //         .Combine(context.AnalyzerConfigOptionsProvider)
-        //         .Combine(context.SyntaxProvider
-        //             .ForAttributeWithMetadataName(
-        //                 fullyQualifiedMetadataName: AddOwnerAttributeFullName,
-        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
-        //             .Where(static syntax => syntax is not null)
-        //             .Collect()),
-        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
+        //                 transform: static (context, _) => (SemanticModel: context.SemanticModel, Class: (ClassDeclarationSyntax)context.TargetNode))
+        //             .Collect())
+        //         .Select((pair, cancellationToken) =>
+        //         {
+        //             var classSyntaxes = pair.Right;
+        //             var framework = pair.Left;
+        //             try
+        //             {
+        //                 var classes = classSyntaxes.IsDefaultOrEmpty
+        //                     ? ImmutableArray<ClassData>.Empty
+        //                     : GetTypesToGenerate(framework, classSyntaxes, cancellationToken);
+        //             
+        //                 return (Framework: framework, Classes: classes, Errors: ImmutableArray<ErrorData>.Empty);
+        //             }
+        //             catch (Exception exception)
+        //             {
+        //                 return (Framework: framework, Classes: ImmutableArray<ClassData>.Empty, Errors: ImmutableArray.Create(new ErrorData(exception)));
+        //             }
+        //         }),
+        //     static (context, data) =>
+        //     {
+        //         foreach (var error in data.Errors)
+        //         {
+        //             context.ReportException(
+        //                 id: "001",
+        //                 exception: error.Exception,
+        //                 prefix: Id);
+        //         }
+        //         foreach (var @class in data.Classes)
+        //         {
+        //             foreach (var property in @class.AttachedDependencyProperties)
+        //             {
+        //                 context.AddTextSource(
+        //                     hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
+        //                     text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
+        //             }
+        //         }
+        //     });
     }
 
     private static void Execute(
-        Compilation compilation,
         AnalyzerConfigOptionsProvider options,
-        ImmutableArray<ClassDeclarationSyntax> classSyntaxes,
+        ImmutableArray<(SemanticModel, ClassDeclarationSyntax)> classSyntaxes,
         SourceProductionContext context)
     {
         if (!options.IsDesignTime() &&
@@ -122,7 +121,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         try
         {
             var framework = options.RecognizeFramework(prefix: Name);
-            var classes = GetTypesToGenerate(compilation, framework, classSyntaxes, context.CancellationToken);
+            var classes = GetTypesToGenerate(framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 foreach(var property in @class.DependencyProperties)
@@ -226,20 +225,17 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         }
     }
 
-    private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
-        Compilation compilation,
+    private static ImmutableArray<ClassData> GetTypesToGenerate(
         Framework framework,
-        IEnumerable<ClassDeclarationSyntax> classes,
+        IEnumerable<(SemanticModel SemanticModel, ClassDeclarationSyntax Syntax)> classes,
         CancellationToken cancellationToken)
     {
         var values = new List<ClassData>();
-        foreach (var group in classes.GroupBy(compilation.GetFullClassName))
+        foreach (var group in classes.GroupBy(static data => data.SemanticModel.GetFullClassName(data.Syntax)))
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var @class = group.First();
-            
-            var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
+            var (semanticModel, @class) = group.First();
             if (semanticModel.GetDeclaredSymbol(
                 @class, cancellationToken) is not INamedTypeSymbol classSymbol)
             {
@@ -269,9 +265,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 .Where(static attribute => attribute.ConstructorArguments.ElementAtOrDefault(0).Value is string)
                 .ToDictionary(static attribute => attribute.ConstructorArguments[0].Value as string ?? string.Empty);
             foreach (var attributeSyntax in group
-                .SelectMany(static list => list.AttributeLists)
+                .SelectMany(static list => list.Syntax.AttributeLists)
                 .SelectMany(static list => list.Attributes)
-                .Where(attributeSyntax => attributeSyntax.WhereFullNameIs(compilation.GetSemanticModel(attributeSyntax.SyntaxTree), IsGeneratorAttribute)))
+                .Where(attributeSyntax => attributeSyntax.WhereFullNameIs(semanticModel, IsGeneratorAttribute)))
             {
                 var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString().Trim('"') ?? string.Empty;
                 name = name.RemoveNameof();
@@ -440,7 +436,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 AddOwner: addOwner));
         }
 
-        return values;
+        return values.ToImmutableArray();
     }
     
     private static bool IsGeneratorAttribute(string fullTypeName)
