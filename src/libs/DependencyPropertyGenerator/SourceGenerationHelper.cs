@@ -29,7 +29,7 @@ namespace {@class.Namespace}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
-{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
         public {GenerateType(property)} {property.Name}
         {{
             {GenerateGetter(property)}
@@ -48,7 +48,7 @@ namespace {@class.Namespace}
 
     private static string GenerateGetter(DependencyPropertyData property)
     {
-        if (property is { IsDirect: true, Platform: Platform.Avalonia })
+        if (property is { IsDirect: true, Framework: Framework.Avalonia })
         {
             return @$"get => _{property.Name.ToParameterName()};";
         }
@@ -58,7 +58,7 @@ namespace {@class.Namespace}
 
     private static string GenerateSetter(DependencyPropertyData property)
     {
-        if (property is { IsDirect: true, Platform: Platform.Avalonia })
+        if (property is { IsDirect: true, Framework: Framework.Avalonia })
         {
             return @$"private set
             {{
@@ -80,7 +80,7 @@ namespace {@class.Namespace}
     {
         if (property.IsAddOwner)
         {
-            if (@class.Platform == Platform.Avalonia)
+            if (@class.Framework == Framework.Avalonia)
             {
                 if (property.IsDirect)
                 {
@@ -242,7 +242,7 @@ namespace {@class.Namespace}
         ClassData @class,
         IReadOnlyCollection<DependencyPropertyData> properties)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             var generatedProperties = properties
                 .Where(static property => !property.IsAttached)
@@ -276,7 +276,7 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
         }
 
-        if (@class.Platform == Platform.WPF)
+        if (@class.Framework == Framework.Wpf)
         {
             return @$" 
 #nullable enable
@@ -331,8 +331,8 @@ namespace {@class.Namespace}
 {GenerateBrowsableAttribute(property.Browsable)}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
-{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
-        {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Platform)} element, {GenerateType(property)} value)
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
+        {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Framework)} element, {GenerateType(property)} value)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -348,8 +348,8 @@ namespace {@class.Namespace}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateBrowsableForTypeAttribute(property)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
-{GenerateLocalizabilityAttribute(property.Localizability, @class.Platform)}
-        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Platform)} element)
+{GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
+        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Framework)} element)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -369,7 +369,7 @@ namespace {@class.Namespace}
     public static string GenerateRoutedEvent(ClassData @class, EventData @event)
     {
         // https://docs.avaloniaui.net/docs/input/routed-events
-        if (@class.Platform == Platform.WPF || @class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Wpf || @class.Framework == Framework.Avalonia)
         {
             return @$" 
 #nullable enable
@@ -469,10 +469,10 @@ namespace {@class.Namespace}
             ? " static"
             : string.Empty;
         
-        switch (@class.Platform)
+        switch (@class.Framework)
         {
             // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns
-            case Platform.WPF:
+            case Framework.Wpf:
             {
                 var source = @event.IsAttached
                     ? @class.Name
@@ -563,7 +563,7 @@ namespace {@class.Namespace}
             
             // https://github.com/dotnet/maui/issues/2703
             // https://github.com/dotnet/maui/pull/12950
-            case Platform.MAUI:
+            case Framework.Maui:
             {
                 return @$" 
 #nullable enable
@@ -592,11 +592,11 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
             }
 
-            case Platform.UWP:
-            case Platform.WinUI:
-            case Platform.Uno:
-            case Platform.UnoWinUI:
-            case Platform.Avalonia:
+            case Framework.Uwp:
+            case Framework.WinUi:
+            case Framework.Uno:
+            case Framework.UnoWinUi:
+            case Framework.Avalonia:
             default:
                 return string.Empty;
         }
@@ -619,15 +619,15 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
-        public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class.Platform)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        public static void Add{@event.Name}Handler({GenerateDependencyObjectType(@class.Framework)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
+            if (element is {GenerateTypeByPlatform(@class.Framework, "UIElement")} uiElement)
             {{
                 uiElement.AddHandler({@event.Name}Event, handler);
             }}
-            else if (element is {GenerateTypeByPlatform(@class.Platform, "ContentElement")} contentElement)
+            else if (element is {GenerateTypeByPlatform(@class.Framework, "ContentElement")} contentElement)
             {{
                 contentElement.AddHandler({@event.Name}Event, handler);
             }}
@@ -636,15 +636,15 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
-        public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class.Platform)} element, {GenerateRoutedEventHandlerType(@class)} handler)
+        public static void Remove{@event.Name}Handler({GenerateDependencyObjectType(@class.Framework)} element, {GenerateRoutedEventHandlerType(@class)} handler)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            if (element is {GenerateTypeByPlatform(@class.Platform, "UIElement")} uiElement)
+            if (element is {GenerateTypeByPlatform(@class.Framework, "UIElement")} uiElement)
             {{
                 uiElement.RemoveHandler({@event.Name}Event, handler);
             }}
-            else if (element is {GenerateTypeByPlatform(@class.Platform, "ContentElement")} contentElement)
+            else if (element is {GenerateTypeByPlatform(@class.Framework, "ContentElement")} contentElement)
             {{
                 contentElement.RemoveHandler({@event.Name}Event, handler);
             }}
@@ -655,9 +655,9 @@ namespace {@class.Namespace}
 
     private static string GenerateBaseType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
-            return $" : {GenerateTypeByPlatform(@class.Platform, "AvaloniaObject")}";
+            return $" : {GenerateTypeByPlatform(@class.Framework, "AvaloniaObject")}";
         }
 
         return string.Empty;
@@ -665,7 +665,7 @@ namespace {@class.Namespace}
 
     private static string GenerateModifiers(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return string.Empty;
         }
@@ -692,7 +692,7 @@ namespace {@class.Namespace}
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return property.IsAttached
                 ? $@"static (sender, oldValue, newValue) =>
@@ -758,7 +758,7 @@ namespace {@class.Namespace}
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return property.IsAttached
                 ? $@"static (sender, oldValue, newValue) =>
@@ -821,7 +821,7 @@ namespace {@class.Namespace}
             ? GenerateBrowsableForType(property)
             : GenerateType(@class.FullName, false);
 
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return property.IsAttached
                 ? $@"static (sender, value) =>
@@ -850,7 +850,7 @@ namespace {@class.Namespace}
             return "null";
         }
 
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return $@"static (_, value) =>
                     Is{property.Name}Valid(
@@ -869,7 +869,7 @@ namespace {@class.Namespace}
             return "null";
         }
 
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return $@"static _ => Get{property.Name}DefaultValue()";
         }
@@ -884,14 +884,14 @@ namespace {@class.Namespace}
             return "null";
         }
 
-        var parameterName = (@class.Platform, property.IsAttached) switch
+        var parameterName = (@class.Framework, property.IsAttached) switch
         {
-            (Platform.WPF, true) or (Platform.UWP, true) or (Platform.WinUI, true) => "defaultMetadata",
+            (Framework.Wpf, true) or (Framework.Uwp, true) or (Framework.WinUi, true) => "defaultMetadata",
             _ => "typeMetadata",
         };
-        switch (@class.Platform)
+        switch (@class.Framework)
         {
-            case Platform.WPF:
+            case Framework.Wpf:
                 if (property.DefaultUpdateSourceTrigger == null)
                 {
                     return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
@@ -910,11 +910,11 @@ namespace {@class.Namespace}
                     isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower(CultureInfo.InvariantCulture)},
                     defaultUpdateSourceTrigger: global::System.Windows.Data.UpdateSourceTrigger.{property.DefaultUpdateSourceTrigger})";
 
-            case Platform.UWP:
-            case Platform.WinUI:
-            case Platform.Uno:
-            case Platform.UnoWinUI:
-                var type = GenerateTypeByPlatform(@class.Platform, "PropertyMetadata");
+            case Framework.Uwp:
+            case Framework.WinUi:
+            case Framework.Uno:
+            case Framework.UnoWinUi:
+                var type = GenerateTypeByPlatform(@class.Framework, "PropertyMetadata");
                 if (property.CreateDefaultValueCallback)
                 {
                     return $@"{parameterName}: {type}.Create(
@@ -923,9 +923,9 @@ namespace {@class.Namespace}
                 }
 
                 // fix for NotImplementedException: The member PropertyMetadata PropertyMetadata.Create(object defaultValue, PropertyChangedCallback propertyChangedCallback) is not implemented in Uno.
-                var create = property.Platform switch
+                var create = property.Framework switch
                 {
-                    Platform.Uno or Platform.UnoWinUI => $"new {type}",
+                    Framework.Uno or Framework.UnoWinUi => $"new {type}",
                     _ => $"{type}.Create",
                 };
                 return $@"{parameterName}: {create}(
@@ -936,15 +936,15 @@ namespace {@class.Namespace}
         throw new InvalidOperationException("Platform is not supported.");
     }
 
-    private static string GenerateTypeByPlatform(Platform platform, string name)
+    private static string GenerateTypeByPlatform(Framework framework, string name)
     {
-        return (platform switch
+        return (framework switch
         {
-            Platform.WPF => $"System.Windows.{name}",
-            Platform.UWP or Platform.Uno => $"Windows.UI.Xaml.{name}",
-            Platform.WinUI or Platform.UnoWinUI => $"Microsoft.UI.Xaml.{name}",
-            Platform.Avalonia => $"Avalonia.{name}",
-            Platform.MAUI => $"Microsoft.Maui.Controls.{name}",
+            Framework.Wpf => $"System.Windows.{name}",
+            Framework.Uwp or Framework.Uno => $"Windows.UI.Xaml.{name}",
+            Framework.WinUi or Framework.UnoWinUi => $"Microsoft.UI.Xaml.{name}",
+            Framework.Avalonia => $"Avalonia.{name}",
+            Framework.Maui => $"Microsoft.Maui.Controls.{name}",
             _ => throw new InvalidOperationException("Platform is not supported."),
         }).WithGlobalPrefix();
     }
@@ -986,32 +986,32 @@ namespace {@class.Namespace}
 
     private static string GenerateRoutedEventType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
-            return $"{GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEvent")}<{GenerateRoutedEventArgsType(@class)}>";
+            return $"{GenerateTypeByPlatform(@class.Framework, "Interactivity.RoutedEvent")}<{GenerateRoutedEventArgsType(@class)}>";
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "RoutedEvent");
+        return GenerateTypeByPlatform(@class.Framework, "RoutedEvent");
     }
 
     private static string GenerateRoutedEventArgsType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
-            return GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEventArgs");
+            return GenerateTypeByPlatform(@class.Framework, "Interactivity.RoutedEventArgs");
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "RoutedEventArgs");
+        return GenerateTypeByPlatform(@class.Framework, "RoutedEventArgs");
     }
 
     private static string GenerateRoutedEventHandlerType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return $"global::System.EventHandler<{GenerateRoutedEventArgsType(@class)}>";
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "RoutedEventHandler");
+        return GenerateTypeByPlatform(@class.Framework, "RoutedEventHandler");
     }
 
     private static string GenerateEventHandlerType(EventData @event)
@@ -1036,77 +1036,77 @@ namespace {@class.Namespace}
 
     private static string GenerateEventManagerType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
-            return GenerateTypeByPlatform(@class.Platform, "Interactivity.RoutedEvent");
+            return GenerateTypeByPlatform(@class.Framework, "Interactivity.RoutedEvent");
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "EventManager");
+        return GenerateTypeByPlatform(@class.Framework, "EventManager");
     }
 
     private static string GenerateRoutingStrategyType(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
-            return GenerateTypeByPlatform(@class.Platform, $"Interactivity.RoutingStrategies");
+            return GenerateTypeByPlatform(@class.Framework, $"Interactivity.RoutingStrategies");
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "RoutingStrategy");
+        return GenerateTypeByPlatform(@class.Framework, "RoutingStrategy");
     }
 
     private static string GeneratePropertyType(ClassData @class, DependencyPropertyData property)
     {
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return GenerateTypeByPlatform(
-                property.Platform,
+                property.Framework,
                 property.IsReadOnly
                     ? "BindablePropertyKey"
                     : "BindableProperty");
         }
-        if (property.Platform == Platform.Avalonia)
+        if (property.Framework == Framework.Avalonia)
         {
             return property.IsDirect
                 ? GenerateTypeByPlatform(
-                    property.Platform,
+                    property.Framework,
                     $"DirectProperty<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>")
                 : property.IsAttached
                     ? GenerateTypeByPlatform(
-                        property.Platform,
+                        property.Framework,
                         $"AttachedProperty<{GenerateType(property)}>")
                     : GenerateTypeByPlatform(
-                        property.Platform,
+                        property.Framework,
                         $"StyledProperty<{GenerateType(property)}>");
         }
-        if (property is { IsReadOnly: true, Platform: Platform.WPF })
+        if (property is { IsReadOnly: true, Framework: Framework.Wpf })
         {
-            return GenerateTypeByPlatform(property.Platform, "DependencyPropertyKey");
+            return GenerateTypeByPlatform(property.Framework, "DependencyPropertyKey");
         }
 
-        return GenerateTypeByPlatform(property.Platform, "DependencyProperty");
+        return GenerateTypeByPlatform(property.Framework, "DependencyProperty");
     }
 
     private static string GenerateManagerType(ClassData @class)
     {
-        if (@class.Platform == Platform.MAUI)
+        if (@class.Framework == Framework.Maui)
         {
             return GenerateTypeByPlatform(
-                @class.Platform,
+                @class.Framework,
                 "BindableProperty");
         }
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return GenerateTypeByPlatform(
-                @class.Platform,
+                @class.Framework,
                 "AvaloniaProperty");
         }
 
-        return GenerateTypeByPlatform(@class.Platform, "DependencyProperty");
+        return GenerateTypeByPlatform(@class.Framework, "DependencyProperty");
     }
 
     private static string GenerateRegisterMethod(ClassData @class)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return $"Register<{GenerateType(@class.FullName, false)}, {GenerateRoutedEventArgsType(@class)}>";
         }
@@ -1116,7 +1116,7 @@ namespace {@class.Namespace}
 
     private static string GenerateRegisterMethod(ClassData @class, DependencyPropertyData property)
     {
-        if (property.Platform == Platform.MAUI)
+        if (property.Framework == Framework.Maui)
         {
             return property.IsAttached
                 ? property.IsReadOnly
@@ -1126,7 +1126,7 @@ namespace {@class.Namespace}
                     ? "CreateReadOnly"
                     : "Create";
         }
-        if (property.Platform == Platform.Avalonia)
+        if (property.Framework == Framework.Avalonia)
         {
             return property.IsDirect
                 ? $"RegisterDirect<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>"
@@ -1134,7 +1134,7 @@ namespace {@class.Namespace}
                     ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
                     : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
         }
-        if (property is { IsReadOnly: true, Platform: Platform.WPF })
+        if (property is { IsReadOnly: true, Framework: Framework.Wpf })
         {
             return property.IsAttached
                 ? "RegisterAttachedReadOnly"
@@ -1218,15 +1218,15 @@ namespace {@class.Namespace}
 
     private static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return GenerateAvaloniaRegisterMethodArguments(@class, property);
         }
-        if (@class.Platform == Platform.MAUI)
+        if (@class.Framework == Framework.Maui)
         {
             return GenerateMauiRegisterMethodArguments(@class, property);
         }
-        if (@class.Platform == Platform.WPF)
+        if (@class.Framework == Framework.Wpf)
         {
             return @$"
                 name: ""{property.Name}"",
@@ -1245,15 +1245,15 @@ namespace {@class.Namespace}
 
     private static string GenerateRegisterAttachedMethodArguments(ClassData @class, DependencyPropertyData property)
     {
-        if (@class.Platform == Platform.MAUI)
+        if (@class.Framework == Framework.Maui)
         {
             return GenerateMauiRegisterMethodArguments(@class, property);
         }
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return GenerateAvaloniaRegisterMethodArguments(@class, property);
         }
-        if (@class.Platform == Platform.WPF)
+        if (@class.Framework == Framework.Wpf)
         {
             return @$"
                 name: ""{property.Name}"",
@@ -1272,7 +1272,7 @@ namespace {@class.Namespace}
 
     private static string GenerateRegisterRoutedEventMethodArguments(ClassData @class, EventData @event)
     {
-        if (@class.Platform == Platform.Avalonia)
+        if (@class.Framework == Framework.Avalonia)
         {
             return @$"
             name: ""{@event.Name}"",
@@ -1288,7 +1288,7 @@ namespace {@class.Namespace}
 
     private static string GenerateDependencyPropertyName(DependencyPropertyData property)
     {
-        if (property is { IsReadOnly: true, Platform: Platform.WPF or Platform.MAUI })
+        if (property is { IsReadOnly: true, Framework: Framework.Wpf or Framework.Maui })
         {
             return $"{property.Name}PropertyKey";
         }
@@ -1296,18 +1296,18 @@ namespace {@class.Namespace}
         return $"{property.Name}Property";
     }
 
-    private static string GenerateDependencyObjectType(Platform platform)
+    private static string GenerateDependencyObjectType(Framework framework)
     {
-        if (platform == Platform.MAUI)
+        if (framework == Framework.Maui)
         {
-            return GenerateTypeByPlatform(platform, "BindableObject");
+            return GenerateTypeByPlatform(framework, "BindableObject");
         }
-        if (platform == Platform.Avalonia)
+        if (framework == Framework.Avalonia)
         {
-            return GenerateTypeByPlatform(platform, "IAvaloniaObject");
+            return GenerateTypeByPlatform(framework, "IAvaloniaObject");
         }
 
-        return GenerateTypeByPlatform(platform, "DependencyObject");
+        return GenerateTypeByPlatform(framework, "DependencyObject");
     }
     
     private static string GenerateDefaultValue(DependencyPropertyData property)
@@ -1330,12 +1330,12 @@ namespace {@class.Namespace}
 
     private static string GenerateBrowsableForType(DependencyPropertyData property)
     {
-        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Platform);
+        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Framework);
     }
 
     private static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
     {
-        return (property.BrowsableForType ?? GenerateDependencyObjectType(property.Platform))
+        return (property.BrowsableForType ?? GenerateDependencyObjectType(property.Framework))
             .ExtractSimpleName()
             .ToParameterName();
     }
@@ -1406,7 +1406,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     private static string GenerateOnChangingMethods(DependencyPropertyData property)
     {
-        if (property.Platform != Platform.MAUI)
+        if (property.Framework != Framework.Maui)
         {
             return " ";
         }
@@ -1442,9 +1442,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        return property.Platform switch
+        return property.Framework switch
         {
-            Platform.Avalonia => $@" 
+            Framework.Avalonia => $@" 
         private {GenerateType(property)} _{property.Name.ToParameterName()} = {GenerateDefaultValue(property)};
 ",
             _ => " ",
@@ -1458,17 +1458,17 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
         
-        return property.Platform switch
+        return property.Framework switch
         {
-            Platform.MAUI => $@" 
+            Framework.Maui => $@" 
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
-        public static readonly {GenerateTypeByPlatform(property.Platform, "BindableProperty")} {property.Name}Property
+        public static readonly {GenerateTypeByPlatform(property.Framework, "BindableProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.BindableProperty;
 ",
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.dependencypropertykey?view=windowsdesktop-6.0#examples
-            Platform.WPF => $@" 
+            Framework.Wpf => $@" 
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
-        public static readonly {GenerateTypeByPlatform(property.Platform, "DependencyProperty")} {property.Name}Property
+        public static readonly {GenerateTypeByPlatform(property.Framework, "DependencyProperty")} {property.Name}Property
             = {GenerateDependencyPropertyName(property)}.DependencyProperty;
 ",
             _ => " ",
@@ -1477,7 +1477,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     private static string GenerateAdditionalSetterModifier(DependencyPropertyData property)
     {
-        return property is { IsDirect: true, Platform: Platform.Avalonia }
+        return property is { IsDirect: true, Framework: Framework.Avalonia }
             ? "private "
             : property.IsReadOnly
                 ? "protected "
@@ -1486,7 +1486,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
     private static string GeneratePropertyModifier(DependencyPropertyData property)
     {
-        if (property is { IsReadOnly: true, Platform: Platform.WPF })
+        if (property is { IsReadOnly: true, Framework: Framework.Wpf })
         {
             return "internal";
         }
@@ -1659,9 +1659,9 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         return GenerateAttribute("System.CLSCompliant", value);
     }
 
-    private static string GenerateLocalizabilityAttribute(string? value, Platform platform)
+    private static string GenerateLocalizabilityAttribute(string? value, Framework framework)
     {
-        if (value == null || platform != Platform.WPF)
+        if (value == null || framework != Framework.Wpf)
         {
             return " ";
         }
@@ -1673,7 +1673,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
     
     private static string GenerateBrowsableForTypeAttribute(DependencyPropertyData property)
     {
-        if (property.Platform != Platform.WPF)
+        if (property.Framework != Framework.Wpf)
         {
             return " ";
         }

@@ -3,32 +3,32 @@
 public partial class Tests
 {
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task RoutedEvent(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task RoutedEvent(Framework framework)
     {
-        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(framework, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, WinRtEvents = true)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task AttachedRoutedEvent(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task AttachedRoutedEvent(Framework framework)
     {
-        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<RoutedEventGenerator>(GetHeader(framework, "Controls") + @"
 [RoutedEvent(""TrayLeftMouseDown"", RoutedEventStrategy.Bubble, IsAttached = true)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 }

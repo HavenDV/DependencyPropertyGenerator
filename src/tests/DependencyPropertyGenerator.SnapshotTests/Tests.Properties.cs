@@ -4,14 +4,14 @@
 public partial class Tests
 {
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task NonGenericAttributes(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task NonGenericAttributes(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty(""Text"", typeof(string))]
 public partial class MyControl : UserControl
 {
@@ -20,18 +20,18 @@ public partial class MyControl : UserControl
 [AttachedDependencyProperty(""AttachedProperty"", typeof(object), BrowsableForType = typeof(Grid))]
 public static partial class GridExtensions
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task MultipleClassDeclarations(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task MultipleClassDeclarations(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"")]
 public partial class MyControl : UserControl
 {
@@ -48,18 +48,18 @@ public partial class MyControl : UserControl
     partial void OnIsSpinning2Changed(bool newValue)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task Attributes(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task Attributes(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls", "System.ComponentModel") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls", "System.ComponentModel") + @"
 [DependencyProperty<string>(""AttributedProperty"",
     Category = ""Category"",
     Description = ""Description"",
@@ -70,18 +70,18 @@ public partial class MyControl : UserControl
     Localizability = Localizability.Text)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task WithOtherAttributes(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task WithOtherAttributes(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls", "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls", "System") + @"
 [CLSCompliant(false)]
 public partial class MyControl : UserControl
 {
@@ -93,18 +93,18 @@ public partial class MyControl : UserControl
     partial void OnIsSpinning5Changed(bool oldValue, bool newValue)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task WithOtherAttributes2(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task WithOtherAttributes2(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 [System.ComponentModel.DesignTimeVisible(false)]
 public partial class Generatable : FrameworkElement
@@ -112,51 +112,51 @@ public partial class Generatable : FrameworkElement
     partial void OnTextChanged(string? oldValue, string? newValue)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task NullableDisable(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task NullableDisable(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, false, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, false, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 public partial class Generatable : FrameworkElement
 {
     partial void OnTextChanged(string oldValue, string newValue)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task FloatLiterals(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task FloatLiterals(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<float>(""FloatProperty"", DefaultValue = 42)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task ValidateAndCoerce(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task ValidateAndCoerce(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<string>(""NotNullStringProperty"", DefaultValue = """", Validate = true, Coerce = true)]
 public partial class MyControl : UserControl
 {
@@ -169,18 +169,18 @@ public partial class MyControl : UserControl
     {
         return value != null;
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task CreateDefaultValueCallback(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task CreateDefaultValueCallback(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<string>(""SomeProperty"", CreateDefaultValueCallback = true)]
 public partial class MyGrid : Grid
 {
@@ -188,93 +188,93 @@ public partial class MyGrid : Grid
     {
         return ""Hello, world"";
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task DefaultUpdateSourceTrigger(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task DefaultUpdateSourceTrigger(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""ExplicitUpdateSourceTriggerProperty"", DefaultUpdateSourceTrigger = SourceTrigger.Explicit)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task ReadOnlyProperty(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task ReadOnlyProperty(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""ReadOnlyProperty"", IsReadOnly = true)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task DefaultBindingMode(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task DefaultBindingMode(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultBindingMode = DefaultBindingMode.OneTime)]
 public partial class MyGrid : Grid
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task Direct(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task Direct(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", IsDirect = true)]
 public partial class MyGrid : Grid
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task DirectReadOnly(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task DirectReadOnly(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", IsDirect = true, IsReadOnly = true, EnableDataValidation = true)]
 public partial class MyGrid : Grid
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task BindEvents(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task BindEvents(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "Input") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty, "Input") + @"
 [DependencyProperty<object>(""BindEventsProperty"",
     BindEvents = new[] { nameof(UIElement.PointerEntered), nameof(UIElement.PointerExited) })]
 public partial class MyUIElement : UIElement
@@ -286,54 +286,54 @@ public partial class MyUIElement : UIElement
     private static void OnBindEventsPropertyChanged_PointerExited(object? sender, PointerRoutedEventArgs args)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task CustomOnChanged(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task CustomOnChanged(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
 [DependencyProperty<string>(""Text"", OnChanged = nameof(OnMyTextChanged))]
 public partial class Generatable : FrameworkElement
 {
     protected virtual void OnMyTextChanged(string? value)
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task NullableValueType(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task NullableValueType(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
 [DependencyProperty<int?>(""Property"")]
 public partial class Generatable : FrameworkElement
 {
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task Dictionary(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task Dictionary(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
 [DependencyProperty<System.Collections.Generic.Dictionary<string, string>>(""Headers"", DefaultBindingMode = DefaultBindingMode.TwoWay)]
 public partial class Generatable : FrameworkElement
 {
-}", platform);
+}", framework);
     }
 }

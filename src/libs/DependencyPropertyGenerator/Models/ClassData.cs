@@ -6,7 +6,7 @@ public readonly record struct ClassData(
     string FullName,
     string Modifiers,
     bool IsStatic,
-    Platform Platform,
+    Framework Framework,
     IReadOnlyCollection<string> Methods,
     IReadOnlyCollection<DependencyPropertyData> DependencyProperties,
     IReadOnlyCollection<DependencyPropertyData> AttachedDependencyProperties,

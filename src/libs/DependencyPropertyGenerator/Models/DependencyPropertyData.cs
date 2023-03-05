@@ -11,7 +11,7 @@ public readonly record struct DependencyPropertyData(
     bool IsDirect,
     bool IsAttached,
     bool IsAddOwner,
-    Platform Platform,
+    Framework Framework,
     string? Description,
     string? Category,
     string? TypeConverter,

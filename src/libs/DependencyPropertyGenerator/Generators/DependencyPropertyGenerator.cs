@@ -55,6 +55,51 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(
             compilationAndClasses,
             static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right!, context));
+            
+        // context.RegisterSourceOutput(
+        //     context.CompilationProvider
+        //         .Combine(context.AnalyzerConfigOptionsProvider)
+        //         .Combine(context.SyntaxProvider
+        //             .ForAttributeWithMetadataName(
+        //                 fullyQualifiedMetadataName: AttachedDependencyPropertyAttributeFullName,
+        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
+        //             .Where(static syntax => syntax is not null)
+        //             .Collect()),
+        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
+        // context.RegisterSourceOutput(
+        //     context.CompilationProvider
+        //         .Combine(context.AnalyzerConfigOptionsProvider)
+        //         .Combine(context.SyntaxProvider
+        //             .ForAttributeWithMetadataName(
+        //                 fullyQualifiedMetadataName: DependencyPropertyAttributeFullName,
+        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
+        //             .Where(static syntax => syntax is not null)
+        //             .Collect()),
+        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
+        // context.RegisterSourceOutput(
+        //     context.CompilationProvider
+        //         .Combine(context.AnalyzerConfigOptionsProvider)
+        //         .Combine(context.SyntaxProvider
+        //             .ForAttributeWithMetadataName(
+        //                 fullyQualifiedMetadataName: OverrideMetadataAttributeFullName,
+        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
+        //             .Where(static syntax => syntax is not null)
+        //             .Collect()),
+        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
+        // context.RegisterSourceOutput(
+        //     context.CompilationProvider
+        //         .Combine(context.AnalyzerConfigOptionsProvider)
+        //         .Combine(context.SyntaxProvider
+        //             .ForAttributeWithMetadataName(
+        //                 fullyQualifiedMetadataName: AddOwnerAttributeFullName,
+        //                 predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+        //                 transform: static (context, _) => (ClassDeclarationSyntax)context.TargetNode)
+        //             .Where(static syntax => syntax is not null)
+        //             .Collect()),
+        //     static (context, source) => Execute(source.Left.Left, source.Left.Right, source.Right, context));
     }
 
     private static void Execute(
@@ -76,8 +121,8 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         
         try
         {
-            var platform = options.RecognizePlatform(prefix: Name);
-            var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
+            var framework = options.RecognizeFramework(prefix: Name);
+            var classes = GetTypesToGenerate(compilation, framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 foreach(var property in @class.DependencyProperties)
@@ -95,20 +140,20 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
                 if (@class.OverrideMetadata.Any())
                 {
-                    if (platform == Platform.WPF)
+                    if (framework == Framework.Wpf)
                     {
                         context.AddTextSource(
                             hintName: $"{@class.Name}.StaticConstructor.generated.cs",
                             text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
                     }
-                    else if (platform is Platform.UWP or Platform.WinUI or Platform.Uno or Platform.UnoWinUI)
+                    else if (framework is Framework.Uwp or Framework.WinUi or Framework.Uno or Framework.UnoWinUi)
                     {
                         context.AddTextSource(
                             hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
                             text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
                     }
                 }
-                if (platform is Platform.UWP or Platform.WinUI or Platform.Uno or Platform.UnoWinUI)
+                if (framework is Framework.Uwp or Framework.WinUi or Framework.Uno or Framework.UnoWinUi)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
@@ -117,7 +162,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
-                if (platform == Platform.Avalonia)
+                if (framework == Framework.Avalonia)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
@@ -149,7 +194,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                         }
                     }
                 }
-                if (platform == Platform.WPF)
+                if (framework == Framework.Wpf)
                 {
                     foreach (var addOwner in @class.AddOwner)
                     {
@@ -183,7 +228,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
         Compilation compilation,
-        Platform platform,
+        Framework framework,
         IEnumerable<ClassDeclarationSyntax> classes,
         CancellationToken cancellationToken)
     {
@@ -319,7 +364,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                     IsDirect: bool.Parse(isDirect),
                     IsAttached: isAttached,
                     IsAddOwner: attributeClass.StartsWith(AddOwnerAttributeFullName, StringComparison.InvariantCulture),
-                    Platform: platform,
+                    Framework: framework,
                     Description: description,
                     Category: category,
                     TypeConverter: typeConverter,
@@ -385,7 +430,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 FullName: fullClassName,
                 Modifiers: classModifiers,
                 IsStatic: isStaticClass,
-                Platform: platform,
+                Framework: framework,
                 Methods: methods,
                 DependencyProperties: dependencyProperties,
                 AttachedDependencyProperties: attachedDependencyProperties,

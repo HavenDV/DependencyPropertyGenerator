@@ -70,13 +70,13 @@ public class WeakEventGenerator : IIncrementalGenerator
         
         try
         {
-            var platform = options.RecognizePlatform(prefix: Name);
-            if (platform is not (Platform.MAUI or Platform.WPF))
+            var framework = options.RecognizeFramework(prefix: Name);
+            if (framework is not (Framework.Maui or Framework.Wpf))
             {
                 return;
             }
             
-            var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
+            var classes = GetTypesToGenerate(compilation, framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 foreach (var @event in @class.WeakEvents)
@@ -98,7 +98,7 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
         Compilation compilation,
-        Platform platform,
+        Framework framework,
         IEnumerable<ClassDeclarationSyntax> classes,
         CancellationToken cancellationToken)
     {
@@ -192,7 +192,7 @@ public class WeakEventGenerator : IIncrementalGenerator
                 FullName: fullClassName,
                 Modifiers: classModifiers,
                 IsStatic: isStaticClass,
-                Platform: platform,
+                Framework: framework,
                 Methods: methods,
                 DependencyProperties: Array.Empty<DependencyPropertyData>(),
                 AttachedDependencyProperties: Array.Empty<DependencyPropertyData>(),

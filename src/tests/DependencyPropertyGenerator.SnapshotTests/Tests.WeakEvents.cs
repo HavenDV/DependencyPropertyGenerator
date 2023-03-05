@@ -3,62 +3,62 @@
 public partial class Tests
 {
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task WeakEvent(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task WeakEvent(Framework framework)
     {
-        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(framework, "Controls") + @"
 [WeakEvent(""Completed"")]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
     
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task WeakEventWithType(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task WeakEventWithType(Framework framework)
     {
-        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(framework, "Controls") + @"
 [WeakEvent<string>(""UrlChanged"")]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
     
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task StaticWeakEvent(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task StaticWeakEvent(Framework framework)
     {
-        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(framework, "Controls") + @"
 [WeakEvent(""Completed"", IsStatic = true)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
     
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task StaticWeakEventWithType(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task StaticWeakEventWithType(Framework framework)
     {
-        return CheckSourceAsync<WeakEventGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(framework, "Controls") + @"
 [WeakEvent<string>(""UrlChanged"", IsStatic = true)]
 public partial class MyControl : UserControl
 {
-}", platform);
+}", framework);
     }
 }

@@ -3,14 +3,14 @@
 public partial class Tests
 {
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task OverrideMetadata(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task OverrideMetadata(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", AffectsRender = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement
@@ -24,18 +24,18 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", platform);
+}", framework);
     }
 
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task OverrideMetadataForReadOnlyProperty(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task OverrideMetadataForReadOnlyProperty(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, string.Empty, "System") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", IsReadOnly = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement
@@ -49,6 +49,6 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", platform);
+}", framework);
     }
 }

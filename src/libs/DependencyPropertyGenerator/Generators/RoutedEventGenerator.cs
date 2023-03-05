@@ -70,11 +70,11 @@ public class RoutedEventGenerator : IIncrementalGenerator
         
         try
         {
-            var platform = options.RecognizePlatform(prefix: Name);
-            var classes = GetTypesToGenerate(compilation, platform, classSyntaxes, context.CancellationToken);
+            var framework = options.RecognizeFramework(prefix: Name);
+            var classes = GetTypesToGenerate(compilation, framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
-                if (platform is not Platform.MAUI)
+                if (framework is not Framework.Maui)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
@@ -83,7 +83,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
                             text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
-                if (platform is Platform.WPF)
+                if (framework is Framework.Wpf)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => @event.IsAttached))
                     {
@@ -105,7 +105,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
 
     private static IReadOnlyCollection<ClassData> GetTypesToGenerate(
         Compilation compilation,
-        Platform platform,
+        Framework framework,
         IEnumerable<ClassDeclarationSyntax> classes,
         CancellationToken cancellationToken)
     {
@@ -201,7 +201,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
                 FullName: fullClassName,
                 Modifiers: classModifiers,
                 IsStatic: isStaticClass,
-                Platform: platform,
+                Framework: framework,
                 Methods: methods,
                 DependencyProperties: Array.Empty<DependencyPropertyData>(),
                 AttachedDependencyProperties: Array.Empty<DependencyPropertyData>(),

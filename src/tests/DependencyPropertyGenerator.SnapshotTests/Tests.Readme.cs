@@ -3,14 +3,14 @@
 public partial class Tests
 {
     [DataTestMethod]
-    [DataRow(Platform.WPF)]
-    [DataRow(Platform.Uno)]
-    [DataRow(Platform.UnoWinUI)]
-    [DataRow(Platform.MAUI)]
-    [DataRow(Platform.Avalonia)]
-    public Task ReadmeExample(Platform platform)
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task ReadmeExample(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(platform, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
 [DependencyProperty<bool>(""IsSpinning"", DefaultValue = true, Category = ""Category"", Description = ""Description"")]
 public partial class MyControl : UserControl
 {
@@ -27,6 +27,6 @@ public static partial class TreeViewExtensions
     static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
-}", platform);
+}", framework);
     }
 }

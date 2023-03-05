@@ -10,16 +10,16 @@ namespace H.Generators.SnapshotTests;
 public partial class Tests : VerifyBase
 {
     private static string GetHeader(
-        Platform platform,
+        Framework framework,
         bool nullable,
         params string[] values)
     {
-        var prefix = platform switch
+        var prefix = framework switch
         {
-            Platform.WinUI or Platform.UnoWinUI => @"Microsoft.UI.Xaml",
-            Platform.UWP or Platform.Uno => @"Windows.UI.Xaml",
-            Platform.Avalonia => @"Avalonia",
-            Platform.MAUI => @"Microsoft.Maui",
+            Framework.WinUi or Framework.UnoWinUi => @"Microsoft.UI.Xaml",
+            Framework.Uwp or Framework.Uno => @"Windows.UI.Xaml",
+            Framework.Avalonia => @"Avalonia",
+            Framework.Maui => @"Microsoft.Maui",
             _ => @"System.Windows",
         };
         var usings = string.Join(
@@ -40,34 +40,34 @@ namespace H.Generators.IntegrationTests;
     }
 
     private static string GetHeader(
-        Platform platform,
+        Framework framework,
         params string[] values)
     {
-        return GetHeader(platform, true, values);
+        return GetHeader(framework, true, values);
     }
 
     private async Task CheckSourceAsync<T>(
         string source,
-        Platform platform,
+        Framework framework,
         CancellationToken cancellationToken = default)
         where T : IIncrementalGenerator, new()
     {
-        if (platform == Platform.WPF)
+        if (framework == Framework.Wpf)
         {
             source = source
                 .Replace("PointerEntered", "MouseEnter")
                 .Replace("PointerExited", "MouseLeave")
                 .Replace("PointerRoutedEventArgs", "MouseEventArgs");
         }
-        if (platform == Platform.Uno ||
-            platform == Platform.UnoWinUI ||
-            platform == Platform.WinUI ||
-            platform == Platform.UWP)
+        if (framework == Framework.Uno ||
+            framework == Framework.UnoWinUi ||
+            framework == Framework.WinUi ||
+            framework == Framework.Uwp)
         {
             source = source
                 .Replace("KeyEventArgs", "KeyRoutedEventArgs");
         }
-        if (platform == Platform.Avalonia)
+        if (framework == Framework.Avalonia)
         {
             source = source
                 .ReplaceType("DispatcherObject", "Avalonia.AvaloniaObject")
@@ -81,7 +81,7 @@ namespace H.Generators.IntegrationTests;
                 .Replace("PointerExited", "PointerLeave")
                 .Replace("PointerRoutedEventArgs", "PointerEventArgs");
         }
-        if (platform == Platform.MAUI)
+        if (framework == Framework.Maui)
         {
             source = source
                 .Replace("using Microsoft.Maui.Input;", string.Empty)
@@ -102,26 +102,26 @@ namespace H.Generators.IntegrationTests;
 {source}";
         }
 
-        var referenceAssemblies = platform switch
+        var referenceAssemblies = framework switch
         {
-            Platform.WPF => ReferenceAssemblies.NetFramework.Net48.Wpf,
-            Platform.UWP => ReferenceAssemblies.Net.Net60Windows
+            Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
+            Framework.Uwp => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.NETCore.UniversalWindowsPlatform", "6.2.14"),
                     new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
                     new PackageIdentity("Microsoft.Net.UWPCoreRuntimeSdk", "2.2.14"))),
-            Platform.WinUI => ReferenceAssemblies.Net.Net60Windows
+            Framework.WinUi => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.WindowsAppSDK", "1.2.230118.102"),
                     new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
                     new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.22621.28"))),
-            Platform.Uno => ReferenceAssemblies.NetStandard.NetStandard20
+            Framework.Uno => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.7.30"))),
-            Platform.UnoWinUI => ReferenceAssemblies.NetStandard.NetStandard20
+            Framework.UnoWinUi => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.7.30"))),
-            Platform.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
+            Framework.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))),
-            Platform.MAUI => ReferenceAssemblies.Net.Net60Windows
+            Framework.Maui => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"),
                     new PackageIdentity("Microsoft.Maui.Core.Ref.any", "6.0.550"))),
@@ -139,32 +139,32 @@ namespace H.Generators.IntegrationTests;
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var generator = new T();
         var globalOptions = new Dictionary<string, string>();
-        if (platform == Platform.WPF)
+        if (framework == Framework.Wpf)
         {
             globalOptions.Add("build_property.UseWPF", "true");
         }
-        else if (platform == Platform.UWP)
+        else if (framework == Framework.Uwp)
         {
             globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "WINDOWS_UWP");
         }
-        else if (platform == Platform.WinUI)
+        else if (framework == Framework.WinUi)
         {
             globalOptions.Add("build_property.UseWinUI", "true");
         }
-        else if (platform == Platform.Uno)
+        else if (framework == Framework.Uno)
         {
             globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO");
         }
-        else if (platform == Platform.UnoWinUI)
+        else if (framework == Framework.UnoWinUi)
         {
             globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO;HAS_WINUI");
         }
-        else if (platform == Platform.Avalonia)
+        else if (framework == Framework.Avalonia)
         {
             globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_AVALONIA");
         }
         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-        else if (platform == Platform.MAUI)
+        else if (framework == Framework.Maui)
         {
             globalOptions.Add("build_property.UseMaui", "true");
         }
@@ -177,10 +177,10 @@ namespace H.Generators.IntegrationTests;
         await Task.WhenAll(
             Verify(diagnostics.NormalizeLocations())
                 .UseDirectory("Snapshots")
-                .UseTextForParameters($"{platform}_Diagnostics"),
+                .UseTextForParameters($"{framework}_Diagnostics"),
             Verify(driver)
                 .UseDirectory("Snapshots")
-                .UseTextForParameters($"{platform}"));
+                .UseTextForParameters($"{framework}"));
     }
 }
 
