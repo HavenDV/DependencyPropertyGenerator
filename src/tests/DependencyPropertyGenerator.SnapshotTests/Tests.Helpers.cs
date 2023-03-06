@@ -175,7 +175,7 @@ namespace H.Generators.IntegrationTests;
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            Verify(diagnostics.NormalizeLocations())
+            Verify(diagnostics)
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{framework}_Diagnostics"),
             Verify(driver)
