@@ -1,9 +1,7 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Diagnostics;
 using RoutedEventAttribute = DependencyPropertyGenerator.RoutedEventAttribute;
 
 namespace H.Generators;
@@ -36,31 +34,23 @@ public class RoutedEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var classes = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-                transform: static (context, _) => GetSemanticTargetForGeneration(context))
-            .Where(static x => x.Syntax is not null);
-
-        var compilationAndClasses = context.AnalyzerConfigOptionsProvider
-            .Combine(classes.Collect());
-
         context.RegisterSourceOutput(
-            compilationAndClasses,
+            context.AnalyzerConfigOptionsProvider
+                .Select(static (options, _) => options.RecognizeFramework(prefix: Name))
+                .Combine(context.SyntaxProvider
+                    .CreateSyntaxProvider(
+                        predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+                        transform: static (context, _) => GetSemanticTargetForGeneration(context))
+                    .Where(static x => x.Syntax is not null)
+                    .Collect()),
             static (context, source) => Execute(source.Left, source.Right!, context));
     }
 
     private static void Execute(
-        AnalyzerConfigOptionsProvider options,
+        Framework framework,
         ImmutableArray<(SemanticModel, ClassDeclarationSyntax)> classSyntaxes,
         SourceProductionContext context)
     {
-        if (!options.IsDesignTime() &&
-            options.GetGlobalOption("DebuggerBreak", prefix: Name) != null)
-        {
-            Debugger.Launch();
-        }
-        
         if (classSyntaxes.IsDefaultOrEmpty)
         {
             return;
@@ -68,7 +58,6 @@ public class RoutedEventGenerator : IIncrementalGenerator
         
         try
         {
-            var framework = options.RecognizeFramework(prefix: Name);
             var classes = GetTypesToGenerate(framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
@@ -76,18 +65,18 @@ public class RoutedEventGenerator : IIncrementalGenerator
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
                 if (framework is Framework.Wpf)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => @event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.AttachedEvents.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
                 }
             }

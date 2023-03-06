@@ -1,9 +1,7 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Diagnostics;
 using WeakEventAttribute = DependencyPropertyGenerator.WeakEventAttribute;
 
 namespace H.Generators;
@@ -36,31 +34,23 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var classes = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-                transform: static (context, _) => GetSemanticTargetForGeneration(context))
-            .Where(static x => x.Syntax is not null);
-
-        var compilationAndClasses = context.AnalyzerConfigOptionsProvider
-            .Combine(classes.Collect());
-
         context.RegisterSourceOutput(
-            compilationAndClasses,
+            context.AnalyzerConfigOptionsProvider
+                .Select(static (options, _) => options.RecognizeFramework(prefix: Name))
+                .Combine(context.SyntaxProvider
+                    .CreateSyntaxProvider(
+                        predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+                        transform: static (context, _) => GetSemanticTargetForGeneration(context))
+                    .Where(static x => x.Syntax is not null)
+                    .Collect()),
             static (context, source) => Execute(source.Left, source.Right!, context));
     }
 
     private static void Execute(
-        AnalyzerConfigOptionsProvider options,
+        Framework framework,
         ImmutableArray<(SemanticModel, ClassDeclarationSyntax)> classSyntaxes,
         SourceProductionContext context)
     {
-        if (!options.IsDesignTime() &&
-            options.GetGlobalOption("DebuggerBreak", prefix: Name) != null)
-        {
-            Debugger.Launch();
-        }
-        
         if (classSyntaxes.IsDefaultOrEmpty)
         {
             return;
@@ -68,7 +58,6 @@ public class WeakEventGenerator : IIncrementalGenerator
         
         try
         {
-            var framework = options.RecognizeFramework(prefix: Name);
             if (framework is not (Framework.Maui or Framework.Wpf))
             {
                 return;
@@ -79,9 +68,9 @@ public class WeakEventGenerator : IIncrementalGenerator
             {
                 foreach (var @event in @class.WeakEvents)
                 {
-                    context.AddTextSource(
+                    context.AddSource(
                         hintName: $"{@class.Name}.WeakEvents.{@event.Name}.generated.cs",
-                        text: SourceGenerationHelper.GenerateWeakEvent(@class, @event));
+                        source: SourceGenerationHelper.GenerateWeakEvent(@class, @event));
                 }
             }
         }

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Diagnostics;
 using AttachedDependencyPropertyAttribute = DependencyPropertyGenerator.AttachedDependencyPropertyAttribute;
 using DependencyPropertyAttribute = DependencyPropertyGenerator.DependencyPropertyAttribute;
 using OverrideMetadataAttribute = DependencyPropertyGenerator.OverrideMetadataAttribute;
@@ -42,17 +40,15 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var classes = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
-                transform: static (context, _) => GetSemanticTargetForGeneration(context))
-            .Where(static x => x.Syntax is not null);
-
-        var compilationAndClasses = context.AnalyzerConfigOptionsProvider
-            .Combine(classes.Collect());
-
         context.RegisterSourceOutput(
-            compilationAndClasses,
+            context.AnalyzerConfigOptionsProvider
+                .Select(static (options, _) => options.RecognizeFramework(prefix: Name))
+                .Combine(context.SyntaxProvider
+                    .CreateSyntaxProvider(
+                        predicate: static (node, _) => node is ClassDeclarationSyntax { AttributeLists.Count: > 0 },
+                        transform: static (context, _) => GetSemanticTargetForGeneration(context))
+                    .Where(static x => x.Syntax is not null)
+                    .Collect()),
             static (context, source) => Execute(source.Left, source.Right!, context));
             
         // context.RegisterSourceOutput(
@@ -94,25 +90,19 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         //         {
         //             foreach (var property in @class.AttachedDependencyProperties)
         //             {
-        //                 context.AddTextSource(
+        //                 context.AddSource(
         //                     hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
-        //                     text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
+        //                     source: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
         //             }
         //         }
         //     });
     }
 
     private static void Execute(
-        AnalyzerConfigOptionsProvider options,
+        Framework framework,
         ImmutableArray<(SemanticModel, ClassDeclarationSyntax)> classSyntaxes,
         SourceProductionContext context)
     {
-        if (!options.IsDesignTime() &&
-            options.GetGlobalOption("DebuggerBreak", prefix: Name) != null)
-        {
-            Debugger.Launch();
-        }
-        
         if (classSyntaxes.IsDefaultOrEmpty)
         {
             return;
@@ -120,60 +110,59 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         
         try
         {
-            var framework = options.RecognizeFramework(prefix: Name);
             var classes = GetTypesToGenerate(framework, classSyntaxes, context.CancellationToken);
             foreach (var @class in classes)
             {
                 foreach(var property in @class.DependencyProperties)
                 {
-                    context.AddTextSource(
+                    context.AddSource(
                         hintName: $"{@class.Name}.Properties.{property.Name}.generated.cs",
-                        text: SourceGenerationHelper.GenerateDependencyProperty(@class, property));
+                        source: SourceGenerationHelper.GenerateDependencyProperty(@class, property));
                 }
                 foreach (var property in @class.AttachedDependencyProperties)
                 {
-                    context.AddTextSource(
+                    context.AddSource(
                         hintName: $"{@class.Name}.AttachedProperties.{property.Name}.generated.cs",
-                        text: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
+                        source: SourceGenerationHelper.GenerateAttachedDependencyProperty(@class, property));
                 }
 
                 if (@class.OverrideMetadata.Any())
                 {
                     if (framework == Framework.Wpf)
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.StaticConstructor.generated.cs",
-                            text: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
+                            source: SourceGenerationHelper.GenerateStaticConstructor(@class, @class.OverrideMetadata));
                     }
                     else if (framework is Framework.Uwp or Framework.WinUi or Framework.Uno or Framework.UnoWinUi)
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs",
-                            text: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
+                            source: SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(@class, @class.OverrideMetadata));
                     }
                 }
                 if (framework is Framework.Uwp or Framework.WinUi or Framework.Uno or Framework.UnoWinUi)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                 }
                 if (framework == Framework.Avalonia)
                 {
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                     foreach (var addOwner in @class.AddOwner)
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.AddOwner.{addOwner.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
+                            source: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
                     }
                     if (@class.DependencyProperties.Where(static property => !property.IsDirect).Any() ||
                         @class.AttachedDependencyProperties.Where(static property => !property.IsDirect).Any())
@@ -187,9 +176,9 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
                         if (!string.IsNullOrWhiteSpace(text))
                         {
-                            context.AddTextSource(
+                            context.AddSource(
                                 hintName: $"{@class.Name}.StaticConstructor.generated.cs",
-                                text: text);
+                                source: text);
                         }
                     }
                 }
@@ -197,21 +186,21 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 {
                     foreach (var addOwner in @class.AddOwner)
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.AddOwner.{addOwner.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
+                            source: SourceGenerationHelper.GenerateDependencyProperty(@class, addOwner));
                     }
                     foreach (var @event in @class.RoutedEvents.Where(static @event => !@event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateRoutedEvent(@class, @event));
                     }
                     foreach (var @event in @class.RoutedEvents.Where(static @event => @event.IsAttached))
                     {
-                        context.AddTextSource(
+                        context.AddSource(
                             hintName: $"{@class.Name}.AttachedEvents.{@event.Name}.generated.cs",
-                            text: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
+                            source: SourceGenerationHelper.GenerateAttachedRoutedEvent(@class, @event));
                     }
                 }
             }

@@ -20,25 +20,19 @@
     <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants" />
     <CompilerVisibleProperty Include="RoutedEventGenerator_DefineConstants" />
     <CompilerVisibleProperty Include="WeakEventGenerator_DefineConstants" />
-    <CompilerVisibleProperty Include="UseWPF" />
-    <CompilerVisibleProperty Include="UseWinUI" />
   </ItemGroup>
 
-  <ItemGroup Label="Base packages">
-    <PackageReference Include="Avalonia" Version="0.10.18" />
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
+    <PackageReference Include="Avalonia" Version="0.10.18" />
   </ItemGroup>
 
   <ItemGroup Label="GlobalUsings">
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
     <Using Include="FluentAssertions" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
