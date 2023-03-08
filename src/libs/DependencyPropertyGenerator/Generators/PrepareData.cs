@@ -32,66 +32,66 @@ public static class PrepareData
             (attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol)?.IsSpecialType() ??
             false;
         var defaultValue =
-            attribute.GetProperty(nameof(DependencyPropertyAttribute.DefaultValueExpression))?.Value?.ToString() ??
-            attribute.GetProperty(nameof(DependencyPropertyAttribute.DefaultValue))?.Value?.ToString();
+            attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValueExpression)).Value?.ToString() ??
+            attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValue)).Value?.ToString();
         var defaultValueDocumentation =
-            attribute.GetProperty(nameof(DependencyPropertyAttribute.DefaultValueExpression))?.Value?.ToString() ??
-            attributeSyntax?.GetProperty(nameof(DependencyPropertyAttribute.DefaultValue));
+            attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValueExpression)).Value?.ToString() ??
+            attributeSyntax?.GetNamedArgumentExpression(nameof(DependencyPropertyAttribute.DefaultValue));
         var browsableForType =
             attribute.GetGenericTypeArgument(1)?.ToDisplayString() ??
-            attribute.GetProperty(nameof(AttachedDependencyPropertyAttribute.BrowsableForType))?.Value?.ToString();
+            attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.BrowsableForType)).Value?.ToString();
         var fromType =
             attribute.GetGenericTypeArgument(1)?.ToDisplayString() ??
-            attribute.GetProperty(nameof(AddOwnerAttribute.FromType))?.Value?.ToString();
+            attribute.GetNamedArgument(nameof(AddOwnerAttribute.FromType)).Value?.ToString();
         var isBrowsableForTypeSpecialType =
             attribute.GetGenericTypeArgument(1).IsSpecialType() ??
-            (attribute.GetProperty(nameof(AttachedDependencyPropertyAttribute.BrowsableForType))?.Value as ITypeSymbol)?.IsSpecialType() ??
+            (attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.BrowsableForType)).Value as ITypeSymbol)?.IsSpecialType() ??
             false;
-        var isReadOnly = attribute.GetProperty(nameof(DependencyPropertyAttribute.IsReadOnly))?.Value?.ToString() ?? bool.FalseString;
-        var isDirect = attribute.GetProperty(nameof(DependencyPropertyAttribute.IsDirect))?.Value?.ToString() ?? bool.FalseString;
+        var isReadOnly = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.IsReadOnly)).Value?.ToString() ?? bool.FalseString;
+        var isDirect = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.IsDirect)).Value?.ToString() ?? bool.FalseString;
 
-        var description = attribute.GetProperty(nameof(DependencyPropertyAttribute.Description))?.Value?.ToString();
-        var category = attribute.GetProperty(nameof(DependencyPropertyAttribute.Category))?.Value?.ToString();
-        var typeConverter = attribute.GetProperty(nameof(DependencyPropertyAttribute.TypeConverter))?.Value?.ToString();
-        var bindable = attribute.GetProperty(nameof(DependencyPropertyAttribute.Bindable))?.ToBoolean();
-        var browsable = attribute.GetProperty(nameof(DependencyPropertyAttribute.Browsable))?.ToBoolean();
-        var designerSerializationVisibility = attribute.GetProperty(nameof(DependencyPropertyAttribute.DesignerSerializationVisibility))
+        var description = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Description)).Value?.ToString();
+        var category = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Category)).Value?.ToString();
+        var typeConverter = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.TypeConverter)).Value?.ToString();
+        var bindable = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Bindable)).ToBoolean();
+        var browsable = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Browsable)).ToBoolean();
+        var designerSerializationVisibility = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DesignerSerializationVisibility))
             .ToEnum<DesignerSerializationVisibility>()?
             .ToString("G");
-        var clsCompliant = attribute.GetProperty(nameof(DependencyPropertyAttribute.ClsCompliant))?.ToBoolean();
-        var localizability = attribute.GetProperty(nameof(DependencyPropertyAttribute.Localizability))
+        var clsCompliant = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.ClsCompliant)).ToBoolean();
+        var localizability = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Localizability))
             .ToEnum<Localizability>()?
             .ToString("G");
 
-        var xmlDocumentation = attribute.GetProperty(nameof(DependencyPropertyAttribute.XmlDocumentation))?.Value?.ToString();
-        var propertyXmlDocumentation = attribute.GetProperty(nameof(DependencyPropertyAttribute.PropertyXmlDocumentation))?.Value?.ToString();
-        var getterXmlDocumentation = attribute.GetProperty(nameof(AttachedDependencyPropertyAttribute.GetterXmlDocumentation))?.Value?.ToString();
-        var setterXmlDocumentation = attribute.GetProperty(nameof(AttachedDependencyPropertyAttribute.SetterXmlDocumentation))?.Value?.ToString();
-        var bindEvent = attribute.GetProperty(nameof(DependencyPropertyAttribute.BindEvent))?.Value?.ToString();
-        var bindEvents = attribute.GetProperty(nameof(DependencyPropertyAttribute.BindEvents));
-        var onChanged = attribute.GetProperty(nameof(DependencyPropertyAttribute.OnChanged))?.Value?.ToString();
+        var xmlDocumentation = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.XmlDocumentation)).Value?.ToString();
+        var propertyXmlDocumentation = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.PropertyXmlDocumentation)).Value?.ToString();
+        var getterXmlDocumentation = attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.GetterXmlDocumentation)).Value?.ToString();
+        var setterXmlDocumentation = attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.SetterXmlDocumentation)).Value?.ToString();
+        var bindEvent = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.BindEvent)).Value?.ToString();
+        var bindEvents = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.BindEvents));
+        var onChanged = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.OnChanged)).Value?.ToString();
 
-        var affectsMeasure = attribute.GetProperty(nameof(DependencyPropertyAttribute.AffectsMeasure))?.Value?.ToString() ?? bool.FalseString;
-        var affectsArrange = attribute.GetProperty(nameof(DependencyPropertyAttribute.AffectsArrange))?.Value?.ToString() ?? bool.FalseString;
-        var affectsParentMeasure = attribute.GetProperty(nameof(DependencyPropertyAttribute.AffectsParentMeasure))?.Value?.ToString() ?? bool.FalseString;
-        var affectsParentArrange = attribute.GetProperty(nameof(DependencyPropertyAttribute.AffectsParentArrange))?.Value?.ToString() ?? bool.FalseString;
-        var affectsRender = attribute.GetProperty(nameof(DependencyPropertyAttribute.AffectsRender))?.Value?.ToString() ?? bool.FalseString;
-        var inherits = attribute.GetProperty(nameof(DependencyPropertyAttribute.Inherits))?.Value?.ToString() ?? bool.FalseString;
-        var overridesInheritanceBehavior = attribute.GetProperty(nameof(DependencyPropertyAttribute.OverridesInheritanceBehavior))?.Value?.ToString() ?? bool.FalseString;
-        var notDataBindable = attribute.GetProperty(nameof(DependencyPropertyAttribute.NotDataBindable))?.Value?.ToString() ?? bool.FalseString;
-        var journal = attribute.GetProperty(nameof(DependencyPropertyAttribute.Journal))?.Value?.ToString() ?? bool.FalseString;
-        var subPropertiesDoNotAffectRender = attribute.GetProperty(nameof(DependencyPropertyAttribute.SubPropertiesDoNotAffectRender))?.Value?.ToString() ?? bool.FalseString;
-        var isAnimationProhibited = attribute.GetProperty(nameof(DependencyPropertyAttribute.IsAnimationProhibited))?.Value?.ToString() ?? bool.FalseString;
-        var defaultUpdateSourceTrigger = attribute.GetProperty(nameof(DependencyPropertyAttribute.DefaultUpdateSourceTrigger))
+        var affectsMeasure = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.AffectsMeasure)).Value?.ToString() ?? bool.FalseString;
+        var affectsArrange = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.AffectsArrange)).Value?.ToString() ?? bool.FalseString;
+        var affectsParentMeasure = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.AffectsParentMeasure)).Value?.ToString() ?? bool.FalseString;
+        var affectsParentArrange = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.AffectsParentArrange)).Value?.ToString() ?? bool.FalseString;
+        var affectsRender = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.AffectsRender)).Value?.ToString() ?? bool.FalseString;
+        var inherits = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Inherits)).Value?.ToString() ?? bool.FalseString;
+        var overridesInheritanceBehavior = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.OverridesInheritanceBehavior)).Value?.ToString() ?? bool.FalseString;
+        var notDataBindable = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.NotDataBindable)).Value?.ToString() ?? bool.FalseString;
+        var journal = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Journal)).Value?.ToString() ?? bool.FalseString;
+        var subPropertiesDoNotAffectRender = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.SubPropertiesDoNotAffectRender)).Value?.ToString() ?? bool.FalseString;
+        var isAnimationProhibited = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.IsAnimationProhibited)).Value?.ToString() ?? bool.FalseString;
+        var defaultUpdateSourceTrigger = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultUpdateSourceTrigger))
             .ToEnum<SourceTrigger>()?
             .ToString("G");
-        var defaultBindingMode = attribute.GetProperty(nameof(DependencyPropertyAttribute.DefaultBindingMode))
+        var defaultBindingMode = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultBindingMode))
             .ToEnum<DefaultBindingMode>()?
             .ToString("G");
-        var enableDataValidation = attribute.GetProperty(nameof(DependencyPropertyAttribute.EnableDataValidation))?.Value?.ToString() ?? bool.FalseString;
-        var coerce = attribute.GetProperty(nameof(DependencyPropertyAttribute.Coerce))?.Value?.ToString() ?? bool.FalseString;
-        var validate = attribute.GetProperty(nameof(DependencyPropertyAttribute.Validate))?.Value?.ToString() ?? bool.FalseString;
-        var createDefaultValueCallback = attribute.GetProperty(nameof(DependencyPropertyAttribute.CreateDefaultValueCallback))?.Value?.ToString() ?? bool.FalseString;
+        var enableDataValidation = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.EnableDataValidation)).Value?.ToString() ?? bool.FalseString;
+        var coerce = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Coerce)).Value?.ToString() ?? bool.FalseString;
+        var validate = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.Validate)).Value?.ToString() ?? bool.FalseString;
+        var createDefaultValueCallback = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.CreateDefaultValueCallback)).Value?.ToString() ?? bool.FalseString;
         
         return new DependencyPropertyData(
             Name: name,
@@ -121,8 +121,8 @@ public static class PrepareData
             SetterXmlDocumentation: setterXmlDocumentation,
             BindEvents: bindEvent != null
                 ? new[] { bindEvent }
-                : bindEvents?.Kind == TypedConstantKind.Array
-                    ? bindEvents.Value.Values
+                : bindEvents.Kind == TypedConstantKind.Array
+                    ? bindEvents.Values
                         .Select(static value => value.Value?.ToString() ?? string.Empty)
                         .Where(value => !string.IsNullOrWhiteSpace(value))
                         .ToArray()
@@ -157,10 +157,10 @@ public static class PrepareData
         var strategy = attribute.ConstructorArguments.ElementAtOrDefault(1)
             .ToEnum(defaultValue: RoutedEventStrategy.Direct)
             .ToString("G");
-        var isStatic = attribute.GetProperty(nameof(WeakEventAttribute.IsStatic))?.Value?.ToString() ?? bool.FalseString;
+        var isStatic = attribute.GetNamedArgument(nameof(WeakEventAttribute.IsStatic)).Value?.ToString() ?? bool.FalseString;
         var type =
             attribute.GetGenericTypeArgument(0)?.ToDisplayString() ??
-            attribute.GetProperty(nameof(RoutedEventAttribute.Type))?.Value?.ToString() ??
+            attribute.GetNamedArgument(nameof(RoutedEventAttribute.Type)).Value?.ToString() ??
             string.Empty;
         var isValueType =
             attribute.GetGenericTypeArgument(0)?.IsValueType ??
@@ -170,14 +170,14 @@ public static class PrepareData
             attribute.GetGenericTypeArgument(0).IsSpecialType() ??
             (attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol)?.IsSpecialType() ??
             false;
-        var isAttached = attribute.GetProperty(nameof(RoutedEventAttribute.IsAttached))?.Value?.ToString() ?? bool.FalseString;
-        var description = attribute.GetProperty(nameof(RoutedEventAttribute.Description))?.Value?.ToString();
-        var category = attribute.GetProperty(nameof(RoutedEventAttribute.Category))?.Value?.ToString();
+        var isAttached = attribute.GetNamedArgument(nameof(RoutedEventAttribute.IsAttached)).Value?.ToString() ?? bool.FalseString;
+        var description = attribute.GetNamedArgument(nameof(RoutedEventAttribute.Description)).Value?.ToString();
+        var category = attribute.GetNamedArgument(nameof(RoutedEventAttribute.Category)).Value?.ToString();
 
-        var xmlDocumentation = attribute.GetProperty(nameof(RoutedEventAttribute.XmlDocumentation))?.Value?.ToString();
-        var eventXmlDocumentation = attribute.GetProperty(nameof(RoutedEventAttribute.EventXmlDocumentation))?.Value?.ToString();
+        var xmlDocumentation = attribute.GetNamedArgument(nameof(RoutedEventAttribute.XmlDocumentation)).Value?.ToString();
+        var eventXmlDocumentation = attribute.GetNamedArgument(nameof(RoutedEventAttribute.EventXmlDocumentation)).Value?.ToString();
 
-        var winRtEvents = attribute.GetProperty(nameof(RoutedEventAttribute.WinRtEvents))?.Value?.ToString() ?? bool.FalseString;
+        var winRtEvents = attribute.GetNamedArgument(nameof(RoutedEventAttribute.WinRtEvents)).Value?.ToString() ?? bool.FalseString;
 
         return new EventData(
             Name: name,

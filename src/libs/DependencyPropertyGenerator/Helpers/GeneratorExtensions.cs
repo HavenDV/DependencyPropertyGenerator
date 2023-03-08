@@ -30,27 +30,27 @@ public static class GeneratorExtensions
             symbol.BaseType.SpecialType != SpecialType.None);
     }
 
-    public static ITypeSymbol? GetGenericTypeArgument(this AttributeData data, int position)
+    public static ITypeSymbol? GetGenericTypeArgument(this AttributeData attributeData, int position)
     {
-        data = data ?? throw new ArgumentNullException(nameof(data));
+        attributeData = attributeData ?? throw new ArgumentNullException(nameof(attributeData));
         
-        return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
+        return attributeData.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
     }
 
-    public static TypedConstant? GetProperty(this AttributeData data, string name)
+    public static TypedConstant GetNamedArgument(this AttributeData attributeData, string name)
     {
-        data = data ?? throw new ArgumentNullException(nameof(data));
+        attributeData = attributeData ?? throw new ArgumentNullException(nameof(attributeData));
         
-        return data.NamedArguments
+        return attributeData.NamedArguments
             .FirstOrDefault(pair => pair.Key == name)
             .Value;
     }
 
-    public static string? GetProperty(this AttributeSyntax syntax, string name)
+    public static string? GetNamedArgumentExpression(this AttributeSyntax attributeSyntax, string name)
     {
-        syntax = syntax ?? throw new ArgumentNullException(nameof(syntax));
+        attributeSyntax = attributeSyntax ?? throw new ArgumentNullException(nameof(attributeSyntax));
         
-        return syntax.ArgumentList?.Arguments
+        return attributeSyntax.ArgumentList?.Arguments
             .FirstOrDefault(x =>
             {
                 var nameEquals = x.NameEquals?.ToFullString()

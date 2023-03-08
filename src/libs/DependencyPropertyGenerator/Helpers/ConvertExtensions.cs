@@ -19,14 +19,13 @@ public static class ConvertExtensions
         return (T)(typedConstant.Value ?? defaultValue);
     }
 
-    public static T? ToEnum<T>(this TypedConstant? typedConstant) where T : struct, Enum
+    public static T? ToEnum<T>(this TypedConstant typedConstant) where T : struct, Enum
     {
-        if (typedConstant == null ||
-            typedConstant.Value.Value == null)
+        if (typedConstant.Value == null)
         {
             return null;
         }
         
-        return (T)typedConstant.Value.Value;
+        return (T)typedConstant.Value;
     }
 }
