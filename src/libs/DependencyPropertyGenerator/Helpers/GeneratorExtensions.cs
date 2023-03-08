@@ -16,19 +16,6 @@ public static class GeneratorExtensions
             : value;
     }
 
-    public static string? GetFullClassName(this SemanticModel semanticModel, ClassDeclarationSyntax classDeclarationSyntax)
-    {
-        semanticModel = semanticModel ?? throw new ArgumentNullException(nameof(semanticModel));
-        classDeclarationSyntax = classDeclarationSyntax ?? throw new ArgumentNullException(nameof(classDeclarationSyntax));
-        
-        if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
-        {
-            return null;
-        }
-
-        return classSymbol.ToString();
-    }
-
     public static bool? IsSpecialType(this ITypeSymbol? symbol)
     {
         if (symbol == null)
@@ -73,32 +60,5 @@ public static class GeneratorExtensions
             })?
             .Expression
             .ToFullString();
-    }
-
-    public static bool WhereFullNameIs(this AttributeSyntax attributeSyntax, SemanticModel semanticModel, Predicate<string> predicate)
-    {
-        attributeSyntax = attributeSyntax ?? throw new ArgumentNullException(nameof(attributeSyntax));
-        semanticModel = semanticModel ?? throw new ArgumentNullException(nameof(semanticModel));
-        predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
-        
-        if (semanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
-        {
-            return false;
-        }
-
-        var attributeContainingTypeSymbol = attributeSymbol.ContainingType;
-        var fullName = attributeContainingTypeSymbol.ToDisplayString();
-
-        return predicate(fullName);
-    }
-
-    public static bool WhereFullNameIs(this AttributeData attributeData, Predicate<string> predicate)
-    {
-        attributeData = attributeData ?? throw new ArgumentNullException(nameof(attributeData));
-        predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
-        
-        var attributeClass = attributeData.AttributeClass?.ToDisplayString() ?? string.Empty;
-
-        return predicate(attributeClass);
     }
 }

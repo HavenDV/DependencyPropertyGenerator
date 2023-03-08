@@ -3,7 +3,6 @@ using H.Generators.Tests.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using System.Collections.Immutable;
-using H.Generators.Extensions;
 
 namespace H.Generators.SnapshotTests;
 
@@ -46,10 +45,50 @@ namespace H.Generators.IntegrationTests;
         return GetHeader(framework, true, values);
     }
 
+    private Dictionary<string, string> GetGlobalOptions(Framework framework, params string[] names)
+    {
+        var globalOptions = new Dictionary<string, string>();
+        if (framework == Framework.Wpf)
+        {
+            globalOptions.Add("build_property.UseWPF", "true");
+        }
+        else if (framework == Framework.WinUi)
+        {
+            globalOptions.Add("build_property.UseWinUI", "true");
+        }
+        else if (framework == Framework.Maui)
+        {
+            globalOptions.Add("build_property.UseMaui", "true");
+        }
+        
+        foreach (var name in names)
+        {
+            if (framework == Framework.Uwp)
+            {
+                globalOptions.Add($"build_property.{name}_DefineConstants", "WINDOWS_UWP");
+            }
+            else if (framework == Framework.Uno)
+            {
+                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_UNO");
+            }
+            else if (framework == Framework.UnoWinUi)
+            {
+                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_UNO;HAS_WINUI");
+            }
+            else if (framework == Framework.Avalonia)
+            {
+                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_AVALONIA");
+            }
+        }
+
+        return globalOptions;
+    }
+    
     private async Task CheckSourceAsync<T>(
         string source,
         Framework framework,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        params IIncrementalGenerator[] additionalGenerators)
         where T : IIncrementalGenerator, new()
     {
         if (framework == Framework.Wpf)
@@ -104,6 +143,7 @@ namespace H.Generators.IntegrationTests;
 
         var referenceAssemblies = framework switch
         {
+            Framework.None => ReferenceAssemblies.NetFramework.Net48.Wpf,
             Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
             Framework.Uwp => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
@@ -138,38 +178,13 @@ namespace H.Generators.IntegrationTests;
                 .Add(MetadataReference.CreateFromFile(typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var generator = new T();
-        var globalOptions = new Dictionary<string, string>();
-        if (framework == Framework.Wpf)
-        {
-            globalOptions.Add("build_property.UseWPF", "true");
-        }
-        else if (framework == Framework.Uwp)
-        {
-            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "WINDOWS_UWP");
-        }
-        else if (framework == Framework.WinUi)
-        {
-            globalOptions.Add("build_property.UseWinUI", "true");
-        }
-        else if (framework == Framework.Uno)
-        {
-            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO");
-        }
-        else if (framework == Framework.UnoWinUi)
-        {
-            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_UNO;HAS_WINUI");
-        }
-        else if (framework == Framework.Avalonia)
-        {
-            globalOptions.Add($"build_property.{typeof(T).Name}_DefineConstants", "HAS_AVALONIA");
-        }
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-        else if (framework == Framework.Maui)
-        {
-            globalOptions.Add("build_property.UseMaui", "true");
-        }
-        var driver = CSharpGeneratorDriver
-            .Create(generator)
+        GeneratorDriver driver = additionalGenerators.Any()
+            ? CSharpGeneratorDriver.Create(new IIncrementalGenerator[]{ generator }.Concat(additionalGenerators).ToArray())
+            : CSharpGeneratorDriver.Create(generator);
+        var globalOptions = additionalGenerators.Any()
+            ? GetGlobalOptions(framework, new []{ typeof(T).Name }.Concat(additionalGenerators.Select(x => x.GetType().Name)).ToArray())
+            : GetGlobalOptions(framework, typeof(T).Name);
+        driver = driver
             .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(globalOptions))
             .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);

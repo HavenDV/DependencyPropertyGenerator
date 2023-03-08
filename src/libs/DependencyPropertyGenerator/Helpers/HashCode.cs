@@ -35,7 +35,10 @@ internal struct HashCode
     {
         byte[] bytes = new byte[4];
 
-        RandomNumberGenerator.Create().GetBytes(bytes);
+        using (var generator = RandomNumberGenerator.Create())
+        {
+            generator.GetBytes(bytes);
+        }
 
         return BitConverter.ToUInt32(bytes, 0);
     }

@@ -1,16 +1,15 @@
-﻿using DependencyPropertyGenerator;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace H.Generators;
 
 [Generator]
-public class WeakEventGenerator : IIncrementalGenerator
+public class AddOwnerGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(WeakEventGenerator);
-    private const string Id = "WEG";
+    private const string Name = nameof(AddOwnerGenerator);
+    private const string Id = "AOG";
 
     #endregion
 
@@ -20,41 +19,42 @@ public class WeakEventGenerator : IIncrementalGenerator
     {
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute")
+                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
                 .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
                 .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
+                .SafeSelect(GetSourceCode, context, Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute`1")
+                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute`2")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
                 .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
                 .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
+                .SafeSelect(GetSourceCode, context, Id));
     }
 
-    private static (ClassData Class, EventData Event)? PrepareData(
+    private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
         Framework framework,
         (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
     {
-        if (framework is not (Framework.Maui or Framework.Wpf))
+        if (framework is not (Framework.Avalonia or Framework.Wpf))
         {
             return null;
         }
 
         var (_, attribute, _, classSymbol) = tuple;
+        
         var classData = classSymbol.GetClassData(framework);
-        var eventData = attribute.GetEventData(isStaticClass: classData.IsStatic);
-
-        return (classData, eventData);
+        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, isAddOwner: true);
+        
+        return (classData, dependencyPropertyData);
     }
     
-    private static FileWithName GetSourceCode((ClassData Class, EventData Event) data)
+    private static FileWithName GetSourceCode((ClassData Class, DependencyPropertyData DependencyProperty) data)
     {
         return new FileWithName(
-            Name: $"{data.Class.Name}.WeakEvents.{data.Event.Name}.generated.cs",
-            Text: SourceGenerationHelper.GenerateWeakEvent(data.Class, data.Event));
+            Name: $"{data.Class.Name}.AddOwner.{data.DependencyProperty.Name}.generated.cs",
+            Text: SourceGenerationHelper.GenerateDependencyProperty(data.Class, data.DependencyProperty));
     }
 
     #endregion

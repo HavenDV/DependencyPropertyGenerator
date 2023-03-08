@@ -4,12 +4,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace H.Generators;
 
 [Generator]
-public class DependencyPropertyGenerator : IIncrementalGenerator
+public class AttachedDependencyPropertyGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(DependencyPropertyGenerator);
-    private const string Id = "DPG";
+    private const string Name = nameof(AttachedDependencyPropertyGenerator);
+    private const string Id = "ADPG";
 
     #endregion
 
@@ -19,14 +19,21 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     {
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
+                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
                 .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
+                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
+                .SelectManyAllAttributesOfCurrentClassSyntax()
+                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .PrepareData(PrepareData, context, Id)
+                .SafeSelect(GetSourceCode, context, Id));
+        context.RegisterSourceOutputOfFiles(
+            context.SyntaxProvider
+                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
                 .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
                 .PrepareData(PrepareData, context, Id)
@@ -39,16 +46,16 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     {
         var (_, attribute, classSyntax, classSymbol) = tuple;
         var classData = classSymbol.GetClassData(framework);
-        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, classSyntax.TryFindAttributeSyntax(attribute));
+        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, classSyntax.TryFindAttributeSyntax(attribute), isAttached: true);
         
         return (classData, dependencyPropertyData);
     }
-
+    
     private static FileWithName GetSourceCode((ClassData Class, DependencyPropertyData DependencyProperty) data)
     {
         return new FileWithName(
-            Name: $"{data.Class.Name}.Properties.{data.DependencyProperty.Name}.generated.cs",
-            Text: SourceGenerationHelper.GenerateDependencyProperty(data.Class, data.DependencyProperty));
+            Name: $"{data.Class.Name}.AttachedProperties.{data.DependencyProperty.Name}.generated.cs",
+            Text: SourceGenerationHelper.GenerateAttachedDependencyProperty(data.Class, data.DependencyProperty));
     }
 
     #endregion

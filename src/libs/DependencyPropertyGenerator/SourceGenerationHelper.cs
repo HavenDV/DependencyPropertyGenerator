@@ -1,4 +1,5 @@
-﻿using H.Generators.Extensions;
+﻿using System.ComponentModel;
+using H.Generators.Extensions;
 using System.Globalization;
 using System.Net;
 
@@ -368,6 +369,11 @@ namespace {@class.Namespace}
     
     public static string GenerateRoutedEvent(ClassData @class, EventData @event)
     {
+        if (@event.IsAttached)
+        {
+            return GenerateAttachedRoutedEvent(@class, @event);
+        }
+        
         // https://docs.avaloniaui.net/docs/input/routed-events
         if (@class.Framework == Framework.Wpf || @class.Framework == Framework.Avalonia)
         {
@@ -1628,18 +1634,25 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             $"typeof({value.WithGlobalPrefix()})");
     }
 
-    private static string GenerateBindableAttribute(string? value)
+    private static string ToBooleanKeyword(this bool value)
+    {
+        return value
+            ? "true"
+            : "false";
+    }
+
+    private static string GenerateBindableAttribute(bool? value)
     {
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Bindable),
-            value);
+            value?.ToBooleanKeyword());
     }
 
-    private static string GenerateBrowsableAttribute(string? value)
+    private static string GenerateBrowsableAttribute(bool? value)
     {
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Browsable),
-            value);
+            value?.ToBooleanKeyword());
     }
 
     private static string GenerateDesignerSerializationVisibilityAttribute(string? value)
@@ -1651,12 +1664,12 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
 
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.DesignerSerializationVisibility),
-            $"global::System.ComponentModel.{value}");
+            $"global::System.ComponentModel.{nameof(DesignerSerializationVisibility)}.{value}");
     }
 
-    private static string GenerateClsCompliantAttribute(string? value)
-{
-        return GenerateAttribute("System.CLSCompliant", value);
+    private static string GenerateClsCompliantAttribute(bool? value)
+    {
+        return GenerateAttribute("System.CLSCompliant", value?.ToBooleanKeyword());
     }
 
     private static string GenerateLocalizabilityAttribute(string? value, Framework framework)

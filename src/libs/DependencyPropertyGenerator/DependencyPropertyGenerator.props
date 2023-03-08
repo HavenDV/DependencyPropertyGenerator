@@ -1,24 +1,27 @@
 ﻿<Project>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DebuggerBreak"/>
+    <CompilerVisibleProperty Include="AddOwnerGenerator_DefineConstants"/>
+    <CompilerVisibleProperty Include="AttachedDependencyPropertyGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="RoutedEventGenerator_DebuggerBreak"/>
+    <CompilerVisibleProperty Include="OverrideMetadataGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="RoutedEventGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="WeakEventGenerator_DebuggerBreak"/>
+    <CompilerVisibleProperty Include="StaticConstructorGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="WeakEventGenerator_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
     <CompilerVisibleProperty Include="UseMaui"/>
-    <CompilerVisibleProperty Include="BuildingProject" />
-    <CompilerVisibleProperty Include="DesignTimeBuild" />
   </ItemGroup>
 
   <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
 
     <PropertyGroup>
+      <AddOwnerGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</AddOwnerGenerator_DefineConstants>
+      <AttachedDependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</AttachedDependencyPropertyGenerator_DefineConstants>
       <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
+      <OverrideMetadataGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</OverrideMetadataGenerator_DefineConstants>
       <RoutedEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</RoutedEventGenerator_DefineConstants>
+      <StaticConstructorGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</StaticConstructorGenerator_DefineConstants>
       <WeakEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</WeakEventGenerator_DefineConstants>
     </PropertyGroup>
 

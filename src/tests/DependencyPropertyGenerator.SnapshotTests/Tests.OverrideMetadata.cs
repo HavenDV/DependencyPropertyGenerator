@@ -10,7 +10,7 @@ public partial class Tests
     [DataRow(Framework.Avalonia)]
     public Task OverrideMetadata(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty, "System") + @"
+        return CheckSourceAsync<OverrideMetadataGenerator>(GetHeader(framework, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", AffectsRender = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement
@@ -24,7 +24,7 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", framework);
+}", framework, CancellationToken.None, new DependencyPropertyGenerator());
     }
 
     [DataTestMethod]
@@ -35,7 +35,7 @@ public partial class TropicalAquarium : Aquarium
     [DataRow(Framework.Avalonia)]
     public Task OverrideMetadataForReadOnlyProperty(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty, "System") + @"
+        return CheckSourceAsync<OverrideMetadataGenerator>(GetHeader(framework, string.Empty, "System") + @"
 [DependencyProperty<Uri>(""AquariumGraphic"", IsReadOnly = true,
     DefaultValueExpression = ""new System.Uri(\""http://www.contoso.com/aquarium-graphic.jpg\"")"")]
 public partial class Aquarium : UIElement
@@ -49,6 +49,6 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", framework);
+}", framework, CancellationToken.None, new DependencyPropertyGenerator());
     }
 }
