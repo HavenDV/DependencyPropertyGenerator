@@ -18,11 +18,13 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var framework = context.DetectFramework(Name, Id);
+        
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
                 .Collect()
                 .Select(GetSourceCode));
@@ -30,7 +32,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
                 .Collect()
                 .Select(GetSourceCode));
@@ -38,7 +40,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
                 .Collect()
                 .Select(GetSourceCode));
@@ -46,7 +48,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
                 .Collect()
                 .Select(GetSourceCode));
@@ -54,7 +56,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
                 .Collect()
                 .Select(GetSourceCode));

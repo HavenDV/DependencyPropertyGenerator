@@ -17,25 +17,27 @@ public class AttachedDependencyPropertyGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var framework = context.DetectFramework(Name, Id);
+
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
     }

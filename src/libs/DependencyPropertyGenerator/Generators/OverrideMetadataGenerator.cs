@@ -18,18 +18,20 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var framework = context.DetectFramework(Name, Id);
+
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute")
                 .SelectAllAttributes()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, prefix: Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute`1")
                 .SelectAllAttributes()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, prefix: Id));
     }

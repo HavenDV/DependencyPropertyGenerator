@@ -17,18 +17,20 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var framework = context.DetectFramework(Name, Id);
+
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
                 .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
                 .SelectManyAllAttributesOfCurrentClassSyntax()
-                .CombineWithFrameworkDetection(context.AnalyzerConfigOptionsProvider, Name)
+                .Combine(framework)
                 .PrepareData(PrepareData, context, Id)
                 .SafeSelect(GetSourceCode, context, Id));
     }

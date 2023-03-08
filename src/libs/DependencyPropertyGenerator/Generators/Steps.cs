@@ -96,15 +96,40 @@ public static class CommonSteps
             .FirstOrDefault(x => x.ArgumentList?.Arguments.FirstOrDefault()?.ToString().Trim('"').RemoveNameof() == name);
     }
 
-    public static IncrementalValuesProvider<(TLeft Left, Framework Right)>
-        CombineWithFrameworkDetection<TLeft>(
-            this IncrementalValuesProvider<TLeft> source,
-            IncrementalValueProvider<AnalyzerConfigOptionsProvider> optionsProvider,
-            string name)
+    public static IncrementalValueProvider<Framework> DetectFramework(
+        this IncrementalGeneratorInitializationContext initializationContext,
+        string name,
+        string? id = null)
     {
-        return source
-            .Combine(optionsProvider
-                .Select((options, _) => options.TryRecognizeFramework(prefix: name)));
+        var frameworksWithErrors = initializationContext.AnalyzerConfigOptionsProvider
+            .Select<AnalyzerConfigOptionsProvider, (Framework Framework, Exception? Exception)>((options, _) =>
+            {
+                try
+                {
+                    var framework = options.RecognizeFramework(prefix: name);
+
+                    return (Framework: framework, Exception: null);
+                }
+                catch (Exception exception)
+                {
+                    return (Framework: Framework.None, Exception: exception);
+                }
+            });
+        
+        initializationContext.RegisterSourceOutput(
+            frameworksWithErrors,
+            (context, tuple) =>
+            {
+                if (tuple.Exception == null)
+                {
+                    return;
+                }
+                
+                context.ReportException(id: "001", exception: tuple.Exception!, prefix: id);
+            });
+        
+        return frameworksWithErrors
+            .Select(static (x, _) => x.Framework);
     }
 
     public static IncrementalValuesProvider<TResult>
