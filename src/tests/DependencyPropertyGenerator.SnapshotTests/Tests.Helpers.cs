@@ -190,7 +190,7 @@ namespace H.Generators.IntegrationTests;
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            Verify(diagnostics)
+            Verify(diagnostics.NormalizeLocations())
                 .UseDirectory("Snapshots")
                 .UseTextForParameters($"{framework}_Diagnostics"),
             Verify(driver)
