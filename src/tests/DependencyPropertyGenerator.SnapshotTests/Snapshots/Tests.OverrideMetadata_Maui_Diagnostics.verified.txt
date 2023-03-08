@@ -1,0 +1,35 @@
+﻿[
+  {
+    Id: CS0759,
+    Title: ,
+    Severity: Error,
+    WarningLevel: 0,
+    Location: : (19,17)-(19,41),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0759),
+    MessageFormat: No defining declaration found for implementing declaration of partial method '{0}',
+    Message: No defining declaration found for implementing declaration of partial method 'TropicalAquarium.OnAquariumGraphicChanged()',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry,
+      NotConfigurable
+    ]
+  },
+  {
+    Id: CS8019,
+    Title: Unnecessary using directive,
+    Severity: Hidden,
+    WarningLevel: 1,
+    Location: : (1,0)-(1,21),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
+    MessageFormat: Unnecessary using directive.,
+    Message: Unnecessary using directive.,
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  }
+]

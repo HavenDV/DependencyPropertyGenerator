@@ -1,0 +1,46 @@
+﻿//HintName: MyGrid.Properties.IsSpinning.generated.cs
+
+#nullable enable
+
+namespace H.Generators.IntegrationTests
+{
+    public partial class MyGrid
+    {
+        /// <summary>
+        /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
+        /// Default value: default(bool)
+        /// </summary>
+        internal static readonly global::System.Windows.DependencyPropertyKey IsSpinningPropertyKey =
+            global::System.Windows.DependencyProperty.RegisterReadOnly(
+                name: "IsSpinning",
+                propertyType: typeof(bool),
+                ownerType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                typeMetadata: new global::System.Windows.FrameworkPropertyMetadata(
+                    defaultValue: default(bool),
+                    flags: global::System.Windows.FrameworkPropertyMetadataOptions.None,
+                    propertyChangedCallback: null,
+                    coerceValueCallback: null,
+                    isAnimationProhibited: false),
+                validateValueCallback: null);
+
+        /// <summary>
+        /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
+        /// Default value: default(bool)
+        /// </summary>
+        public static readonly global::System.Windows.DependencyProperty IsSpinningProperty
+            = IsSpinningPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Default value: default(bool)
+        /// </summary>
+        public bool IsSpinning
+        {
+            get => (bool)GetValue(IsSpinningProperty);
+            protected set => SetValue(IsSpinningPropertyKey, value);
+        }
+
+        partial void OnIsSpinningChanged();
+        partial void OnIsSpinningChanged(bool newValue);
+        partial void OnIsSpinningChanged(bool oldValue, bool newValue);
+    }
+}

@@ -1,0 +1,98 @@
+﻿[
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: : (16,38)-(16,46),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  },
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.Mode.generated.cs: (49,42)-(49,83),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  },
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: : (13,34)-(13,42),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  },
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.Mode.generated.cs: (47,42)-(47,83),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  },
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.Mode.generated.cs: (48,42)-(48,83),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  },
+  {
+    Id: CS0618,
+    Title: Type or member is obsolete,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\TreeViewExtensions.AttachedProperties.Mode.generated.cs: (21,29)-(21,70),
+    Description: ,
+    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
+    MessageFormat: '{0}' is obsolete: '{1}',
+    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Category: Compiler,
+    CustomTags: [
+      Compiler,
+      Telemetry
+    ]
+  }
+]
