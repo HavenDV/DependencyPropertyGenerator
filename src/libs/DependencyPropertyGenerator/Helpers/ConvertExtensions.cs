@@ -4,7 +4,17 @@ namespace H.Generators;
 
 public static class ConvertExtensions
 {
-    public static bool? ToBoolean(this TypedConstant typedConstant)
+    public static bool ToBoolean(this TypedConstant typedConstant, bool defaultValue = false)
+    {
+        if (typedConstant.Value == null)
+        {
+            return defaultValue;
+        }
+        
+        return (bool)typedConstant.Value!;
+    }
+    
+    public static bool? ToNullableBoolean(this TypedConstant typedConstant)
     {
         if (typedConstant.Value == null)
         {
