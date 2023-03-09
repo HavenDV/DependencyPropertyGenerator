@@ -98,37 +98,43 @@ public static class CommonSteps
 
     public static IncrementalValueProvider<Framework> DetectFramework(
         this IncrementalGeneratorInitializationContext initializationContext,
-        string name,
-        string? id = null)
+        string name)
     {
-        var frameworksWithErrors = initializationContext.AnalyzerConfigOptionsProvider
-            .Select<AnalyzerConfigOptionsProvider, (Framework Framework, Exception? Exception)>((options, _) =>
+        var frameworkWithDiagnostic = initializationContext.AnalyzerConfigOptionsProvider
+            .Select<AnalyzerConfigOptionsProvider, (Framework Framework, Diagnostic? Diagnostic)>((options, _) =>
             {
-                try
-                {
-                    var framework = options.RecognizeFramework(prefix: name);
+                var framework = options.TryRecognizeFramework(prefix: name);
 
-                    return (Framework: framework, Exception: null);
-                }
-                catch (Exception exception)
-                {
-                    return (Framework: Framework.None, Exception: exception);
-                }
+                var diagnostic = framework == Framework.None
+                    ? Diagnostic.Create(
+                        new DiagnosticDescriptor(
+                            id: "TRF001",
+                            title: "Framework is not recognized",
+                            messageFormat: @"Framework is not recognized.
+You can explicitly specify the framework by setting one of the following constants in your project:
+HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI",
+                            "Usage",
+                            DiagnosticSeverity.Error,
+                            true),
+                        Location.None)
+                    : null;
+                
+                return (Framework: framework, Diagnostic: diagnostic);
             });
         
         initializationContext.RegisterSourceOutput(
-            frameworksWithErrors,
+            frameworkWithDiagnostic,
             (context, tuple) =>
             {
-                if (tuple.Exception == null)
+                if (tuple.Diagnostic == null)
                 {
                     return;
                 }
                 
-                context.ReportException(id: "001", exception: tuple.Exception!, prefix: id);
+                context.ReportDiagnostic(tuple.Diagnostic);
             });
         
-        return frameworksWithErrors
+        return frameworkWithDiagnostic
             .Select(static (x, _) => x.Framework);
     }
 

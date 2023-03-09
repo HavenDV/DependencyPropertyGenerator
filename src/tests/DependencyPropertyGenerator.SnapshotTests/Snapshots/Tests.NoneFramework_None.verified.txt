@@ -1,25 +1,21 @@
 ﻿{
   Diagnostics: [
     {
-      Id: WEG001,
-      Title: Exception: ,
+      Id: TRF001,
+      Title: Framework is not recognized,
       Severity: Error,
       WarningLevel: 0,
       Location: : (0,0)-(0,0),
       Description: ,
       HelpLink: ,
       MessageFormat:
-System.InvalidOperationException: Framework is not recognized.
+Framework is not recognized.
 You can explicitly specify the framework by setting one of the following constants in your project:
-HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI
-   at H.Generators.Extensions.AnalyzerConfigOptionsProviderExtensions.RecognizeFramework(AnalyzerConfigOptionsProvider provider, String prefix) in /_/src/libs/H.Generators.Extensions/AnalyzerConfigOptionsProviderExtensions.cs:line 184
-   at H.Generators.CommonSteps.<>c__DisplayClass6_0.<DetectFramework>b__0(AnalyzerConfigOptionsProvider options, CancellationToken _) in {SolutionDirectory}src/libs/DependencyPropertyGenerator/Generators/Steps.cs:line 109,
+HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI,
       Message:
-System.InvalidOperationException: Framework is not recognized.
+Framework is not recognized.
 You can explicitly specify the framework by setting one of the following constants in your project:
-HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI
-   at H.Generators.Extensions.AnalyzerConfigOptionsProviderExtensions.RecognizeFramework(AnalyzerConfigOptionsProvider provider, String prefix) in /_/src/libs/H.Generators.Extensions/AnalyzerConfigOptionsProviderExtensions.cs:line 184
-   at H.Generators.CommonSteps.<>c__DisplayClass6_0.<DetectFramework>b__0(AnalyzerConfigOptionsProvider options, CancellationToken _) in {SolutionDirectory}src/libs/DependencyPropertyGenerator/Generators/Steps.cs:line 109,
+HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI,
       Category: Usage
     }
   ]

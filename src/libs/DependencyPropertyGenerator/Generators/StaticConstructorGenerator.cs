@@ -18,7 +18,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name, Id);
+        var framework = context.DetectFramework(Name);
         
         context.RegisterSourceOutputOfFiles(
             context.SyntaxProvider
