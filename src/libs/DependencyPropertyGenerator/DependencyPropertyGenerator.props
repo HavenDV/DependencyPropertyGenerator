@@ -1,13 +1,7 @@
 ﻿<Project>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="AddOwnerGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="AttachedDependencyPropertyGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="OverrideMetadataGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="RoutedEventGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="StaticConstructorGenerator_DefineConstants"/>
-    <CompilerVisibleProperty Include="WeakEventGenerator_DefineConstants"/>
+    <CompilerVisibleProperty Include="RecognizeFramework_DefineConstants"/>
     <CompilerVisibleProperty Include="UseWPF"/>
     <CompilerVisibleProperty Include="UseWinUI"/>
     <CompilerVisibleProperty Include="UseMaui"/>
@@ -16,13 +10,7 @@
   <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
 
     <PropertyGroup>
-      <AddOwnerGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</AddOwnerGenerator_DefineConstants>
-      <AttachedDependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</AttachedDependencyPropertyGenerator_DefineConstants>
-      <DependencyPropertyGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</DependencyPropertyGenerator_DefineConstants>
-      <OverrideMetadataGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</OverrideMetadataGenerator_DefineConstants>
-      <RoutedEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</RoutedEventGenerator_DefineConstants>
-      <StaticConstructorGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</StaticConstructorGenerator_DefineConstants>
-      <WeakEventGenerator_DefineConstants>$(DefineConstants.Replace(';',','))</WeakEventGenerator_DefineConstants>
+      <RecognizeFramework_DefineConstants>$(DefineConstants.Replace(';',','))</RecognizeFramework_DefineConstants>
     </PropertyGroup>
 
   </Target>

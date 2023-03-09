@@ -9,7 +9,6 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(OverrideMetadataGenerator);
     private const string Id = "OMG";
 
     #endregion
@@ -18,22 +17,24 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name);
+        var framework = context.DetectFramework();
 
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute")
-                .SelectAllAttributes()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute`1")
-                .SelectAllAttributes()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute")
+            .SelectAllAttributes()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute`1")
+            .SelectAllAttributes()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
     }
 
     private static (ClassData Class, ImmutableArray<DependencyPropertyData> OverrideMetada)? PrepareData(

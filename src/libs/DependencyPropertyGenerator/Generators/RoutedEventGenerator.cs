@@ -8,7 +8,6 @@ public class RoutedEventGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(RoutedEventGenerator);
     private const string Id = "REG";
 
     #endregion
@@ -17,22 +16,24 @@ public class RoutedEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name);
+        var framework = context.DetectFramework();
 
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, Id));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute`1")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, Id));
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute`1")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
     }
 
     private static (ClassData Class, EventData Event)? PrepareData(

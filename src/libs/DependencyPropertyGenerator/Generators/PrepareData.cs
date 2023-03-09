@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using DependencyPropertyGenerator;
+using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

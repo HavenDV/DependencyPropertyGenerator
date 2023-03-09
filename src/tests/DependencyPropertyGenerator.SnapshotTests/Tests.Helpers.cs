@@ -45,7 +45,7 @@ namespace H.Generators.IntegrationTests;
         return GetHeader(framework, true, values);
     }
 
-    private Dictionary<string, string> GetGlobalOptions(Framework framework, params string[] names)
+    private static Dictionary<string, string> GetGlobalOptions(Framework framework)
     {
         var globalOptions = new Dictionary<string, string>();
         if (framework == Framework.Wpf)
@@ -60,25 +60,21 @@ namespace H.Generators.IntegrationTests;
         {
             globalOptions.Add("build_property.UseMaui", "true");
         }
-        
-        foreach (var name in names)
+        else if (framework == Framework.Uwp)
         {
-            if (framework == Framework.Uwp)
-            {
-                globalOptions.Add($"build_property.{name}_DefineConstants", "WINDOWS_UWP");
-            }
-            else if (framework == Framework.Uno)
-            {
-                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_UNO");
-            }
-            else if (framework == Framework.UnoWinUi)
-            {
-                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_UNO;HAS_WINUI");
-            }
-            else if (framework == Framework.Avalonia)
-            {
-                globalOptions.Add($"build_property.{name}_DefineConstants", "HAS_AVALONIA");
-            }
+            globalOptions.Add($"build_property.RecognizeFramework_DefineConstants", "WINDOWS_UWP");
+        }
+        else if (framework == Framework.Uno)
+        {
+            globalOptions.Add($"build_property.RecognizeFramework_DefineConstants", "HAS_UNO");
+        }
+        else if (framework == Framework.UnoWinUi)
+        {
+            globalOptions.Add($"build_property.RecognizeFramework_DefineConstants", "HAS_UNO;HAS_WINUI");
+        }
+        else if (framework == Framework.Avalonia)
+        {
+            globalOptions.Add($"build_property.RecognizeFramework_DefineConstants", "HAS_AVALONIA");
         }
 
         return globalOptions;
@@ -181,11 +177,8 @@ namespace H.Generators.IntegrationTests;
         GeneratorDriver driver = additionalGenerators.Any()
             ? CSharpGeneratorDriver.Create(new IIncrementalGenerator[]{ generator }.Concat(additionalGenerators).ToArray())
             : CSharpGeneratorDriver.Create(generator);
-        var globalOptions = additionalGenerators.Any()
-            ? GetGlobalOptions(framework, new []{ typeof(T).Name }.Concat(additionalGenerators.Select(x => x.GetType().Name)).ToArray())
-            : GetGlobalOptions(framework, typeof(T).Name);
         driver = driver
-            .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(globalOptions))
+            .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(GetGlobalOptions(framework)))
             .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 

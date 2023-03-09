@@ -30,22 +30,6 @@ public static class GeneratorExtensions
             symbol.BaseType.SpecialType != SpecialType.None);
     }
 
-    public static ITypeSymbol? GetGenericTypeArgument(this AttributeData attributeData, int position)
-    {
-        attributeData = attributeData ?? throw new ArgumentNullException(nameof(attributeData));
-        
-        return attributeData.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
-    }
-
-    public static TypedConstant GetNamedArgument(this AttributeData attributeData, string name)
-    {
-        attributeData = attributeData ?? throw new ArgumentNullException(nameof(attributeData));
-        
-        return attributeData.NamedArguments
-            .FirstOrDefault(pair => pair.Key == name)
-            .Value;
-    }
-
     public static string? GetNamedArgumentExpression(this AttributeSyntax attributeSyntax, string name)
     {
         attributeSyntax = attributeSyntax ?? throw new ArgumentNullException(nameof(attributeSyntax));
@@ -60,5 +44,14 @@ public static class GeneratorExtensions
             })?
             .Expression
             .ToFullString();
+    }
+
+    internal static AttributeSyntax? TryFindAttributeSyntax(this ClassDeclarationSyntax classSyntax, AttributeData attribute)
+    {
+        var name = attribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString();
+        
+        return classSyntax.AttributeLists
+            .SelectMany(static x => x.Attributes)
+            .FirstOrDefault(x => x.ArgumentList?.Arguments.FirstOrDefault()?.ToString().Trim('"').RemoveNameof() == name);
     }
 }

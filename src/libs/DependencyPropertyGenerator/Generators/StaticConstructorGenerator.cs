@@ -9,7 +9,6 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(StaticConstructorGenerator);
     private const string Id = "SCG";
 
     #endregion
@@ -18,48 +17,53 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name);
-        
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
-                .Collect()
-                .Select(GetSourceCode));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
-                .Collect()
-                .Select(GetSourceCode));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
-                .Collect()
-                .Select(GetSourceCode));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
-                .Collect()
-                .Select(GetSourceCode));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
-                .Collect()
-                .Select(GetSourceCode));
+        var framework = context.DetectFramework();
+
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
+            .WhereNotNull()
+            .Collect()
+            .Select(GetSourceCode)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
+            .WhereNotNull()
+            .Collect()
+            .Select(GetSourceCode)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .WhereNotNull()
+            .Collect()
+            .Select(GetSourceCode)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .WhereNotNull()
+            .Collect()
+            .Select(GetSourceCode)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .WhereNotNull()
+            .Collect()
+            .Select(GetSourceCode)
+            .AddSource(context);
     }
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(

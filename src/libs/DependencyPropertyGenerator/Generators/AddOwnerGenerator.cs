@@ -8,7 +8,6 @@ public class AddOwnerGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(AddOwnerGenerator);
     private const string Id = "AOG";
 
     #endregion
@@ -17,22 +16,24 @@ public class AddOwnerGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name);
+        var framework = context.DetectFramework();
 
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, Id));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute`2")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, Id));
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute`2")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
     }
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(

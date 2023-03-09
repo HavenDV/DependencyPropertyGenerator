@@ -8,7 +8,6 @@ public class WeakEventGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    private const string Name = nameof(WeakEventGenerator);
     private const string Id = "WEG";
 
     #endregion
@@ -17,22 +16,24 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var framework = context.DetectFramework(Name);
-        
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
-        context.RegisterSourceOutputOfFiles(
-            context.SyntaxProvider
-                .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute`1")
-                .SelectManyAllAttributesOfCurrentClassSyntax()
-                .Combine(framework)
-                .PrepareData(PrepareData, context, Id)
-                .SafeSelect(GetSourceCode, context, prefix: Id));
+        var framework = context.DetectFramework();
+
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
+        context.SyntaxProvider
+            .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute`1")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .SelectAndReportExceptions(PrepareData, context, Id)
+            .WhereNotNull()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .AddSource(context);
     }
 
     private static (ClassData Class, EventData Event)? PrepareData(
