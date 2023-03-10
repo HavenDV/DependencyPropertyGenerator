@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+﻿using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -25,8 +25,8 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .Combine(framework)
             .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
             .WhereNotNull()
-            .Collect()
-            .Select(GetSourceCode)
+            .CollectAsEquatableArray()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
@@ -34,8 +34,8 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .Combine(framework)
             .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
             .WhereNotNull()
-            .Collect()
-            .Select(GetSourceCode)
+            .CollectAsEquatableArray()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
@@ -43,8 +43,8 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .Combine(framework)
             .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
             .WhereNotNull()
-            .Collect()
-            .Select(GetSourceCode)
+            .CollectAsEquatableArray()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
@@ -52,8 +52,8 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .Combine(framework)
             .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
             .WhereNotNull()
-            .Collect()
-            .Select(GetSourceCode)
+            .CollectAsEquatableArray()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
@@ -61,8 +61,8 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .Combine(framework)
             .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
             .WhereNotNull()
-            .Collect()
-            .Select(GetSourceCode)
+            .CollectAsEquatableArray()
+            .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
     }
 
@@ -79,12 +79,9 @@ public class StaticConstructorGenerator : IIncrementalGenerator
     }
     
     private static FileWithName GetSourceCode(
-        ImmutableArray<(ClassData Class, DependencyPropertyData DependencyProperty)> values,
-        CancellationToken cancellationToken)
+        EquatableArray<(ClassData Class, DependencyPropertyData DependencyProperty)> values)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
-        if (values.IsDefaultOrEmpty)
+        if (values.AsImmutableArray().IsDefaultOrEmpty)
         {
             return FileWithName.Empty;
         }
