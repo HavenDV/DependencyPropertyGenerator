@@ -1,4 +1,6 @@
-﻿namespace H.Generators;
+﻿using H.Generators.Extensions;
+
+namespace H.Generators;
 
 public readonly record struct ClassData(
     string Namespace,
@@ -7,4 +9,4 @@ public readonly record struct ClassData(
     string Modifiers,
     bool IsStatic,
     Framework Framework,
-    IReadOnlyCollection<string> Methods);
+    EquatableArray<string> Methods);

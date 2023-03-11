@@ -1,4 +1,6 @@
-﻿namespace H.Generators;
+﻿using H.Generators.Extensions;
+
+namespace H.Generators;
 
 public readonly record struct DependencyPropertyData(
     string Name,
@@ -26,7 +28,7 @@ public readonly record struct DependencyPropertyData(
     string? XmlDocumentation,
     string? SetterXmlDocumentation,
     string? GetterXmlDocumentation,
-    IReadOnlyCollection<string> BindEvents,
+    EquatableArray<string> BindEvents,
     string OnChanged,
     bool AffectsMeasure,
     bool AffectsArrange,

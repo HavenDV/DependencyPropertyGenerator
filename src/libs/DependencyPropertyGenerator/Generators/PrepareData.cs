@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Immutable;
+using System.ComponentModel;
 using DependencyPropertyGenerator;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
@@ -120,14 +121,14 @@ public static class PrepareData
             XmlDocumentation: xmlDocumentation,
             GetterXmlDocumentation: getterXmlDocumentation ?? propertyXmlDocumentation,
             SetterXmlDocumentation: setterXmlDocumentation,
-            BindEvents: bindEvent != null
+            BindEvents: (bindEvent != null
                 ? new[] { bindEvent }
                 : bindEvents.Kind == TypedConstantKind.Array
                     ? bindEvents.Values
                         .Select(static value => value.Value?.ToString() ?? string.Empty)
                         .Where(value => !string.IsNullOrWhiteSpace(value))
                         .ToArray()
-                    : Array.Empty<string>(),
+                    : Array.Empty<string>()).ToImmutableArray().AsEquatableArray(),
             OnChanged: onChanged ?? string.Empty,
             AffectsMeasure: affectsMeasure,
             AffectsArrange: affectsArrange,
@@ -222,6 +223,6 @@ public static class PrepareData
             Modifiers: classModifiers,
             IsStatic: isStaticClass,
             Framework: framework,
-            Methods: methods);
+            Methods: methods.ToImmutableArray().AsEquatableArray());
     }
 }
