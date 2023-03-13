@@ -1,5 +1,5 @@
 # DependencyPropertyGenerator
-Dependency property and routed event source generator for WPF/UWP/WinUI/Uno/Avalonia/MAUI platforms. 
+Dependency property, routed event and weak event source generator for WPF/UWP/WinUI/Uno/Avalonia/MAUI platforms. 
 
 ## Install
 ```xml
