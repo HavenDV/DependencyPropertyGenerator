@@ -61,4 +61,19 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
+    
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task WeakEventWithEventArgsType(Framework framework)
+    {
+        return CheckSourceAsync<WeakEventGenerator>(GetHeader(framework, "Controls") + @"
+[WeakEvent<System.EventArgs>(""Changed"")]
+public partial class MyControl : UserControl
+{
+}", framework);
+    }
 }
