@@ -65,18 +65,18 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
-	    public event global::System.EventHandler? Completed
-	    {
-		    add => CompletedWeakEventManager.AddHandler(null, value);
-		    remove => CompletedWeakEventManager.RemoveHandler(null, value);
-	    }
+        public event global::System.EventHandler? Completed
+        {
+            add => CompletedWeakEventManager.AddHandler(null, value);
+            remove => CompletedWeakEventManager.RemoveHandler(null, value);
+        }
 
         /// <summary>
         /// A helper method to raise the Completed event.
         /// </summary>
-	    internal void RaiseCompletedEvent(object? sender)
-	    {
-		    CompletedWeakEventManager.CurrentManager.OnCompleted(sender, global::System.EventArgs.Empty);
-	    }
+        internal void RaiseCompletedEvent(object? sender)
+        {
+            CompletedWeakEventManager.CurrentManager.OnCompleted(sender, global::System.EventArgs.Empty);
+        }
     }
 }

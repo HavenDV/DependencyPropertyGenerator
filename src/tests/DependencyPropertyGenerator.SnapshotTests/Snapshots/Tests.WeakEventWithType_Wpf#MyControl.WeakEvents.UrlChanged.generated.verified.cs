@@ -65,18 +65,18 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
-	    public event global::System.EventHandler<string?>? UrlChanged
-	    {
-		    add => UrlChangedWeakEventManager.AddHandler(null, value);
-		    remove => UrlChangedWeakEventManager.RemoveHandler(null, value);
-	    }
+        public event global::System.EventHandler<string?>? UrlChanged
+        {
+            add => UrlChangedWeakEventManager.AddHandler(null, value);
+            remove => UrlChangedWeakEventManager.RemoveHandler(null, value);
+        }
 
         /// <summary>
         /// A helper method to raise the UrlChanged event.
         /// </summary>
-	    internal void RaiseUrlChangedEvent(object? sender, string? args)
-	    {
-		    UrlChangedWeakEventManager.CurrentManager.OnUrlChanged(sender, args);
-	    }
+        internal void RaiseUrlChangedEvent(object? sender, string? args)
+        {
+            UrlChangedWeakEventManager.CurrentManager.OnUrlChanged(sender, args);
+        }
     }
 }
