@@ -6,7 +6,7 @@
 namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will override dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
+/// Overrides dependency property metadata using DependencyProperty.OverrideMetadata. <br/>
 /// Metadata override behavior: <seealso href="https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/framework-property-metadata?view=netdesktop-6.0#metadata-override-behavior"/>
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]

@@ -6,7 +6,7 @@
 namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will generates routed event using EventManager.RegisterRoutedEvent.
+/// Generates routed event using EventManager.RegisterRoutedEvent.
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]

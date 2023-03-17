@@ -6,7 +6,7 @@
 namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will generate attached dependency property using DependencyProperty.Register.
+/// Generates attached dependency property using DependencyProperty.Register.
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
@@ -243,7 +243,7 @@ public sealed class DependencyPropertyAttribute : global::System.Attribute
 }
 
 /// <summary>
-/// Will generates attached dependency property using DependencyProperty.Register.
+/// Generates attached dependency property using DependencyProperty.Register.
 /// </summary>
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
