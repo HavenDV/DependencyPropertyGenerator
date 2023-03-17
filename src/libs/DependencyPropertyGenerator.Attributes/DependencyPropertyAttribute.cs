@@ -6,7 +6,7 @@
 namespace DependencyPropertyGenerator;
 
 /// <summary>
-/// Will generates attached dependency property using DependencyProperty.Register.
+/// Will generate attached dependency property using DependencyProperty.Register.
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
