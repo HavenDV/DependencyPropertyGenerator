@@ -1063,8 +1063,7 @@ namespace {@class.Namespace}
                 inherits: {(property.Inherits ? "true" : "false")},
                 defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
                 validate: {GenerateValidateValueCallback(property)},
-                coerce: {GenerateCoerceValueCallback(@class, property)},
-                notifying: null";
+                coerce: {GenerateCoerceValueCallback(@class, property)}";
     }
 
     private static string GenerateRegisterMethodArguments(ClassData @class, DependencyPropertyData property)

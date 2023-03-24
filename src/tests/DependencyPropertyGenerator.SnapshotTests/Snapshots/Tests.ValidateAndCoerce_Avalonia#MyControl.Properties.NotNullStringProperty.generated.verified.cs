@@ -21,8 +21,7 @@ namespace H.Generators.IntegrationTests
                         (string?)value),
                 coerce: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyControl)sender).CoerceNotNullStringProperty(
-                            (string?)value),
-                notifying: null);
+                            (string?)value));
 
         /// <summary>
         /// Default value: ""

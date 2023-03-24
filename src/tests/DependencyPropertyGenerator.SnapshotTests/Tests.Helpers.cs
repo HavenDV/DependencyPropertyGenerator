@@ -156,7 +156,7 @@ namespace H.Generators.IntegrationTests;
             Framework.UnoWinUi => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.7.30"))),
             Framework.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))),
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))), // 11.0.0-preview6
             Framework.Maui => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"),

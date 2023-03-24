@@ -17,8 +17,7 @@ namespace H.Generators.IntegrationTests
                 inherits: false,
                 defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
                 validate: null,
-                coerce: null,
-                notifying: null);
+                coerce: null);
 
         /// <summary>
         /// Default value: default(string)
