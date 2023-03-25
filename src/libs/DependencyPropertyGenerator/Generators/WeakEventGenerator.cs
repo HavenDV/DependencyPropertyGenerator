@@ -38,7 +38,8 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     private static (ClassData Class, EventData Event)? PrepareData(
         Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
+        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
+            ClassSymbol) tuple)
     {
         if (framework is not (Framework.Maui or Framework.Wpf))
         {
@@ -51,7 +52,7 @@ public class WeakEventGenerator : IIncrementalGenerator
 
         return (classData, eventData);
     }
-    
+
     private static FileWithName GetSourceCode((ClassData Class, EventData Event) data)
     {
         return new FileWithName(

@@ -59,7 +59,8 @@ public partial class MyControl : UserControl
     [DataRow(Framework.Avalonia)]
     public Task Attributes(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls", "System.ComponentModel") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls", "System.ComponentModel") +
+                                                             @"
 [DependencyProperty<string>(""AttributedProperty"",
     Category = ""Category"",
     Description = ""Description"",

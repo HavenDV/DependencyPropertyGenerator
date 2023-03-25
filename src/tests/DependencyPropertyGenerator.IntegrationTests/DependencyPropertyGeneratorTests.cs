@@ -24,7 +24,7 @@ public class DependencyPropertyGeneratorTests
                 TreeViewExtensions.SetSelectedItem(treeView, new object());
                 selectedItemValue = TreeViewExtensions.GetSelectedItem(treeView);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 exception = e;
             }
@@ -37,6 +37,7 @@ public class DependencyPropertyGeneratorTests
         {
             throw exception;
         }
+
         isSpinningValue.Should().BeTrue();
         selectedItemValue.Should().NotBeNull();
     }

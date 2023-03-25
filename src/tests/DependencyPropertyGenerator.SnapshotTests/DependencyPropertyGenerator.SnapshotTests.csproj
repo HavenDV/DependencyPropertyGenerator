@@ -1,30 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-    <PackageReference Include="FluentAssertions" Version="6.10.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" />
-    <PackageReference Include="Verify.MSTest" Version="19.10.0" />
-    <PackageReference Include="Verify.SourceGenerators" Version="2.1.0" />
-    <PackageReference Include="H.Generators.Extensions" Version="1.15.0" />
-    <PackageReference Include="H.Generators.Tests.Extensions" Version="1.15.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="MSTest.TestAdapter" />
+        <PackageReference Include="MSTest.TestFramework" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+        <PackageReference Include="Verify.MSTest" />
+        <PackageReference Include="Verify.SourceGenerators" />
+        <PackageReference Include="H.Generators.Extensions" />
+        <PackageReference Include="H.Generators.Tests.Extensions" />
+    </ItemGroup>
 
-  <ItemGroup Label="GlobalUsings">
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="FluentAssertions" />
-  </ItemGroup>
+    <ItemGroup Label="GlobalUsings">
+        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+        <Using Include="FluentAssertions" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" />
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference
+            Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" />
+        <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" />
+    </ItemGroup>
 
 </Project>

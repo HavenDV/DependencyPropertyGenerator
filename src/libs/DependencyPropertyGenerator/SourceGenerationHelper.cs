@@ -74,7 +74,8 @@ namespace {@class.Namespace}
             }}";
         }
 
-        return @$"{GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);";
+        return
+            @$"{GenerateAdditionalSetterModifier(property)}set => SetValue({GenerateDependencyPropertyName(property)}, value);";
     }
 
     private static string GenerateDependencyPropertyCreateCall(ClassData @class, DependencyPropertyData property)
@@ -120,20 +121,20 @@ namespace {@class.Namespace}
         private void RegisterPropertyChangedCallbacks()
         {{
 {overrideMetadata.Select(property => {
-            var senderType = property.IsAttached
-                ? GenerateBrowsableForType(property)
-                : GenerateType(@class.FullName, false);
+    var senderType = property.IsAttached
+        ? GenerateBrowsableForType(property)
+        : GenerateType(@class.FullName, false);
 
-            var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
-            if (!isChanged0 &&
-                !isChanged1 &&
-                !isChanged2 &&
-                !isChanged3)
-            {
-                return " ";
-            }
+    var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
+    if (!isChanged0 &&
+        !isChanged1 &&
+        !isChanged2 &&
+        !isChanged3)
+    {
+        return " ";
+    }
 
-            return @$"
+    return @$"
             _ = this.RegisterPropertyChangedCallback(
                 dp: {property.Name}Property,
                 callback: static (sender, dependencyProperty) =>
@@ -146,7 +147,7 @@ namespace {@class.Namespace}
                         ({GenerateType(property)})sender.GetValue(dependencyProperty));" : "")}
                 }});
 ";
-        }).Inject()}
+}).Inject()}
         }}
 
 {overrideMetadata.Select(GenerateOnChangedMethods).Inject()}
@@ -163,8 +164,8 @@ namespace {@class.Namespace}
             .Replace("global::", string.Empty)
             .Replace("?", string.Empty);
         var senderType = (property.IsAttached
-            ? GenerateBrowsableForType(property)
-            : GenerateType(@class.FullName, false))
+                ? GenerateBrowsableForType(property)
+                : GenerateType(@class.FullName, false))
             .Replace("global::", string.Empty);
 
         var isChanged0 =
@@ -181,9 +182,10 @@ namespace {@class.Namespace}
         return (isChanged0, isChanged1, isChanged2, isChanged3);
     }
 
-    private static (string Name, bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3) CheckOnChangedMethods(
-        ClassData @class,
-        DependencyPropertyData property)
+    private static (string Name, bool IsChanged0, bool IsChanged1, bool IsChanged2, bool IsChanged3)
+        CheckOnChangedMethods(
+            ClassData @class,
+            DependencyPropertyData property)
     {
         var isCustom = !string.IsNullOrWhiteSpace(property.OnChanged);
         var name = isCustom
@@ -366,14 +368,14 @@ namespace {@class.Namespace}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
-    
+
     public static string GenerateRoutedEvent(ClassData @class, EventData @event)
     {
         if (@event.IsAttached)
         {
             return GenerateAttachedRoutedEvent(@class, @event);
         }
-        
+
         // https://docs.avaloniaui.net/docs/input/routed-events
         if (@class.Framework == Framework.Wpf || @class.Framework == Framework.Avalonia)
         {
@@ -462,7 +464,7 @@ namespace {@class.Namespace}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
-    
+
     public static string GenerateAttachedRoutedEvent(ClassData @class, EventData @event)
     {
         return @$"
@@ -607,7 +609,8 @@ namespace {@class.Namespace}
 
     private static string GeneratePropertyChangingCallback(ClassData @class, DependencyPropertyData property)
     {
-        var (isChanging0, isChanging1, isChanging2, isChanging3) = CheckMethods($"On{property.Name}Changing", @class, property);
+        var (isChanging0, isChanging1, isChanging2, isChanging3) =
+            CheckMethods($"On{property.Name}Changing", @class, property);
         if (!isChanging0 &&
             !isChanging1 &&
             !isChanging2 &&
@@ -849,7 +852,8 @@ namespace {@class.Namespace}
     {
         if (@class.Framework == Framework.Avalonia)
         {
-            return $"{GenerateTypeByPlatform(@class.Framework, "Interactivity.RoutedEvent")}<{GenerateRoutedEventArgsType(@class)}>";
+            return
+                $"{GenerateTypeByPlatform(@class.Framework, "Interactivity.RoutedEvent")}<{GenerateRoutedEventArgsType(@class)}>";
         }
 
         return GenerateTypeByPlatform(@class.Framework, "RoutedEvent");
@@ -881,7 +885,7 @@ namespace {@class.Namespace}
         {
             return "global::System.EventArgs";
         }
-        
+
         return GenerateType(@event);
     }
 
@@ -915,6 +919,7 @@ namespace {@class.Namespace}
                     ? "BindablePropertyKey"
                     : "BindableProperty");
         }
+
         if (property.Framework == Framework.Avalonia)
         {
             return property.IsDirect
@@ -929,6 +934,7 @@ namespace {@class.Namespace}
                         property.Framework,
                         $"StyledProperty<{GenerateType(property)}>");
         }
+
         if (property is { IsReadOnly: true, Framework: Framework.Wpf })
         {
             return GenerateTypeByPlatform(property.Framework, "DependencyPropertyKey");
@@ -945,6 +951,7 @@ namespace {@class.Namespace}
                 @class.Framework,
                 "BindableProperty");
         }
+
         if (@class.Framework == Framework.Avalonia)
         {
             return GenerateTypeByPlatform(
@@ -977,6 +984,7 @@ namespace {@class.Namespace}
                     ? "CreateReadOnly"
                     : "Create";
         }
+
         if (property.Framework == Framework.Avalonia)
         {
             return property.IsDirect
@@ -985,6 +993,7 @@ namespace {@class.Namespace}
                     ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
                     : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
         }
+
         if (property is { IsReadOnly: true, Framework: Framework.Wpf })
         {
             return property.IsAttached
@@ -1072,10 +1081,12 @@ namespace {@class.Namespace}
         {
             return GenerateAvaloniaRegisterMethodArguments(@class, property);
         }
+
         if (@class.Framework == Framework.Maui)
         {
             return GenerateMauiRegisterMethodArguments(@class, property);
         }
+
         if (@class.Framework == Framework.Wpf)
         {
             return @$"
@@ -1099,10 +1110,12 @@ namespace {@class.Namespace}
         {
             return GenerateMauiRegisterMethodArguments(@class, property);
         }
+
         if (@class.Framework == Framework.Avalonia)
         {
             return GenerateAvaloniaRegisterMethodArguments(@class, property);
         }
+
         if (@class.Framework == Framework.Wpf)
         {
             return @$"
@@ -1152,6 +1165,7 @@ namespace {@class.Namespace}
         {
             return GenerateTypeByPlatform(framework, "BindableObject");
         }
+
         if (framework == Framework.Avalonia)
         {
             return GenerateTypeByPlatform(framework, "IAvaloniaObject");
@@ -1159,7 +1173,7 @@ namespace {@class.Namespace}
 
         return GenerateTypeByPlatform(framework, "DependencyObject");
     }
-    
+
     private static string GenerateDefaultValue(DependencyPropertyData property)
     {
         var type = GenerateType(property.Type, property.IsSpecialType);
@@ -1167,8 +1181,8 @@ namespace {@class.Namespace}
         {
             return $"({type}){property.DefaultValueDocumentation}";
         }
-        
-        return property.DefaultValue != null 
+
+        return property.DefaultValue != null
             ? $"({type}){property.DefaultValue}"
             : $"default({type})";
     }
@@ -1196,14 +1210,14 @@ namespace {@class.Namespace}
         {
             return GenerateRoutedEventHandlerType(@class);
         }
-        
+
         return @event.Type.WithGlobalPrefix();
     }
 
     private static string GenerateXmlDocumentationFrom(string value)
     {
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        
+
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
@@ -1307,7 +1321,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         {
             return " ";
         }
-        
+
         return property.Framework switch
         {
             Framework.Maui => $@" 
@@ -1458,12 +1472,12 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         var isMultilineString =
             value.Contains('\r') ||
             value.Contains('\n');
-        
+
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Description),
-            isMultilineString 
-                    ? $"@\"{value}\""
-                    : $"\"{value}\"");
+            isMultilineString
+                ? $"@\"{value}\""
+                : $"\"{value}\"");
     }
 
     private static string GenerateTypeConverterAttribute(string? value)
@@ -1527,7 +1541,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             "System.Windows.Localizability",
             $"global::System.Windows.LocalizationCategory.{value}");
     }
-    
+
     private static string GenerateBrowsableForTypeAttribute(DependencyPropertyData property)
     {
         if (property.Framework != Framework.Wpf)
@@ -1547,46 +1561,57 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
         {
             values.Add(nameof(property.AffectsMeasure));
         }
+
         if (property.AffectsArrange)
         {
             values.Add(nameof(property.AffectsArrange));
         }
+
         if (property.AffectsParentMeasure)
         {
             values.Add(nameof(property.AffectsParentMeasure));
         }
+
         if (property.AffectsParentArrange)
         {
             values.Add(nameof(property.AffectsParentArrange));
         }
+
         if (property.AffectsRender)
         {
             values.Add(nameof(property.AffectsRender));
         }
+
         if (property.Inherits)
         {
             values.Add(nameof(property.Inherits));
         }
+
         if (property.OverridesInheritanceBehavior)
         {
             values.Add(nameof(property.OverridesInheritanceBehavior));
         }
+
         if (property.NotDataBindable)
         {
             values.Add(nameof(property.NotDataBindable));
         }
+
         if (property.DefaultBindingMode == "TwoWay")
         {
             values.Add("BindsTwoWayByDefault");
         }
+
         if (property.Journal)
         {
             values.Add(nameof(property.Journal));
         }
+
         if (property.SubPropertiesDoNotAffectRender)
         {
             values.Add(nameof(property.SubPropertiesDoNotAffectRender));
         }
+
         if (!values.Any())
         {
             values.Add("None");

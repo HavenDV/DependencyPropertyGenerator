@@ -16,10 +16,11 @@ internal static class GeneratorDriverExtensions
     {
         driver = driver.RunGenerators(compilation, cancellationToken);
         var result = driver.GetRunResult();
-        
+
         outputCompilation = compilation
             .AddSyntaxTrees(result.GeneratedTrees
-                .Select(tree => tree.WithRootAndOptions(tree.GetRoot(cancellationToken), CSharpParseOptions.Default.WithLanguageVersion(version))));
+                .Select(tree => tree.WithRootAndOptions(tree.GetRoot(cancellationToken),
+                    CSharpParseOptions.Default.WithLanguageVersion(version))));
         diagnostics = result.Diagnostics;
 
         return driver;

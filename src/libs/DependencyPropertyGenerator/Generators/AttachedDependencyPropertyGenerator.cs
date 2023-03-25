@@ -46,15 +46,17 @@ public class AttachedDependencyPropertyGenerator : IIncrementalGenerator
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
         Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
+        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
+            ClassSymbol) tuple)
     {
         var (_, attribute, classSyntax, classSymbol) = tuple;
         var classData = classSymbol.GetClassData(framework);
-        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, classSyntax.TryFindAttributeSyntax(attribute), isAttached: true);
-        
+        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework,
+            classSyntax.TryFindAttributeSyntax(attribute), isAttached: true);
+
         return (classData, dependencyPropertyData);
     }
-    
+
     private static FileWithName GetSourceCode((ClassData Class, DependencyPropertyData DependencyProperty) data)
     {
         return new FileWithName(

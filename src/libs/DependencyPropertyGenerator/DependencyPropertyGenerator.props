@@ -1,27 +1,29 @@
 ﻿<Project>
 
-  <ItemGroup>
-    <CompilerVisibleProperty Include="RecognizeFramework_DefineConstants"/>
-    <CompilerVisibleProperty Include="UseWPF"/>
-    <CompilerVisibleProperty Include="UseWinUI"/>
-    <CompilerVisibleProperty Include="UseMaui"/>
-  </ItemGroup>
+    <ItemGroup>
+        <CompilerVisibleProperty Include="RecognizeFramework_DefineConstants" />
+        <CompilerVisibleProperty Include="UseWPF" />
+        <CompilerVisibleProperty Include="UseWinUI" />
+        <CompilerVisibleProperty Include="UseMaui" />
+    </ItemGroup>
 
-  <Target Name="CreateDefineConstants" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
+    <Target Name="CreateDefineConstants"
+            BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun;GenerateMSBuildEditorConfigFileCore">
+
+        <PropertyGroup>
+            <RecognizeFramework_DefineConstants>$(DefineConstants.Replace(';',','))</RecognizeFramework_DefineConstants>
+        </PropertyGroup>
+
+    </Target>
 
     <PropertyGroup>
-      <RecognizeFramework_DefineConstants>$(DefineConstants.Replace(';',','))</RecognizeFramework_DefineConstants>
+        <DependencyPropertyGenerator_EmbedAttributes>false</DependencyPropertyGenerator_EmbedAttributes>
+        <DependencyPropertyGenerator_EmbeddedAttributesVisible>true</DependencyPropertyGenerator_EmbeddedAttributesVisible>
     </PropertyGroup>
 
-  </Target>
+    <ItemGroup Condition="$(DependencyPropertyGenerator_EmbedAttributes)">
+        <Compile Include="$(MSBuildThisFileDirectory)*.cs"
+                 Visible="$(DependencyPropertyGenerator_EmbeddedAttributesVisible)" />
+    </ItemGroup>
 
-  <PropertyGroup>
-    <DependencyPropertyGenerator_EmbedAttributes>false</DependencyPropertyGenerator_EmbedAttributes>
-    <DependencyPropertyGenerator_EmbeddedAttributesVisible>true</DependencyPropertyGenerator_EmbeddedAttributesVisible>
-  </PropertyGroup>
-
-  <ItemGroup Condition="$(DependencyPropertyGenerator_EmbedAttributes)">
-    <Compile Include="$(MSBuildThisFileDirectory)*.cs" Visible="$(DependencyPropertyGenerator_EmbeddedAttributesVisible)" />
-  </ItemGroup>
-  
 </Project>

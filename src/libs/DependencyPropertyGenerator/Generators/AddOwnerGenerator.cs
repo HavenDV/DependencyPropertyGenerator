@@ -38,7 +38,8 @@ public class AddOwnerGenerator : IIncrementalGenerator
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
         Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
+        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
+            ClassSymbol) tuple)
     {
         if (framework is not (Framework.Avalonia or Framework.Wpf))
         {
@@ -46,13 +47,13 @@ public class AddOwnerGenerator : IIncrementalGenerator
         }
 
         var (_, attribute, _, classSymbol) = tuple;
-        
+
         var classData = classSymbol.GetClassData(framework);
         var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, isAddOwner: true);
-        
+
         return (classData, dependencyPropertyData);
     }
-    
+
     private static FileWithName GetSourceCode((ClassData Class, DependencyPropertyData DependencyProperty) data)
     {
         return new FileWithName(

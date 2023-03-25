@@ -79,7 +79,7 @@ namespace H.Generators.IntegrationTests;
 
         return globalOptions;
     }
-    
+
     private async Task CheckSourceAsync<T>(
         string source,
         Framework framework,
@@ -94,6 +94,7 @@ namespace H.Generators.IntegrationTests;
                 .Replace("PointerExited", "MouseLeave")
                 .Replace("PointerRoutedEventArgs", "MouseEventArgs");
         }
+
         if (framework == Framework.Uno ||
             framework == Framework.UnoWinUi ||
             framework == Framework.WinUi ||
@@ -102,6 +103,7 @@ namespace H.Generators.IntegrationTests;
             source = source
                 .Replace("KeyEventArgs", "KeyRoutedEventArgs");
         }
+
         if (framework == Framework.Avalonia)
         {
             source = source
@@ -116,6 +118,7 @@ namespace H.Generators.IntegrationTests;
                 .Replace("PointerExited", "PointerLeave")
                 .Replace("PointerRoutedEventArgs", "PointerEventArgs");
         }
+
         if (framework == Framework.Maui)
         {
             source = source
@@ -168,18 +171,22 @@ namespace H.Generators.IntegrationTests;
             assemblyName: "Tests",
             syntaxTrees: new[]
             {
-                CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview), cancellationToken: cancellationToken),
+                CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview),
+                    cancellationToken: cancellationToken),
             },
             references: references
-                .Add(MetadataReference.CreateFromFile(typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
+                .Add(MetadataReference.CreateFromFile(
+                    typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var generator = new T();
         GeneratorDriver driver = additionalGenerators.Any()
-            ? CSharpGeneratorDriver.Create(new IIncrementalGenerator[]{ generator }.Concat(additionalGenerators).ToArray())
+            ? CSharpGeneratorDriver.Create(new IIncrementalGenerator[] { generator }.Concat(additionalGenerators)
+                .ToArray())
             : CSharpGeneratorDriver.Create(generator);
         driver = driver
             .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(GetGlobalOptions(framework)))
-            .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
+            .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _,
+                cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(

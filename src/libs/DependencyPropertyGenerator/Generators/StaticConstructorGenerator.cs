@@ -68,16 +68,17 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
         Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple,
+        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
+            ClassSymbol) tuple,
         bool isAttached)
     {
         var (_, attribute, _, classSymbol) = tuple;
         var classData = classSymbol.GetClassData(framework);
         var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, isAttached: isAttached);
-        
+
         return (classData, dependencyPropertyData);
     }
-    
+
     private static FileWithName GetSourceCode(
         EquatableArray<(ClassData Class, DependencyPropertyData DependencyProperty)> values)
     {
@@ -85,13 +86,13 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         {
             return FileWithName.Empty;
         }
-        
+
         var @class = values.First().Class;
         if (@class.Framework is not Framework.Avalonia)
         {
             return FileWithName.Empty;
         }
-        
+
         var dependencyProperties = values
             .Select(static x => x.DependencyProperty)
             .ToArray();

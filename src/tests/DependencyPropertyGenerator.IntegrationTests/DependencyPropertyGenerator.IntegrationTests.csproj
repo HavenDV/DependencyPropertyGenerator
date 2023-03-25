@@ -1,29 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <NoWarn>$(NoWarn);CS3021</NoWarn>
-    <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
-  </PropertyGroup>
-  
-  <Import Project="../../libs/DependencyPropertyGenerator/DependencyPropertyGenerator.props"/>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <NoWarn>$(NoWarn);CS3021</NoWarn>
+        <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-    <PackageReference Include="FluentAssertions" Version="6.10.0" />
-    <PackageReference Include="Avalonia" Version="0.10.18" />
-  </ItemGroup>
+    <Import Project="../../libs/DependencyPropertyGenerator/DependencyPropertyGenerator.props" />
 
-  <ItemGroup Label="GlobalUsings">
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="FluentAssertions" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="MSTest.TestAdapter" />
+        <PackageReference Include="MSTest.TestFramework" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Avalonia" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
+    <ItemGroup Label="GlobalUsings">
+        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+        <Using Include="FluentAssertions" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference
+            Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj"
+            OutputItemType="Analyzer" />
+        <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj"
+                          OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ internal static partial class SourceGenerationHelper
         var modifiers = @event.IsAttached
             ? " static"
             : string.Empty;
-        
+
         switch (@class.Framework)
         {
             // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/events/weak-event-patterns
@@ -24,7 +24,7 @@ internal static partial class SourceGenerationHelper
                 var source = @event.IsAttached
                     ? @class.Name
                     : $"(source as {@class.Name})!";
-                
+
                 return @$" 
 #nullable enable
 
@@ -107,13 +107,13 @@ namespace {@class.Namespace}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
             }
-            
+
             // https://github.com/dotnet/maui/issues/2703
             // https://github.com/dotnet/maui/pull/12950
             case Framework.Maui:
             {
                 var nullable = !@event.Type.Contains("EventArgs");
-                
+
                 return @$" 
 #nullable enable
 

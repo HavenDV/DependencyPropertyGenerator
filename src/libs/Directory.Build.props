@@ -1,47 +1,47 @@
 <Project>
 
-  <Import Project="..\Directory.Build.props" />
+    <Import Project="..\Directory.Build.props" />
 
-  <PropertyGroup Label="Signing">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)src\key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+    <PropertyGroup Label="Signing">
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(SolutionDir)src\key.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
 
-  <ItemGroup Label="CLSCompliant">
-    <AssemblyAttribute Include="System.CLSCompliantAttribute">
-      <_Parameter1>false</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-  
-  <PropertyGroup Label="Nuget">
-    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Authors>havendv</Authors>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>nuget_icon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
+    <ItemGroup Label="CLSCompliant">
+        <AssemblyAttribute Include="System.CLSCompliantAttribute">
+            <_Parameter1>false</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
-  <ItemGroup Label="Nuget">
-    <None Include="$(SolutionDir)assets\nuget_icon.png" Pack="true" PackagePath="\" Visible="false" />
-    <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\" Visible="false" />
-    <PackageReference Include="ConventionalCommitsGitInfo" Version="0.3.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <PropertyGroup Label="Nuget">
+        <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Authors>havendv</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>nuget_icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
 
-  <ItemGroup Label="Source Link">
-    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup Label="Nuget">
+        <None Include="$(SolutionDir)assets\nuget_icon.png" Pack="true" PackagePath="\" Visible="false" />
+        <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\" Visible="false" />
+        <PackageReference Include="ConventionalCommitsGitInfo">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <PropertyGroup Label="Analyzers">
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>All</AnalysisMode>
-  </PropertyGroup>
+    <ItemGroup Label="Source Link">
+        <PackageReference Include="DotNet.ReproducibleBuilds">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <PropertyGroup Label="Analyzers">
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <AnalysisMode>All</AnalysisMode>
+    </PropertyGroup>
 
 </Project>

@@ -16,7 +16,7 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
-    
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]
@@ -31,7 +31,7 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
-    
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]
@@ -46,7 +46,7 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
-    
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]
@@ -61,7 +61,7 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
-    
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]

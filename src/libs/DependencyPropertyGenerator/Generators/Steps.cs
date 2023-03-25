@@ -15,11 +15,15 @@ public static class CommonSteps
             .ForAttributeWithMetadataName(
                 fullyQualifiedMetadataName: fullyQualifiedMetadataName,
                 predicate: static (node, _) =>
-                    node is ClassDeclarationSyntax { AttributeLists.Count: > 0 } or RecordDeclarationSyntax { AttributeLists.Count: > 0 },
+                    node is ClassDeclarationSyntax { AttributeLists.Count: > 0 } or RecordDeclarationSyntax
+                    {
+                        AttributeLists.Count: > 0
+                    },
                 transform: static (context, _) => context);
     }
 
-    public static IncrementalValuesProvider<(SemanticModel SemanticModel, ImmutableArray<AttributeData> Attributes, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol)>
+    public static IncrementalValuesProvider<(SemanticModel SemanticModel, ImmutableArray<AttributeData> Attributes,
+            ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol)>
         SelectAllAttributes(
             this IncrementalValuesProvider<GeneratorAttributeSyntaxContext> source)
     {
@@ -31,9 +35,10 @@ public static class CommonSteps
                 ClassSymbol: (INamedTypeSymbol)context.TargetSymbol));
     }
 
-    public static IncrementalValuesProvider<(SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol)>
+    public static IncrementalValuesProvider<(SemanticModel SemanticModel, AttributeData AttributeData,
+            ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol)>
         SelectManyAllAttributesOfCurrentClassSyntax(
-        this IncrementalValuesProvider<GeneratorAttributeSyntaxContext> source)
+            this IncrementalValuesProvider<GeneratorAttributeSyntaxContext> source)
     {
         return source
             .SelectMany(static (context, _) => context.Attributes
@@ -41,7 +46,7 @@ public static class CommonSteps
                 {
                     var classSyntax = (ClassDeclarationSyntax)context.TargetNode;
                     var attributeSyntax = classSyntax.TryFindAttributeSyntax(x);
-                    
+
                     return attributeSyntax != null;
                 })
                 .Select(x => (
