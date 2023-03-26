@@ -8,37 +8,13 @@ public class DependencyPropertyGeneratorTests
     [TestMethod]
     public void GeneratesCorrectly()
     {
-        var isSpinningValue = false;
-        var selectedItemValue = (object?)null;
-        var exception = (Exception?)null;
+        var window = new MyControl();
+        window.SetValue(MyControl.IsSpinningProperty, false);
+        window.GetValue(MyControl.IsSpinningProperty).Should().BeFalse();
+        window.IsChanged.Should().BeTrue();
 
-        var thread = new Thread(() =>
-        {
-            try
-            {
-                var window = new MyControl();
-                window.SetValue(MyControl.IsSpinningProperty, true);
-                isSpinningValue = window.GetValue(MyControl.IsSpinningProperty);
-
-                var treeView = new TreeView();
-                TreeViewExtensions.SetSelectedItem(treeView, new object());
-                selectedItemValue = TreeViewExtensions.GetSelectedItem(treeView);
-            }
-            catch (Exception e)
-            {
-                exception = e;
-            }
-        });
-        //thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-
-        if (exception != null)
-        {
-            throw exception;
-        }
-
-        isSpinningValue.Should().BeTrue();
-        selectedItemValue.Should().NotBeNull();
+        var treeView = new TreeView();
+        TreeViewExtensions.SetSelectedItem(treeView, new object());
+        TreeViewExtensions.GetSelectedItem(treeView).Should().NotBeNull();
     }
 }

@@ -14,9 +14,12 @@ namespace H.Generators.IntegrationTests;
 [DependencyProperty<bool>("IsSpinning", DefaultValue = true, Category = "Category", Description = "Description")]
 public partial class MyControl : UserControl
 {
+    public bool IsChanged { get; private set; }
+    
     // Optional
     partial void OnIsSpinningChanged(bool oldValue, bool newValue)
     {
+        IsChanged = true;
     }
 }
 
