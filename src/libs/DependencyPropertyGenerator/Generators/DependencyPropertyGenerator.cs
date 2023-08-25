@@ -52,7 +52,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     private static FileWithName GetSourceCode((ClassData Class, DependencyPropertyData DependencyProperty) data)
     {
         return new FileWithName(
-            Name: $"{data.Class.Name}.Properties.{data.DependencyProperty.Name}.generated.cs",
+            Name: $"{data.Class.FullName}.Properties.{data.DependencyProperty.Name}.g.cs",
             Text: SourceGenerationHelper.GenerateDependencyProperty(data.Class, data.DependencyProperty));
     }
 

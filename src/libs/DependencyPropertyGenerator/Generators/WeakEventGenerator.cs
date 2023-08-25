@@ -56,7 +56,7 @@ public class WeakEventGenerator : IIncrementalGenerator
     private static FileWithName GetSourceCode((ClassData Class, EventData Event) data)
     {
         return new FileWithName(
-            Name: $"{data.Class.Name}.WeakEvents.{data.Event.Name}.generated.cs",
+            Name: $"{data.Class.FullName}.WeakEvents.{data.Event.Name}.g.cs",
             Text: SourceGenerationHelper.GenerateWeakEvent(data.Class, data.Event));
     }
 

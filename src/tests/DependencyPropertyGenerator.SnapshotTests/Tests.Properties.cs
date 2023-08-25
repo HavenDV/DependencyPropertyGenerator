@@ -337,4 +337,32 @@ public partial class Generatable : FrameworkElement
 {
 }", framework);
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task SameNameDifferentNamespaces(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, nullable: true, @namespace: false, string.Empty) + @"
+namespace Namespace1
+{
+    [DependencyProperty<int>(""MyProperty"")]
+    public partial class MyControl : FrameworkElement
+    {
+        public int MyPropertySqrt => MyProperty * MyProperty;
+    }
+}
+
+namespace Namespace2
+{
+    [DependencyProperty<int>(""MyProperty"")]
+    public partial class MyControl : FrameworkElement
+    {
+        public int MyPropertySqrt => MyProperty * MyProperty;
+    }
+}", framework);
+    }
 }

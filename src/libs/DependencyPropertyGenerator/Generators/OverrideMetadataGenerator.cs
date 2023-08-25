@@ -63,8 +63,8 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
         (ClassData Class, EquatableArray<DependencyPropertyData> OverrideMetada) data)
     {
         var name = data.Class.Framework is Framework.Wpf
-            ? $"{data.Class.Name}.StaticConstructor.generated.cs"
-            : $"{data.Class.Name}.Methods.RegisterPropertyChangedCallbacks.generated.cs";
+            ? $"{data.Class.FullName}.StaticConstructor.g.cs"
+            : $"{data.Class.FullName}.Methods.RegisterPropertyChangedCallbacks.g.cs";
         var text = data.Class.Framework is Framework.Wpf
             ? SourceGenerationHelper.GenerateStaticConstructor(data.Class, data.OverrideMetada.AsImmutableArray())
             : SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(data.Class,

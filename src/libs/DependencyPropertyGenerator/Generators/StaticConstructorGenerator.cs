@@ -107,7 +107,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             if (!string.IsNullOrWhiteSpace(text))
             {
                 return new FileWithName(
-                    Name: $"{@class.Name}.StaticConstructor.generated.cs",
+                    Name: $"{@class.FullName}.StaticConstructor.g.cs",
                     Text: text);
             }
         }
