@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty AttributedPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
-            propertyName: "AttributedProperty",
-            returnType: typeof(string),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
-            defaultValue: default(string),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "AttributedProperty",
+                returnType: typeof(string),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                defaultValue: default(string),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Description<br/>

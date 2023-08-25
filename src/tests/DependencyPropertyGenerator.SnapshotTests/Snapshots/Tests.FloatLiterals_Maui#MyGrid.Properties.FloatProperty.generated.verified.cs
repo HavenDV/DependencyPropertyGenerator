@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty FloatPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
-            propertyName: "FloatProperty",
-            returnType: typeof(float),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
-            defaultValue: (float)42,
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "FloatProperty",
+                returnType: typeof(float),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                defaultValue: (float)42,
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: 42

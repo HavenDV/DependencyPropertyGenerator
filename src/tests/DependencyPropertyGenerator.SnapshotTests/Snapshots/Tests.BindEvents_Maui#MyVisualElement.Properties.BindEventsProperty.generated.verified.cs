@@ -12,21 +12,21 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty BindEventsPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
-            propertyName: "BindEventsProperty",
-            returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyVisualElement),
-            defaultValue: default(object),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "BindEventsProperty",
+                returnType: typeof(object),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyVisualElement),
+                defaultValue: default(object),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: static (sender, oldValue, newValue) =>
+                {
+                    ((global::H.Generators.IntegrationTests.MyVisualElement)sender).OnBindEventsPropertyChanged(
+                        (object?)oldValue,
+                        (object?)newValue);
+                },
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(object)

@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty UserAgentSuffixProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "UserAgentSuffix",
-            returnType: typeof(string),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: default(string),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "UserAgentSuffix",
+                returnType: typeof(string),
+                declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
+                defaultValue: default(string),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// A suffix that is added to the default user agent, surrounded by square brackets.

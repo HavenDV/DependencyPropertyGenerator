@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey AquariumGraphicPropertyKey =
             global::Microsoft.Maui.Controls.BindableProperty.CreateReadOnly(
-            propertyName: "AquariumGraphic",
-            returnType: typeof(global::System.Uri),
-            declaringType: typeof(global::H.Generators.IntegrationTests.Aquarium),
-            defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "AquariumGraphic",
+                returnType: typeof(global::System.Uri),
+                declaringType: typeof(global::H.Generators.IntegrationTests.Aquarium),
+                defaultValue: (global::System.Uri)new System.Uri("http://www.contoso.com/aquarium-graphic.jpg"),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>

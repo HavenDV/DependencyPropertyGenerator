@@ -12,22 +12,22 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty ModeProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "Mode",
-            returnType: typeof(global::H.Generators.IntegrationTests.Mode),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                OnModeChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Mode)oldValue,
-                    (global::H.Generators.IntegrationTests.Mode)newValue);
-            },
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "Mode",
+                returnType: typeof(global::H.Generators.IntegrationTests.Mode),
+                declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
+                defaultValue: (global::H.Generators.IntegrationTests.Mode)1,
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: static (sender, oldValue, newValue) =>
+                {
+                    OnModeChanged(
+                        (global::Microsoft.Maui.Controls.Grid)sender,
+                        (global::H.Generators.IntegrationTests.Mode)oldValue,
+                        (global::H.Generators.IntegrationTests.Mode)newValue);
+                },
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: Mode2

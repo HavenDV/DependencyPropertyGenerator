@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty HeadersProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
-            propertyName: "Headers",
-            returnType: typeof(global::System.Collections.Generic.Dictionary<string, string>),
-            declaringType: typeof(global::H.Generators.IntegrationTests.Generatable),
-            defaultValue: default(global::System.Collections.Generic.Dictionary<string, string>),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.TwoWay,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "Headers",
+                returnType: typeof(global::System.Collections.Generic.Dictionary<string, string>),
+                declaringType: typeof(global::H.Generators.IntegrationTests.Generatable),
+                defaultValue: default(global::System.Collections.Generic.Dictionary<string, string>),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.TwoWay,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(Dictionary&lt;string, string&gt;)

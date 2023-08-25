@@ -124,7 +124,7 @@ public partial class Generatable : FrameworkElement
     [DataRow(Framework.Avalonia)]
     public Task NullableDisable(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, false, string.Empty) + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, nullable: false, @namespace: true, string.Empty) + @"
 [DependencyProperty<string>(""Text"")]
 public partial class Generatable : FrameworkElement
 {

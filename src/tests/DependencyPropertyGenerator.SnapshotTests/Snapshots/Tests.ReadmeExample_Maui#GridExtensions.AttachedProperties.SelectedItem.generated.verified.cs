@@ -12,22 +12,22 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty SelectedItemProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "SelectedItem",
-            returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: default(object),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.TwoWay,
-            validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                OnSelectedItemChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (object?)oldValue,
-                    (object?)newValue);
-            },
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "SelectedItem",
+                returnType: typeof(object),
+                declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
+                defaultValue: default(object),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.TwoWay,
+                validateValue: null,
+                propertyChanged: static (sender, oldValue, newValue) =>
+                {
+                    OnSelectedItemChanged(
+                        (global::Microsoft.Maui.Controls.Grid)sender,
+                        (object?)oldValue,
+                        (object?)newValue);
+                },
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(object)

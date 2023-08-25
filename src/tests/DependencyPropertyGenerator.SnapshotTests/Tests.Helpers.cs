@@ -11,6 +11,7 @@ public partial class Tests : VerifyBase
     private static string GetHeader(
         Framework framework,
         bool nullable,
+        bool @namespace,
         params string[] values)
     {
         var prefix = framework switch
@@ -34,7 +35,7 @@ using DependencyPropertyGenerator;
 
 #nullable {(nullable ? "enable" : "disable")}
 
-namespace H.Generators.IntegrationTests;
+{(@namespace ? "namespace H.Generators.IntegrationTests;" : string.Empty)}
 ";
     }
 
@@ -42,7 +43,7 @@ namespace H.Generators.IntegrationTests;
         Framework framework,
         params string[] values)
     {
-        return GetHeader(framework, true, values);
+        return GetHeader(framework, nullable: true, @namespace: true, values);
     }
 
     private static Dictionary<string, string> GetGlobalOptions(Framework framework)

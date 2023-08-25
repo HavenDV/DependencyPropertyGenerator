@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey IsSpinningPropertyKey =
             global::Microsoft.Maui.Controls.BindableProperty.CreateReadOnly(
-            propertyName: "IsSpinning",
-            returnType: typeof(bool),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
-            defaultValue: default(bool),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "IsSpinning",
+                returnType: typeof(bool),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                defaultValue: default(bool),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>

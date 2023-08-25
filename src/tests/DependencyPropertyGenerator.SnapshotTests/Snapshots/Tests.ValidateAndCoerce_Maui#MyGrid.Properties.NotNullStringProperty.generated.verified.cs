@@ -12,20 +12,20 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty NotNullStringPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
-            propertyName: "NotNullStringProperty",
-            returnType: typeof(string),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
-            defaultValue: (string)"",
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: static (_, value) =>
+                propertyName: "NotNullStringProperty",
+                returnType: typeof(string),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                defaultValue: (string)"",
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: static (_, value) =>
                     IsNotNullStringPropertyValid(
                         (string?)value),
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: static (sender, value) =>
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: static (sender, value) =>
                         ((global::H.Generators.IntegrationTests.MyGrid)sender).CoerceNotNullStringProperty(
                             (string?)value),
-            defaultValueCreator: null);
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: ""

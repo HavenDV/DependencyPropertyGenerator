@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty SomePropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "SomeProperty",
-            returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: default(object),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "SomeProperty",
+                returnType: typeof(object),
+                declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
+                defaultValue: default(object),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(object)

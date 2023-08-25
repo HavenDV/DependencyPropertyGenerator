@@ -12,21 +12,21 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindableProperty TestPropProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
-            propertyName: "TestProp",
-            returnType: typeof(global::H.Generators.IntegrationTests.Test),
-            declaringType: typeof(global::H.Generators.IntegrationTests.Test),
-            defaultValue: default(global::H.Generators.IntegrationTests.Test),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-            validateValue: null,
-            propertyChanged: static (sender, oldValue, newValue) =>
-            {
-                TestChanged(
-                    (global::Microsoft.Maui.Controls.Grid)sender,
-                    (global::H.Generators.IntegrationTests.Test?)newValue);
-            },
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "TestProp",
+                returnType: typeof(global::H.Generators.IntegrationTests.Test),
+                declaringType: typeof(global::H.Generators.IntegrationTests.Test),
+                defaultValue: default(global::H.Generators.IntegrationTests.Test),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
+                validateValue: null,
+                propertyChanged: static (sender, oldValue, newValue) =>
+                {
+                    TestChanged(
+                        (global::Microsoft.Maui.Controls.Grid)sender,
+                        (global::H.Generators.IntegrationTests.Test?)newValue);
+                },
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Default value: default(Test)

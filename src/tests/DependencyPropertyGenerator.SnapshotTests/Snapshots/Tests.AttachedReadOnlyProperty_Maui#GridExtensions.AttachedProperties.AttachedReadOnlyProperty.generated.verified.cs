@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey AttachedReadOnlyPropertyPropertyKey =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttachedReadOnly(
-            propertyName: "AttachedReadOnlyProperty",
-            returnType: typeof(object),
-            declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-            defaultValue: default(object),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "AttachedReadOnlyProperty",
+                returnType: typeof(object),
+                declaringType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
+                defaultValue: default(object),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Identifies the AttachedReadOnlyProperty dependency property.<br/>

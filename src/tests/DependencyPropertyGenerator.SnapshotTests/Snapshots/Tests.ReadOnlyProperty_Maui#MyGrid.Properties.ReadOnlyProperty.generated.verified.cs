@@ -12,16 +12,16 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         public static readonly global::Microsoft.Maui.Controls.BindablePropertyKey ReadOnlyPropertyPropertyKey =
             global::Microsoft.Maui.Controls.BindableProperty.CreateReadOnly(
-            propertyName: "ReadOnlyProperty",
-            returnType: typeof(bool),
-            declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
-            defaultValue: default(bool),
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
-            validateValue: null,
-            propertyChanged: null,
-            propertyChanging: null,
-            coerceValue: null,
-            defaultValueCreator: null);
+                propertyName: "ReadOnlyProperty",
+                returnType: typeof(bool),
+                declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
+                defaultValue: default(bool),
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWayToSource,
+                validateValue: null,
+                propertyChanged: null,
+                propertyChanging: null,
+                coerceValue: null,
+                defaultValueCreator: null);
 
         /// <summary>
         /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>

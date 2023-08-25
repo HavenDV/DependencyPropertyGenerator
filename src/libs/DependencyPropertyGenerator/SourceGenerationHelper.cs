@@ -559,27 +559,27 @@ namespace {@class.Namespace}
         {
             return property.IsAttached
                 ? $@"static (sender, oldValue, newValue) =>
-            {{
-                {(isChanged0 ? @$"{name}();" : "")}
-                {(isChanged1 ? @$"{name}(
-                    ({senderType})sender);" : "")}
-                {(isChanged2 ? @$"{name}(
-                    ({senderType})sender,
-                    ({GenerateType(property)})newValue);" : "")}
-                {(isChanged3 ? @$"{name}(
-                    ({senderType})sender,
-                    ({GenerateType(property)})oldValue,
-                    ({GenerateType(property)})newValue);" : "")}
-            }}"
+                {{
+                    {(isChanged0 ? @$"{name}();" : "")}
+                    {(isChanged1 ? @$"{name}(
+                        ({senderType})sender);" : "")}
+                    {(isChanged2 ? @$"{name}(
+                        ({senderType})sender,
+                        ({GenerateType(property)})newValue);" : "")}
+                    {(isChanged3 ? @$"{name}(
+                        ({senderType})sender,
+                        ({GenerateType(property)})oldValue,
+                        ({GenerateType(property)})newValue);" : "")}
+                }}"
                 : $@"static (sender, oldValue, newValue) =>
-            {{
-                {(isChanged0 ? @$"(({senderType})sender).{name}();" : "")}
-                {(isChanged1 ? @$"(({senderType})sender).{name}(
-                    ({GenerateType(property)})newValue);" : "")}
-                {(isChanged2 ? @$"(({senderType})sender).{name}(
-                    ({GenerateType(property)})oldValue,
-                    ({GenerateType(property)})newValue);" : "")}
-            }}";
+                {{
+                    {(isChanged0 ? @$"(({senderType})sender).{name}();" : "")}
+                    {(isChanged1 ? @$"(({senderType})sender).{name}(
+                        ({GenerateType(property)})newValue);" : "")}
+                    {(isChanged2 ? @$"(({senderType})sender).{name}(
+                        ({GenerateType(property)})oldValue,
+                        ({GenerateType(property)})newValue);" : "")}
+                }}";
         }
 
         return property.IsAttached
@@ -626,27 +626,27 @@ namespace {@class.Namespace}
         {
             return property.IsAttached
                 ? $@"static (sender, oldValue, newValue) =>
-            {{
-                {(isChanging0 ? @$"On{property.Name}Changing();" : "")}
-                {(isChanging1 ? @$"On{property.Name}Changing(
-                    ({senderType})sender);" : "")}
-                {(isChanging2 ? @$"On{property.Name}Changing(
-                    ({senderType})sender,
-                    ({GenerateType(property)})newValue);" : "")}
-                {(isChanging3 ? @$"On{property.Name}Changing(
-                    ({senderType})sender,
-                    ({GenerateType(property)})oldValue,
-                    ({GenerateType(property)})newValue);" : "")}
-            }}"
+                {{
+                    {(isChanging0 ? @$"On{property.Name}Changing();" : "")}
+                    {(isChanging1 ? @$"On{property.Name}Changing(
+                        ({senderType})sender);" : "")}
+                    {(isChanging2 ? @$"On{property.Name}Changing(
+                        ({senderType})sender,
+                        ({GenerateType(property)})newValue);" : "")}
+                    {(isChanging3 ? @$"On{property.Name}Changing(
+                        ({senderType})sender,
+                        ({GenerateType(property)})oldValue,
+                        ({GenerateType(property)})newValue);" : "")}
+                }}"
                 : $@"static (sender, oldValue, newValue) =>
-            {{
-                {(isChanging0 ? @$"(({senderType})sender).On{property.Name}Changing();" : "")}
-                {(isChanging1 ? @$"(({senderType})sender).On{property.Name}Changing(
-                    ({GenerateType(property)})newValue);" : "")}
-                {(isChanging2 ? @$"(({senderType})sender).On{property.Name}Changing(
-                    ({GenerateType(property)})oldValue,
-                    ({GenerateType(property)})newValue);" : "")}
-            }}";
+                {{
+                    {(isChanging0 ? @$"(({senderType})sender).On{property.Name}Changing();" : "")}
+                    {(isChanging1 ? @$"(({senderType})sender).On{property.Name}Changing(
+                        ({GenerateType(property)})newValue);" : "")}
+                    {(isChanging2 ? @$"(({senderType})sender).On{property.Name}Changing(
+                        ({GenerateType(property)})oldValue,
+                        ({GenerateType(property)})newValue);" : "")}
+                }}";
         }
 
         return property.IsAttached
@@ -1015,16 +1015,16 @@ namespace {@class.Namespace}
             : property.DefaultBindingMode;
 
         return @$"
-            propertyName: ""{property.Name}"",
-            returnType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-            declaringType: typeof({GenerateType(@class.FullName, false)}),
-            defaultValue: {GenerateDefaultValue(property)},
-            defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{defaultBindingMode},
-            validateValue: {GenerateValidateValueCallback(property)},
-            propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
-            propertyChanging: {GeneratePropertyChangingCallback(@class, property)},
-            coerceValue: {GenerateCoerceValueCallback(@class, property)},
-            defaultValueCreator: {GenerateCreateDefaultValueCallbackValueCallback(property)}";
+                propertyName: ""{property.Name}"",
+                returnType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
+                declaringType: typeof({GenerateType(@class.FullName, false)}),
+                defaultValue: {GenerateDefaultValue(property)},
+                defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{defaultBindingMode},
+                validateValue: {GenerateValidateValueCallback(property)},
+                propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
+                propertyChanging: {GeneratePropertyChangingCallback(@class, property)},
+                coerceValue: {GenerateCoerceValueCallback(@class, property)},
+                defaultValueCreator: {GenerateCreateDefaultValueCallbackValueCallback(property)}";
     }
 
     // https://docs.avaloniaui.net/docs/authoring-controls/defining-properties
