@@ -66,8 +66,8 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
             ? $"{data.Class.FullName}.StaticConstructor.g.cs"
             : $"{data.Class.FullName}.Methods.RegisterPropertyChangedCallbacks.g.cs";
         var text = data.Class.Framework is Framework.Wpf
-            ? SourceGenerationHelper.GenerateStaticConstructor(data.Class, data.OverrideMetada.AsImmutableArray())
-            : SourceGenerationHelper.GenerateRegisterPropertyChangedCallbacksMethod(data.Class,
+            ? Sources.GenerateStaticConstructor(data.Class, data.OverrideMetada.AsImmutableArray())
+            : Sources.GenerateRegisterPropertyChangedCallbacksMethod(data.Class,
                 data.OverrideMetada.AsImmutableArray());
 
         return new FileWithName(

@@ -2,7 +2,7 @@
 
 namespace H.Generators;
 
-internal static partial class SourceGenerationHelper
+internal static partial class Sources
 {
     public static string GenerateWeakEvent(ClassData @class, EventData @event)
     {

@@ -98,7 +98,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .ToArray();
         if (dependencyProperties.Where(static property => !property.IsDirect).Any())
         {
-            var text = SourceGenerationHelper.GenerateStaticConstructor(
+            var text = Sources.GenerateStaticConstructor(
                 @class,
                 dependencyProperties
                     .Where(static property => !property.IsDirect)

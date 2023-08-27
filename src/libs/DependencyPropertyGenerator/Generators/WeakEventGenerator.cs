@@ -57,7 +57,7 @@ public class WeakEventGenerator : IIncrementalGenerator
     {
         return new FileWithName(
             Name: $"{data.Class.FullName}.WeakEvents.{data.Event.Name}.g.cs",
-            Text: SourceGenerationHelper.GenerateWeakEvent(data.Class, data.Event));
+            Text: Sources.GenerateWeakEvent(data.Class, data.Event));
     }
 
     #endregion

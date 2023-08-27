@@ -53,7 +53,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     {
         return new FileWithName(
             Name: $"{data.Class.FullName}.Properties.{data.DependencyProperty.Name}.g.cs",
-            Text: SourceGenerationHelper.GenerateDependencyProperty(data.Class, data.DependencyProperty));
+            Text: Sources.GenerateDependencyProperty(data.Class, data.DependencyProperty));
     }
 
     #endregion

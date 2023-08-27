@@ -61,7 +61,7 @@ public class AttachedDependencyPropertyGenerator : IIncrementalGenerator
     {
         return new FileWithName(
             Name: $"{data.Class.FullName}.AttachedProperties.{data.DependencyProperty.Name}.g.cs",
-            Text: SourceGenerationHelper.GenerateAttachedDependencyProperty(data.Class, data.DependencyProperty));
+            Text: Sources.GenerateAttachedDependencyProperty(data.Class, data.DependencyProperty));
     }
 
     #endregion

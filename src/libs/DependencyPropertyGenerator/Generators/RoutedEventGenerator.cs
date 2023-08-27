@@ -63,7 +63,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
 
         return new FileWithName(
             Name: $"{data.Class.FullName}.{category}.{data.Event.Name}.g.cs",
-            Text: SourceGenerationHelper.GenerateRoutedEvent(data.Class, data.Event));
+            Text: Sources.GenerateRoutedEvent(data.Class, data.Event));
     }
 
     #endregion
