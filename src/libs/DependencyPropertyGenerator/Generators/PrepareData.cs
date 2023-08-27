@@ -21,18 +21,12 @@ public static class PrepareData
         var name =
             attribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ??
             string.Empty;
-        var type =
-            attribute.GetGenericTypeArgument(0)?.ToDisplayString() ??
-            attribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ??
-            string.Empty;
-        var isValueType =
-            attribute.GetGenericTypeArgument(0)?.IsValueType ??
-            attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
-            true;
-        var isSpecialType =
-            attribute.GetGenericTypeArgument(0).IsSpecialType() ??
-            (attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol)?.IsSpecialType() ??
-            false;
+        var typeSymbol =
+            attribute.GetGenericTypeArgument(0) ??
+            attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol;
+        var type = typeSymbol?.ToDisplayString() ?? string.Empty;
+        var isValueType = typeSymbol?.IsValueType ?? true;
+        var isSpecialType = typeSymbol.IsSpecialType() ?? false;
         var defaultValue =
             attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValueExpression)).Value?.ToString() ??
             attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValue)).Value?.ToString();
