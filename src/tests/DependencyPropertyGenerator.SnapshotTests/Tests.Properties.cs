@@ -365,4 +365,19 @@ namespace Namespace2
     }
 }", framework);
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task PrimitiveTypeArray(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
+[DependencyProperty<double[]>(""Values"")]
+public partial class MyControl : FrameworkElement
+{
+}", framework);
+    }
 }

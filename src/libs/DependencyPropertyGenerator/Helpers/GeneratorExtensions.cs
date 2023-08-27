@@ -24,6 +24,7 @@ public static class GeneratorExtensions
         }
 
         return
+            symbol is IArrayTypeSymbol ||
             symbol.SpecialType != SpecialType.None ||
             (symbol.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T &&
              symbol.BaseType != null &&
