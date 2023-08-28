@@ -298,4 +298,56 @@ namespace {@class.Namespace}
             ? "RegisterAttached"
             : "Register";
     }
+
+    private static string GenerateCoercePartialMethod(DependencyPropertyData property)
+    {
+        if (!property.Coerce)
+        {
+            return " ";
+        }
+
+        return property.IsAttached
+            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} value);"
+            : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
+    }
+
+    private static string GenerateAdditionalFieldForDirectProperties(DependencyPropertyData property)
+    {
+        if (!property.IsDirect)
+        {
+            return " ";
+        }
+
+        return property.Framework switch
+        {
+            Framework.Avalonia => $@" 
+        private {GenerateType(property)} _{property.Name.ToParameterName()} = {GenerateDefaultValue(property)};
+",
+            _ => " ",
+        };
+    }
+
+    private static string GenerateAdditionalPropertyForReadOnlyProperties(DependencyPropertyData property)
+    {
+        if (!property.IsReadOnly)
+        {
+            return " ";
+        }
+
+        return property.Framework switch
+        {
+            Framework.Maui => $@" 
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
+        public static readonly {GenerateTypeByPlatform(property.Framework, "BindableProperty")} {property.Name}Property
+            = {GenerateDependencyPropertyName(property)}.BindableProperty;
+",
+            // https://docs.microsoft.com/en-us/dotnet/api/system.windows.dependencypropertykey?view=windowsdesktop-6.0#examples
+            Framework.Wpf => $@" 
+{GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
+        public static readonly {GenerateTypeByPlatform(property.Framework, "DependencyProperty")} {property.Name}Property
+            = {GenerateDependencyPropertyName(property)}.DependencyProperty;
+",
+            _ => " ",
+        };
+    }
 }

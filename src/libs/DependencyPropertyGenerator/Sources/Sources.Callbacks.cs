@@ -2,6 +2,45 @@
 
 internal static partial class Sources
 {
+
+    private static string GenerateOnChangedMethods(DependencyPropertyData property)
+    {
+        if (!string.IsNullOrWhiteSpace(property.OnChanged))
+        {
+            return " ";
+        }
+
+        return property.IsAttached
+            ? $@" 
+        static partial void On{property.Name}Changed();
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
+            : $@" 
+        partial void On{property.Name}Changed();
+        partial void On{property.Name}Changed({GenerateType(property)} newValue);
+        partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
+    }
+
+    private static string GenerateOnChangingMethods(DependencyPropertyData property)
+    {
+        if (property.Framework != Framework.Maui)
+        {
+            return " ";
+        }
+
+        return property.IsAttached
+            ? $@" 
+        static partial void On{property.Name}Changing();
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+        static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
+            : $@" 
+        partial void On{property.Name}Changing();
+        partial void On{property.Name}Changing({GenerateType(property)} newValue);
+        partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
+    }
+    
     private static string GenerateValidateValueCallback(DependencyPropertyData property)
     {
         if (!property.Validate)
