@@ -380,4 +380,19 @@ public partial class MyControl : FrameworkElement
 {
 }", framework);
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task MultidimensionalArray(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
+[DependencyProperty<int[,,]>(""Values3"")]
+public partial class MyControl : FrameworkElement
+{
+}", framework);
+    }
 }

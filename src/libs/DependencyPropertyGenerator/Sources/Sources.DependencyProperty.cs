@@ -225,8 +225,8 @@ namespace {@class.Namespace}
 
         return @$"
                 propertyName: ""{property.Name}"",
-                returnType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                declaringType: typeof({GenerateType(@class.FullName, false)}),
+                returnType: typeof({property.Type}),
+                declaringType: typeof({@class.Type}),
                 defaultValue: {GenerateDefaultValue(property)},
                 defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{defaultBindingMode},
                 validateValue: {GenerateValidateValueCallback(property)},
@@ -252,16 +252,16 @@ namespace {@class.Namespace}
         {
             return @$"
                 name: ""{property.Name}"",
-                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)},
                 validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
         return @$"
                 name: ""{property.Name}"",
-                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)}";
     }
 
@@ -281,10 +281,10 @@ namespace {@class.Namespace}
         if (property.Framework == Framework.Avalonia)
         {
             return property.IsDirect
-                ? $"RegisterDirect<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>"
+                ? $"RegisterDirect<{@class.Type}, {GenerateType(property)}>"
                 : property.IsAttached
-                    ? $"RegisterAttached<{GenerateType(@class.FullName, false)}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
-                    : $"Register<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>";
+                    ? $"RegisterAttached<{@class.Type}, {GenerateBrowsableForType(property)}, {GenerateType(property)}>"
+                    : $"Register<{@class.Type}, {GenerateType(property)}>";
         }
 
         if (property is { IsReadOnly: true, Framework: Framework.Wpf })

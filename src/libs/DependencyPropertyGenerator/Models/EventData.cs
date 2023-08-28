@@ -5,7 +5,6 @@ public readonly record struct EventData(
     string Strategy,
     string Type,
     bool IsValueType,
-    bool IsSpecialType,
     bool IsAttached,
     string? Description,
     string? Category,

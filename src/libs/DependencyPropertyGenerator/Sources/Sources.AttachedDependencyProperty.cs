@@ -78,16 +78,16 @@ namespace {@class.Namespace}
         {
             return @$"
                 name: ""{property.Name}"",
-                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)},
                 validateValueCallback: {GenerateValidateValueCallback(property)}";
         }
 
         return @$"
                 name: ""{property.Name}"",
-                propertyType: typeof({GenerateType(property.Type, property.IsSpecialType)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
+                propertyType: typeof({property.Type}),
+                ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)}";
     }
 

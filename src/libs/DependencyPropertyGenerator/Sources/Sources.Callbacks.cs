@@ -45,7 +45,7 @@ internal static partial class Sources
 
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
-            : GenerateType(@class.FullName, false);
+            : @class.Type;
 
         if (property.Framework == Framework.Maui)
         {
@@ -82,7 +82,7 @@ internal static partial class Sources
 
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
-            : GenerateType(@class.FullName, false);
+            : @class.Type;
         if (property.Framework == Framework.Maui)
         {
             return property.IsAttached
@@ -150,7 +150,7 @@ internal static partial class Sources
             .Replace("?", string.Empty);
         var senderType = (property.IsAttached
                 ? GenerateBrowsableForType(property)
-                : GenerateType(@class.FullName, false))
+                : @class.Type)
             .Replace("global::", string.Empty);
 
         var isChanged0 =
@@ -198,7 +198,7 @@ internal static partial class Sources
 
         var senderType = property.IsAttached
             ? GenerateBrowsableForType(property)
-            : GenerateType(@class.FullName, false);
+            : @class.Type;
         if (property.Framework == Framework.Maui)
         {
             return property.IsAttached

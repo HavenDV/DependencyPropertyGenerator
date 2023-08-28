@@ -55,13 +55,13 @@ namespace {@class.Namespace}
         {{
 {properties.Where(static property => property.IsReadOnly).Select(property => @$"
             {property.Name}Property.OverrideMetadata(
-                forType: typeof({GenerateType(@class.FullName, false)}),
+                forType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)},
                 key: {property.Name}PropertyKey);
 ").Inject()}
 {properties.Where(static property => !property.IsReadOnly).Select(property => @$"
             {property.Name}Property.OverrideMetadata(
-                forType: typeof({GenerateType(@class.FullName, false)}),
+                forType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)});
 ").Inject()}
         }}
@@ -106,10 +106,10 @@ namespace {@class.Namespace}
             : @$"
             {property.Name}Property.Changed.Subscribe(static x =>
             {{
-                {(isChanged0 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}();" : "")}
-                {(isChanged1 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}(
+                {(isChanged0 ? @$"(({@class.Type})x.Sender).{name}();" : "")}
+                {(isChanged1 ? @$"(({@class.Type})x.Sender).{name}(
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
-                {(isChanged2 ? @$"(({GenerateType(@class.FullName, false)})x.Sender).{name}(
+                {(isChanged2 ? @$"(({@class.Type})x.Sender).{name}(
                     ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
             }});

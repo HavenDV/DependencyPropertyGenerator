@@ -19,7 +19,7 @@ namespace {@class.Namespace}
 {overrideMetadata.Select(property => {
     var senderType = property.IsAttached
         ? GenerateBrowsableForType(property)
-        : GenerateType(@class.FullName, false);
+        : @class.Type;
 
     var (name, isChanged0, isChanged1, isChanged2, isChanged3) = CheckOnChangedMethods(@class, property);
     if (!isChanged0 &&

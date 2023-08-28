@@ -24,7 +24,6 @@ public readonly record struct DependencyPropertyData(
     string? Localizability,
     string? BrowsableForType,
     string? FromType,
-    bool IsBrowsableForTypeSpecialType,
     string? XmlDocumentation,
     string? SetterXmlDocumentation,
     string? GetterXmlDocumentation,

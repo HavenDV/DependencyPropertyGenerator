@@ -11,17 +11,17 @@ internal static partial class Sources
             if (property.IsDirect)
             {
                 return @$"
-            {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>(
+            {property.FromType}.{property.Name}Property.AddOwner<{@class.Type}>(
                 {GenerateAvaloniaRegisterMethodArguments(@class, property)});";
             }
 
             return @$"
-            {GenerateFromType(property)}.{property.Name}Property.AddOwner<{GenerateType(@class.FullName, false)}>();";
+            {property.FromType}.{property.Name}Property.AddOwner<{@class.Type}>();";
         }
 
         return @$"
-            {GenerateFromType(property)}.{property.Name}Property.AddOwner(
-                ownerType: typeof({GenerateType(@class.FullName, false)}),
+            {property.FromType}.{property.Name}Property.AddOwner(
+                ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)});
     ".RemoveBlankLinesWhereOnlyWhitespaces();
     }

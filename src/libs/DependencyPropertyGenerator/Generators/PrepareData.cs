@@ -24,7 +24,7 @@ public static class PrepareData
         var typeSymbol =
             attribute.GetGenericTypeArgument(0) ??
             attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol;
-        var type = typeSymbol?.ToDisplayString() ?? string.Empty;
+        var type = typeSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ?? string.Empty;
         var isValueType = typeSymbol?.IsValueType ?? true;
         var isSpecialType = typeSymbol.IsSpecialType() ?? false;
         var defaultValue =
@@ -34,16 +34,11 @@ public static class PrepareData
             attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.DefaultValueExpression)).Value?.ToString() ??
             attributeSyntax?.GetNamedArgumentExpression(nameof(DependencyPropertyAttribute.DefaultValue));
         var browsableForType =
-            attribute.GetGenericTypeArgument(1)?.ToDisplayString() ??
-            attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.BrowsableForType)).Value?.ToString();
+            attribute.GetGenericTypeArgumentOrNamed(position: 1, nameof(AttachedDependencyPropertyAttribute.BrowsableForType))?
+                .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         var fromType =
-            attribute.GetGenericTypeArgument(1)?.ToDisplayString() ??
-            attribute.GetNamedArgument(nameof(AddOwnerAttribute.FromType)).Value?.ToString();
-        var isBrowsableForTypeSpecialType =
-            attribute.GetGenericTypeArgument(1).IsSpecialType() ??
-            (attribute.GetNamedArgument(nameof(AttachedDependencyPropertyAttribute.BrowsableForType))
-                .Value as ITypeSymbol)?.IsSpecialType() ??
-            false;
+            attribute.GetGenericTypeArgumentOrNamed(position: 1, nameof(AddOwnerAttribute.FromType))?
+                .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         var isReadOnly = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.IsReadOnly)).ToBoolean();
         var isDirect = attribute.GetNamedArgument(nameof(DependencyPropertyAttribute.IsDirect)).ToBoolean();
 
@@ -128,7 +123,6 @@ public static class PrepareData
             Localizability: localizability,
             BrowsableForType: browsableForType,
             FromType: fromType,
-            IsBrowsableForTypeSpecialType: isBrowsableForTypeSpecialType,
             XmlDocumentation: xmlDocumentation,
             GetterXmlDocumentation: getterXmlDocumentation ?? propertyXmlDocumentation,
             SetterXmlDocumentation: setterXmlDocumentation,
@@ -172,17 +166,13 @@ public static class PrepareData
             .ToString("G");
         var isStatic = attribute.GetNamedArgument(nameof(WeakEventAttribute.IsStatic)).ToBoolean();
         var type =
-            attribute.GetGenericTypeArgument(0)?.ToDisplayString() ??
+            attribute.GetGenericTypeArgument(0)?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ??
             attribute.GetNamedArgument(nameof(RoutedEventAttribute.Type)).Value?.ToString() ??
             string.Empty;
         var isValueType =
             attribute.GetGenericTypeArgument(0)?.IsValueType ??
             attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
             true;
-        var isSpecialType =
-            attribute.GetGenericTypeArgument(0).IsSpecialType() ??
-            (attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol)?.IsSpecialType() ??
-            false;
         var isAttached = attribute.GetNamedArgument(nameof(RoutedEventAttribute.IsAttached)).ToBoolean();
         var description = attribute.GetNamedArgument(nameof(RoutedEventAttribute.Description)).Value?.ToString();
         var category = attribute.GetNamedArgument(nameof(RoutedEventAttribute.Category)).Value?.ToString();
@@ -199,7 +189,6 @@ public static class PrepareData
             Strategy: strategy,
             Type: type,
             IsValueType: isValueType,
-            IsSpecialType: isSpecialType,
             IsAttached: isAttached || isStatic || isStaticClass,
             Description: description,
             Category: category,
@@ -215,6 +204,7 @@ public static class PrepareData
         classSymbol = classSymbol ?? throw new ArgumentNullException(nameof(classSymbol));
 
         var fullClassName = classSymbol.ToString();
+        var type = classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
         var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
         var isStaticClass = classSymbol.IsStatic;
@@ -233,6 +223,7 @@ public static class PrepareData
             Namespace: @namespace,
             Name: className,
             FullName: fullClassName,
+            Type: type,
             Modifiers: classModifiers,
             IsStatic: isStaticClass,
             Framework: framework,
@@ -290,5 +281,13 @@ public static class PrepareData
             .SelectMany(static x => x.Attributes)
             .FirstOrDefault(
                 x => x.ArgumentList?.Arguments.FirstOrDefault()?.ToString().Trim('"').RemoveNameof() == name);
+    }
+    
+    public static ITypeSymbol? GetGenericTypeArgumentOrNamed(this AttributeData attribute, int position, string name)
+    {
+        attribute = attribute ?? throw new ArgumentNullException(nameof(attribute));
+        
+        return attribute.GetGenericTypeArgument(position) ??
+               attribute.GetNamedArgument(name).Value as ITypeSymbol;
     }
 }

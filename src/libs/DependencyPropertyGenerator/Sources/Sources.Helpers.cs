@@ -5,22 +5,9 @@ namespace H.Generators;
 
 internal static partial class Sources
 {
-    private static string GenerateType(string fullTypeName, bool isSpecialType)
-    {
-        if (isSpecialType)
-        {
-            return fullTypeName;
-        }
-
-        return fullTypeName switch
-        {
-            _ => fullTypeName.WithGlobalPrefix(),
-        };
-    }
-
     private static string GenerateType(DependencyPropertyData property)
     {
-        var value = GenerateType(property.Type, property.IsSpecialType);
+        var value = property.Type;
         if (!property.IsValueType)
         {
             value += "?";
@@ -31,7 +18,7 @@ internal static partial class Sources
 
     private static string GenerateType(EventData @event, bool nullable = true)
     {
-        var value = GenerateType(@event.Type, @event.IsSpecialType);
+        var value = @event.Type;
         if (nullable && !@event.IsValueType)
         {
             value += "?";
@@ -80,7 +67,7 @@ internal static partial class Sources
 
     private static string GenerateDefaultValue(DependencyPropertyData property)
     {
-        var type = GenerateType(property.Type, property.IsSpecialType);
+        var type = property.Type;
         if (property is { IsSpecialType: true, DefaultValueDocumentation: { } })
         {
             return $"({type}){property.DefaultValueDocumentation}";
@@ -91,14 +78,9 @@ internal static partial class Sources
             : $"default({type})";
     }
 
-    private static string? GenerateFromType(DependencyPropertyData property)
-    {
-        return property.FromType?.WithGlobalPrefix();
-    }
-
     private static string GenerateBrowsableForType(DependencyPropertyData property)
     {
-        return property.BrowsableForType?.WithGlobalPrefix() ?? GenerateDependencyObjectType(property.Framework);
+        return property.BrowsableForType ?? GenerateDependencyObjectType(property.Framework);
     }
 
     private static string GenerateBrowsableForTypeParameterName(DependencyPropertyData property)
@@ -301,7 +283,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return " ";
         }
 
-        var type = GenerateType(property.Type, property.IsSpecialType);
+        var type = property.Type;
         var sender = property.IsAttached ? GenerateBrowsableForTypeParameterName(property) : "this";
 
         return $@"
@@ -412,7 +394,7 @@ Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"def
             return property.IsDirect
                 ? GenerateTypeByPlatform(
                     property.Framework,
-                    $"DirectProperty<{GenerateType(@class.FullName, false)}, {GenerateType(property)}>")
+                    $"DirectProperty<{@class.Type}, {GenerateType(property)}>")
                 : property.IsAttached
                     ? GenerateTypeByPlatform(
                         property.Framework,

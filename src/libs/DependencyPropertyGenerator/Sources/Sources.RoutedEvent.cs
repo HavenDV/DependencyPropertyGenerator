@@ -205,7 +205,7 @@ namespace {@class.Namespace}
                 name: ""{@event.Name}"",
                 routingStrategy: {GenerateRoutingStrategyType(@class)}.{@event.Strategy},
                 handlerType: typeof({GenerateRouterEventType(@class, @event)}),
-                ownerType: typeof({GenerateType(@class.FullName, false)})";
+                ownerType: typeof({@class.Type})";
     }
 
     private static string GenerateRoutingStrategyType(ClassData @class)
@@ -232,7 +232,7 @@ namespace {@class.Namespace}
     {
         if (@class.Framework == Framework.Avalonia)
         {
-            return $"Register<{GenerateType(@class.FullName, false)}, {GenerateRoutedEventArgsType(@class)}>";
+            return $"Register<{@class.Type}, {GenerateRoutedEventArgsType(@class)}>";
         }
 
         return "RegisterRoutedEvent";
