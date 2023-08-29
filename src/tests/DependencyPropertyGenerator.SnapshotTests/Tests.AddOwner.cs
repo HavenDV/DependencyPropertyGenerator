@@ -23,10 +23,10 @@ public partial class UnrelatedStateControl : UIElement
     [DataRow(Framework.UnoWinUi)]
     [DataRow(Framework.Maui)]
     [DataRow(Framework.Avalonia)]
-    public Task AddOwnerDirect(Framework framework)
+    public Task AddOwner2(Framework framework)
     {
         return CheckSourceAsync<AddOwnerGenerator>(GetHeader(framework, string.Empty, "Controls") + @"
-[AddOwner<string, TextBox>(nameof(TextBox.Text), IsDirect = true)]
+[AddOwner<string, TextBox>(nameof(TextBox.Text))]
 public partial class UnrelatedStateControl : UIElement
 {
 }", framework);

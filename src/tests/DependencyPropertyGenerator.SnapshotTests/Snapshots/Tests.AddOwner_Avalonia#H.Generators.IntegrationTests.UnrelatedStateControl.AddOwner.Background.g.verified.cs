@@ -11,7 +11,8 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(IBrush)
         /// </summary>
         public static readonly global::Avalonia.StyledProperty<global::Avalonia.Media.IBrush?> BackgroundProperty =
-            global::Avalonia.Controls.Border.BackgroundProperty.AddOwner<global::H.Generators.IntegrationTests.UnrelatedStateControl>();
+            global::Avalonia.Controls.Border.BackgroundProperty.AddOwner<global::H.Generators.IntegrationTests.UnrelatedStateControl>(
+                null);
 
         /// <summary>
         /// Default value: default(IBrush)

@@ -16,7 +16,8 @@ internal static partial class Sources
             }
 
             return @$"
-            {property.FromType}.{property.Name}Property.AddOwner<{@class.Type}>();";
+            {property.FromType}.{property.Name}Property.AddOwner<{@class.Type}>(
+                {GeneratePropertyMetadata(@class, property)});";
         }
 
         return @$"

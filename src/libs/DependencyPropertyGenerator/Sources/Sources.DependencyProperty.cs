@@ -147,6 +147,7 @@ namespace {@class.Namespace}
         var parameterName = (@class.Framework, property.IsAttached) switch
         {
             (Framework.Wpf, true) or (Framework.Uwp, true) or (Framework.WinUi, true) => "defaultMetadata",
+            (Framework.Avalonia, _) => "metadata",
             _ => "typeMetadata",
         };
         switch (@class.Framework)
@@ -174,6 +175,7 @@ namespace {@class.Namespace}
             case Framework.WinUi:
             case Framework.Uno:
             case Framework.UnoWinUi:
+            {
                 var type = GenerateTypeByPlatform(@class.Framework, "PropertyMetadata");
                 if (property.CreateDefaultValueCallback)
                 {
@@ -191,6 +193,18 @@ namespace {@class.Namespace}
                 return $@"{parameterName}: {create}(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
+            }
+
+            case Framework.Avalonia:
+            {
+                var metadataType = GenerateTypeByPlatform(@class.Framework, $"StyledPropertyMetadata<{property.Type}>");
+
+                return $@"{parameterName}: new {metadataType}(
+                    defaultValue: {GenerateDefaultValue(property)},
+                    defaultBindingMode: global::Avalonia.Data.BindingMode.Default,
+                    coerce: {GenerateCoerceValueCallback(@class, property)},
+                    enableDataValidation: {property.EnableDataValidation.ToBooleanKeyword()})";
+            }
         }
 
         throw new InvalidOperationException("Platform is not supported.");
