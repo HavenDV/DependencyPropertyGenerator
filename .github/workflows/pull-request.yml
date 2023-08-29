@@ -1,12 +1,15 @@
-﻿name: Build, test and publish
-on: [ push ]
+﻿name: Build and test
+on:
+  push:
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  build-test-publish:
+  build-test:
     name: Build, test and publish
     uses: HavenDV/workflows/.github/workflows/dotnet_build-test-publish.yml@main
     with:
       generate-build-number: false
       conventional-commits-publish-conditions: false
-    secrets:
-      nuget-key: ${{ secrets.NUGET_KEY }}
+      additional-test-arguments: '--logger GitHubActions'
