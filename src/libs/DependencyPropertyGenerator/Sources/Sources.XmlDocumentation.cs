@@ -25,7 +25,7 @@ internal static partial class Sources
             : $"Identifies the {name} dependency property.<br/>";
         value ??= @$"<summary>
 {body}
-Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.Type.ExtractSimpleName())})"}
+Default value: {property.DefaultValueDocumentation?.ExtractSimpleName() ?? $"default({WebUtility.HtmlEncode(property.ShortType)})"}
 </summary>".RemoveBlankLinesWhereOnlyWhitespaces();
 
         return GenerateXmlDocumentationFrom(value);

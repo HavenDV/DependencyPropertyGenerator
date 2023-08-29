@@ -395,4 +395,24 @@ public partial class MyControl : FrameworkElement
 {
 }", framework);
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task Tuples(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
+[DependencyProperty<(int, string)>(""TypeIntString"")]
+[DependencyProperty<(FrameworkElement, int)>(""TypeControlInt"")]
+[DependencyProperty<(int, FrameworkElement)>(""TypeIntControl"")]
+[DependencyProperty<System.Tuple<int, string>>(""TupleIntString"")]
+[DependencyProperty<System.Tuple<FrameworkElement, int>>(""TupleControlInt"")]
+[DependencyProperty<System.Tuple<int, FrameworkElement>>(""TupleIntControl"")]
+public partial class MyControl : FrameworkElement
+{
+}", framework);
+    }
 }

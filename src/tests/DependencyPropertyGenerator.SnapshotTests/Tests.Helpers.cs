@@ -209,6 +209,11 @@ internal static class StringExtensions
         return source
             .Replace($": {from}", $": global::{to}")
             .Replace($"{from}.", $"global::{to}.")
-            .Replace($", {from}", $", global::{to}");
+            .Replace($", {from}", $", global::{to}")
+            .Replace($"<{from}", $"<global::{to}")
+            .Replace($"{from}>", $"global::{to}>")
+            .Replace($"({from}", $"(global::{to}")
+            .Replace($"{from})", $"global::{to})")
+            ;
     }
 }

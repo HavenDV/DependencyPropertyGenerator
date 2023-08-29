@@ -25,6 +25,7 @@ public static class PrepareData
             attribute.GetGenericTypeArgument(0) ??
             attribute.ConstructorArguments.ElementAtOrDefault(1).Value as ITypeSymbol;
         var type = typeSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ?? string.Empty;
+        var shortType = typeSymbol?.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) ?? string.Empty;
         var isValueType = typeSymbol?.IsValueType ?? true;
         var isSpecialType = typeSymbol.IsSpecialType() ?? false;
         var defaultValue =
@@ -104,6 +105,7 @@ public static class PrepareData
         return new DependencyPropertyData(
             Name: name,
             Type: type,
+            ShortType: shortType,
             IsValueType: isValueType,
             IsSpecialType: isSpecialType,
             DefaultValue: defaultValue,
