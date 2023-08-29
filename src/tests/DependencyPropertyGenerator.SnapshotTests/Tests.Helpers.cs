@@ -193,9 +193,11 @@ using DependencyPropertyGenerator;
         await Task.WhenAll(
             Verify(diagnostics.NormalizeLocations())
                 .UseDirectory("Snapshots")
+                //.AutoVerify()
                 .UseTextForParameters($"{framework}_Diagnostics"),
             Verify(driver)
                 .UseDirectory("Snapshots")
+                //.AutoVerify()
                 .UseTextForParameters($"{framework}"));
     }
 }
