@@ -9,6 +9,10 @@
     <Import Project="../../libs/DependencyPropertyGenerator/DependencyPropertyGenerator.props" />
 
     <ItemGroup>
+        <PackageReference Include="GitHubActionsTestLogger">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="MSTest.TestAdapter" />
         <PackageReference Include="MSTest.TestFramework" />
