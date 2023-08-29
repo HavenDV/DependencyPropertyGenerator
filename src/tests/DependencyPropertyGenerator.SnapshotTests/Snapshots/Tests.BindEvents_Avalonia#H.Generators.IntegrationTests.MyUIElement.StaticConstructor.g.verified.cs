@@ -1,7 +1,4 @@
 ﻿//HintName: H.Generators.IntegrationTests.MyUIElement.StaticConstructor.g.cs
-
-using System;
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -10,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         static MyUIElement()
         {
-            BindEventsPropertyProperty.Changed.Subscribe(static x =>
+            BindEventsPropertyProperty.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<object?>>(static x =>
             {
                 ((global::H.Generators.IntegrationTests.MyUIElement)x.Sender).OnBindEventsPropertyChanged(
                     (object?)x.OldValue.GetValueOrDefault(),
                     (object?)x.NewValue.GetValueOrDefault());
-            });
+            }));
         }
     }
 }

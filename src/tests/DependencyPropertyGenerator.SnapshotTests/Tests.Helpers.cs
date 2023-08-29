@@ -115,8 +115,6 @@ using DependencyPropertyGenerator;
                 .ReplaceType("FrameworkElement", "Avalonia.Controls.Control")
                 .Replace("static partial class", "partial class")
                 .Replace("Brush", "IBrush")
-                .Replace("PointerEntered", "PointerEnter")
-                .Replace("PointerExited", "PointerLeave")
                 .Replace("PointerRoutedEventArgs", "PointerEventArgs");
         }
 
@@ -160,7 +158,7 @@ using DependencyPropertyGenerator;
             Framework.UnoWinUi => ReferenceAssemblies.NetStandard.NetStandard20
                 .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.7.30"))),
             Framework.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "0.10.18"))), // 11.0.0-preview6
+                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "11.0.4"))),
             Framework.Maui => ReferenceAssemblies.Net.Net60Windows
                 .WithPackages(ImmutableArray.Create(
                     new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"),

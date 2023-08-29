@@ -1,7 +1,4 @@
 ﻿//HintName: H.Generators.IntegrationTests.Generatable.StaticConstructor.g.cs
-
-using System;
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -10,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         static Generatable()
         {
-            TextProperty.Changed.Subscribe(static x =>
+            TextProperty.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<string?>>(static x =>
             {
                 ((global::H.Generators.IntegrationTests.Generatable)x.Sender).OnTextChanged(
                     (string?)x.OldValue.GetValueOrDefault(),
                     (string?)x.NewValue.GetValueOrDefault());
-            });
+            }));
         }
     }
 }

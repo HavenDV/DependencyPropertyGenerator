@@ -15,4 +15,3 @@ updates:
           - "*"
     ignore:
       - dependency-name: "Microsoft.CodeAnalysis.CSharp"
-      - dependency-name: "Avalonia"

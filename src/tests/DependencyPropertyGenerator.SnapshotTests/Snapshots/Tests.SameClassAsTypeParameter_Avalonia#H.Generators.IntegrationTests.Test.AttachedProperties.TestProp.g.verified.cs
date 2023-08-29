@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
-        public static void SetTestProp(global::Avalonia.IAvaloniaObject element, global::H.Generators.IntegrationTests.Test? value)
+        public static void SetTestProp(global::Avalonia.AvaloniaObject element, global::H.Generators.IntegrationTests.Test? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
-        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Avalonia.IAvaloniaObject element)
+        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

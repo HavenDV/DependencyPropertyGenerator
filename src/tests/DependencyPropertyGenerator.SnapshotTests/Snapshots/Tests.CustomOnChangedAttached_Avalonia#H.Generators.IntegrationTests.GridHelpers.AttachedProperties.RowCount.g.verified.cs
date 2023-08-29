@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
-        public static void SetRowCount(global::Avalonia.IAvaloniaObject element, int value)
+        public static void SetRowCount(global::Avalonia.AvaloniaObject element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
-        public static int GetRowCount(global::Avalonia.IAvaloniaObject element)
+        public static int GetRowCount(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

@@ -49,13 +49,13 @@ namespace H.Generators.IntegrationTests
 
             if (oldValue is not default(object))
             {
-                this.PointerEnter -= OnBindEventsPropertyChanged_PointerEnter;
-                this.PointerLeave -= OnBindEventsPropertyChanged_PointerLeave;
+                this.PointerEntered -= OnBindEventsPropertyChanged_PointerEntered;
+                this.PointerExited -= OnBindEventsPropertyChanged_PointerExited;
             }
             if (newValue is not default(object))
             {
-                this.PointerEnter += OnBindEventsPropertyChanged_PointerEnter;
-                this.PointerLeave += OnBindEventsPropertyChanged_PointerLeave;
+                this.PointerEntered += OnBindEventsPropertyChanged_PointerEntered;
+                this.PointerExited += OnBindEventsPropertyChanged_PointerExited;
             }
 
             OnBindEventsPropertyChanged_AfterBind(

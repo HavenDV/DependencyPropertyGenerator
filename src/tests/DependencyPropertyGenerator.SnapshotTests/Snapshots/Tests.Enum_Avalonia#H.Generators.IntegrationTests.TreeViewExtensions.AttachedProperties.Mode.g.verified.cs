@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: Mode2
         /// </summary>
-        public static void SetMode(global::Avalonia.IAvaloniaObject element, global::H.Generators.IntegrationTests.Mode value)
+        public static void SetMode(global::Avalonia.AvaloniaObject element, global::H.Generators.IntegrationTests.Mode value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: Mode2
         /// </summary>
-        public static global::H.Generators.IntegrationTests.Mode GetMode(global::Avalonia.IAvaloniaObject element)
+        public static global::H.Generators.IntegrationTests.Mode GetMode(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

@@ -11,7 +11,7 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(object)
         /// </summary>
         public static readonly global::Avalonia.AttachedProperty<object?> SomePropertyProperty =
-            global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridExtensions, global::Avalonia.IAvaloniaObject, object?>(
+            global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridExtensions, global::Avalonia.AvaloniaObject, object?>(
                 name: "SomeProperty",
                 defaultValue: default(object),
                 inherits: false,
@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static void SetSomeProperty(global::Avalonia.IAvaloniaObject element, object? value)
+        public static void SetSomeProperty(global::Avalonia.AvaloniaObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static object? GetSomeProperty(global::Avalonia.IAvaloniaObject element)
+        public static object? GetSomeProperty(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -40,8 +40,8 @@ namespace H.Generators.IntegrationTests
         }
 
         static partial void OnSomePropertyChanged();
-        static partial void OnSomePropertyChanged(global::Avalonia.IAvaloniaObject iAvaloniaObject);
-        static partial void OnSomePropertyChanged(global::Avalonia.IAvaloniaObject iAvaloniaObject, object? newValue);
-        static partial void OnSomePropertyChanged(global::Avalonia.IAvaloniaObject iAvaloniaObject, object? oldValue, object? newValue);
+        static partial void OnSomePropertyChanged(global::Avalonia.AvaloniaObject avaloniaObject);
+        static partial void OnSomePropertyChanged(global::Avalonia.AvaloniaObject avaloniaObject, object? newValue);
+        static partial void OnSomePropertyChanged(global::Avalonia.AvaloniaObject avaloniaObject, object? oldValue, object? newValue);
     }
 }

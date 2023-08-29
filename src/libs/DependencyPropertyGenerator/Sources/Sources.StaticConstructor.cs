@@ -24,10 +24,7 @@ internal static partial class Sources
                 return string.Empty;
             }
 
-            return @$"
-using System;
-
-#nullable enable
+            return @$"#nullable enable
 
 namespace {@class.Namespace}
 {{
@@ -89,7 +86,7 @@ namespace {@class.Namespace}
 
         return property.IsAttached
             ? @$"
-            {property.Name}Property.Changed.Subscribe(static x =>
+            {property.Name}Property.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<{GenerateType(property)}>>(static x =>
             {{
                 {(isChanged0 ? @$"{name}();" : "")}
                 {(isChanged1 ? @$"{name}(
@@ -101,10 +98,10 @@ namespace {@class.Namespace}
                     ({GenerateBrowsableForType(property)})x.Sender,
                     ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
-            }});
+            }}));
 ".RemoveBlankLinesWhereOnlyWhitespaces()
             : @$"
-            {property.Name}Property.Changed.Subscribe(static x =>
+            {property.Name}Property.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<{GenerateType(property)}>>(static x =>
             {{
                 {(isChanged0 ? @$"(({@class.Type})x.Sender).{name}();" : "")}
                 {(isChanged1 ? @$"(({@class.Type})x.Sender).{name}(
@@ -112,7 +109,7 @@ namespace {@class.Namespace}
                 {(isChanged2 ? @$"(({@class.Type})x.Sender).{name}(
                     ({GenerateType(property)})x.OldValue.GetValueOrDefault(),
                     ({GenerateType(property)})x.NewValue.GetValueOrDefault());" : "")}
-            }});
+            }}));
 ".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 }

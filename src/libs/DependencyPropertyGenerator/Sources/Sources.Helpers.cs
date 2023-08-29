@@ -58,7 +58,7 @@ internal static partial class Sources
 
         if (framework == Framework.Avalonia)
         {
-            return GenerateTypeByPlatform(framework, "IAvaloniaObject");
+            return GenerateTypeByPlatform(framework, "AvaloniaObject");
         }
 
         return GenerateTypeByPlatform(framework, "DependencyObject");

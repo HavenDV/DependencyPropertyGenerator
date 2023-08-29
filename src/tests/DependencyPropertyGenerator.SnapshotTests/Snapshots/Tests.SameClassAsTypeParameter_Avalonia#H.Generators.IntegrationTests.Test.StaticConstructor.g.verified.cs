@@ -1,7 +1,4 @@
 ﻿//HintName: H.Generators.IntegrationTests.Test.StaticConstructor.g.cs
-
-using System;
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -10,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         static Test()
         {
-            TestPropProperty.Changed.Subscribe(static x =>
+            TestPropProperty.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<global::H.Generators.IntegrationTests.Test?>>(static x =>
             {
                 TestChanged(
                     (global::Avalonia.Controls.Grid)x.Sender,
                     (global::H.Generators.IntegrationTests.Test?)x.NewValue.GetValueOrDefault());
-            });
+            }));
         }
     }
 }

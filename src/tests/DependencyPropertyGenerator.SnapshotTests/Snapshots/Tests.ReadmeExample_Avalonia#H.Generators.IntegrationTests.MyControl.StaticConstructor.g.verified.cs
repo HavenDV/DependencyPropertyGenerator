@@ -1,7 +1,4 @@
 ﻿//HintName: H.Generators.IntegrationTests.MyControl.StaticConstructor.g.cs
-
-using System;
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -10,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         static MyControl()
         {
-            IsSpinningProperty.Changed.Subscribe(static x =>
+            IsSpinningProperty.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<bool>>(static x =>
             {
                 ((global::H.Generators.IntegrationTests.MyControl)x.Sender).OnIsSpinningChanged(
                     (bool)x.OldValue.GetValueOrDefault(),
                     (bool)x.NewValue.GetValueOrDefault());
-            });
+            }));
         }
     }
 }

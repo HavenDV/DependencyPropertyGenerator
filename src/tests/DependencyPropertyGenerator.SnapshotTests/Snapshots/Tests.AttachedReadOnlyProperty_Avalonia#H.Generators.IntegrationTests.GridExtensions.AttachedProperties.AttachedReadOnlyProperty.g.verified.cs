@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        internal static void SetAttachedReadOnlyProperty(global::Avalonia.IAvaloniaObject element, object? value)
+        internal static void SetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static object? GetAttachedReadOnlyProperty(global::Avalonia.IAvaloniaObject element)
+        public static object? GetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

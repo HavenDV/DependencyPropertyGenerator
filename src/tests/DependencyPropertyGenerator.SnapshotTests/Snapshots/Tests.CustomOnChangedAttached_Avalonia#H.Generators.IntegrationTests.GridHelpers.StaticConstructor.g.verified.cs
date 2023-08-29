@@ -1,7 +1,4 @@
 ﻿//HintName: H.Generators.IntegrationTests.GridHelpers.StaticConstructor.g.cs
-
-using System;
-
 #nullable enable
 
 namespace H.Generators.IntegrationTests
@@ -10,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         static GridHelpers()
         {
-            RowCountProperty.Changed.Subscribe(static x =>
+            RowCountProperty.Changed.Subscribe(new global::Avalonia.Reactive.AnonymousObserver<global::Avalonia.AvaloniaPropertyChangedEventArgs<int>>(static x =>
             {
                 OnRowCountChanged(
                     (global::Avalonia.Controls.Grid)x.Sender,
                     (int)x.NewValue.GetValueOrDefault());
-            });
+            }));
         }
     }
 }

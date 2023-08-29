@@ -22,7 +22,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static void SetSelectedItem(global::Avalonia.IAvaloniaObject element, object? value)
+        public static void SetSelectedItem(global::Avalonia.AvaloniaObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        public static object? GetSelectedItem(global::Avalonia.IAvaloniaObject element)
+        public static object? GetSelectedItem(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
