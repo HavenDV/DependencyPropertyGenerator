@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\Directory.Packages.props = src\Directory.Packages.props
 		.github\workflows\main.yml = .github\workflows\main.yml
 		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyPropertyGenerator.Attributes", "src\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj", "{90F8AD3B-1C24-447B-99A3-2FBF5066FECA}"
