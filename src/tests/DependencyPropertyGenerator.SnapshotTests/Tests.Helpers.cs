@@ -143,26 +143,12 @@ using DependencyPropertyGenerator;
         {
             Framework.None => ReferenceAssemblies.NetFramework.Net48.Wpf,
             Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
-            Framework.Uwp => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(
-                    new PackageIdentity("Microsoft.NETCore.UniversalWindowsPlatform", "6.2.14"),
-                    new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
-                    new PackageIdentity("Microsoft.Net.UWPCoreRuntimeSdk", "2.2.14"))),
-            Framework.WinUi => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(
-                    new PackageIdentity("Microsoft.WindowsAppSDK", "1.2.230118.102"),
-                    new PackageIdentity("Microsoft.UI.Xaml", "2.8.2"),
-                    new PackageIdentity("Microsoft.Windows.SDK.NET.Ref", "10.0.22621.28"))),
-            Framework.Uno => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.UI", "4.7.30"))),
-            Framework.UnoWinUi => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Uno.WinUI", "4.7.30"))),
-            Framework.Avalonia => ReferenceAssemblies.NetStandard.NetStandard20
-                .WithPackages(ImmutableArray.Create(new PackageIdentity("Avalonia", "11.0.4"))),
-            Framework.Maui => ReferenceAssemblies.Net.Net60Windows
-                .WithPackages(ImmutableArray.Create(
-                    new PackageIdentity("Microsoft.Maui.Controls.Ref.any", "6.0.550"),
-                    new PackageIdentity("Microsoft.Maui.Core.Ref.any", "6.0.550"))),
+            Framework.Uwp => FrameworkReferenceAssemblies.Net70Uwp,
+            Framework.WinUi => FrameworkReferenceAssemblies.Net70WinUi,
+            Framework.Uno => FrameworkReferenceAssemblies.Net70Uno,
+            Framework.UnoWinUi => FrameworkReferenceAssemblies.Net70UnoWinUi,
+            Framework.Avalonia => FrameworkReferenceAssemblies.Net60Avalonia,
+            Framework.Maui => FrameworkReferenceAssemblies.Net70Maui,
             _ => throw new NotImplementedException(),
         };
         var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
