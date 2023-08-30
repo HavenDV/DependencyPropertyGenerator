@@ -6,7 +6,7 @@
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.3.3" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
-    <PackageVersion Include="H.Generators.Extensions" Version="1.17.1" />
+    <PackageVersion Include="H.Generators.Extensions" Version="1.18.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.1.1" />
   </ItemGroup>
@@ -20,6 +20,6 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.7.0" />
     <PackageVersion Include="Verify.MSTest" Version="20.8.2" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.1.0" />
-    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.17.1" />
+    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.18.0" />
   </ItemGroup>
 </Project>
