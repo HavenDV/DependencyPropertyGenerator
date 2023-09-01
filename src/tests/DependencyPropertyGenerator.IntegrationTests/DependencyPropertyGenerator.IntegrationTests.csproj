@@ -26,6 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference
+                Include="..\..\libs\DependencyPropertyGenerator.Attributes\DependencyPropertyGenerator.Attributes.csproj"
+                OutputItemType="Analyzer" />
         <ProjectReference Include="..\..\libs\DependencyPropertyGenerator\DependencyPropertyGenerator.csproj"
                           OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
