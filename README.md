@@ -1,7 +1,7 @@
 # DependencyPropertyGenerator
 
 [![Nuget package](https://img.shields.io/nuget/vpre/DependencyPropertyGenerator)](https://www.nuget.org/packages/DependencyPropertyGenerator/)
-[![dotnet](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/dotnet.yml)
+[![CI/CD](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/main.yml)
 [![License: MIT](https://img.shields.io/github/license/HavenDV/DependencyPropertyGenerator)](https://github.com/HavenDV/DependencyPropertyGenerator/blob/main/LICENSE.txt)
 [![Discord](https://img.shields.io/discord/988253265550532680?label=Discord&logo=discord&logoColor=white&color=d82679)](https://discord.gg/g8u2t9dKgE)
 
