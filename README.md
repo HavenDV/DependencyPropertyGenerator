@@ -1,14 +1,12 @@
 # DependencyPropertyGenerator
-Dependency property, routed event and weak event source generator for WPF/UWP/WinUI/Uno/Avalonia/MAUI platforms. 
 
-## Install
-```xml
-<!-- compile assets are required for attributes. -->
-<!-- ExcludeAssets="runtime" excludes DependencyPropertyGenerator.Attributes.dll from your output. -->
-<PackageReference Include="DependencyPropertyGenerator" Version="1.0.0" PrivateAssets="all" ExcludeAssets="runtime" />
-```
-> **_NOTE:_**  When installing via NuGet just replace `<IncludeAssets>runtime` with `<IncludeAssets>compile` for it to work properly.
- 
+[![Nuget package](https://img.shields.io/nuget/vpre/DependencyPropertyGenerator)](https://www.nuget.org/packages/DependencyPropertyGenerator/)
+[![dotnet](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/HavenDV/DependencyPropertyGenerator/actions/workflows/dotnet.yml)
+[![License: MIT](https://img.shields.io/github/license/HavenDV/DependencyPropertyGenerator)](https://github.com/HavenDV/DependencyPropertyGenerator/blob/main/LICENSE.txt)
+[![Discord](https://img.shields.io/discord/988253265550532680?label=Discord&logo=discord&logoColor=white&color=d82679)](https://discord.gg/g8u2t9dKgE)
+
+Dependency property, routed event and weak event source generator for WPF/UWP/WinUI/Uno/Avalonia/MAUI platforms.  
+
 ## Usage
 ```cs
 using DependencyPropertyGenerator;
