@@ -18,6 +18,13 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "OverrideMetadataAttribute.g.cs",
+                source: Resources.OverrideMetadataAttribute_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

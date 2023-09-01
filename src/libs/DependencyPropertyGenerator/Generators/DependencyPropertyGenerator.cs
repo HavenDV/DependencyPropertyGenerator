@@ -16,6 +16,13 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "DependencyPropertyAttribute.g.cs",
+                source: Resources.DependencyPropertyAttribute_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

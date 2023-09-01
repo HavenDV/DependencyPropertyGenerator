@@ -16,6 +16,13 @@ public class WeakEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "WeakEventAttribute.g.cs",
+                source: Resources.WeakEventAttribute_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

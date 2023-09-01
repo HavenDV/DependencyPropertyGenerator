@@ -15,12 +15,21 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="H.Resources.Generator">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="IsExternalInit">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" />
         <PackageReference Include="H.Generators.Extensions" PrivateAssets="all" />
+    </ItemGroup>
+    
+    <ItemGroup Label="Attributes">
+        <EmbeddedResource Include="../$(AssemblyName).Attributes/*.cs" Visible="false" />
+        <AdditionalFiles Include="../$(AssemblyName).Attributes/*.cs" Visible="false" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,20 +40,7 @@
 
     <ItemGroup>
         <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
-        <None Include="../$(AssemblyName).Attributes/*.cs" Pack="true" PackagePath="build" Visible="false" />
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-        <None Include="$(OutputPath)\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs"
-              Visible="false" />
-        <None
-            Include="../$(AssemblyName).Attributes/bin/$(Configuration)/netstandard2.0/$(AssemblyName).Attributes.dll"
-            Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-        <None
-            Include="../$(AssemblyName).Attributes/bin/$(Configuration)/netstandard2.0/$(AssemblyName).Attributes.xml"
-            Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-        <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/net4.5.1/$(AssemblyName).Attributes.dll"
-              Pack="true" PackagePath="lib/net451" Visible="false" />
-        <None Include="../$(AssemblyName).Attributes/bin/$(Configuration)/net4.5.1/$(AssemblyName).Attributes.xml"
-              Pack="true" PackagePath="lib/net451" Visible="false" />
     </ItemGroup>
 
 </Project>

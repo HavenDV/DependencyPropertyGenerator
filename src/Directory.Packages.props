@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup Label="Main">
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.3.3" />
+    <PackageVersion Include="H.Resources.Generator" Version="1.5.1" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
     <PackageVersion Include="H.Generators.Extensions" Version="1.18.0" />

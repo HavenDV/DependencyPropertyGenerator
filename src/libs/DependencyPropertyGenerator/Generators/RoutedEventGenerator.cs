@@ -16,6 +16,16 @@ public class RoutedEventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "RoutedEventAttribute.g.cs",
+                source: Resources.RoutedEventAttribute_cs.AsString());
+            context.AddSource(
+                hintName: "RoutedEventStrategy.g.cs",
+                source: Resources.RoutedEventStrategy_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

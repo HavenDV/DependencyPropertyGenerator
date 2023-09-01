@@ -17,6 +17,19 @@ public class StaticConstructorGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "Localizability.g.cs",
+                source: Resources.Localizability_cs.AsString());
+            context.AddSource(
+                hintName: "DefaultBindingMode.g.cs",
+                source: Resources.DefaultBindingMode_cs.AsString());
+            context.AddSource(
+                hintName: "SourceTrigger.g.cs",
+                source: Resources.SourceTrigger_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

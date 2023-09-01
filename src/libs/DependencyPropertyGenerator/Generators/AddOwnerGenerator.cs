@@ -16,6 +16,13 @@ public class AddOwnerGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context =>
+        {
+            context.AddSource(
+                hintName: "AddOwnerAttribute.g.cs",
+                source: Resources.AddOwnerAttribute_cs.AsString());
+        });
+
         var framework = context.DetectFramework();
 
         context.SyntaxProvider

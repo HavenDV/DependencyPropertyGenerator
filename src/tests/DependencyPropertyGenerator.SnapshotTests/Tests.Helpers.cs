@@ -159,19 +159,29 @@ using DependencyPropertyGenerator;
                 CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview),
                     cancellationToken: cancellationToken),
             },
-            references: references
-                .Add(MetadataReference.CreateFromFile(
-                    typeof(global::DependencyPropertyGenerator.AttachedDependencyPropertyAttribute).Assembly.Location)),
+            references: references,
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         var generator = new T();
+        if (generator is not (WeakEventGenerator or RoutedEventGenerator or StaticConstructorGenerator) &&
+            !additionalGenerators.Any(static x => x is StaticConstructorGenerator))
+        {
+            additionalGenerators = additionalGenerators
+                .Concat(new[] { new StaticConstructorGenerator() })
+                .ToArray();
+        }
         GeneratorDriver driver = additionalGenerators.Any()
-            ? CSharpGeneratorDriver.Create(new IIncrementalGenerator[] { generator }.Concat(additionalGenerators)
-                .ToArray())
-            : CSharpGeneratorDriver.Create(generator);
+            ? CSharpGeneratorDriver.Create(
+                generators: new IIncrementalGenerator[] { generator }
+                    .Concat(additionalGenerators)
+                    .Select(GeneratorExtensions.AsSourceGenerator)
+                    .ToArray(),
+                parseOptions: CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview))
+            : CSharpGeneratorDriver.Create(
+                generators: new[]{ generator.AsSourceGenerator() },
+                parseOptions: CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview));
         driver = driver
             .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(GetGlobalOptions(framework)))
-            .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _,
-                cancellationToken);
+            .RunGeneratorsAndUpdateCompilation(compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
