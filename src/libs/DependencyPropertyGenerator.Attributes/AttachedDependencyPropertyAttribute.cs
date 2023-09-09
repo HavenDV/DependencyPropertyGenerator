@@ -10,7 +10,7 @@ namespace DependencyPropertyGenerator;
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute : global::System.Attribute
+internal sealed class AttachedDependencyPropertyAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -247,7 +247,7 @@ public sealed class AttachedDependencyPropertyAttribute : global::System.Attribu
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute<T> : global::System.Attribute
+internal sealed class AttachedDependencyPropertyAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -483,7 +483,7 @@ public sealed class AttachedDependencyPropertyAttribute<T> : global::System.Attr
 /// <typeparam name="TBrowsableForType">The type for which the extension is intended.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : global::System.Attribute
+internal sealed class AttachedDependencyPropertyAttribute<T, TBrowsableForType> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.

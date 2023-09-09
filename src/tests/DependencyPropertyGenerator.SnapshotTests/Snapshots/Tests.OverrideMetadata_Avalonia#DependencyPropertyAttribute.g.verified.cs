@@ -11,7 +11,7 @@ namespace DependencyPropertyGenerator;
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class DependencyPropertyAttribute : global::System.Attribute
+internal sealed class DependencyPropertyAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -249,7 +249,7 @@ public sealed class DependencyPropertyAttribute : global::System.Attribute
 /// <typeparam name="T">Type of this dependency property.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class DependencyPropertyAttribute<T> : global::System.Attribute
+internal sealed class DependencyPropertyAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.

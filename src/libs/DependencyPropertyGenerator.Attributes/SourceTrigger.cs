@@ -5,7 +5,7 @@ namespace DependencyPropertyGenerator;
 /// <summary>
 /// Describes the timing of binding source updates.
 /// </summary>
-public enum SourceTrigger
+internal enum SourceTrigger
 {
     /// <summary>
     /// The default System.Windows.Data.UpdateSourceTrigger value of the binding target

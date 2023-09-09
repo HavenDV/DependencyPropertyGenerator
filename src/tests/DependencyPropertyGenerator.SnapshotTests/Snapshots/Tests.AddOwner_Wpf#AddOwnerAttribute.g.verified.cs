@@ -11,7 +11,7 @@ namespace DependencyPropertyGenerator;
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class AddOwnerAttribute : global::System.Attribute
+internal sealed class AddOwnerAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.
@@ -258,7 +258,7 @@ public sealed class AddOwnerAttribute : global::System.Attribute
 /// <typeparam name="TFromType">The type for which the extension is intended.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class AddOwnerAttribute<T, TFromType> : global::System.Attribute
+internal sealed class AddOwnerAttribute<T, TFromType> : global::System.Attribute
 {
     /// <summary>
     /// Name of this dependency property.

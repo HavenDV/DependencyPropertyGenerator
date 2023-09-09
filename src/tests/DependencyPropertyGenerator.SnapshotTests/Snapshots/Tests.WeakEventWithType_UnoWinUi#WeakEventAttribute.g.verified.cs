@@ -11,7 +11,7 @@ namespace DependencyPropertyGenerator;
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class WeakEventAttribute : global::System.Attribute
+internal sealed class WeakEventAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name of this routed event.
@@ -75,7 +75,7 @@ public sealed class WeakEventAttribute : global::System.Attribute
 /// <typeparam name="T">Type of this routed event.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("DEPENDENCY_PROPERTY_GENERATOR_ATTRIBUTES")]
-public sealed class WeakEventAttribute<T> : global::System.Attribute
+internal sealed class WeakEventAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name of this routed event.

@@ -6,7 +6,7 @@ namespace DependencyPropertyGenerator;
 /// <summary>
 /// Indicates the routing strategy of a routed event.
 /// </summary>
-public enum RoutedEventStrategy
+internal enum RoutedEventStrategy
 {
     /// <summary>
     /// The routed event uses a tunneling strategy, where the event instance routes 
