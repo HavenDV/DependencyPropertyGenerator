@@ -27,6 +27,6 @@ public static partial class TreeViewExtensions
     static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
-}", framework, default, new AttachedDependencyPropertyGenerator(), new StaticConstructorGenerator());
+}", framework, callerName: null, default, new AttachedDependencyPropertyGenerator(), new StaticConstructorGenerator());
     }
 }

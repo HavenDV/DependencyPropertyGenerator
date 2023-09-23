@@ -3,6 +3,7 @@ using H.Generators.Tests.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
 
 namespace H.Generators.SnapshotTests;
 
@@ -84,6 +85,7 @@ using DependencyPropertyGenerator;
     private async Task CheckSourceAsync<T>(
         string source,
         Framework framework,
+        [CallerMemberName]string? callerName = null,
         CancellationToken cancellationToken = default,
         params IIncrementalGenerator[] additionalGenerators)
         where T : IIncrementalGenerator, new()
@@ -186,11 +188,11 @@ using DependencyPropertyGenerator;
 
         await Task.WhenAll(
             Verify(diagnostics.NormalizeLocations())
-                .UseDirectory("Snapshots")
+                .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
                 .UseTextForParameters($"{framework}_Diagnostics"),
             Verify(driver)
-                .UseDirectory("Snapshots")
+                .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
                 .UseTextForParameters($"{framework}"));
     }

@@ -23,7 +23,7 @@ public static partial class TreeViewExtensions
     static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
     {
     }
-}", framework, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -56,7 +56,7 @@ public static partial class UIElementExtensions
     private static void OnBindEventPropertyChanged_KeyUp(object? sender, KeyEventArgs args)
     {
     }
-}", framework, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -107,7 +107,7 @@ public static partial class GridHelpers
     static void OnRowCountChanged(Grid grid, int newValue)
     {
     }
-}", framework, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -125,6 +125,6 @@ public partial class Test
     private static void TestChanged(Grid grid, Test? newValue)
     {
     }
-}", framework, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
     }
 }
