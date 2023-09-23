@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>
         /// Default value: true
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Avalonia.StyledProperty<bool> IsSpinningProperty =
             global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.MyControl, bool>(
                 name: "IsSpinning",
@@ -25,14 +26,19 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.ComponentModel.Category("Category")]
         [global::System.ComponentModel.Description("Description")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public bool IsSpinning
         {
             get => (bool)GetValue(IsSpinningProperty);
             set => SetValue(IsSpinningProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnIsSpinningChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnIsSpinningChanged(bool newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnIsSpinningChanged(bool oldValue, bool newValue);
     }
 }

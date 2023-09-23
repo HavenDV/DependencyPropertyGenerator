@@ -22,6 +22,7 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
+{GenerateGeneratedCodeAttribute()}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
             {GenerateEventManagerType(@class)}.{GenerateRegisterMethod(@class)}(
                 {GenerateRegisterRoutedEventMethodArguments(@class, @event)});
@@ -29,6 +30,8 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
+{GenerateGeneratedCodeAttribute()}
+{GenerateExcludeFromCodeCoverageAttribute()}
         public event {GenerateRouterEventType(@class, @event)} {@event.Name}
         {{
             add => AddHandler({@event.Name}Event, value);
@@ -38,6 +41,8 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
+{GenerateGeneratedCodeAttribute()}
+{GenerateExcludeFromCodeCoverageAttribute()}
         protected {GenerateRoutedEventArgsType(@class)} On{@event.Name}()
         {{
             var args = new {GenerateRoutedEventArgsType(@class)}({@event.Name}Event);
@@ -197,8 +202,8 @@ namespace {@class.Namespace}
         if (@class.Framework == Framework.Avalonia)
         {
             return @$"
-            name: ""{@event.Name}"",
-            routingStrategy: {GenerateRoutingStrategyType(@class)}.{@event.Strategy}";
+                name: ""{@event.Name}"",
+                routingStrategy: {GenerateRoutingStrategyType(@class)}.{@event.Strategy}";
         }
 
         return @$"

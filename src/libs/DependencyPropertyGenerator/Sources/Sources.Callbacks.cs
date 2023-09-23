@@ -12,13 +12,20 @@ internal static partial class Sources
 
         return property.IsAttached
             ? $@" 
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changed();
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
             : $@" 
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changed();
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changed({GenerateType(property)} newValue);
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
@@ -31,13 +38,20 @@ internal static partial class Sources
 
         return property.IsAttached
             ? $@" 
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changing();
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
+{GenerateGeneratedCodeAttribute()}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
             : $@" 
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changing();
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changing({GenerateType(property)} newValue);
+{GenerateGeneratedCodeAttribute()}
         partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
     

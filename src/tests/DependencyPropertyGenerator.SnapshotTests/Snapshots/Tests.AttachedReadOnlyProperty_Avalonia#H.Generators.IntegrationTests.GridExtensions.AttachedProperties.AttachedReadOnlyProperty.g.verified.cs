@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the AttachedReadOnlyProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Avalonia.AttachedProperty<object?> AttachedReadOnlyPropertyProperty =
             global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridExtensions, global::Avalonia.Controls.Grid, object?>(
                 name: "AttachedReadOnlyProperty",
@@ -22,6 +23,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal static void SetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -32,6 +35,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -39,9 +44,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedReadOnlyPropertyProperty);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedReadOnlyPropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Avalonia.Controls.Grid grid);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Avalonia.Controls.Grid grid, object? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Avalonia.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

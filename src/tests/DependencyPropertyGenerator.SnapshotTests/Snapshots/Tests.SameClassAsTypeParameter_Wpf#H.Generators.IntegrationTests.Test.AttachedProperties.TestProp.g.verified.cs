@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the TestProp dependency property.<br/>
         /// Default value: default(Test)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::System.Windows.DependencyProperty TestPropProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "TestProp",
@@ -31,6 +32,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetTestProp(global::System.Windows.DependencyObject element, global::H.Generators.IntegrationTests.Test? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -42,6 +45,8 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(Test)
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::System.Windows.DependencyObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));

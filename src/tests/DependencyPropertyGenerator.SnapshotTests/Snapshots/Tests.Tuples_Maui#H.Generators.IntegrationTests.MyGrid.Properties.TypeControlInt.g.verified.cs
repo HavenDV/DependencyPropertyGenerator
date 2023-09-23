@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TypeControlInt"/> dependency property.<br/>
         /// Default value: default((VisualElement, int))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty TypeControlIntProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
                 propertyName: "TypeControlInt",
@@ -26,17 +27,25 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default((VisualElement, int))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public (global::Microsoft.Maui.Controls.VisualElement, int) TypeControlInt
         {
             get => ((global::Microsoft.Maui.Controls.VisualElement, int))GetValue(TypeControlIntProperty);
             set => SetValue(TypeControlIntProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanged((global::Microsoft.Maui.Controls.VisualElement, int) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanged((global::Microsoft.Maui.Controls.VisualElement, int) oldValue, (global::Microsoft.Maui.Controls.VisualElement, int) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanging((global::Microsoft.Maui.Controls.VisualElement, int) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeControlIntChanging((global::Microsoft.Maui.Controls.VisualElement, int) oldValue, (global::Microsoft.Maui.Controls.VisualElement, int) newValue);
     }
 }

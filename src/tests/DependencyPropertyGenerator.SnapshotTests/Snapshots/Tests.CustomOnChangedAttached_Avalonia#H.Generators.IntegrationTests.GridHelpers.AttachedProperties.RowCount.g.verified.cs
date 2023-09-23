@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the RowCount dependency property.<br/>
         /// Default value: -1
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Avalonia.AttachedProperty<int> RowCountProperty =
             global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridHelpers, global::Avalonia.Controls.Grid, int>(
                 name: "RowCount",
@@ -22,6 +23,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetRowCount(global::Avalonia.AvaloniaObject element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -32,6 +35,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static int GetRowCount(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));

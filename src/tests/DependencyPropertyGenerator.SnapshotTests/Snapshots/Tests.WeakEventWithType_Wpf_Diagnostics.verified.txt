@@ -4,7 +4,7 @@
     Title: ,
     Severity: Error,
     WarningLevel: 0,
-    Location: DependencyPropertyGenerator/H.Generators.WeakEventGenerator/H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs: (60,37)-(60,41),
+    Location: DependencyPropertyGenerator/H.Generators.WeakEventGenerator/H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs: (62,37)-(62,41),
     Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1503),
     MessageFormat: Argument {0}: cannot convert from '{1}' to '{2}',

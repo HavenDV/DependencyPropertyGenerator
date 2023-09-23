@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the SomeProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::System.Windows.DependencyProperty SomePropertyProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "SomeProperty",
@@ -26,6 +27,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetSomeProperty(global::System.Windows.DependencyObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -37,6 +40,8 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(object)
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.DependencyObject))]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetSomeProperty(global::System.Windows.DependencyObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -44,9 +49,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(SomePropertyProperty);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnSomePropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject, object? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnSomePropertyChanged(global::System.Windows.DependencyObject dependencyObject, object? oldValue, object? newValue);
     }
 }

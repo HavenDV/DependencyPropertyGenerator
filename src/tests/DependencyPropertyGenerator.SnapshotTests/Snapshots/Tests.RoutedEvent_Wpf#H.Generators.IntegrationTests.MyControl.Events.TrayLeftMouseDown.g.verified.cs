@@ -7,6 +7,7 @@ namespace H.Generators.IntegrationTests
     {
         /// <summary>
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::System.Windows.RoutedEvent TrayLeftMouseDownEvent =
             global::System.Windows.EventManager.RegisterRoutedEvent(
                 name: "TrayLeftMouseDown",
@@ -16,6 +17,8 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public event global::System.Windows.RoutedEventHandler TrayLeftMouseDown
         {
             add => AddHandler(TrayLeftMouseDownEvent, value);
@@ -25,6 +28,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the TrayLeftMouseDown event.
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         protected global::System.Windows.RoutedEventArgs OnTrayLeftMouseDown()
         {
             var args = new global::System.Windows.RoutedEventArgs(TrayLeftMouseDownEvent);

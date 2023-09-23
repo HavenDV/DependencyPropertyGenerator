@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the UserAgentSuffix dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty UserAgentSuffixProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
                 propertyName: "UserAgentSuffix",
@@ -30,6 +31,8 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.ComponentModel.Description(@"A suffix that is added to the default user agent, surrounded by square brackets.
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetUserAgentSuffix(global::Microsoft.Maui.Controls.BindableObject element, string? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -44,6 +47,8 @@ Can be used to identify the web view as belonging to a certain app/version on th
         /// </summary>
         [global::System.ComponentModel.Description(@"A suffix that is added to the default user agent, surrounded by square brackets.
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static string? GetUserAgentSuffix(global::Microsoft.Maui.Controls.BindableObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -51,13 +56,21 @@ Can be used to identify the web view as belonging to a certain app/version on th
             return (string?)element.GetValue(UserAgentSuffixProperty);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanged(global::Microsoft.Maui.Controls.Grid grid);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanged(global::Microsoft.Maui.Controls.Grid grid, string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanged(global::Microsoft.Maui.Controls.Grid grid, string? oldValue, string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanging(global::Microsoft.Maui.Controls.Grid grid);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanging(global::Microsoft.Maui.Controls.Grid grid, string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnUserAgentSuffixChanging(global::Microsoft.Maui.Controls.Grid grid, string? oldValue, string? newValue);
     }
 }

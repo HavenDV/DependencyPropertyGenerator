@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the AttachedProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty AttachedPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
                 propertyName: "AttachedProperty",
@@ -26,6 +27,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetAttachedProperty(global::Microsoft.Maui.Controls.BindableObject element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -36,6 +39,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetAttachedProperty(global::Microsoft.Maui.Controls.BindableObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -43,13 +48,21 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedPropertyProperty);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid, object? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanged(global::Microsoft.Maui.Controls.Grid grid, object? oldValue, object? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid, object? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         static partial void OnAttachedPropertyChanging(global::Microsoft.Maui.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

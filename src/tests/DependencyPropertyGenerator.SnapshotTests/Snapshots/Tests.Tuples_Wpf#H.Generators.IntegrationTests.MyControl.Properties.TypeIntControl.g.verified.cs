@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TypeIntControl"/> dependency property.<br/>
         /// Default value: default((int, FrameworkElement))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::System.Windows.DependencyProperty TypeIntControlProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "TypeIntControl",
@@ -26,14 +27,19 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default((int, FrameworkElement))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public (int, global::System.Windows.FrameworkElement) TypeIntControl
         {
             get => ((int, global::System.Windows.FrameworkElement))GetValue(TypeIntControlProperty);
             set => SetValue(TypeIntControlProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntControlChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntControlChanged((int, global::System.Windows.FrameworkElement) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntControlChanged((int, global::System.Windows.FrameworkElement) oldValue, (int, global::System.Windows.FrameworkElement) newValue);
     }
 }

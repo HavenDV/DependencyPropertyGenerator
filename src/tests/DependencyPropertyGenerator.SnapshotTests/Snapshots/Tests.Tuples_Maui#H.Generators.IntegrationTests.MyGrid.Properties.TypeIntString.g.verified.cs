@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TypeIntString"/> dependency property.<br/>
         /// Default value: default((int, string))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty TypeIntStringProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
                 propertyName: "TypeIntString",
@@ -26,17 +27,25 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default((int, string))
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public (int, string) TypeIntString
         {
             get => ((int, string))GetValue(TypeIntStringProperty);
             set => SetValue(TypeIntStringProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanged((int, string) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanged((int, string) oldValue, (int, string) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanging((int, string) newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTypeIntStringChanging((int, string) oldValue, (int, string) newValue);
     }
 }

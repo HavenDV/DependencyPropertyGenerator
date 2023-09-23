@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="Text"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Avalonia.StyledProperty<string?> TextProperty =
             global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.MyControl, string?>(
                 name: "Text",
@@ -22,14 +23,19 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? Text
         {
             get => (string?)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTextChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTextChanged(string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnTextChanged(string? oldValue, string? newValue);
     }
 }

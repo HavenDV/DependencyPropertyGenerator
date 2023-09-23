@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the TestProp dependency property.<br/>
         /// Default value: default(Test)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Avalonia.AttachedProperty<global::H.Generators.IntegrationTests.Test?> TestPropProperty =
             global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.Test, global::Avalonia.Controls.Grid, global::H.Generators.IntegrationTests.Test?>(
                 name: "TestProp",
@@ -22,6 +23,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetTestProp(global::Avalonia.AvaloniaObject element, global::H.Generators.IntegrationTests.Test? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
@@ -32,6 +35,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));

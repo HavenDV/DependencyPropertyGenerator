@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="AttributedProperty"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty AttributedPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
                 propertyName: "AttributedProperty",
@@ -33,17 +34,25 @@ namespace H.Generators.IntegrationTests
         [global::System.ComponentModel.Bindable(true)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [global::System.CLSCompliant(false)]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? AttributedProperty
         {
             get => (string?)GetValue(AttributedPropertyProperty);
             set => SetValue(AttributedPropertyProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanged(string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanged(string? oldValue, string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanging(string? newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnAttributedPropertyChanging(string? oldValue, string? newValue);
     }
 }

@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="ExplicitUpdateSourceTriggerProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty ExplicitUpdateSourceTriggerPropertyProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
                 propertyName: "ExplicitUpdateSourceTriggerProperty",
@@ -26,17 +27,25 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public bool ExplicitUpdateSourceTriggerProperty
         {
             get => (bool)GetValue(ExplicitUpdateSourceTriggerPropertyProperty);
             set => SetValue(ExplicitUpdateSourceTriggerPropertyProperty, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanged(bool oldValue, bool newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanging();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanging(bool newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnExplicitUpdateSourceTriggerPropertyChanging(bool oldValue, bool newValue);
     }
 }

@@ -5,6 +5,8 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MyControl
     {
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private class ChangedWeakEventManager : global::System.Windows.WeakEventManager
         {
             private ChangedWeakEventManager()
@@ -65,6 +67,8 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public event global::System.EventHandler<global::System.EventArgs?>? Changed
         {
             add => ChangedWeakEventManager.AddHandler(null, value);
@@ -74,6 +78,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the Changed event.
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal void RaiseChangedEvent(object? sender, global::System.EventArgs? args)
         {
             ChangedWeakEventManager.CurrentManager.OnChanged(sender, args);

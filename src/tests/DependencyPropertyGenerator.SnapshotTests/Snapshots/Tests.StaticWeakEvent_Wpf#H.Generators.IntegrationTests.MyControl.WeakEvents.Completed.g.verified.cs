@@ -5,6 +5,8 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MyControl
     {
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private class CompletedWeakEventManager : global::System.Windows.WeakEventManager
         {
             private CompletedWeakEventManager()
@@ -65,6 +67,8 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static event global::System.EventHandler? Completed
         {
             add => CompletedWeakEventManager.AddHandler(null, value);
@@ -74,6 +78,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the Completed event.
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal static void RaiseCompletedEvent(object? sender)
         {
             CompletedWeakEventManager.CurrentManager.OnCompleted(sender, global::System.EventArgs.Empty);

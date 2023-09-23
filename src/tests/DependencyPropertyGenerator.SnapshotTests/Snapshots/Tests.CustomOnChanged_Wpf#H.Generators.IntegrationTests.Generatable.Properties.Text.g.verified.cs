@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="Text"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         public static readonly global::System.Windows.DependencyProperty TextProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "Text",
@@ -30,6 +31,8 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(string)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? Text
         {
             get => (string?)GetValue(TextProperty);

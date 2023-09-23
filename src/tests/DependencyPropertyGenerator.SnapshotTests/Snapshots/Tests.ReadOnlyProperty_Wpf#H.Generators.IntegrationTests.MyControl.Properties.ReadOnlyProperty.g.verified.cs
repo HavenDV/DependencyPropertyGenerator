@@ -10,6 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="ReadOnlyProperty"/> dependency property.<br/>
         /// Default value: default(bool)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         internal static readonly global::System.Windows.DependencyPropertyKey ReadOnlyPropertyPropertyKey =
             global::System.Windows.DependencyProperty.RegisterReadOnly(
                 name: "ReadOnlyProperty",
@@ -33,14 +34,19 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(bool)
         /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public bool ReadOnlyProperty
         {
             get => (bool)GetValue(ReadOnlyPropertyProperty);
             protected set => SetValue(ReadOnlyPropertyPropertyKey, value);
         }
 
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnReadOnlyPropertyChanged();
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnReadOnlyPropertyChanged(bool newValue);
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.1.0")]
         partial void OnReadOnlyPropertyChanged(bool oldValue, bool newValue);
     }
 }
