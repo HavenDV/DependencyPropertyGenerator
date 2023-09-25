@@ -7,7 +7,7 @@
     <PackageVersion Include="H.Resources.Generator" Version="1.5.1" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
-    <PackageVersion Include="H.Generators.Extensions" Version="1.18.0" />
+    <PackageVersion Include="H.Generators.Extensions" Version="1.19.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.1.1" />
   </ItemGroup>
@@ -19,8 +19,8 @@
     <PackageVersion Include="Avalonia" Version="11.0.4" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.1" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.7.0" />
-    <PackageVersion Include="Verify.MSTest" Version="21.1.3" />
+    <PackageVersion Include="Verify.MSTest" Version="21.2.0" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.1.0" />
-    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.18.0" />
+    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.19.0" />
   </ItemGroup>
 </Project>
