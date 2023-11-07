@@ -152,7 +152,7 @@ internal static partial class Sources
 
     private static string GenerateBindEventMethod(DependencyPropertyData property)
     {
-        if (!property.BindEvents.Any())
+        if (property.BindEvents.IsEmpty)
         {
             return " ";
         }
@@ -243,7 +243,7 @@ internal static partial class Sources
             values.Add(nameof(property.SubPropertiesDoNotAffectRender));
         }
 
-        if (!values.Any())
+        if (values.Count == 0)
         {
             values.Add("None");
         }

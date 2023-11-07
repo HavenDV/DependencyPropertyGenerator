@@ -5,7 +5,6 @@
     Severity: Hidden,
     WarningLevel: 1,
     Location: : (0,0)-(0,15),
-    Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
     MessageFormat: Unnecessary using directive.,
     Message: Unnecessary using directive.,

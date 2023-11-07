@@ -231,8 +231,8 @@ internal static partial class Sources
             : $"On{property.Name}Changed";
 
         var (isChanged0, isChanged1, isChanged2, isChanged3) = CheckMethods(name, @class, property);
-        isChanged2 |= !isCustom && !property.IsAttached && property.BindEvents.Any();
-        isChanged3 |= !isCustom && property.IsAttached && property.BindEvents.Any();
+        isChanged2 |= !isCustom && property is { IsAttached: false, BindEvents.IsEmpty: false };
+        isChanged3 |= !isCustom && property is { IsAttached: true, BindEvents.IsEmpty: false };
 
         return (name, isChanged0, isChanged1, isChanged2, isChanged3);
     }

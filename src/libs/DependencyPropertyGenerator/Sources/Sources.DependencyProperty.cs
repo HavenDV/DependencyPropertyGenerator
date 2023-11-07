@@ -149,16 +149,17 @@ namespace {@class.Namespace}
 
         var parameterName = (@class.Framework, property.IsAttached) switch
         {
-            (Framework.Wpf, true) or (Framework.Uwp, true) or (Framework.WinUi, true) => "defaultMetadata",
-            (Framework.Avalonia, _) => "metadata",
-            _ => "typeMetadata",
+            (Framework.Wpf, true) or (Framework.Uwp, true) or (Framework.WinUi, true) => "defaultMetadata: ",
+            (Framework.Avalonia, _) => "metadata: ",
+            (Framework.Uno, true) or (Framework.UnoWinUi, true) => string.Empty,
+            _ => "typeMetadata: ",
         };
         switch (@class.Framework)
         {
             case Framework.Wpf:
                 if (property.DefaultUpdateSourceTrigger == null)
                 {
-                    return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
+                    return $@"{parameterName}new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
@@ -166,7 +167,7 @@ namespace {@class.Namespace}
                     isAnimationProhibited: {property.IsAnimationProhibited.ToString().ToLower(CultureInfo.InvariantCulture)})";
                 }
 
-                return $@"{parameterName}: new global::System.Windows.FrameworkPropertyMetadata(
+                return $@"{parameterName}new global::System.Windows.FrameworkPropertyMetadata(
                     defaultValue: {GenerateDefaultValue(property)},
                     flags: {GenerateOptions(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)},
@@ -182,7 +183,7 @@ namespace {@class.Namespace}
                 var type = GenerateTypeByPlatform(@class.Framework, "PropertyMetadata");
                 if (property.CreateDefaultValueCallback)
                 {
-                    return $@"{parameterName}: {type}.Create(
+                    return $@"{parameterName}{type}.Create(
                     createDefaultValueCallback: {GenerateCreateDefaultValueCallbackValueCallback(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
                 }
@@ -193,7 +194,7 @@ namespace {@class.Namespace}
                     Framework.Uno or Framework.UnoWinUi => $"new {type}",
                     _ => $"{type}.Create",
                 };
-                return $@"{parameterName}: {create}(
+                return $@"{parameterName}{create}(
                     defaultValue: {GenerateDefaultValue(property)},
                     propertyChangedCallback: {GeneratePropertyChangedCallback(@class, property)})";
             }
@@ -202,7 +203,7 @@ namespace {@class.Namespace}
             {
                 var metadataType = GenerateTypeByPlatform(@class.Framework, $"StyledPropertyMetadata<{property.Type}>");
 
-                return $@"{parameterName}: new {metadataType}(
+                return $@"{parameterName}new {metadataType}(
                     defaultValue: {GenerateDefaultValue(property)},
                     defaultBindingMode: global::Avalonia.Data.BindingMode.Default,
                     coerce: {GenerateCoerceValueCallback(@class, property)},

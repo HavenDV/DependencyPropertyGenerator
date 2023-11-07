@@ -6,8 +6,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (0,0)-(0,0),
-      Description: ,
-      HelpLink: ,
       MessageFormat:
 Framework is not recognized.
 You can explicitly specify the framework by setting one of the following constants in your project:

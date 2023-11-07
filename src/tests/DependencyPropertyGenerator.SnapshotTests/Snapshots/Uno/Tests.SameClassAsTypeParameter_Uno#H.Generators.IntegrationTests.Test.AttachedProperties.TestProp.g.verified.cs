@@ -16,7 +16,7 @@ namespace H.Generators.IntegrationTests
                 name: "TestProp",
                 propertyType: typeof(global::H.Generators.IntegrationTests.Test),
                 ownerType: typeof(global::H.Generators.IntegrationTests.Test),
-                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
+                new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: default(global::H.Generators.IntegrationTests.Test),
                     propertyChangedCallback: static (sender, args) =>
                     {

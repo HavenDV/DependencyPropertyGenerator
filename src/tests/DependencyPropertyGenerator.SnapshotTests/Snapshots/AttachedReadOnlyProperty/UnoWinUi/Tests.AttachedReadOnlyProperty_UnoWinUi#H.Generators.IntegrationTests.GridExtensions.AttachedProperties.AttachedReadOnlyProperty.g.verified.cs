@@ -16,7 +16,7 @@ namespace H.Generators.IntegrationTests
                 name: "AttachedReadOnlyProperty",
                 propertyType: typeof(object),
                 ownerType: typeof(global::H.Generators.IntegrationTests.GridExtensions),
-                typeMetadata: new global::Microsoft.UI.Xaml.PropertyMetadata(
+                new global::Microsoft.UI.Xaml.PropertyMetadata(
                     defaultValue: default(object),
                     propertyChangedCallback: null));
 

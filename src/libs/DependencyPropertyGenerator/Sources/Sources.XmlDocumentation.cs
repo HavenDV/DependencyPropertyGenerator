@@ -5,9 +5,11 @@ namespace H.Generators;
 
 internal static partial class Sources
 {
+    private readonly static char[] Separator = { '\r', '\n' };
+    
     private static string GenerateXmlDocumentationFrom(string value)
     {
-        var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = value.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
 
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }

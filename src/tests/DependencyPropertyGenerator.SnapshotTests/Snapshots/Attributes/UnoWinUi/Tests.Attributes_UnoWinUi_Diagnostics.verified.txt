@@ -5,7 +5,6 @@
     Severity: Warning,
     WarningLevel: 2,
     Location: DependencyPropertyGenerator/H.Generators.DependencyPropertyGenerator/H.Generators.IntegrationTests.MyControl.Properties.AttributedProperty.g.cs: (33,23)-(33,41),
-    Description: ,
     HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
     MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
     Message: 'MyControl.AttributedProperty' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,

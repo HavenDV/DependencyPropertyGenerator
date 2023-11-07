@@ -16,7 +16,7 @@ namespace H.Generators.IntegrationTests
                 name: "RowCount",
                 propertyType: typeof(int),
                 ownerType: typeof(global::H.Generators.IntegrationTests.GridHelpers),
-                typeMetadata: new global::Windows.UI.Xaml.PropertyMetadata(
+                new global::Windows.UI.Xaml.PropertyMetadata(
                     defaultValue: (int)-1,
                     propertyChangedCallback: static (sender, args) =>
                     {
