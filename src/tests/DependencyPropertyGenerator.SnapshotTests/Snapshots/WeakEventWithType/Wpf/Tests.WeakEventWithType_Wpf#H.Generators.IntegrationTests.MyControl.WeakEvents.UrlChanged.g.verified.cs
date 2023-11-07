@@ -5,7 +5,7 @@ namespace H.Generators.IntegrationTests
 {
     partial class MyControl
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private class UrlChangedWeakEventManager : global::System.Windows.WeakEventManager
         {
@@ -67,7 +67,7 @@ namespace H.Generators.IntegrationTests
 
         /// <summary>
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public event global::System.EventHandler<string?>? UrlChanged
         {
@@ -78,7 +78,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the UrlChanged event.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal void RaiseUrlChangedEvent(object? sender, string? args)
         {

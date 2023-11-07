@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TupleIntControl"/> dependency property.<br/>
         /// Default value: default(Tuple&lt;int, VisualElement&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty TupleIntControlProperty =
             global::Microsoft.Maui.Controls.BindableProperty.Create(
                 propertyName: "TupleIntControl",
@@ -27,7 +27,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Tuple&lt;int, VisualElement&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? TupleIntControl
         {
@@ -35,17 +35,17 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TupleIntControlProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged(global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged(global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? oldValue, global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanging();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanging(global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanging(global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? oldValue, global::System.Tuple<int, global::Microsoft.Maui.Controls.VisualElement>? newValue);
     }
 }

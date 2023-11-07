@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TypeIntControl"/> dependency property.<br/>
         /// Default value: default((int, FrameworkElement))
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::Microsoft.UI.Xaml.DependencyProperty TypeIntControlProperty =
             global::Microsoft.UI.Xaml.DependencyProperty.Register(
                 name: "TypeIntControl",
@@ -23,7 +23,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default((int, FrameworkElement))
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public (int, global::Microsoft.UI.Xaml.FrameworkElement) TypeIntControl
         {
@@ -31,11 +31,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TypeIntControlProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTypeIntControlChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTypeIntControlChanged((int, global::Microsoft.UI.Xaml.FrameworkElement) newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTypeIntControlChanged((int, global::Microsoft.UI.Xaml.FrameworkElement) oldValue, (int, global::Microsoft.UI.Xaml.FrameworkElement) newValue);
     }
 }

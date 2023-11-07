@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the SelectedItem dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::Windows.UI.Xaml.DependencyProperty SelectedItemProperty =
             global::Windows.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "SelectedItem",
@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetSelectedItem(global::Windows.UI.Xaml.DependencyObject element, object? value)
         {
@@ -41,7 +41,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetSelectedItem(global::Windows.UI.Xaml.DependencyObject element)
         {
@@ -50,13 +50,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(SelectedItemProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnSelectedItemChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnSelectedItemChanged(global::Windows.UI.Xaml.Controls.TreeView treeView);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnSelectedItemChanged(global::Windows.UI.Xaml.Controls.TreeView treeView, object? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnSelectedItemChanged(global::Windows.UI.Xaml.Controls.TreeView treeView, object? oldValue, object? newValue);
     }
 }

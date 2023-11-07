@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the Mode dependency property.<br/>
         /// Default value: Mode2
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::System.Windows.DependencyProperty ModeProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "Mode",
@@ -33,7 +33,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: Mode2
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetMode(global::System.Windows.DependencyObject element, global::H.Generators.IntegrationTests.Mode value)
         {
@@ -46,7 +46,7 @@ namespace H.Generators.IntegrationTests
         /// Default value: Mode2
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.TreeView))]
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static global::H.Generators.IntegrationTests.Mode GetMode(global::System.Windows.DependencyObject element)
         {
@@ -55,13 +55,13 @@ namespace H.Generators.IntegrationTests
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnModeChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnModeChanged(global::System.Windows.Controls.TreeView treeView);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnModeChanged(global::System.Windows.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnModeChanged(global::System.Windows.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

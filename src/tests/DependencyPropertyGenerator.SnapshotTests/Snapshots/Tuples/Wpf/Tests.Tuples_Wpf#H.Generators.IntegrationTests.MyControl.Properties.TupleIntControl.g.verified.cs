@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TupleIntControl"/> dependency property.<br/>
         /// Default value: default(Tuple&lt;int, FrameworkElement&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::System.Windows.DependencyProperty TupleIntControlProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "TupleIntControl",
@@ -27,7 +27,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Tuple&lt;int, FrameworkElement&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public global::System.Tuple<int, global::System.Windows.FrameworkElement>? TupleIntControl
         {
@@ -35,11 +35,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TupleIntControlProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged(global::System.Tuple<int, global::System.Windows.FrameworkElement>? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnTupleIntControlChanged(global::System.Tuple<int, global::System.Windows.FrameworkElement>? oldValue, global::System.Tuple<int, global::System.Windows.FrameworkElement>? newValue);
     }
 }

@@ -10,7 +10,7 @@ namespace Namespace1
         /// Identifies the <see cref="MyProperty"/> dependency property.<br/>
         /// Default value: default(int)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::Avalonia.StyledProperty<int> MyPropertyProperty =
             global::Avalonia.AvaloniaProperty.Register<global::Namespace1.MyControl, int>(
                 name: "MyProperty",
@@ -23,7 +23,7 @@ namespace Namespace1
         /// <summary>
         /// Default value: default(int)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public int MyProperty
         {
@@ -31,11 +31,11 @@ namespace Namespace1
             set => SetValue(MyPropertyProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnMyPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnMyPropertyChanged(int newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnMyPropertyChanged(int oldValue, int newValue);
     }
 }

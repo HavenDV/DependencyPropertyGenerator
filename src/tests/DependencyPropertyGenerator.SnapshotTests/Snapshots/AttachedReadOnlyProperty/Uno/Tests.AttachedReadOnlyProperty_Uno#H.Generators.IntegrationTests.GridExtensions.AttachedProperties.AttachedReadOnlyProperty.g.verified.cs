@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the AttachedReadOnlyProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::Windows.UI.Xaml.DependencyProperty AttachedReadOnlyPropertyProperty =
             global::Windows.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "AttachedReadOnlyProperty",
@@ -23,7 +23,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal static void SetAttachedReadOnlyProperty(global::Windows.UI.Xaml.DependencyObject element, object? value)
         {
@@ -35,7 +35,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetAttachedReadOnlyProperty(global::Windows.UI.Xaml.DependencyObject element)
         {
@@ -44,13 +44,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedReadOnlyPropertyProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnAttachedReadOnlyPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Windows.UI.Xaml.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Windows.UI.Xaml.Controls.Grid grid, object? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::Windows.UI.Xaml.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

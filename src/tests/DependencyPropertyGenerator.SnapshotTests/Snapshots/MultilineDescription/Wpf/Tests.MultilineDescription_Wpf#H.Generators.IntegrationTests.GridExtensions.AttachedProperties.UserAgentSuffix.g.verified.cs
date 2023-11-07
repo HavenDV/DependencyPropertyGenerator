@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the UserAgentSuffix dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::System.Windows.DependencyProperty UserAgentSuffixProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "UserAgentSuffix",
@@ -31,7 +31,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.ComponentModel.Description(@"A suffix that is added to the default user agent, surrounded by square brackets.
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetUserAgentSuffix(global::System.Windows.DependencyObject element, string? value)
         {
@@ -48,7 +48,7 @@ Can be used to identify the web view as belonging to a certain app/version on th
         [global::System.ComponentModel.Description(@"A suffix that is added to the default user agent, surrounded by square brackets.
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static string? GetUserAgentSuffix(global::System.Windows.DependencyObject element)
         {
@@ -57,13 +57,13 @@ Can be used to identify the web view as belonging to a certain app/version on th
             return (string?)element.GetValue(UserAgentSuffixProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnUserAgentSuffixChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnUserAgentSuffixChanged(global::System.Windows.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnUserAgentSuffixChanged(global::System.Windows.Controls.Grid grid, string? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         static partial void OnUserAgentSuffixChanged(global::System.Windows.Controls.Grid grid, string? oldValue, string? newValue);
     }
 }

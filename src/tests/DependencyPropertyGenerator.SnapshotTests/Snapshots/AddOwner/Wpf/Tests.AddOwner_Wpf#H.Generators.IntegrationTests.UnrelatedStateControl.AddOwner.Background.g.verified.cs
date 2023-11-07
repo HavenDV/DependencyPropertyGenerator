@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="Background"/> dependency property.<br/>
         /// Default value: default(Brush)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         public static readonly global::System.Windows.DependencyProperty BackgroundProperty =
             global::System.Windows.Controls.Border.BackgroundProperty.AddOwner(
                 ownerType: typeof(global::H.Generators.IntegrationTests.UnrelatedStateControl),
@@ -19,7 +19,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Brush)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public global::System.Windows.Media.Brush? Background
         {
@@ -27,11 +27,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(BackgroundProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnBackgroundChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnBackgroundChanged(global::System.Windows.Media.Brush? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
         partial void OnBackgroundChanged(global::System.Windows.Media.Brush? oldValue, global::System.Windows.Media.Brush? newValue);
     }
 }
