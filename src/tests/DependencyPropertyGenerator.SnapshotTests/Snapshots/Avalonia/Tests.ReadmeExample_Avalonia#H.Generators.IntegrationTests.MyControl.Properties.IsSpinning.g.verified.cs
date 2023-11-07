@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyControl
+    partial class MyControl
     {
         /// <summary>
         /// Identifies the <see cref="IsSpinning"/> dependency property.<br/>

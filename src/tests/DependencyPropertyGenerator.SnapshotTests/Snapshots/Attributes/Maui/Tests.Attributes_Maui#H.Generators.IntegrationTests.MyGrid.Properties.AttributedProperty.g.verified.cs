@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyGrid
+    partial class MyGrid
     {
         /// <summary>
         /// Identifies the <see cref="AttributedProperty"/> dependency property.<br/>

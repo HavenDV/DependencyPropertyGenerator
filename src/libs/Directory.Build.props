@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <PropertyGroup Label="Nuget">
+        <Version>1.3.3</Version>
         <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Authors>havendv</Authors>
@@ -25,13 +26,6 @@
     <ItemGroup Label="Nuget">
         <None Include="$(SolutionDir)assets\nuget_icon.png" Pack="true" PackagePath="\" Visible="false" />
         <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\" Visible="false" />
-    </ItemGroup>
-
-    <ItemGroup Label="Versioning">
-        <PackageReference Include="ConventionalCommitsGitInfo">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
     </ItemGroup>
 
     <ItemGroup Label="Source Link">

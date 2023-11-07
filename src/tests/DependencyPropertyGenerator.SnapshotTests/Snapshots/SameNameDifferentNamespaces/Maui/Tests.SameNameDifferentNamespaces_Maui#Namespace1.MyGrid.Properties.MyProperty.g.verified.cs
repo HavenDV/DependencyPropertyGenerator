@@ -4,7 +4,7 @@
 
 namespace Namespace1
 {
-    public partial class MyGrid
+    partial class MyGrid
     {
         /// <summary>
         /// Identifies the <see cref="MyProperty"/> dependency property.<br/>

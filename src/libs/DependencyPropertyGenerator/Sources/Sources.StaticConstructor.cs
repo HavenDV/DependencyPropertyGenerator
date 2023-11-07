@@ -28,7 +28,7 @@ internal static partial class Sources
 
 namespace {@class.Namespace}
 {{
-    public{GenerateModifiers(@class)} partial class {@class.Name}
+    {GenerateModifiers(@class)}partial class {@class.Name}
     {{
         static {@class.Name}()
         {{
@@ -46,7 +46,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{GenerateModifiers(@class)} partial class {@class.Name}
+    {GenerateModifiers(@class)}partial class {@class.Name}
     {{
         static {@class.Name}()
         {{

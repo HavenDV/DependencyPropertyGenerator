@@ -11,7 +11,7 @@ internal static partial class Sources
 
 namespace {@class.Namespace}
 {{
-    public{GenerateModifiers(@class)} partial class {@class.Name}{GenerateBaseType(@class)}
+    {GenerateModifiers(@class)}partial class {@class.Name}{GenerateBaseType(@class)}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
 {GenerateGeneratedCodeAttribute()}

@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public static partial class UIElementExtensions
+    static partial class UIElementExtensions
     {
         /// <summary>
         /// Identifies the BindEventProperty dependency property.<br/>

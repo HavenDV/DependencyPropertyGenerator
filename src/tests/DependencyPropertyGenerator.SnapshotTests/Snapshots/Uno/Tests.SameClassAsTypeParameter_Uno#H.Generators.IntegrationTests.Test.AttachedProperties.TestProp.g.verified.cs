@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class Test
+    partial class Test
     {
         /// <summary>
         /// Identifies the TestProp dependency property.<br/>

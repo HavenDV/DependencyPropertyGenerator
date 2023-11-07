@@ -12,7 +12,7 @@ internal static partial class Sources
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
 {GenerateGeneratedCodeAttribute()}

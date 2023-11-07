@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class Generatable
+    partial class Generatable
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.<br/>

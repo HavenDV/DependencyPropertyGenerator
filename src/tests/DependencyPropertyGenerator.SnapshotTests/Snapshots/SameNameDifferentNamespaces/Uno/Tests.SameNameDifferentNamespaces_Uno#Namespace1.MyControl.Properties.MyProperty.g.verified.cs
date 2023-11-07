@@ -4,7 +4,7 @@
 
 namespace Namespace1
 {
-    public partial class MyControl
+    partial class MyControl
     {
         /// <summary>
         /// Identifies the <see cref="MyProperty"/> dependency property.<br/>

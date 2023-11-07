@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyControl
+    partial class MyControl
     {
         static MyControl()
         {

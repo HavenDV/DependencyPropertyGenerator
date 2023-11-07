@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public static partial class GridExtensions
+    static partial class GridExtensions
     {
         /// <summary>
         /// Identifies the AttachedReadOnlyProperty dependency property.<br/>

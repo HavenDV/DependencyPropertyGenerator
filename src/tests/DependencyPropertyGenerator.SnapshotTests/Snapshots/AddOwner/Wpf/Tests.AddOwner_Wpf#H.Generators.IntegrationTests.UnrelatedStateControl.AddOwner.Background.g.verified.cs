@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class UnrelatedStateControl
+    partial class UnrelatedStateControl
     {
         /// <summary>
         /// Identifies the <see cref="Background"/> dependency property.<br/>

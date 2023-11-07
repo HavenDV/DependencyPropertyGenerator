@@ -30,7 +30,7 @@ internal static partial class Sources
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateGeneratedCodeAttribute()}
 {GenerateExcludeFromCodeCoverageAttribute()}
@@ -125,7 +125,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
         private{modifiers} global::Microsoft.Maui.WeakEventManager {@event.Name}WeakEventManager {{ get; }} = new global::Microsoft.Maui.WeakEventManager();
         

@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class GridHelpers
+    partial class GridHelpers
     {
         static GridHelpers()
         {

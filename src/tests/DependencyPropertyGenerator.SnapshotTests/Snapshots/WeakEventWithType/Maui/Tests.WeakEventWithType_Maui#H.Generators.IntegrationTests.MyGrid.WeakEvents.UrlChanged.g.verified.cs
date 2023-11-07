@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyGrid
+    partial class MyGrid
     {
         private global::Microsoft.Maui.WeakEventManager UrlChangedWeakEventManager { get; } = new global::Microsoft.Maui.WeakEventManager();
         /// <summary>

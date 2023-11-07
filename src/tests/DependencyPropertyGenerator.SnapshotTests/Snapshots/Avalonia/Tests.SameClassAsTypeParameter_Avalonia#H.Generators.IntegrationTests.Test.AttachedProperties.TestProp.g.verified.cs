@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class Test : global::Avalonia.AvaloniaObject
+    partial class Test : global::Avalonia.AvaloniaObject
     {
         /// <summary>
         /// Identifies the TestProp dependency property.<br/>

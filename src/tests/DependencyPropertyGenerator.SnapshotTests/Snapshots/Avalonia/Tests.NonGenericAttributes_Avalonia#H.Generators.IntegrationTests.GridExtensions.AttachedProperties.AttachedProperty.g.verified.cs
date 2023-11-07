@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class GridExtensions : global::Avalonia.AvaloniaObject
+    partial class GridExtensions : global::Avalonia.AvaloniaObject
     {
         /// <summary>
         /// Identifies the AttachedProperty dependency property.<br/>

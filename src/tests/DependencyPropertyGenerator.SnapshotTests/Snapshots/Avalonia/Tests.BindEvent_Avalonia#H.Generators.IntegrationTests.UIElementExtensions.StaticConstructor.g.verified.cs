@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class UIElementExtensions
+    partial class UIElementExtensions
     {
         static UIElementExtensions()
         {

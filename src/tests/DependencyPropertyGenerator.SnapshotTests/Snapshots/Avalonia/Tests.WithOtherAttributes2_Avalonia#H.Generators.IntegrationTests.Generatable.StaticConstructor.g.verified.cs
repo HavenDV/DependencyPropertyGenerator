@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class Generatable
+    partial class Generatable
     {
         static Generatable()
         {

@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyUIElement
+    partial class MyUIElement
     {
         /// <summary>
         /// Identifies the <see cref="BindEventsProperty"/> dependency property.<br/>

@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class Aquarium
+    partial class Aquarium
     {
         /// <summary>
         /// Identifies the <see cref="AquariumGraphic"/> dependency property.<br/>

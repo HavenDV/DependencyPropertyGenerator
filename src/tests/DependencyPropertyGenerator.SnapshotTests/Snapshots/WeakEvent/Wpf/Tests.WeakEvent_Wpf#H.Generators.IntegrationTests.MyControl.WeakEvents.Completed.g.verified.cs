@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyControl
+    partial class MyControl
     {
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.2.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]

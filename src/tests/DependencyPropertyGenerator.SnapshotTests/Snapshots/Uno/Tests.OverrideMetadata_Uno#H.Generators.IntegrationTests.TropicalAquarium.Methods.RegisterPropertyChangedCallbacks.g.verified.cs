@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class TropicalAquarium
+    partial class TropicalAquarium
     {
         private void RegisterPropertyChangedCallbacks()
         {

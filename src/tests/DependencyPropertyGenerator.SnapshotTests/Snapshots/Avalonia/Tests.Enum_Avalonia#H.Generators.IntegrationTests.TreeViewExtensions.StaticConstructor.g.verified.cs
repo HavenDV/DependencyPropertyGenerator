@@ -3,7 +3,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class TreeViewExtensions
+    partial class TreeViewExtensions
     {
         static TreeViewExtensions()
         {

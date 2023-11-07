@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class MyGrid
+    partial class MyGrid
     {
         /// <summary>
         /// Identifies the <see cref="IsSpinning5"/> dependency property.<br/>

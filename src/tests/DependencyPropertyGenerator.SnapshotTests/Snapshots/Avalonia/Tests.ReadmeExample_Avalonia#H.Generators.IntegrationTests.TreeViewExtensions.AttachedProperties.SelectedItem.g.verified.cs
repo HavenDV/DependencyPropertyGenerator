@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    public partial class TreeViewExtensions : global::Avalonia.AvaloniaObject
+    partial class TreeViewExtensions : global::Avalonia.AvaloniaObject
     {
         /// <summary>
         /// Identifies the SelectedItem dependency property.<br/>
