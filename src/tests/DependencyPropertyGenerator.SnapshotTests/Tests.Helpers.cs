@@ -85,7 +85,7 @@ using DependencyPropertyGenerator;
     private async Task CheckSourceAsync<T>(
         string source,
         Framework framework,
-        [CallerMemberName]string? callerName = null,
+        [CallerMemberName] string? callerName = null,
         CancellationToken cancellationToken = default,
         params IIncrementalGenerator[] additionalGenerators)
         where T : IIncrementalGenerator, new()
