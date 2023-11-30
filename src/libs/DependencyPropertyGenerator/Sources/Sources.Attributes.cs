@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel;
-using System.Reflection;
 using H.Generators.Extensions;
 
 namespace H.Generators;
 
 internal static partial class Sources
 {
-    private static string Version { get; } = $"{Assembly.GetExecutingAssembly().GetName().Version}";
-    
     private static string GenerateAttribute(string name)
     {
         return $"        [global::{name}]";
@@ -108,9 +105,9 @@ internal static partial class Sources
         return GenerateAttribute("System.CLSCompliant", value?.ToBooleanKeyword());
     }
 
-    private static string GenerateGeneratedCodeAttribute()
+    private static string GenerateGeneratedCodeAttribute(string version)
     {
-        return GenerateAttribute("System.CodeDom.Compiler.GeneratedCode", $"\"DependencyPropertyGenerator\", \"{Version}\"");
+        return GenerateAttribute("System.CodeDom.Compiler.GeneratedCode", $"\"DependencyPropertyGenerator\", \"{version}\"");
     }
 
     private static string GenerateExcludeFromCodeCoverageAttribute()

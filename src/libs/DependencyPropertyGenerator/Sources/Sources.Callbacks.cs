@@ -1,4 +1,6 @@
-﻿namespace H.Generators;
+﻿using H.Generators.Extensions;
+
+namespace H.Generators;
 
 internal static partial class Sources
 {
@@ -12,20 +14,20 @@ internal static partial class Sources
 
         return property.IsAttached
             ? $@" 
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changed();
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changed({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
             : $@" 
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changed();
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changed({GenerateType(property)} newValue);
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changed({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
 
@@ -38,20 +40,20 @@ internal static partial class Sources
 
         return property.IsAttached
             ? $@" 
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changing();
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)});
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} newValue);
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         static partial void On{property.Name}Changing({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} oldValue, {GenerateType(property)} newValue);"
             : $@" 
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changing();
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changing({GenerateType(property)} newValue);
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(property.Version)}
         partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
     

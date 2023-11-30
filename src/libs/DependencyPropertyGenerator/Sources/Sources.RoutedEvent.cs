@@ -22,7 +22,7 @@ namespace {@class.Namespace}
     {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =
             {GenerateEventManagerType(@class)}.{GenerateRegisterMethod(@class)}(
                 {GenerateRegisterRoutedEventMethodArguments(@class, @event)});
@@ -30,7 +30,7 @@ namespace {@class.Namespace}
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
 {GenerateDescriptionAttribute(@event.Description)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         public event {GenerateRouterEventType(@class, @event)} {@event.Name}
         {{
@@ -41,7 +41,7 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         protected {GenerateRoutedEventArgsType(@class)} On{@event.Name}()
         {{

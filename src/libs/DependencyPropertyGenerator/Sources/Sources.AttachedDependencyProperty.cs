@@ -14,7 +14,7 @@ namespace {@class.Namespace}
     {GenerateModifiers(@class)}partial class {@class.Name}{GenerateBaseType(@class)}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
         {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateManagerType(@class)}.{GenerateRegisterMethod(@class, property)}(
                 {GenerateRegisterAttachedMethodArguments(@class, property)});
@@ -29,7 +29,7 @@ namespace {@class.Namespace}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Framework)} element, {GenerateType(property)} value)
         {{
@@ -48,7 +48,7 @@ namespace {@class.Namespace}
 {GenerateBrowsableForTypeAttribute(property)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Framework)} element)
         {{

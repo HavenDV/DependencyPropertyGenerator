@@ -1,5 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using H.Generators.Extensions;
+using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
 
@@ -24,19 +24,22 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -44,14 +47,19 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
-            ClassSymbol) tuple)
+        ((ClassWithAttributesContext context,
+            Framework framework) left,
+            string version) tuple)
     {
-        var (_, attribute, classSyntax, classSymbol) = tuple;
-        var classData = classSymbol.GetClassData(framework);
+        var (((_, attributes, classSyntax, classSymbol), framework), version) = tuple;
+        if (attributes.FirstOrDefault() is not { } attribute)
+        {
+            return null;
+        }
+        
+        var classData = classSymbol.GetClassData(framework, version);
         var dependencyPropertyData =
-            attribute.GetDependencyPropertyData(framework, classSyntax.TryFindAttributeSyntax(attribute));
+            attribute.GetDependencyPropertyData(framework, version, classSyntax.TryFindAttributeSyntax(attribute));
 
         return (classData, dependencyPropertyData);
     }

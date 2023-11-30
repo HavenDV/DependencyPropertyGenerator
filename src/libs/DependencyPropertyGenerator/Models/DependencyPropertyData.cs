@@ -4,6 +4,7 @@ namespace H.Generators;
 
 public readonly record struct DependencyPropertyData(
     string Name,
+    string Version,
     string Type,
     string ShortType,
     bool IsValueType,

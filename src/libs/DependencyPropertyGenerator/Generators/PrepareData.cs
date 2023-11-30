@@ -12,6 +12,7 @@ public static class PrepareData
     public static DependencyPropertyData GetDependencyPropertyData(
         this AttributeData attribute,
         Framework framework,
+        string version,
         AttributeSyntax? attributeSyntax = null,
         bool isAddOwner = false,
         bool isAttached = false)
@@ -105,6 +106,7 @@ public static class PrepareData
         return new DependencyPropertyData(
             Name: name,
             Type: type,
+            Version: version,
             ShortType: shortType,
             IsValueType: isValueType,
             IsSpecialType: isSpecialType,
@@ -201,7 +203,8 @@ public static class PrepareData
 
     public static ClassData GetClassData(
         this INamedTypeSymbol classSymbol,
-        Framework framework)
+        Framework framework,
+        string version)
     {
         classSymbol = classSymbol ?? throw new ArgumentNullException(nameof(classSymbol));
 
@@ -227,6 +230,7 @@ public static class PrepareData
             FullName: fullClassName,
             Type: type,
             Modifiers: classModifiers,
+            Version: version,
             IsStatic: isStaticClass,
             Framework: framework,
             Methods: methods.ToImmutableArray().AsEquatableArray());

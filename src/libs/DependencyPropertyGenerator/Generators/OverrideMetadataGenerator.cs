@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace H.Generators;
 
@@ -26,19 +25,22 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.OverrideMetadataAttribute")
             .SelectAllAttributes()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.OverrideMetadataAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.OverrideMetadataAttribute`1")
             .SelectAllAttributes()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -46,20 +48,19 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, EquatableArray<DependencyPropertyData> OverrideMetada)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, ImmutableArray<AttributeData> Attributes, ClassDeclarationSyntax ClassSyntax,
-            INamedTypeSymbol ClassSymbol) tuple)
+        ((ClassWithAttributesContext context,
+            Framework framework) left,
+            string version) tuple)
     {
+        var (((_, attributes, _, classSymbol), framework), version) = tuple;
         if (framework is not (Framework.Wpf or Framework.Uwp or Framework.WinUi or Framework.Uno or Framework.UnoWinUi))
         {
             return null;
         }
 
-        var (_, attributes, _, classSymbol) = tuple;
-
-        var classData = classSymbol.GetClassData(framework);
+        var classData = classSymbol.GetClassData(framework, version);
         var overrideMetadata = attributes
-            .Select(attribute => attribute.GetDependencyPropertyData(framework))
+            .Select(attribute => attribute.GetDependencyPropertyData(framework, version))
             .ToImmutableArray()
             .AsEquatableArray();
 

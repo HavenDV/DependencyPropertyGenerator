@@ -32,7 +32,7 @@ namespace {@class.Namespace}
 {{
     {@class.Modifiers}partial class {@class.Name}
     {{
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         private class {@event.Name}WeakEventManager : global::System.Windows.WeakEventManager
         {{
@@ -93,7 +93,7 @@ namespace {@class.Namespace}
         }}
 
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         public{modifiers} event {GenerateEventHandlerType(@event)} {@event.Name}
         {{
@@ -104,7 +104,7 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         internal{modifiers} void Raise{@event.Name}Event(object? sender{additionalParameters})
         {{

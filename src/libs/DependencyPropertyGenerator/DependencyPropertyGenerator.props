@@ -2,6 +2,7 @@
 
     <ItemGroup>
         <CompilerVisibleProperty Include="RecognizeFramework_DefineConstants" />
+        <CompilerVisibleProperty Include="RecognizeFramework_Version" />
         <CompilerVisibleProperty Include="UseWPF" />
         <CompilerVisibleProperty Include="UseWinUI" />
         <CompilerVisibleProperty Include="UseMaui" />

@@ -1,5 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using H.Generators.Extensions;
+using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
 
@@ -24,19 +24,22 @@ public class WeakEventGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.WeakEventAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.WeakEventAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.WeakEventAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -44,17 +47,18 @@ public class WeakEventGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, EventData Event)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
-            ClassSymbol) tuple)
+        ((ClassWithAttributesContext context,
+            Framework framework) left,
+            string version) tuple)
     {
-        if (framework is not (Framework.Maui or Framework.Wpf))
+        var (((_, attributes, _, classSymbol), framework), version) = tuple;
+        if (framework is not (Framework.Maui or Framework.Wpf) ||
+            attributes.FirstOrDefault() is not { } attribute)
         {
             return null;
         }
 
-        var (_, attribute, _, classSymbol) = tuple;
-        var classData = classSymbol.GetClassData(framework);
+        var classData = classSymbol.GetClassData(framework, version);
         var eventData = attribute.GetEventData(isStaticClass: classData.IsStatic);
 
         return (classData, eventData);

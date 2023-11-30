@@ -15,7 +15,7 @@ namespace {@class.Namespace}
     {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
         {GeneratePropertyModifier(property)} static readonly {GeneratePropertyType(@class, property)} {GenerateDependencyPropertyName(property)} =
             {GenerateDependencyPropertyCreateCall(@class, property)}
 
@@ -30,7 +30,7 @@ namespace {@class.Namespace}
 {GenerateDesignerSerializationVisibilityAttribute(property.DesignerSerializationVisibility)}
 {GenerateClsCompliantAttribute(property.ClsCompliant)}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
-{GenerateGeneratedCodeAttribute()}
+{GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
         public {GenerateType(property)} {property.Name}
         {{

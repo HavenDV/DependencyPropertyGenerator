@@ -1,6 +1,5 @@
 ﻿using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace H.Generators;
 
@@ -31,48 +30,54 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
-            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
             .CollectAsEquatableArray()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
-            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: false), context, Id)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
             .CollectAsEquatableArray()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
-            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
             .CollectAsEquatableArray()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
-            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
             .CollectAsEquatableArray()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
-            .SelectAndReportExceptions(static (x, y) => PrepareData(x, y, isAttached: true), context, Id)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
             .CollectAsEquatableArray()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -80,14 +85,19 @@ public class StaticConstructorGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
-            ClassSymbol) tuple,
+        ((ClassWithAttributesContext context,
+            Framework framework) left,
+            string version) tuple,
         bool isAttached)
     {
-        var (_, attribute, _, classSymbol) = tuple;
-        var classData = classSymbol.GetClassData(framework);
-        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, isAttached: isAttached);
+        var (((_, attributes, _, classSymbol), framework), version) = tuple;
+        if (attributes.FirstOrDefault() is not { } attribute)
+        {
+            return null;
+        }
+        
+        var classData = classSymbol.GetClassData(framework, version);
+        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, version, isAttached: isAttached);
 
         return (classData, dependencyPropertyData);
     }

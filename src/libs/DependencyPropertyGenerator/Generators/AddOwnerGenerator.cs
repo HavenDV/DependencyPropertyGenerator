@@ -1,5 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using H.Generators.Extensions;
+using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
 
@@ -24,19 +24,22 @@ public class AddOwnerGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AddOwnerAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
-            .Combine(framework)
+            .Combine(framework)            
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.AddOwnerAttribute`2")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AddOwnerAttribute`2")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -44,19 +47,19 @@ public class AddOwnerGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, DependencyPropertyData DependencyProperty)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
-            ClassSymbol) tuple)
+        ((ClassWithAttributesContext context,
+        Framework framework) left,
+        string version) tuple)
     {
-        if (framework is not (Framework.Avalonia or Framework.Wpf))
+        var (((_, attributes, _, classSymbol), framework), version) = tuple;
+        if (framework is not (Framework.Avalonia or Framework.Wpf) ||
+            attributes.FirstOrDefault() is not { } attribute)
         {
             return null;
         }
 
-        var (_, attribute, _, classSymbol) = tuple;
-
-        var classData = classSymbol.GetClassData(framework);
-        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, isAddOwner: true);
+        var classData = classSymbol.GetClassData(framework, version);
+        var dependencyPropertyData = attribute.GetDependencyPropertyData(framework, version, isAddOwner: true);
 
         return (classData, dependencyPropertyData);
     }

@@ -2,7 +2,6 @@
 using H.Generators.Tests.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
-using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 
 namespace H.Generators.SnapshotTests;
@@ -78,6 +77,7 @@ using DependencyPropertyGenerator;
         {
             globalOptions.Add($"build_property.RecognizeFramework_DefineConstants", "HAS_AVALONIA");
         }
+        globalOptions.Add("build_property.RecognizeFramework_Version", "0.0.0.0");
 
         return globalOptions;
     }

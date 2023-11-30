@@ -1,5 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using H.Generators.Extensions;
+using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
 
@@ -27,19 +27,22 @@ public class RoutedEventGenerator : IIncrementalGenerator
         });
 
         var framework = context.DetectFramework();
+        var version = context.DetectVersion();
 
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.RoutedEventAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
         context.SyntaxProvider
-            .ForAttributeWithMetadataName("DependencyPropertyGenerator.RoutedEventAttribute`1")
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.RoutedEventAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
+            .Combine(version)
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
@@ -47,11 +50,15 @@ public class RoutedEventGenerator : IIncrementalGenerator
     }
 
     private static (ClassData Class, EventData Event)? PrepareData(
-        Framework framework,
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol
-            ClassSymbol) tuple)
+        ((ClassWithAttributesContext context,
+            Framework framework) left,
+            string version) tuple)
     {
-        var (_, attribute, _, classSymbol) = tuple;
+        var (((_, attributes, _, classSymbol), framework), version) = tuple;
+        if (attributes.FirstOrDefault() is not { } attribute)
+        {
+            return null;
+        }
 
         var eventData = attribute.GetEventData(isStaticClass: false);
         if (framework is Framework.Maui ||
@@ -60,7 +67,7 @@ public class RoutedEventGenerator : IIncrementalGenerator
             return null;
         }
 
-        var classData = classSymbol.GetClassData(framework);
+        var classData = classSymbol.GetClassData(framework, version);
 
         return (classData, eventData);
     }
