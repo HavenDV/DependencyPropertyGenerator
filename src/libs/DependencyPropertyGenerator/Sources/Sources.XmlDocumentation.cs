@@ -11,7 +11,7 @@ internal static partial class Sources
     {
         var lines = value.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
 
-        return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
+        return string.Join("\n", lines.Select(static line => $"        /// {line}"));
     }
 
     private static string GenerateXmlDocumentationFrom(

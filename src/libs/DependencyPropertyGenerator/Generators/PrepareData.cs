@@ -205,7 +205,7 @@ public static class PrepareData
     {
         classSymbol = classSymbol ?? throw new ArgumentNullException(nameof(classSymbol));
 
-        var fullClassName = classSymbol.ToString();
+        var fullClassName = classSymbol.ToString() ?? string.Empty;
         var type = classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
         var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
