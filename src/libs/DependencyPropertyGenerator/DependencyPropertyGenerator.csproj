@@ -5,6 +5,7 @@
         <NoWarn>$(NoWarn);CA1014;CA1308;CA1031;CA1307</NoWarn>
         <IsRoslynComponent>true</IsRoslynComponent>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <PropertyGroup Label="NuGet">
@@ -59,12 +60,16 @@
         <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
         <None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.3.1/cs" Visible="false" />
         <None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.3.1/cs" Visible="false" />
+        <None Include="$(OutputPath)\netstandard2.0\H.Generators.Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.3.1/cs" Visible="false" />
         <None Include="$(OutputPath)\net6.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.6.0/cs" Visible="false" />
         <None Include="$(OutputPath)\net6.0\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.6.0/cs" Visible="false" />
+        <None Include="$(OutputPath)\net6.0\H.Generators.Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.6.0/cs" Visible="false" />
         <None Include="$(OutputPath)\net7.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.7.0/cs" Visible="false" />
         <None Include="$(OutputPath)\net7.0\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.7.0/cs" Visible="false" />
+        <None Include="$(OutputPath)\net7.0\H.Generators.Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.7.0/cs" Visible="false" />
         <None Include="$(OutputPath)\net8.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.8.0/cs" Visible="false" />
         <None Include="$(OutputPath)\net8.0\$(AssemblyName).Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.8.0/cs" Visible="false" />
+        <None Include="$(OutputPath)\net8.0\H.Generators.Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/roslyn4.8.0/cs" Visible="false" />
     </ItemGroup>
 
 </Project>
