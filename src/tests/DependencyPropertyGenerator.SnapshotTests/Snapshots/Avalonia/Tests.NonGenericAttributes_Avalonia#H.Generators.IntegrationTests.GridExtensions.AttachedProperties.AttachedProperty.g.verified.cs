@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the AttachedProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Avalonia.AttachedProperty<object?> AttachedPropertyProperty =
             global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridExtensions, global::Avalonia.Controls.Grid, object?>(
                 name: "AttachedProperty",
@@ -23,7 +23,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetAttachedProperty(global::Avalonia.AvaloniaObject element, object? value)
         {
@@ -35,7 +35,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetAttachedProperty(global::Avalonia.AvaloniaObject element)
         {
@@ -44,13 +44,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedPropertyProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid, object? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

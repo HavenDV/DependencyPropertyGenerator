@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the RowCount dependency property.<br/>
         /// Default value: -1
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::System.Windows.DependencyProperty RowCountProperty =
             global::System.Windows.DependencyProperty.RegisterAttached(
                 name: "RowCount",
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetRowCount(global::System.Windows.DependencyObject element, int value)
         {
@@ -45,7 +45,7 @@ namespace H.Generators.IntegrationTests
         /// Default value: -1
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static int GetRowCount(global::System.Windows.DependencyObject element)
         {

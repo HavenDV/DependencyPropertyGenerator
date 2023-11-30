@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the Mode dependency property.<br/>
         /// Default value: Mode2
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Microsoft.UI.Xaml.DependencyProperty ModeProperty =
             global::Microsoft.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "Mode",
@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: Mode2
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetMode(global::Microsoft.UI.Xaml.DependencyObject element, global::H.Generators.IntegrationTests.Mode value)
         {
@@ -41,7 +41,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: Mode2
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static global::H.Generators.IntegrationTests.Mode GetMode(global::Microsoft.UI.Xaml.DependencyObject element)
         {
@@ -50,13 +50,13 @@ namespace H.Generators.IntegrationTests
             return (global::H.Generators.IntegrationTests.Mode)element.GetValue(ModeProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnModeChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnModeChanged(global::Microsoft.UI.Xaml.Controls.TreeView treeView, global::H.Generators.IntegrationTests.Mode oldValue, global::H.Generators.IntegrationTests.Mode newValue);
     }
 }

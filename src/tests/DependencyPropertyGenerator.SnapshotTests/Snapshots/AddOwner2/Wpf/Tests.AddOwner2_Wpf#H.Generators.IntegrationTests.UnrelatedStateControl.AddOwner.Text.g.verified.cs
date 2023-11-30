@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="Text"/> dependency property.<br/>
         /// Default value: default(string)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::System.Windows.DependencyProperty TextProperty =
             global::System.Windows.Controls.TextBox.TextProperty.AddOwner(
                 ownerType: typeof(global::H.Generators.IntegrationTests.UnrelatedStateControl),
@@ -19,7 +19,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(string)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? Text
         {
@@ -27,11 +27,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TextProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTextChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTextChanged(string? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTextChanged(string? oldValue, string? newValue);
     }
 }

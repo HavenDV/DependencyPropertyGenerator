@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the AttachedReadOnlyProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         internal static readonly global::System.Windows.DependencyPropertyKey AttachedReadOnlyPropertyPropertyKey =
             global::System.Windows.DependencyProperty.RegisterAttachedReadOnly(
                 name: "AttachedReadOnlyProperty",
@@ -34,7 +34,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal static void SetAttachedReadOnlyProperty(global::System.Windows.DependencyObject element, object? value)
         {
@@ -47,7 +47,7 @@ namespace H.Generators.IntegrationTests
         /// Default value: default(object)
         /// </summary>
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetAttachedReadOnlyProperty(global::System.Windows.DependencyObject element)
         {
@@ -56,13 +56,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(AttachedReadOnlyPropertyProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedReadOnlyPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid grid, object? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnAttachedReadOnlyPropertyChanged(global::System.Windows.Controls.Grid grid, object? oldValue, object? newValue);
     }
 }

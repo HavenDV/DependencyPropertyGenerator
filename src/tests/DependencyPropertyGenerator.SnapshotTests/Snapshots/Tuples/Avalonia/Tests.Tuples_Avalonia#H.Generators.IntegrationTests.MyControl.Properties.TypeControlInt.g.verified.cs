@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="TypeControlInt"/> dependency property.<br/>
         /// Default value: default((Control, int))
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Avalonia.StyledProperty<(global::Avalonia.Controls.Control, int)> TypeControlIntProperty =
             global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.MyControl, (global::Avalonia.Controls.Control, int)>(
                 name: "TypeControlInt",
@@ -23,7 +23,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default((Control, int))
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public (global::Avalonia.Controls.Control, int) TypeControlInt
         {
@@ -31,11 +31,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(TypeControlIntProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTypeControlIntChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTypeControlIntChanged((global::Avalonia.Controls.Control, int) newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnTypeControlIntChanged((global::Avalonia.Controls.Control, int) oldValue, (global::Avalonia.Controls.Control, int) newValue);
     }
 }

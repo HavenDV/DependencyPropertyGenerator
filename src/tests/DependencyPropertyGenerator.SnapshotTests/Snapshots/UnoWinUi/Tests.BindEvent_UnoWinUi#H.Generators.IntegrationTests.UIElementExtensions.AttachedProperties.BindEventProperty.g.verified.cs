@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the BindEventProperty dependency property.<br/>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Microsoft.UI.Xaml.DependencyProperty BindEventPropertyProperty =
             global::Microsoft.UI.Xaml.DependencyProperty.RegisterAttached(
                 name: "BindEventProperty",
@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetBindEventProperty(global::Microsoft.UI.Xaml.DependencyObject element, object? value)
         {
@@ -41,7 +41,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(object)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static object? GetBindEventProperty(global::Microsoft.UI.Xaml.DependencyObject element)
         {
@@ -50,13 +50,13 @@ namespace H.Generators.IntegrationTests
             return (object?)element.GetValue(BindEventPropertyProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnBindEventPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnBindEventPropertyChanged(global::Microsoft.UI.Xaml.UIElement uIElement);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnBindEventPropertyChanged(global::Microsoft.UI.Xaml.UIElement uIElement, object? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnBindEventPropertyChanged(global::Microsoft.UI.Xaml.UIElement uIElement, object? oldValue, object? newValue);
 
         static partial void OnBindEventPropertyChanged_BeforeBind(

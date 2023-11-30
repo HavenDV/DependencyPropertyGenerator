@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="NotNullStringProperty"/> dependency property.<br/>
         /// Default value: ""
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::System.Windows.DependencyProperty NotNullStringPropertyProperty =
             global::System.Windows.DependencyProperty.Register(
                 name: "NotNullStringProperty",
@@ -31,7 +31,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: ""
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? NotNullStringProperty
         {
@@ -39,11 +39,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(NotNullStringPropertyProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanged(string? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanged(string? oldValue, string? newValue);
         private partial string? CoerceNotNullStringProperty(string? value);
         private static partial bool IsNotNullStringPropertyValid(string? value);

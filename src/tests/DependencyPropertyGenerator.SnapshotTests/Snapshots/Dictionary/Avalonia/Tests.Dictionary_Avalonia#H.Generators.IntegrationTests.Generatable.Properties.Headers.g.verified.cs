@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the <see cref="Headers"/> dependency property.<br/>
         /// Default value: default(Dictionary&lt;string, string&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Avalonia.StyledProperty<global::System.Collections.Generic.Dictionary<string, string>?> HeadersProperty =
             global::Avalonia.AvaloniaProperty.Register<global::H.Generators.IntegrationTests.Generatable, global::System.Collections.Generic.Dictionary<string, string>?>(
                 name: "Headers",
@@ -23,7 +23,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Dictionary&lt;string, string&gt;)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public global::System.Collections.Generic.Dictionary<string, string>? Headers
         {
@@ -31,11 +31,11 @@ namespace H.Generators.IntegrationTests
             set => SetValue(HeadersProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnHeadersChanged();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnHeadersChanged(global::System.Collections.Generic.Dictionary<string, string>? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnHeadersChanged(global::System.Collections.Generic.Dictionary<string, string>? oldValue, global::System.Collections.Generic.Dictionary<string, string>? newValue);
     }
 }

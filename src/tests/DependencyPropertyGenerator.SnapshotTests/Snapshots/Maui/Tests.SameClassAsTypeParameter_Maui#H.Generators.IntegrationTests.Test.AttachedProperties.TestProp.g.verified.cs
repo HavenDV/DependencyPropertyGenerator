@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the TestProp dependency property.<br/>
         /// Default value: default(Test)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty TestPropProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
                 propertyName: "TestProp",
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetTestProp(global::Microsoft.Maui.Controls.BindableObject element, global::H.Generators.IntegrationTests.Test? value)
         {
@@ -44,7 +44,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: default(Test)
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Microsoft.Maui.Controls.BindableObject element)
         {
@@ -53,13 +53,13 @@ namespace H.Generators.IntegrationTests
             return (global::H.Generators.IntegrationTests.Test?)element.GetValue(TestPropProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnTestPropChanging();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnTestPropChanging(global::Microsoft.Maui.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnTestPropChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Test? newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnTestPropChanging(global::Microsoft.Maui.Controls.Grid grid, global::H.Generators.IntegrationTests.Test? oldValue, global::H.Generators.IntegrationTests.Test? newValue);
     }
 }

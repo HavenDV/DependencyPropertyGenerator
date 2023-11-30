@@ -10,7 +10,7 @@ namespace H.Generators.IntegrationTests
         /// Identifies the RowCount dependency property.<br/>
         /// Default value: -1
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         public static readonly global::Microsoft.Maui.Controls.BindableProperty RowCountProperty =
             global::Microsoft.Maui.Controls.BindableProperty.CreateAttached(
                 propertyName: "RowCount",
@@ -32,7 +32,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static void SetRowCount(global::Microsoft.Maui.Controls.BindableObject element, int value)
         {
@@ -44,7 +44,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// Default value: -1
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static int GetRowCount(global::Microsoft.Maui.Controls.BindableObject element)
         {
@@ -53,13 +53,13 @@ namespace H.Generators.IntegrationTests
             return (int)element.GetValue(RowCountProperty);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnRowCountChanging();
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid, int newValue);
-        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "1.3.3.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         static partial void OnRowCountChanging(global::Microsoft.Maui.Controls.Grid grid, int oldValue, int newValue);
     }
 }
