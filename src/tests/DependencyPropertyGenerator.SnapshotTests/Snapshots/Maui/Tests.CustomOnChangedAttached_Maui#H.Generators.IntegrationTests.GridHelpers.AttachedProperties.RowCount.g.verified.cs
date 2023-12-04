@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    static partial class GridHelpers
+    public static partial class GridHelpers
     {
         /// <summary>
         /// Identifies the RowCount dependency property.<br/>

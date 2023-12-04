@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    static partial class GridExtensions
+    public static partial class GridExtensions
     {
         /// <summary>
         /// Identifies the SelectedItem dependency property.<br/>

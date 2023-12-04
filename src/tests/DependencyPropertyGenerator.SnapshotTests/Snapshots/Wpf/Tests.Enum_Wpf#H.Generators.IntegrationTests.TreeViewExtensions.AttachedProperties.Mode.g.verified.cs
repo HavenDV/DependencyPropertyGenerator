@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    static partial class TreeViewExtensions
+    public static partial class TreeViewExtensions
     {
         /// <summary>
         /// Identifies the Mode dependency property.<br/>

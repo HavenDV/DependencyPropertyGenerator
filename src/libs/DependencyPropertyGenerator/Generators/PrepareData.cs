@@ -213,7 +213,7 @@ public static class PrepareData
         var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
         var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
         var isStaticClass = classSymbol.IsStatic;
-        var classModifiers = classSymbol.IsStatic ? "static " : string.Empty;
+        var classModifiers = classSymbol.IsStatic ? "public static " : string.Empty;
         var methods = classSymbol
             .GetMembers()
             .OfType<IMethodSymbol>()
