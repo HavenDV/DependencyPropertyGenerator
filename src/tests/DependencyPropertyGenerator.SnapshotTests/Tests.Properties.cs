@@ -20,7 +20,7 @@ public partial class MyControl : UserControl
 [AttachedDependencyProperty(""AttachedProperty"", typeof(object), BrowsableForType = typeof(Grid))]
 public static partial class GridExtensions
 {
-}", framework, callerName: null, CancellationToken.None, new AttachedDependencyPropertyGenerator());
+}", framework, additionalGenerators: new AttachedDependencyPropertyGenerator());
     }
 
     [DataTestMethod]
@@ -48,7 +48,7 @@ public partial class MyControl : UserControl
     partial void OnIsSpinning2Changed(bool newValue)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -94,7 +94,7 @@ public partial class MyControl : UserControl
     partial void OnIsSpinning5Changed(bool oldValue, bool newValue)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -113,7 +113,7 @@ public partial class Generatable : FrameworkElement
     partial void OnTextChanged(string? oldValue, string? newValue)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -131,7 +131,7 @@ public partial class Generatable : FrameworkElement
     partial void OnTextChanged(string oldValue, string newValue)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -287,7 +287,7 @@ public partial class MyUIElement : UIElement
     private static void OnBindEventsPropertyChanged_PointerExited(object? sender, PointerRoutedEventArgs args)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]
@@ -305,7 +305,7 @@ public partial class Generatable : FrameworkElement
     protected virtual void OnMyTextChanged(string? value)
     {
     }
-}", framework, callerName: null, CancellationToken.None, new StaticConstructorGenerator());
+}", framework, additionalGenerators: new StaticConstructorGenerator());
     }
 
     [DataTestMethod]

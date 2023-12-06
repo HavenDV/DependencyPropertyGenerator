@@ -24,7 +24,7 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", framework, callerName: null, CancellationToken.None, new DependencyPropertyGenerator());
+}", framework, additionalGenerators: new DependencyPropertyGenerator());
     }
 
     [DataTestMethod]
@@ -49,6 +49,6 @@ public partial class TropicalAquarium : Aquarium
     partial void OnAquariumGraphicChanged()
     {
     }
-}", framework, callerName: null, CancellationToken.None, new DependencyPropertyGenerator());
+}", framework, additionalGenerators: new DependencyPropertyGenerator());
     }
 }

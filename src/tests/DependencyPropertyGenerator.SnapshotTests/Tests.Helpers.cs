@@ -190,11 +190,11 @@ using DependencyPropertyGenerator;
             Verify(diagnostics.NormalizeLocations())
                 .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
-                .UseTextForParameters($"{framework}_Diagnostics"),
+                .UseTextForParameters("Diagnostics"),
             Verify(driver)
                 .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
-                .UseTextForParameters($"{framework}"));
+                .UseFileName("_"));
     }
 }
 

@@ -1,4 +1,6 @@
-﻿namespace H.Generators.SnapshotTests;
+﻿using Microsoft.CodeAnalysis;
+
+namespace H.Generators.SnapshotTests;
 
 public partial class Tests
 {
@@ -27,6 +29,6 @@ public static partial class TreeViewExtensions
     static partial void OnSelectedItemChanged(TreeView sender, object? oldValue, object? newValue)
     {
     }
-}", framework, callerName: null, default, new AttachedDependencyPropertyGenerator(), new StaticConstructorGenerator());
+}", framework, additionalGenerators: new IIncrementalGenerator[]{ new AttachedDependencyPropertyGenerator(), new StaticConstructorGenerator() });
     }
 }
