@@ -1,5 +1,6 @@
 ﻿using H.Generators.Extensions;
 using System.Net;
+using System.Security;
 
 namespace H.Generators;
 
@@ -23,7 +24,7 @@ internal static partial class Sources
             ? property.Name
             : $"<see cref=\"{property.Name}\"/>";
         var body = isProperty
-            ? property.Description != null ? $"{property.Description}<br/>" : " "
+            ? property.Description != null ? $"{SecurityElement.Escape(property.Description)}<br/>" : " "
             : $"Identifies the {name} dependency property.<br/>";
         value ??= @$"<summary>
 {body}

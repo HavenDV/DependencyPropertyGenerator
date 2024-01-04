@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Security;
 using H.Generators.Extensions;
 
 namespace H.Generators;
@@ -51,8 +52,8 @@ internal static partial class Sources
         return GenerateComponentModelAttribute(
             nameof(DependencyPropertyData.Description),
             isMultilineString
-                ? $"@\"{value}\""
-                : $"\"{value}\"");
+                ? $"@\"{SecurityElement.Escape(value)}\""
+                : $"\"{SecurityElement.Escape(value)}\"");
     }
 
     private static string GenerateTypeConverterAttribute(string? value)

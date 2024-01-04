@@ -12,4 +12,20 @@ public partial class MyControl : UserControl
 {
 }", framework);
     }
+    
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task DescriptionWithCref(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
+[DependencyProperty<bool>(""IsSpinning"", Description = ""<see cref=\""Style.TargetType\""/> must be Label."")]
+public partial class MyControl : UserControl
+{
+}
+", framework);
+    }
 }
