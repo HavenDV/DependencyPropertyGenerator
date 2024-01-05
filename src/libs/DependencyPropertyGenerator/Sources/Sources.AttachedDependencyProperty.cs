@@ -60,7 +60,7 @@ namespace {@class.Namespace}
 {GenerateOnChangedMethods(property)}
 {GenerateOnChangingMethods(property)}
 {GenerateCoercePartialMethod(property)}
-{GenerateValidatePartialMethod(property)}
+{GenerateValidatePartialMethod(@class, property)}
 {GenerateCreateDefaultValueCallbackPartialMethod(property)}
 {GenerateBindEventMethod(property)}
     }}
@@ -86,7 +86,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(property)}";
+                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
         }
 
         return @$"

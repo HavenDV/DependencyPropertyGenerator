@@ -108,13 +108,25 @@ internal static partial class Sources
         return "public";
     }
 
-    private static string GenerateValidatePartialMethod(DependencyPropertyData property)
+    private static string GenerateValidatePartialMethod(ClassData @class, DependencyPropertyData property)
     {
         if (!property.Validate)
         {
             return " ";
         }
 
+        if (property.Framework == Framework.Maui)
+        {
+            var senderType = property.IsAttached
+                ? GenerateBrowsableForType(property)
+                : @class.Type;
+
+            return $@" 
+        private static partial bool Is{property.Name}Valid(
+            {senderType} sender,
+            {GenerateType(property)} value);".RemoveBlankLinesWhereOnlyWhitespaces();
+        }
+        
         return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
     }
 

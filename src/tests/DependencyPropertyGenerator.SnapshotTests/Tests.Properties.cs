@@ -157,20 +157,25 @@ public partial class MyControl : UserControl
     [DataRow(Framework.Avalonia)]
     public Task ValidateAndCoerce(Framework framework)
     {
-        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + $@"
 [DependencyProperty<string>(""NotNullStringProperty"", DefaultValue = """", Validate = true, Coerce = true)]
 public partial class MyControl : UserControl
-{
+{{
     private partial string? CoerceNotNullStringProperty(string? value)
-    {
+    {{
         return value ?? string.Empty;
-    }
+    }}
 
+{(framework == Framework.Maui ? @"
+    private static partial bool IsNotNullStringPropertyValid(MyControl sender, string? value)
+    {
+        return value != null;
+    }" : @"
     private static partial bool IsNotNullStringPropertyValid(string? value)
     {
         return value != null;
-    }
-}", framework);
+    }")}
+}}", framework);
     }
 
     [DataTestMethod]

@@ -57,7 +57,7 @@ internal static partial class Sources
         partial void On{property.Name}Changing({GenerateType(property)} oldValue, {GenerateType(property)} newValue);";
     }
     
-    private static string GenerateValidateValueCallback(DependencyPropertyData property)
+    private static string GenerateValidateValueCallback(ClassData @class, DependencyPropertyData property)
     {
         if (!property.Validate)
         {
@@ -66,11 +66,16 @@ internal static partial class Sources
 
         if (property.Framework == Framework.Maui)
         {
-            return $@"static (_, value) =>
+            var senderType = property.IsAttached
+                ? GenerateBrowsableForType(property)
+                : @class.Type;
+            
+            return $@"static (sender, value) =>
                     Is{property.Name}Valid(
+                        ({senderType})sender,
                         ({GenerateType(property)})value)";
         }
-
+        
         return $@"static value =>
                     Is{property.Name}Valid(
                         ({GenerateType(property)})value)";

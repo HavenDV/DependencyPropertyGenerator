@@ -18,8 +18,9 @@ namespace H.Generators.IntegrationTests
                 declaringType: typeof(global::H.Generators.IntegrationTests.MyGrid),
                 defaultValue: (string)"",
                 defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.OneWay,
-                validateValue: static (_, value) =>
+                validateValue: static (sender, value) =>
                     IsNotNullStringPropertyValid(
+                        (global::H.Generators.IntegrationTests.MyGrid)sender,
                         (string?)value),
                 propertyChanged: null,
                 propertyChanging: null,
@@ -52,6 +53,8 @@ namespace H.Generators.IntegrationTests
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanging(string? oldValue, string? newValue);
         private partial string? CoerceNotNullStringProperty(string? value);
-        private static partial bool IsNotNullStringPropertyValid(string? value);
+        private static partial bool IsNotNullStringPropertyValid(
+            global::H.Generators.IntegrationTests.MyGrid sender,
+            string? value);
     }
 }

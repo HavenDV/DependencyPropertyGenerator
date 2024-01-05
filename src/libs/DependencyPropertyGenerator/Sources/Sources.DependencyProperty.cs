@@ -41,7 +41,7 @@ namespace {@class.Namespace}
 {GenerateOnChangedMethods(property)}
 {GenerateOnChangingMethods(property)}
 {GenerateCoercePartialMethod(property)}
-{GenerateValidatePartialMethod(property)}
+{GenerateValidatePartialMethod(@class, property)}
 {GenerateCreateDefaultValueCallbackPartialMethod(property)}
 {GenerateBindEventMethod(property)}
     }}
@@ -127,7 +127,7 @@ namespace {@class.Namespace}
                 defaultValue: {GenerateDefaultValue(property)},
                 inherits: {(property.Inherits ? "true" : "false")},
                 defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
-                validate: {GenerateValidateValueCallback(property)},
+                validate: {GenerateValidateValueCallback(@class, property)},
                 coerce: {GenerateCoerceValueCallback(@class, property)}";
         }
 
@@ -136,7 +136,7 @@ namespace {@class.Namespace}
                 defaultValue: {GenerateDefaultValue(property)},
                 inherits: {(property.Inherits ? "true" : "false")},
                 defaultBindingMode: global::Avalonia.Data.BindingMode.{defaultBindingMode},
-                validate: {GenerateValidateValueCallback(property)},
+                validate: {GenerateValidateValueCallback(@class, property)},
                 coerce: {GenerateCoerceValueCallback(@class, property)}";
     }
 
@@ -247,7 +247,7 @@ namespace {@class.Namespace}
                 declaringType: typeof({@class.Type}),
                 defaultValue: {GenerateDefaultValue(property)},
                 defaultBindingMode: global::Microsoft.Maui.Controls.BindingMode.{defaultBindingMode},
-                validateValue: {GenerateValidateValueCallback(property)},
+                validateValue: {GenerateValidateValueCallback(@class, property)},
                 propertyChanged: {GeneratePropertyChangedCallback(@class, property)},
                 propertyChanging: {GeneratePropertyChangingCallback(@class, property)},
                 coerceValue: {GenerateCoerceValueCallback(@class, property)},
@@ -273,7 +273,7 @@ namespace {@class.Namespace}
                 propertyType: typeof({property.Type}),
                 ownerType: typeof({@class.Type}),
                 {GeneratePropertyMetadata(@class, property)},
-                validateValueCallback: {GenerateValidateValueCallback(property)}";
+                validateValueCallback: {GenerateValidateValueCallback(@class, property)}";
         }
 
         return @$"
