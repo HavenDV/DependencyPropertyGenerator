@@ -4,10 +4,11 @@ namespace H.Generators;
 
 internal static partial class Sources
 {
-    private static string GenerateType(DependencyPropertyData property)
+    private static string GenerateType(DependencyPropertyData property, bool canBeNull = false)
     {
         var value = property.Type;
-        if (!property.IsValueType)
+        if (canBeNull ||
+            property is { IsValueType: false, DefaultValue: null })
         {
             value += "?";
         }
@@ -124,10 +125,10 @@ internal static partial class Sources
             return $@" 
         private static partial bool Is{property.Name}Valid(
             {senderType} sender,
-            {GenerateType(property)} value);".RemoveBlankLinesWhereOnlyWhitespaces();
+            {GenerateType(property, canBeNull: true)} value);".RemoveBlankLinesWhereOnlyWhitespaces();
         }
         
-        return $"        private static partial bool Is{property.Name}Valid({GenerateType(property)} value);";
+        return $"        private static partial bool Is{property.Name}Valid({GenerateType(property, canBeNull: true)} value);";
     }
 
     private static string GenerateCreateDefaultValueCallbackPartialMethod(DependencyPropertyData property)

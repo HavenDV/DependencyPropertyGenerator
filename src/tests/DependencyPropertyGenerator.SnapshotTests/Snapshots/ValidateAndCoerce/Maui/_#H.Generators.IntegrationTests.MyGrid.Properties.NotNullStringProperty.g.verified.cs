@@ -34,25 +34,25 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public string? NotNullStringProperty
+        public string NotNullStringProperty
         {
-            get => (string?)GetValue(NotNullStringPropertyProperty);
+            get => (string)GetValue(NotNullStringPropertyProperty);
             set => SetValue(NotNullStringPropertyProperty, value);
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanged();
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnNotNullStringPropertyChanged(string? newValue);
+        partial void OnNotNullStringPropertyChanged(string newValue);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnNotNullStringPropertyChanged(string? oldValue, string? newValue);
+        partial void OnNotNullStringPropertyChanged(string oldValue, string newValue);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnNotNullStringPropertyChanging();
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnNotNullStringPropertyChanging(string? newValue);
+        partial void OnNotNullStringPropertyChanging(string newValue);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnNotNullStringPropertyChanging(string? oldValue, string? newValue);
-        private partial string? CoerceNotNullStringProperty(string? value);
+        partial void OnNotNullStringPropertyChanging(string oldValue, string newValue);
+        private partial string CoerceNotNullStringProperty(string? value);
         private static partial bool IsNotNullStringPropertyValid(
             global::H.Generators.IntegrationTests.MyGrid sender,
             string? value);

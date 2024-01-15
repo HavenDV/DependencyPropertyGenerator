@@ -325,8 +325,8 @@ namespace {@class.Namespace}
         }
 
         return property.IsAttached
-            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property)} value);"
-            : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property)} value);";
+            ? $"        private static partial {GenerateType(property)} Coerce{property.Name}({GenerateBrowsableForType(property)} {GenerateBrowsableForTypeParameterName(property)}, {GenerateType(property, canBeNull: true)} value);"
+            : $"        private partial {GenerateType(property)} Coerce{property.Name}({GenerateType(property, canBeNull: true)} value);";
     }
 
     private static string GenerateAdditionalFieldForDirectProperties(DependencyPropertyData property)

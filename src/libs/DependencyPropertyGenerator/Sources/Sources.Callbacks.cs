@@ -73,12 +73,12 @@ internal static partial class Sources
             return $@"static (sender, value) =>
                     Is{property.Name}Valid(
                         ({senderType})sender,
-                        ({GenerateType(property)})value)";
+                        ({GenerateType(property, canBeNull: true)})value)";
         }
         
         return $@"static value =>
                     Is{property.Name}Valid(
-                        ({GenerateType(property)})value)";
+                        ({GenerateType(property, canBeNull: true)})value)";
     }
 
     private static string GenerateCreateDefaultValueCallbackValueCallback(DependencyPropertyData property)
@@ -113,20 +113,20 @@ internal static partial class Sources
                 ? $@"static (sender, value) =>
                         Coerce{property.Name}(
                             ({senderType})sender,
-                            ({GenerateType(property)})value)"
+                            ({GenerateType(property, canBeNull: true)})value)"
                 : $@"static (sender, value) =>
                         (({senderType})sender).Coerce{property.Name}(
-                            ({GenerateType(property)})value)";
+                            ({GenerateType(property, canBeNull: true)})value)";
         }
 
         return property.IsAttached
             ? $@"static (sender, args) =>
                         Coerce{property.Name}(
                             ({senderType})sender,
-                            ({GenerateType(property)})args.Value)"
+                            ({GenerateType(property, canBeNull: true)})args.Value)"
             : $@"static (sender, value) =>
                         (({senderType})sender).Coerce{property.Name}(
-                            ({GenerateType(property)})value)";
+                            ({GenerateType(property, canBeNull: true)})value)";
     }
     
     private static string GeneratePropertyChangedCallback(ClassData @class, DependencyPropertyData property)

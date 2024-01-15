@@ -25,17 +25,17 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public global::System.Uri? AquariumGraphic
+        public global::System.Uri AquariumGraphic
         {
-            get => (global::System.Uri?)GetValue(AquariumGraphicProperty);
+            get => (global::System.Uri)GetValue(AquariumGraphicProperty);
             protected set => SetValue(AquariumGraphicProperty, value);
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         partial void OnAquariumGraphicChanged();
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnAquariumGraphicChanged(global::System.Uri? newValue);
+        partial void OnAquariumGraphicChanged(global::System.Uri newValue);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        partial void OnAquariumGraphicChanged(global::System.Uri? oldValue, global::System.Uri? newValue);
+        partial void OnAquariumGraphicChanged(global::System.Uri oldValue, global::System.Uri newValue);
     }
 }
