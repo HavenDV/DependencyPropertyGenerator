@@ -6,7 +6,7 @@
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.3.3" />
     <PackageVersion Include="H.Resources.Generator" Version="1.6.0" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
     <PackageVersion Include="H.Generators.Extensions" Version="1.22.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.1.1" />
