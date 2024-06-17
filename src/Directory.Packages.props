@@ -6,7 +6,7 @@
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.4.1" />
     <PackageVersion Include="H.Resources.Generator" Version="1.6.0" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" />
     <PackageVersion Include="H.Generators.Extensions" Version="1.22.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.1.1" />
@@ -18,8 +18,8 @@
     <PackageVersion Include="FluentAssertions" Version="6.12.0" />
     <PackageVersion Include="Avalonia" Version="11.0.10" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.1" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.9.2" />
-    <PackageVersion Include="Verify.MSTest" Version="25.0.1" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.10.0" />
+    <PackageVersion Include="Verify.MSTest" Version="25.0.3" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.2.0" />
     <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.22.0" />
   </ItemGroup>
