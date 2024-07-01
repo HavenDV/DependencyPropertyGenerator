@@ -9,7 +9,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" />
     <PackageVersion Include="H.Generators.Extensions" Version="1.22.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
-    <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.1.1" />
+    <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.2.4" />
   </ItemGroup>
   <ItemGroup Label="Tests">
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
@@ -19,7 +19,7 @@
     <PackageVersion Include="Avalonia" Version="11.0.11" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.10.0" />
-    <PackageVersion Include="Verify.MSTest" Version="25.0.3" />
+    <PackageVersion Include="Verify.MSTest" Version="25.0.4" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.2.0" />
     <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.22.0" />
   </ItemGroup>
