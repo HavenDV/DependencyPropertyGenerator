@@ -1,4 +1,5 @@
-﻿using H.Generators.Extensions;
+﻿using System.Collections.Immutable;
+using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
@@ -102,40 +103,31 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         return (classData, dependencyPropertyData);
     }
 
-    private static FileWithName GetSourceCode(
+    private static EquatableArray<FileWithName> GetSourceCode(
         EquatableArray<(ClassData Class, DependencyPropertyData DependencyProperty)> values)
     {
         if (values.AsImmutableArray().IsDefaultOrEmpty)
         {
-            return FileWithName.Empty;
+            return ImmutableArray<FileWithName>.Empty.AsEquatableArray();
         }
 
-        var @class = values.First().Class;
-        if (@class.Framework is not Framework.Avalonia)
-        {
-            return FileWithName.Empty;
-        }
-
-        var dependencyProperties = values
-            .Select(static x => x.DependencyProperty)
-            .ToArray();
-        if (dependencyProperties.Where(static property => !property.IsDirect).Any())
+        return values.Where(x => x.Class.Framework is Framework.Avalonia).GroupBy(x => x.Class, x => x.DependencyProperty).Select(a =>
         {
             var text = Sources.GenerateStaticConstructor(
-                @class,
-                dependencyProperties
-                    .Where(static property => !property.IsDirect)
+                a.Key,
+                a.Where(static property => !property.IsDirect)
                     .ToArray());
-
             if (!string.IsNullOrWhiteSpace(text))
             {
                 return new FileWithName(
-                    Name: $"{@class.FullName}.StaticConstructor.g.cs",
+                    Name: $"{a.Key.FullName}.StaticConstructor.g.cs",
                     Text: text);
             }
-        }
-
-        return FileWithName.Empty;
+            else
+            {
+                return FileWithName.Empty;
+            }
+        }).ToImmutableArray().AsEquatableArray();
     }
 
     #endregion
