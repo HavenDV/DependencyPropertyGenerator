@@ -1,56 +1,56 @@
-﻿//HintName: H.Generators.IntegrationTests.GridExtensions.AttachedProperties.AttachedProperty.g.cs
+﻿//HintName: H.Generators.IntegrationTests.MyGird.AttachedProperties.MyColumn.g.cs
 
 #nullable enable
 
 namespace H.Generators.IntegrationTests
 {
-    partial class GridExtensions
+    partial class MyGird
     {
         /// <summary>
-        /// Identifies the AttachedProperty dependency property.<br/>
-        /// Default value: default(object)
+        /// Identifies the MyColumn dependency property.<br/>
+        /// Default value: default(int)
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        public static readonly global::Avalonia.AttachedProperty<object?> AttachedPropertyProperty =
-            global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.GridExtensions, global::Avalonia.Controls.Grid, object?>(
-                name: "AttachedProperty",
-                defaultValue: default(object),
+        public static readonly global::Avalonia.AttachedProperty<int> MyColumnProperty =
+            global::Avalonia.AvaloniaProperty.RegisterAttached<global::H.Generators.IntegrationTests.MyGird, global::Avalonia.Controls.Control, int>(
+                name: "MyColumn",
+                defaultValue: default(int),
                 inherits: false,
                 defaultBindingMode: global::Avalonia.Data.BindingMode.OneWay,
                 validate: null,
                 coerce: null);
 
         /// <summary>
-        /// Default value: default(object)
+        /// Default value: default(int)
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetAttachedProperty(global::Avalonia.AvaloniaObject element, object? value)
+        public static void SetMyColumn(global::Avalonia.AvaloniaObject element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            element.SetValue(AttachedPropertyProperty, value);
+            element.SetValue(MyColumnProperty, value);
         }
 
         /// <summary>
-        /// Default value: default(object)
+        /// Default value: default(int)
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetAttachedProperty(global::Avalonia.AvaloniaObject element)
+        public static int GetMyColumn(global::Avalonia.AvaloniaObject element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
-            return (object?)element.GetValue(AttachedPropertyProperty);
+            return (int)element.GetValue(MyColumnProperty);
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        static partial void OnAttachedPropertyChanged();
+        static partial void OnMyColumnChanged();
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid);
+        static partial void OnMyColumnChanged(global::Avalonia.Controls.Control control);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid, object? newValue);
+        static partial void OnMyColumnChanged(global::Avalonia.Controls.Control control, int newValue);
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
-        static partial void OnAttachedPropertyChanged(global::Avalonia.Controls.Grid grid, object? oldValue, object? newValue);
+        static partial void OnMyColumnChanged(global::Avalonia.Controls.Control control, int oldValue, int newValue);
     }
 }

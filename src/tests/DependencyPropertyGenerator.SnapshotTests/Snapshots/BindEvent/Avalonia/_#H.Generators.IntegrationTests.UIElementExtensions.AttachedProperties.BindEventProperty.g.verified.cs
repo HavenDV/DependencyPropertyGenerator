@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    partial class UIElementExtensions : global::Avalonia.AvaloniaObject
+    partial class UIElementExtensions
     {
         /// <summary>
         /// Identifies the BindEventProperty dependency property.<br/>

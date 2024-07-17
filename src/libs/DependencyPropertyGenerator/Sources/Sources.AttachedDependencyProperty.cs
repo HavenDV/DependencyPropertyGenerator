@@ -11,7 +11,7 @@ internal static partial class Sources
 
 namespace {@class.Namespace}
 {{
-    {GenerateModifiers(@class)}partial class {@class.Name}{GenerateBaseType(@class)}
+    {GenerateModifiers(@class)}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(property.XmlDocumentation, property, isProperty: false)}
 {GenerateGeneratedCodeAttribute(@class.Version)}
@@ -104,15 +104,5 @@ namespace {@class.Namespace}
         }
 
         return @class.Modifiers;
-    }
-
-    private static string GenerateBaseType(ClassData @class)
-    {
-        if (@class.Framework == Framework.Avalonia)
-        {
-            return $" : {GenerateTypeByPlatform(@class.Framework, "AvaloniaObject")}";
-        }
-
-        return string.Empty;
     }
 }

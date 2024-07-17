@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    partial class GridHelpers : global::Avalonia.AvaloniaObject
+    partial class GridHelpers
     {
         /// <summary>
         /// Identifies the RowCount dependency property.<br/>

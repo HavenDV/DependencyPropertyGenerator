@@ -127,4 +127,19 @@ public partial class Test
     }
 }", framework, additionalGenerators: new StaticConstructorGenerator());
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task InheritClass(Framework framework)
+    {
+        return CheckSourceAsync<AttachedDependencyPropertyGenerator>(GetHeader(framework, string.Empty, "Controls") + @"
+[AttachedDependencyProperty<int, FrameworkElement>(""MyColumn"")]
+public partial class MyGird : Grid
+{
+}", framework, additionalGenerators: new StaticConstructorGenerator());
+    }
 }

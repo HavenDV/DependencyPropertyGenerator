@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    partial class GridExtensions : global::Avalonia.AvaloniaObject
+    partial class GridExtensions
     {
         /// <summary>
         /// Identifies the SomeProperty dependency property.<br/>

@@ -4,7 +4,7 @@
 
 namespace H.Generators.IntegrationTests
 {
-    partial class TreeViewExtensions : global::Avalonia.AvaloniaObject
+    partial class TreeViewExtensions
     {
         /// <summary>
         /// Identifies the Mode dependency property.<br/>
