@@ -33,55 +33,47 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         var framework = context.DetectFramework();
         var version = context.DetectVersion();
 
-        context.SyntaxProvider
+        var dp1 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var dp2 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var adp1 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
-            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
-            .SelectManyAllAttributesOfCurrentClassSyntax()
-            .Combine(framework)
-            .Combine(version)
-            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
-            .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var adp2 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .CollectAsEquatableArray();
+        // A type can have only one static constructor, so combined all four attributes.
+        // Is there a better performance way?
+        dp1.Combine(dp2.Combine(adp1.Combine(adp2))).Select((x, _) =>
+        {
+            return x.Left.AsImmutableArray().AddRange(x.Right.Left).AddRange(x.Right.Right.Left).AddRange(x.Right.Right.Right).AsEquatableArray();
+        }).SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
     }
 

@@ -437,10 +437,29 @@ public partial class MyControl : FrameworkElement
     {
     }
 }
+[DependencyProperty<int>(""MyProperty2"")]
+[DependencyProperty(""MyProperty3"", typeof(int))]
+public partial class MyControl 
+{
+    partial void OnMyProperty2Changed()
+    {
+    }
+    partial void OnMyProperty3Changed()
+    {
+    }
+}
 [DependencyProperty<int>(""MyProperty"")]
+[DependencyProperty<(int, string)>(""MyProperty2"")]
+[DependencyProperty(""MyProperty3"", typeof(int))]
 public partial class AnotherControl : FrameworkElement
 {
     partial void OnMyPropertyChanged()
+    {
+    }
+    partial void OnMyProperty2Changed()
+    {
+    }
+    partial void OnMyProperty3Changed()
     {
     }
 }", framework);
