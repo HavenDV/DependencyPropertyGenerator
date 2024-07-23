@@ -420,4 +420,48 @@ public partial class MyControl : FrameworkElement
 {
 }", framework);
     }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
+    public Task MultiTypesInOne(Framework framework)
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, string.Empty) + @"
+[DependencyProperty<int>(""MyProperty"")]
+public partial class MyControl : FrameworkElement
+{
+    partial void OnMyPropertyChanged()
+    {
+    }
+}
+[DependencyProperty<int>(""MyProperty2"")]
+[DependencyProperty(""MyProperty3"", typeof(int))]
+public partial class MyControl 
+{
+    partial void OnMyProperty2Changed()
+    {
+    }
+    partial void OnMyProperty3Changed()
+    {
+    }
+}
+[DependencyProperty<int>(""MyProperty"")]
+[DependencyProperty<(int, string)>(""MyProperty2"")]
+[DependencyProperty(""MyProperty3"", typeof(int))]
+public partial class AnotherControl : FrameworkElement
+{
+    partial void OnMyPropertyChanged()
+    {
+    }
+    partial void OnMyProperty2Changed()
+    {
+    }
+    partial void OnMyProperty3Changed()
+    {
+    }
+}", framework);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using H.Generators.Extensions;
+﻿using System.Collections.Immutable;
+using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
@@ -32,55 +33,47 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         var framework = context.DetectFramework();
         var version = context.DetectVersion();
 
-        context.SyntaxProvider
+        var dp1 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var dp2 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.DependencyPropertyAttribute`1")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: false), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var adp1 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
-            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
-            .SelectManyAllAttributesOfCurrentClassSyntax()
-            .Combine(framework)
-            .Combine(version)
-            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
-            .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .AddSource(context);
-        context.SyntaxProvider
+            .CollectAsEquatableArray();
+
+        var adp2 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
             .Combine(version)
             .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
             .WhereNotNull()
-            .CollectAsEquatableArray()
-            .SelectAndReportExceptions(GetSourceCode, context, Id)
+            .CollectAsEquatableArray();
+        // A type can have only one static constructor, so combined all four attributes.
+        // Is there a better performance way?
+        dp1.Combine(dp2.Combine(adp1.Combine(adp2))).Select((x, _) =>
+        {
+            return x.Left.AsImmutableArray().AddRange(x.Right.Left).AddRange(x.Right.Right.Left).AddRange(x.Right.Right.Right).AsEquatableArray();
+        }).SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
     }
 
@@ -102,40 +95,31 @@ public class StaticConstructorGenerator : IIncrementalGenerator
         return (classData, dependencyPropertyData);
     }
 
-    private static FileWithName GetSourceCode(
+    private static EquatableArray<FileWithName> GetSourceCode(
         EquatableArray<(ClassData Class, DependencyPropertyData DependencyProperty)> values)
     {
         if (values.AsImmutableArray().IsDefaultOrEmpty)
         {
-            return FileWithName.Empty;
+            return ImmutableArray<FileWithName>.Empty.AsEquatableArray();
         }
 
-        var @class = values.First().Class;
-        if (@class.Framework is not Framework.Avalonia)
-        {
-            return FileWithName.Empty;
-        }
-
-        var dependencyProperties = values
-            .Select(static x => x.DependencyProperty)
-            .ToArray();
-        if (dependencyProperties.Where(static property => !property.IsDirect).Any())
+        return values.Where(x => x.Class.Framework is Framework.Avalonia).GroupBy(x => x.Class, x => x.DependencyProperty).Select(a =>
         {
             var text = Sources.GenerateStaticConstructor(
-                @class,
-                dependencyProperties
-                    .Where(static property => !property.IsDirect)
+                a.Key,
+                a.Where(static property => !property.IsDirect)
                     .ToArray());
-
             if (!string.IsNullOrWhiteSpace(text))
             {
                 return new FileWithName(
-                    Name: $"{@class.FullName}.StaticConstructor.g.cs",
+                    Name: $"{a.Key.FullName}.StaticConstructor.g.cs",
                     Text: text);
             }
-        }
-
-        return FileWithName.Empty;
+            else
+            {
+                return FileWithName.Empty;
+            }
+        }).ToImmutableArray().AsEquatableArray();
     }
 
     #endregion
