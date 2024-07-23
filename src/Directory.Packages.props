@@ -10,6 +10,7 @@
     <PackageVersion Include="H.Generators.Extensions" Version="1.22.0" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.2.4" />
+    <PackageVersion Include="MinVer" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup Label="Tests">
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
