@@ -61,6 +61,15 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .CollectAsEquatableArray();
 
         var adp2 = context.SyntaxProvider
+            .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`1")
+            .SelectManyAllAttributesOfCurrentClassSyntax()
+            .Combine(framework)
+            .Combine(version)
+            .SelectAndReportExceptions(static (x, _) => PrepareData(x, isAttached: true), context, Id)
+            .WhereNotNull()
+            .CollectAsEquatableArray();
+
+        var adp3 = context.SyntaxProvider
             .ForAttributeWithMetadataNameOfClassesAndRecords("DependencyPropertyGenerator.AttachedDependencyPropertyAttribute`2")
             .SelectManyAllAttributesOfCurrentClassSyntax()
             .Combine(framework)
@@ -70,9 +79,9 @@ public class StaticConstructorGenerator : IIncrementalGenerator
             .CollectAsEquatableArray();
         // A type can have only one static constructor, so combined all four attributes.
         // Is there a better performance way?
-        dp1.Combine(dp2.Combine(adp1.Combine(adp2))).Select((x, _) =>
+        dp1.Combine(dp2.Combine(adp1.Combine(adp2.Combine(adp3)))).Select((x, _) =>
         {
-            return x.Left.AsImmutableArray().AddRange(x.Right.Left).AddRange(x.Right.Right.Left).AddRange(x.Right.Right.Right).AsEquatableArray();
+            return x.Left.AsImmutableArray().AddRange(x.Right.Left).AddRange(x.Right.Right.Left).AddRange(x.Right.Right.Right.Left).AddRange(x.Right.Right.Right.Right).AsEquatableArray();
         }).SelectAndReportExceptions(GetSourceCode, context, Id)
             .AddSource(context);
     }
