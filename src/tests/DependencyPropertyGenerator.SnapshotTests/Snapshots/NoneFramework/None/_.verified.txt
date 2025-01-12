@@ -1,20 +1,22 @@
 ﻿{
   Diagnostics: [
     {
-      Id: TRF001,
-      Title: Framework is not recognized,
-      Severity: Error,
-      WarningLevel: 0,
-      Location: : (0,0)-(0,0),
-      MessageFormat:
-Framework is not recognized.
-You can explicitly specify the framework by setting one of the following constants in your project:
-HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI,
       Message:
 Framework is not recognized.
 You can explicitly specify the framework by setting one of the following constants in your project:
 HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI,
-      Category: Usage
+      Severity: Error,
+      Descriptor: {
+        Id: TRF001,
+        Title: Framework is not recognized,
+        MessageFormat:
+Framework is not recognized.
+You can explicitly specify the framework by setting one of the following constants in your project:
+HAS_WPF, HAS_WINUI, HAS_UWP, HAS_UNO, HAS_UNO_WINUI, HAS_AVALONIA, HAS_MAUI,
+        Category: Usage,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
     }
   ]
 }

@@ -1,17 +1,27 @@
 ﻿[
   {
-    Id: CS3021,
-    Title: Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+    Location: /*
+[CLSCompliant(false)]
+public partial class MyControl : UserControl
+                     ^^^^^^^^^
+{
+*/
+ : (9,21)-(9,30),
+    Message: 'MyControl' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
     Severity: Warning,
     WarningLevel: 2,
-    Location: : (9,21)-(9,30),
-    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
-    MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
-    Message: 'MyControl' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
-    Category: Compiler,
-    CustomTags: [
-      Compiler,
-      Telemetry
-    ]
+    Descriptor: {
+      Id: CS3021,
+      Title: Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
+      MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+      Category: Compiler,
+      DefaultSeverity: Warning,
+      IsEnabledByDefault: true,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    }
   }
 ]

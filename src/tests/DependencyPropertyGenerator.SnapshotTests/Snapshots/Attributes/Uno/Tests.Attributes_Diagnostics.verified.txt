@@ -1,17 +1,27 @@
 ﻿[
   {
-    Id: CS3021,
-    Title: Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+    Location: /*
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        public string? AttributedProperty
+                       ^^^^^^^^^^^^^^^^^^
+        {
+*/
+ DependencyPropertyGenerator\H.Generators.DependencyPropertyGenerator\H.Generators.IntegrationTests.MyControl.Properties.AttributedProperty.g.cs: (33,23)-(33,41),
+    Message: 'MyControl.AttributedProperty' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
     Severity: Warning,
     WarningLevel: 2,
-    Location: DependencyPropertyGenerator/H.Generators.DependencyPropertyGenerator/H.Generators.IntegrationTests.MyControl.Properties.AttributedProperty.g.cs: (33,23)-(33,41),
-    HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
-    MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
-    Message: 'MyControl.AttributedProperty' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
-    Category: Compiler,
-    CustomTags: [
-      Compiler,
-      Telemetry
-    ]
+    Descriptor: {
+      Id: CS3021,
+      Title: Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS3021),
+      MessageFormat: '{0}' does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute,
+      Category: Compiler,
+      DefaultSeverity: Warning,
+      IsEnabledByDefault: true,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    }
   }
 ]
