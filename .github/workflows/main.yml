@@ -1,12 +1,17 @@
-﻿name: Build, test and publish
+﻿name: Publish
 on:
   push:
     branches:
       - main
+    tags:
+      - v**
+
+permissions:
+  contents: write
 
 jobs:
-  build-test-publish:
-    name: Build, test and publish
+  publish:
+    name: Publish
     uses: HavenDV/workflows/.github/workflows/dotnet_build-test-publish.yml@main
     with:
       generate-build-number: false
@@ -14,3 +19,19 @@ jobs:
       additional-test-arguments: '--logger GitHubActions'
     secrets:
       nuget-key: ${{ secrets.NUGET_KEY }}
+  
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [publish]
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create release
+        run: gh release create ${{ github.ref_name }}
+          --title "${{ github.ref_name }}"
+          --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
