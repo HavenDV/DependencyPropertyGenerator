@@ -4,10 +4,10 @@
   </PropertyGroup>
   <ItemGroup Label="Main">
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.4.1" />
-    <PackageVersion Include="H.Resources.Generator" Version="1.6.1" />
+    <PackageVersion Include="H.Resources.Generator" Version="1.8.0" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" />
-    <PackageVersion Include="H.Generators.Extensions" Version="1.24.1" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
+    <PackageVersion Include="H.Generators.Extensions" Version="1.24.2" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
     <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.2.25" />
     <PackageVersion Include="MinVer" Version="6.0.0" />
@@ -17,11 +17,11 @@
     <PackageVersion Include="MSTest.TestAdapter" Version="3.8.2" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.8.2" />
     <PackageVersion Include="FluentAssertions" Version="8.1.1" />
-    <PackageVersion Include="Avalonia" Version="11.2.4" />
+    <PackageVersion Include="Avalonia" Version="11.2.5" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.12.0" />
-    <PackageVersion Include="Verify.MSTest" Version="28.12.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
+    <PackageVersion Include="Verify.MSTest" Version="28.13.0" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
-    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.24.1" />
+    <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.24.2" />
   </ItemGroup>
 </Project>
