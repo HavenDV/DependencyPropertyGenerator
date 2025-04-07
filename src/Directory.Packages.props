@@ -20,7 +20,7 @@
     <PackageVersion Include="Avalonia" Version="11.2.6" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
-    <PackageVersion Include="Verify.MSTest" Version="28.16.0" />
+    <PackageVersion Include="Verify.MSTest" Version="29.1.0" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
     <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.24.2" />
   </ItemGroup>
