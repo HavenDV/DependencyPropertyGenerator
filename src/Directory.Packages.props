@@ -14,13 +14,13 @@
   </ItemGroup>
   <ItemGroup Label="Tests">
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="3.10.0" />
-    <PackageVersion Include="MSTest.TestFramework" Version="3.10.0" />
-    <PackageVersion Include="FluentAssertions" Version="8.5.0" />
-    <PackageVersion Include="Avalonia" Version="11.3.2" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.10.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.10.2" />
+    <PackageVersion Include="FluentAssertions" Version="8.6.0" />
+    <PackageVersion Include="Avalonia" Version="11.3.4" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
-    <PackageVersion Include="Verify.MSTest" Version="30.5.0" />
+    <PackageVersion Include="Verify.MSTest" Version="30.7.3" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
     <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.24.2" />
   </ItemGroup>
