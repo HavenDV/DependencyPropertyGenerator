@@ -17,10 +17,10 @@
     <PackageVersion Include="MSTest.TestAdapter" Version="3.10.4" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.10.4" />
     <PackageVersion Include="FluentAssertions" Version="8.6.0" />
-    <PackageVersion Include="Avalonia" Version="11.3.5" />
+    <PackageVersion Include="Avalonia" Version="11.3.6" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
-    <PackageVersion Include="Verify.MSTest" Version="30.11.0" />
+    <PackageVersion Include="Verify.MSTest" Version="30.13.0" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
     <PackageVersion Include="H.Generators.Tests.Extensions" Version="1.24.2" />
   </ItemGroup>
