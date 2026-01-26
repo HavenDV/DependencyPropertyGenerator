@@ -9,7 +9,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
     <PackageVersion Include="H.Generators.Extensions" Version="1.24.2" />
     <PackageVersion Include="ConventionalCommitsGitInfo" Version="0.3.6" />
-    <PackageVersion Include="DotNet.ReproducibleBuilds" Version="1.2.39" />
+    <PackageVersion Include="DotNet.ReproducibleBuilds" Version="2.0.1" />
     <PackageVersion Include="MinVer" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup Label="Tests">
