@@ -13,11 +13,11 @@
     <PackageVersion Include="MinVer" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup Label="Tests">
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="4.1.0" />
-    <PackageVersion Include="MSTest.TestFramework" Version="4.1.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="4.2.1" />
+    <PackageVersion Include="MSTest.TestFramework" Version="4.2.1" />
     <PackageVersion Include="FluentAssertions" Version="8.9.0" />
-    <PackageVersion Include="Avalonia" Version="11.3.13" />
+    <PackageVersion Include="Avalonia" Version="12.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.MSTest" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.3.0" />
     <PackageVersion Include="Verify.MSTest" Version="31.15.0" />
