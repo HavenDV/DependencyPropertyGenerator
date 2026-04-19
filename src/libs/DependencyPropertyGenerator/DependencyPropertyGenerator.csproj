@@ -47,7 +47,7 @@
     
     <ItemGroup Label="Attributes">
         <EmbeddedResource Include="../$(AssemblyName).Attributes/*.cs" Visible="false" />
-        <AdditionalFiles Include="../$(AssemblyName).Attributes/*.cs" Visible="false" />
+        <AdditionalFiles Include="../$(AssemblyName).Attributes/*.cs" Visible="false" HResourcesGenerator_Resource="true" />
     </ItemGroup>
 
     <ItemGroup>
