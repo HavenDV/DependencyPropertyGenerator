@@ -82,13 +82,7 @@ using DependencyPropertyGenerator;
         return globalOptions;
     }
 
-    private async Task CheckSourceAsync<T>(
-        string source,
-        Framework framework,
-        [CallerMemberName] string? callerName = null,
-        CancellationToken cancellationToken = default,
-        params IIncrementalGenerator[] additionalGenerators)
-        where T : IIncrementalGenerator, new()
+    private static string ApplyFrameworkReplacements(string source, Framework framework)
     {
         if (framework == Framework.Wpf)
         {
@@ -140,6 +134,19 @@ using DependencyPropertyGenerator;
             source = @$"using Microsoft.Maui.Controls;
 {source}";
         }
+
+        return source;
+    }
+
+    private async Task CheckSourceAsync<T>(
+        string source,
+        Framework framework,
+        [CallerMemberName] string? callerName = null,
+        CancellationToken cancellationToken = default,
+        params IIncrementalGenerator[] additionalGenerators)
+        where T : IIncrementalGenerator, new()
+    {
+        source = ApplyFrameworkReplacements(source, framework);
 
         var referenceAssemblies = framework switch
         {
@@ -195,6 +202,49 @@ using DependencyPropertyGenerator;
                 .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
                 .UseFileName("_"));
+    }
+
+    private static async Task<string> GenerateSourceAsync<T>(
+        string source,
+        Framework framework,
+        CancellationToken cancellationToken = default)
+        where T : IIncrementalGenerator, new()
+    {
+        source = ApplyFrameworkReplacements(source, framework);
+        var referenceAssemblies = framework switch
+        {
+            Framework.None => ReferenceAssemblies.NetFramework.Net48.Wpf,
+            Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
+            Framework.Uwp => FrameworkReferenceAssemblies.Net80Uwp,
+            Framework.WinUi => FrameworkReferenceAssemblies.Net80WinUi,
+            Framework.Uno => FrameworkReferenceAssemblies.Net80Uno,
+            Framework.UnoWinUi => FrameworkReferenceAssemblies.Net80UnoWinUi,
+            Framework.Avalonia => FrameworkReferenceAssemblies.Net60Avalonia,
+            Framework.Maui => FrameworkReferenceAssemblies.Net70Maui,
+            _ => throw new NotImplementedException(),
+        };
+        var references = await referenceAssemblies.ResolveAsync(null, cancellationToken);
+        var compilation = (Compilation)CSharpCompilation.Create(
+            assemblyName: "Tests",
+            syntaxTrees: new[]
+            {
+                CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview),
+                    cancellationToken: cancellationToken),
+            },
+            references: references,
+            options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        GeneratorDriver driver = CSharpGeneratorDriver.Create(
+            generators: new[] { new T().AsSourceGenerator() },
+            parseOptions: CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview));
+        driver = driver
+            .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(GetGlobalOptions(framework)))
+            .RunGeneratorsAndUpdateCompilation(compilation, out _, out _, cancellationToken);
+
+        return string.Join(
+            Environment.NewLine,
+            driver.GetRunResult().Results
+                .SelectMany(result => result.GeneratedSources)
+                .Select(generatedSource => generatedSource.SourceText.ToString()));
     }
 }
 
