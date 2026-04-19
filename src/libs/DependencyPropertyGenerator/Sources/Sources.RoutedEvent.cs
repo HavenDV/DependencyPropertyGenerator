@@ -163,7 +163,7 @@ namespace {@class.Namespace}
             return GenerateRoutedEventHandlerType(@class);
         }
 
-        return @event.Type.WithGlobalPrefix();
+        return @event.Type;
     }
 
     private static string GenerateRoutedEventType(ClassData @class)

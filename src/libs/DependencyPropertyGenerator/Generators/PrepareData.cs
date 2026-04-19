@@ -169,12 +169,12 @@ public static class PrepareData
             .ToEnum(defaultValue: RoutedEventStrategy.Direct)
             .ToString("G");
         var isStatic = attribute.GetNamedArgument(nameof(WeakEventAttribute.IsStatic)).ToBoolean();
-        var type =
-            attribute.GetGenericTypeArgument(0)?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ??
-            attribute.GetNamedArgument(nameof(RoutedEventAttribute.Type)).Value?.ToString() ??
-            string.Empty;
+        var typeSymbol =
+            attribute.GetGenericTypeArgument(0) ??
+            attribute.GetNamedArgument(nameof(RoutedEventAttribute.Type)).Value as ITypeSymbol;
+        var type = typeSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ?? string.Empty;
         var isValueType =
-            attribute.GetGenericTypeArgument(0)?.IsValueType ??
+            typeSymbol?.IsValueType ??
             attribute.ConstructorArguments.ElementAtOrDefault(1).Type?.IsValueType ??
             true;
         var isAttached = attribute.GetNamedArgument(nameof(RoutedEventAttribute.IsAttached)).ToBoolean();
