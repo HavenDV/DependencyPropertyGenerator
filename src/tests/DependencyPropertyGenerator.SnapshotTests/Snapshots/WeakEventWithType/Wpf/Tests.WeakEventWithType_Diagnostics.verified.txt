@@ -1,21 +1,9 @@
 ﻿[
   {
-    Location: DependencyPropertyGenerator\H.Generators.WeakEventGenerator\H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs: (62,37)-(62,41),
-    Message: Argument {0}: cannot convert from '{1}' to '{2}',
+    Id: CS1503,
     Severity: Error,
-    Descriptor: {
-      Id: CS1503,
-      Title: ,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1503),
-      MessageFormat: Argument {0}: cannot convert from '{1}' to '{2}',
-      Category: Compiler,
-      DefaultSeverity: Error,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry,
-        NotConfigurable
-      ]
-    }
+    Location: DependencyPropertyGenerator\H.Generators.WeakEventGenerator\H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs,
+    Span: (63,38)-(63,42),
+    MessageFormat: Argument {0}: cannot convert from '{1}' to '{2}'
   }
 ]

@@ -1,26 +1,9 @@
 ﻿[
   {
-    Location: /*
-using Avalonia;
-^^^^^^^^^^^^^^^
-using DependencyPropertyGenerator;
-*/
- : (0,0)-(0,15),
-    Message: Unnecessary using directive.,
+    Id: CS8019,
     Severity: Hidden,
     WarningLevel: 1,
-    Descriptor: {
-      Id: CS8019,
-      Title: Unnecessary using directive,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
-      MessageFormat: Unnecessary using directive.,
-      Category: Compiler,
-      DefaultSeverity: Hidden,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Span: (1,1)-(1,16),
+    MessageFormat: Unnecessary using directive.
   }
 ]

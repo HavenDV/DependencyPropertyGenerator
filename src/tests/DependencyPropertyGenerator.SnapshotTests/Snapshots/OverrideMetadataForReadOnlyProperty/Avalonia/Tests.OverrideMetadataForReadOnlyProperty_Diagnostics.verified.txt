@@ -1,51 +1,15 @@
 ﻿[
   {
-    Location: /*
-{
-    partial void OnAquariumGraphicChanged()
-                 ^^^^^^^^^^^^^^^^^^^^^^^^
-    {
-*/
- : (18,17)-(18,41),
-    Message: No defining declaration found for implementing declaration of partial method 'TropicalAquarium.OnAquariumGraphicChanged()',
+    Id: CS0759,
     Severity: Error,
-    Descriptor: {
-      Id: CS0759,
-      Title: ,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0759),
-      MessageFormat: No defining declaration found for implementing declaration of partial method '{0}',
-      Category: Compiler,
-      DefaultSeverity: Error,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry,
-        NotConfigurable
-      ]
-    }
+    Span: (19,18)-(19,42),
+    MessageFormat: No defining declaration found for implementing declaration of partial method '{0}'
   },
   {
-    Location: /*
-using Avalonia;
-^^^^^^^^^^^^^^^
-using System;
-*/
- : (0,0)-(0,15),
-    Message: Unnecessary using directive.,
+    Id: CS8019,
     Severity: Hidden,
     WarningLevel: 1,
-    Descriptor: {
-      Id: CS8019,
-      Title: Unnecessary using directive,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
-      MessageFormat: Unnecessary using directive.,
-      Category: Compiler,
-      DefaultSeverity: Hidden,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Span: (1,1)-(1,16),
+    MessageFormat: Unnecessary using directive.
   }
 ]

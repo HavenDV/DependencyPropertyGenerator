@@ -194,7 +194,7 @@ using DependencyPropertyGenerator;
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(
-            Verify(diagnostics.NormalizeLocations())
+            Verify(diagnostics.ToSnapshotModels())
                 .UseDirectory($"Snapshots/{callerName}/{framework:G}")
                 //.AutoVerify()
                 .UseTextForParameters("Diagnostics"),
@@ -247,6 +247,60 @@ using DependencyPropertyGenerator;
                 .Select(generatedSource => generatedSource.SourceText.ToString()));
     }
 }
+
+internal static class DiagnosticExtensions
+{
+    internal static IReadOnlyList<DiagnosticSnapshot> ToSnapshotModels(this IEnumerable<Diagnostic> diagnostics)
+    {
+        return diagnostics
+            .Select(static diagnostic => new DiagnosticSnapshot(
+                Id: diagnostic.Id,
+                Severity: diagnostic.Severity.ToString(),
+                WarningLevel: diagnostic.WarningLevel is 0 ? null : diagnostic.WarningLevel,
+                Location: GetLocation(diagnostic.Location),
+                Span: GetSpan(diagnostic.Location),
+                MessageFormat: diagnostic.Descriptor.MessageFormat.ToString()))
+            .ToArray();
+    }
+
+    private static string? GetLocation(Location location)
+    {
+        if (location is null or { IsInSource: false })
+        {
+            return null;
+        }
+
+        var path = location.GetLineSpan().Path;
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return null;
+        }
+
+        return path.Replace('/', '\\');
+    }
+
+    private static string? GetSpan(Location location)
+    {
+        if (location is null or { IsInSource: false })
+        {
+            return null;
+        }
+
+        var lineSpan = location.GetLineSpan();
+        var start = lineSpan.StartLinePosition;
+        var end = lineSpan.EndLinePosition;
+
+        return $"({start.Line + 1},{start.Character + 1})-({end.Line + 1},{end.Character + 1})";
+    }
+}
+
+internal sealed record DiagnosticSnapshot(
+    string Id,
+    string Severity,
+    int? WarningLevel,
+    string? Location,
+    string? Span,
+    string MessageFormat);
 
 internal static class StringExtensions
 {
