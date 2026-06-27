@@ -184,6 +184,35 @@ public partial class MyControl : UserControl
     [DataRow(Framework.UnoWinUi)]
     [DataRow(Framework.Maui)]
     [DataRow(Framework.Avalonia)]
+    public async Task NullableValueTypeWithCoerce_DoesNotDoubleNullableSuffix(Framework framework)
+    {
+        var source = GetHeader(framework, "Controls") + @"
+[DependencyProperty<double?>(""Value"", Coerce = true)]
+public partial class MyControl : UserControl
+{
+}";
+        var generated = await GenerateSourceAsync<DependencyPropertyGenerator>(source, framework);
+
+        generated.Should().NotContain("double??");
+        generated.Should().Contain("CoerceValue(double? value)");
+    }
+
+    [TestMethod]
+    public Task AvaloniaAffectsFlags()
+    {
+        return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(Framework.Avalonia, "Controls", "Media") + @"
+[DependencyProperty<Brush>(""Fill"", AffectsRender = true, AffectsMeasure = true, AffectsArrange = true)]
+public partial class MyControl : Control
+{
+}", Framework.Avalonia, additionalGenerators: new StaticConstructorGenerator());
+    }
+
+    [DataTestMethod]
+    [DataRow(Framework.Wpf)]
+    [DataRow(Framework.Uno)]
+    [DataRow(Framework.UnoWinUi)]
+    [DataRow(Framework.Maui)]
+    [DataRow(Framework.Avalonia)]
     public Task CreateDefaultValueCallback(Framework framework)
     {
         return CheckSourceAsync<DependencyPropertyGenerator>(GetHeader(framework, "Controls") + @"

@@ -25,7 +25,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetRowCount(global::Avalonia.AvaloniaObject element, int value)
+        public static void SetRowCount(global::Avalonia.Controls.Grid element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -37,7 +37,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static int GetRowCount(global::Avalonia.AvaloniaObject element)
+        public static int GetRowCount(global::Avalonia.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

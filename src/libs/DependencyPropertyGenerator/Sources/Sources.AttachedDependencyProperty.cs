@@ -31,7 +31,7 @@ namespace {@class.Namespace}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
 {GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
-        {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateDependencyObjectType(@class.Framework)} element, {GenerateType(property)} value)
+        {(property.IsReadOnly ? "internal" : "public")} static void Set{property.Name}({GenerateBrowsableForType(property)} element, {GenerateType(property)} value)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -50,7 +50,7 @@ namespace {@class.Namespace}
 {GenerateLocalizabilityAttribute(property.Localizability, @class.Framework)}
 {GenerateGeneratedCodeAttribute(@class.Version)}
 {GenerateExcludeFromCodeCoverageAttribute()}
-        public static {GenerateType(property)} Get{property.Name}({GenerateDependencyObjectType(@class.Framework)} element)
+        public static {GenerateType(property)} Get{property.Name}({GenerateBrowsableForType(property)} element)
         {{
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

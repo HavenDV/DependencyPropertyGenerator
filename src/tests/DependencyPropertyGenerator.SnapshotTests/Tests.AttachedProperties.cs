@@ -41,6 +41,20 @@ public static partial class GridExtensions
 }", framework);
     }
 
+    [TestMethod]
+    public async Task AttachedPropertyAccessors_UseBrowsableForType()
+    {
+        var source = GetHeader(Framework.Wpf, "Controls") + @"
+[AttachedDependencyProperty<bool, Grid>(""GeneratedTest"")]
+public static partial class TestProps
+{
+}";
+        var generated = await GenerateSourceAsync<AttachedDependencyPropertyGenerator>(source, Framework.Wpf);
+
+        generated.Should().Contain("SetGeneratedTest(global::System.Windows.Controls.Grid element, bool value)");
+        generated.Should().Contain("GetGeneratedTest(global::System.Windows.Controls.Grid element)");
+    }
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]

@@ -10,6 +10,9 @@ internal static partial class Sources
     {
         if (@class.Framework == Framework.Avalonia)
         {
+            var generatedAffects = properties
+                .Select(property => GenerateAvaloniaStaticConstructorAffects(@class, property))
+                .Inject();
             var generatedProperties = properties
                 .Where(static property => !property.IsAttached)
                 .Select(property => GenerateAvaloniaStaticConstructorPropertyChanged(@class, property))
@@ -18,7 +21,8 @@ internal static partial class Sources
                 .Where(static property => property.IsAttached)
                 .Select(property => GenerateAvaloniaStaticConstructorPropertyChanged(@class, property))
                 .Inject();
-            if (string.IsNullOrWhiteSpace(generatedProperties) &&
+            if (string.IsNullOrWhiteSpace(generatedAffects) &&
+                string.IsNullOrWhiteSpace(generatedProperties) &&
                 string.IsNullOrWhiteSpace(generatedAttachedProperties))
             {
                 return string.Empty;
@@ -32,6 +36,7 @@ namespace {@class.Namespace}
     {{
         static {@class.Name}()
         {{
+{generatedAffects}
 {generatedProperties}
 {generatedAttachedProperties}
         }}
@@ -69,6 +74,17 @@ namespace {@class.Namespace}
         }
 
         return string.Empty;
+    }
+
+    private static string GenerateAvaloniaStaticConstructorAffects(
+        ClassData @class,
+        DependencyPropertyData property)
+    {
+        return @$"
+            {(property.AffectsRender ? $"AffectsRender<{@class.Type}>({property.Name}Property);" : string.Empty)}
+            {(property.AffectsMeasure ? $"AffectsMeasure<{@class.Type}>({property.Name}Property);" : string.Empty)}
+            {(property.AffectsArrange ? $"AffectsArrange<{@class.Type}>({property.Name}Property);" : string.Empty)}
+".RemoveBlankLinesWhereOnlyWhitespaces();
     }
     
     private static string GenerateAvaloniaStaticConstructorPropertyChanged(

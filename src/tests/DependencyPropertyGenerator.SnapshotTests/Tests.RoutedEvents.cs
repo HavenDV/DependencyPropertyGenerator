@@ -32,6 +32,21 @@ public partial class MyControl : UserControl
 }", framework);
     }
 
+    [TestMethod]
+    public async Task AttachedRoutedEvent_StaticClass_DoesNotDuplicatePublicModifier()
+    {
+        const Framework framework = Framework.Wpf;
+        var source = GetHeader(framework, "Controls") + @"
+[RoutedEvent(""MouseDoubleClickEvent"", RoutedEventStrategy.Bubble, IsAttached = true)]
+public static partial class ImageRoutedEvents
+{
+}";
+        var generated = await GenerateSourceAsync<RoutedEventGenerator>(source, framework);
+
+        generated.Should().NotContain("publicpublic");
+        generated.Should().Contain("public static partial class ImageRoutedEvents");
+    }
+
     [DataTestMethod]
     [DataRow(Framework.Wpf)]
     [DataRow(Framework.Uno)]

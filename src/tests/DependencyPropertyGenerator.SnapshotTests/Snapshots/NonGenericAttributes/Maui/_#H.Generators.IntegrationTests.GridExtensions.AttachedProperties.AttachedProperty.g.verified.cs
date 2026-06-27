@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetAttachedProperty(global::Microsoft.Maui.Controls.BindableObject element, object? value)
+        public static void SetAttachedProperty(global::Microsoft.Maui.Controls.Grid element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -41,7 +41,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetAttachedProperty(global::Microsoft.Maui.Controls.BindableObject element)
+        public static object? GetAttachedProperty(global::Microsoft.Maui.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

@@ -61,7 +61,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
         /// <summary>
         /// A helper method to raise the {@event.Name} event. <br/>
@@ -84,7 +84,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
 {GenerateCategoryAttribute(@event.Category)}
@@ -112,7 +112,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers}partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public static readonly {GenerateRoutedEventType(@class)} {@event.Name}Event =

@@ -1,13 +1,7 @@
 ﻿[
   {
-    Location: /*
-            {
-                DeliverEvent(sender, args);
-                                     ^^^^
-            }
-*/
- DependencyPropertyGenerator\H.Generators.WeakEventGenerator\H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs: (62,37)-(62,41),
-    Message: Argument 2: cannot convert from 'string' to 'System.EventArgs',
+    Location: DependencyPropertyGenerator\H.Generators.WeakEventGenerator\H.Generators.IntegrationTests.MyControl.WeakEvents.UrlChanged.g.cs: (62,37)-(62,41),
+    Message: Argument {0}: cannot convert from '{1}' to '{2}',
     Severity: Error,
     Descriptor: {
       Id: CS1503,

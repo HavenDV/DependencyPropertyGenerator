@@ -34,7 +34,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetTestProp(global::Microsoft.Maui.Controls.BindableObject element, global::H.Generators.IntegrationTests.Test? value)
+        public static void SetTestProp(global::Microsoft.Maui.Controls.Grid element, global::H.Generators.IntegrationTests.Test? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -46,7 +46,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Microsoft.Maui.Controls.BindableObject element)
+        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::Microsoft.Maui.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
