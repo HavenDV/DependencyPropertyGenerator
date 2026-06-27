@@ -7,8 +7,9 @@ internal static partial class Sources
     private static string GenerateType(DependencyPropertyData property, bool canBeNull = false)
     {
         var value = property.Type;
-        if (canBeNull ||
-            property is { IsValueType: false, DefaultValue: null })
+        if ((canBeNull ||
+             property is { IsValueType: false, DefaultValue: null }) &&
+            !value.EndsWith("?"))
         {
             value += "?";
         }

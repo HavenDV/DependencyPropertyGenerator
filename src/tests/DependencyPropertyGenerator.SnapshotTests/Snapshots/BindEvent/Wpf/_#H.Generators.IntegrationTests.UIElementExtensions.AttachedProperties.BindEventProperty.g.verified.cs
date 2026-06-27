@@ -35,7 +35,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetBindEventProperty(global::System.Windows.DependencyObject element, object? value)
+        public static void SetBindEventProperty(global::System.Windows.UIElement element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -48,7 +48,7 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.UIElement))]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetBindEventProperty(global::System.Windows.DependencyObject element)
+        public static object? GetBindEventProperty(global::System.Windows.UIElement element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

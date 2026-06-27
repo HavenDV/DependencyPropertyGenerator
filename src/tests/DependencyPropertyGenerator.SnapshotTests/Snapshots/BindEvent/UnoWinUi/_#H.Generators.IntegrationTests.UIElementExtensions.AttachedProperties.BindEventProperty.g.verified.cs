@@ -31,7 +31,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetBindEventProperty(global::Microsoft.UI.Xaml.DependencyObject element, object? value)
+        public static void SetBindEventProperty(global::Microsoft.UI.Xaml.UIElement element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -43,7 +43,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetBindEventProperty(global::Microsoft.UI.Xaml.DependencyObject element)
+        public static object? GetBindEventProperty(global::Microsoft.UI.Xaml.UIElement element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

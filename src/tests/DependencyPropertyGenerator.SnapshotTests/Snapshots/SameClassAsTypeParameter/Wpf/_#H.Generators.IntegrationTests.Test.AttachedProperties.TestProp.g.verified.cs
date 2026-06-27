@@ -34,7 +34,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetTestProp(global::System.Windows.DependencyObject element, global::H.Generators.IntegrationTests.Test? value)
+        public static void SetTestProp(global::System.Windows.Controls.Grid element, global::H.Generators.IntegrationTests.Test? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -47,7 +47,7 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::System.Windows.DependencyObject element)
+        public static global::H.Generators.IntegrationTests.Test? GetTestProp(global::System.Windows.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

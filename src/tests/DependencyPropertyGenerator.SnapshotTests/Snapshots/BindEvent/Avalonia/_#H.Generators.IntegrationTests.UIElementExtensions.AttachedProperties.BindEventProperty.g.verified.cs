@@ -25,7 +25,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetBindEventProperty(global::Avalonia.AvaloniaObject element, object? value)
+        public static void SetBindEventProperty(global::Avalonia.Input.InputElement element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -37,7 +37,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetBindEventProperty(global::Avalonia.AvaloniaObject element)
+        public static object? GetBindEventProperty(global::Avalonia.Input.InputElement element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

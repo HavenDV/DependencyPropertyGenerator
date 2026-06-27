@@ -25,7 +25,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        internal static void SetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element, object? value)
+        internal static void SetAttachedReadOnlyProperty(global::Avalonia.Controls.Grid element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -37,7 +37,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetAttachedReadOnlyProperty(global::Avalonia.AvaloniaObject element)
+        public static object? GetAttachedReadOnlyProperty(global::Avalonia.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

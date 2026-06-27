@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetMyColumn(global::Microsoft.Maui.Controls.BindableObject element, int value)
+        public static void SetMyColumn(global::Microsoft.Maui.Controls.VisualElement element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -41,7 +41,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static int GetMyColumn(global::Microsoft.Maui.Controls.BindableObject element)
+        public static int GetMyColumn(global::Microsoft.Maui.Controls.VisualElement element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

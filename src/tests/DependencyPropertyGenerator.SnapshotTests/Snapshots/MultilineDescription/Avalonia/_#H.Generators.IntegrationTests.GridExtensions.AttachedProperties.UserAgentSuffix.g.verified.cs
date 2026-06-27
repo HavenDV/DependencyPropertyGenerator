@@ -29,7 +29,7 @@ namespace H.Generators.IntegrationTests
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetUserAgentSuffix(global::Avalonia.AvaloniaObject element, string? value)
+        public static void SetUserAgentSuffix(global::Avalonia.Controls.Grid element, string? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -45,7 +45,7 @@ Can be used to identify the web view as belonging to a certain app/version on th
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static string? GetUserAgentSuffix(global::Avalonia.AvaloniaObject element)
+        public static string? GetUserAgentSuffix(global::Avalonia.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

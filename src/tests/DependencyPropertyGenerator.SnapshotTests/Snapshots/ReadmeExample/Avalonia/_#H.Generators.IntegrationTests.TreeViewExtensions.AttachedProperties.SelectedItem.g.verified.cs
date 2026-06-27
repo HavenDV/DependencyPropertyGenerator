@@ -25,7 +25,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetSelectedItem(global::Avalonia.AvaloniaObject element, object? value)
+        public static void SetSelectedItem(global::Avalonia.Controls.TreeView element, object? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -37,7 +37,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static object? GetSelectedItem(global::Avalonia.AvaloniaObject element)
+        public static object? GetSelectedItem(global::Avalonia.Controls.TreeView element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

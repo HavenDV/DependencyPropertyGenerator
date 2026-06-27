@@ -34,7 +34,7 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetRowCount(global::System.Windows.DependencyObject element, int value)
+        public static void SetRowCount(global::System.Windows.Controls.Grid element, int value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -47,7 +47,7 @@ namespace H.Generators.IntegrationTests
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static int GetRowCount(global::System.Windows.DependencyObject element)
+        public static int GetRowCount(global::System.Windows.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 

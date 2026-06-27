@@ -33,7 +33,7 @@ namespace H.Generators.IntegrationTests
 Can be used to identify the web view as belonging to a certain app/version on the server side.")]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static void SetUserAgentSuffix(global::System.Windows.DependencyObject element, string? value)
+        public static void SetUserAgentSuffix(global::System.Windows.Controls.Grid element, string? value)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
@@ -50,7 +50,7 @@ Can be used to identify the web view as belonging to a certain app/version on th
         [global::System.Windows.AttachedPropertyBrowsableForType(typeof(global::System.Windows.Controls.Grid))]
         [global::System.CodeDom.Compiler.GeneratedCode("DependencyPropertyGenerator", "0.0.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public static string? GetUserAgentSuffix(global::System.Windows.DependencyObject element)
+        public static string? GetUserAgentSuffix(global::System.Windows.Controls.Grid element)
         {
             element = element ?? throw new global::System.ArgumentNullException(nameof(element));
 
