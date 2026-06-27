@@ -1,27 +1,9 @@
 ﻿[
   {
-    Location: /*
-using Microsoft.Maui.Controls;
-using Microsoft.Maui;
-^^^^^^^^^^^^^^^^^^^^^
-
-*/
- : (1,0)-(1,21),
-    Message: Unnecessary using directive.,
+    Id: CS8019,
     Severity: Hidden,
     WarningLevel: 1,
-    Descriptor: {
-      Id: CS8019,
-      Title: Unnecessary using directive,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
-      MessageFormat: Unnecessary using directive.,
-      Category: Compiler,
-      DefaultSeverity: Hidden,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Span: (2,1)-(2,22),
+    MessageFormat: Unnecessary using directive.
   }
 ]

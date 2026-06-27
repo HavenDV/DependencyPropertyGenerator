@@ -1,52 +1,15 @@
 ﻿[
   {
-    Location: /*
-{
-    partial void OnAquariumGraphicChanged()
-                 ^^^^^^^^^^^^^^^^^^^^^^^^
-    {
-*/
- : (19,17)-(19,41),
-    Message: No defining declaration found for implementing declaration of partial method 'TropicalAquarium.OnAquariumGraphicChanged()',
+    Id: CS0759,
     Severity: Error,
-    Descriptor: {
-      Id: CS0759,
-      Title: ,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0759),
-      MessageFormat: No defining declaration found for implementing declaration of partial method '{0}',
-      Category: Compiler,
-      DefaultSeverity: Error,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry,
-        NotConfigurable
-      ]
-    }
+    Span: (20,18)-(20,42),
+    MessageFormat: No defining declaration found for implementing declaration of partial method '{0}'
   },
   {
-    Location: /*
-using Microsoft.Maui.Controls;
-using Microsoft.Maui;
-^^^^^^^^^^^^^^^^^^^^^
-using System;
-*/
- : (1,0)-(1,21),
-    Message: Unnecessary using directive.,
+    Id: CS8019,
     Severity: Hidden,
     WarningLevel: 1,
-    Descriptor: {
-      Id: CS8019,
-      Title: Unnecessary using directive,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8019),
-      MessageFormat: Unnecessary using directive.,
-      Category: Compiler,
-      DefaultSeverity: Hidden,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Span: (2,1)-(2,22),
+    MessageFormat: Unnecessary using directive.
   }
 ]

@@ -1,166 +1,64 @@
 ﻿[
   {
-    Location: /*
-{
-    static partial void OnModeChanged(TreeView sender, Mode oldValue, Mode newValue)
-                                      ^^^^^^^^
-    {
-*/
- : (16,38)-(16,46),
-    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Id: CS0618,
     Severity: Warning,
     WarningLevel: 2,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Span: (17,39)-(17,47),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (58,42)-(58,83),
-    Message: '{0}' is obsolete: '{1}',
-    Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
-  },
-  {
-    Location: /*
-
-[AttachedDependencyProperty<Mode, TreeView>("Mode", DefaultValue = Mode.Mode2)]
-                                  ^^^^^^^^
-public static partial class TreeViewExtensions
-*/
- : (13,34)-(13,42),
-    Message: 'TreeView' is obsolete: 'The Windows.UI.Xaml.Controls version of this control is not supported. Please use Microsoft.UI.Xaml.Controls.TreeView instead.',
+    Id: CS0618,
     Severity: Warning,
     WarningLevel: 2,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (59,43)-(59,84),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (32,35)-(32,76),
-    Message: '{0}' is obsolete: '{1}',
+    Id: CS0618,
     Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    WarningLevel: 2,
+    Span: (14,35)-(14,43),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (44,73)-(44,114),
-    Message: '{0}' is obsolete: '{1}',
+    Id: CS0618,
     Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (33,36)-(33,77),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (54,42)-(54,83),
-    Message: '{0}' is obsolete: '{1}',
+    Id: CS0618,
     Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (45,74)-(45,115),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (56,42)-(56,83),
-    Message: '{0}' is obsolete: '{1}',
+    Id: CS0618,
     Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (55,43)-(55,84),
+    MessageFormat: '{0}' is obsolete: '{1}'
   },
   {
-    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs: (22,29)-(22,70),
-    Message: '{0}' is obsolete: '{1}',
+    Id: CS0618,
     Severity: Warning,
-    WarningLevel: 1,
-    Descriptor: {
-      Id: CS0618,
-      Title: Type or member is obsolete,
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618),
-      MessageFormat: '{0}' is obsolete: '{1}',
-      Category: Compiler,
-      DefaultSeverity: Warning,
-      IsEnabledByDefault: true,
-      CustomTags: [
-        Compiler,
-        Telemetry
-      ]
-    }
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (57,43)-(57,84),
+    MessageFormat: '{0}' is obsolete: '{1}'
+  },
+  {
+    Id: CS0618,
+    Severity: Warning,
+    WarningLevel: 2,
+    Location: DependencyPropertyGenerator\H.Generators.AttachedDependencyPropertyGenerator\H.Generators.IntegrationTests.TreeViewExtensions.AttachedProperties.Mode.g.cs,
+    Span: (23,30)-(23,71),
+    MessageFormat: '{0}' is obsolete: '{1}'
   }
 ]
