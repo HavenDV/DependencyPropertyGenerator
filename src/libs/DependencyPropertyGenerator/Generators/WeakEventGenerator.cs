@@ -23,7 +23,7 @@ public class WeakEventGenerator : IIncrementalGenerator
                 source: Resources.WeakEventAttribute_cs.AsString());
         });
 
-        var framework = context.DetectFramework();
+        var framework = context.DetectFrameworkFromOptionsOrReferences();
         var version = context.DetectVersion();
 
         context.SyntaxProvider

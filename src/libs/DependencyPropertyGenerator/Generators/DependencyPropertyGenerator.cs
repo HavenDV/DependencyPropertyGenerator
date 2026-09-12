@@ -23,7 +23,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
                 source: Resources.DependencyPropertyAttribute_cs.AsString());
         });
 
-        var framework = context.DetectFramework();
+        var framework = context.DetectFrameworkFromOptionsOrReferences();
         var version = context.DetectVersion();
 
         context.SyntaxProvider

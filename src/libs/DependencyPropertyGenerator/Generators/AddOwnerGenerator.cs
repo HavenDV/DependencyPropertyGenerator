@@ -23,7 +23,7 @@ public class AddOwnerGenerator : IIncrementalGenerator
                 source: Resources.AddOwnerAttribute_cs.AsString());
         });
 
-        var framework = context.DetectFramework();
+        var framework = context.DetectFrameworkFromOptionsOrReferences();
         var version = context.DetectVersion();
 
         context.SyntaxProvider
