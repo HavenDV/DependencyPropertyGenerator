@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
@@ -16,9 +17,8 @@ jobs:
     with:
       generate-build-number: false
       conventional-commits-publish-conditions: false
+      nuget-trusted-publishing: true
       additional-test-arguments: '--logger GitHubActions'
-    secrets:
-      nuget-key: ${{ secrets.NUGET_KEY }}
   
   release:
     name: Release
