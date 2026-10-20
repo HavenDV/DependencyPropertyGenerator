@@ -24,7 +24,7 @@ public class OverrideMetadataGenerator : IIncrementalGenerator
                 source: Resources.OverrideMetadataAttribute_cs.AsString());
         });
 
-        var framework = context.DetectFramework();
+        var framework = context.DetectFrameworkFromOptionsOrReferences();
         var version = context.DetectVersion();
 
         context.SyntaxProvider
