@@ -150,7 +150,7 @@ using DependencyPropertyGenerator;
 
         var referenceAssemblies = framework switch
         {
-            Framework.None => ReferenceAssemblies.NetFramework.Net48.Wpf,
+            Framework.None => ReferenceAssemblies.NetFramework.Net48.Default,
             Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
             Framework.Uwp => FrameworkReferenceAssemblies.Net80Uwp,
             Framework.WinUi => FrameworkReferenceAssemblies.Net80WinUi,
@@ -213,7 +213,7 @@ using DependencyPropertyGenerator;
         source = ApplyFrameworkReplacements(source, framework);
         var referenceAssemblies = framework switch
         {
-            Framework.None => ReferenceAssemblies.NetFramework.Net48.Wpf,
+            Framework.None => ReferenceAssemblies.NetFramework.Net48.Default,
             Framework.Wpf => ReferenceAssemblies.NetFramework.Net48.Wpf,
             Framework.Uwp => FrameworkReferenceAssemblies.Net80Uwp,
             Framework.WinUi => FrameworkReferenceAssemblies.Net80WinUi,

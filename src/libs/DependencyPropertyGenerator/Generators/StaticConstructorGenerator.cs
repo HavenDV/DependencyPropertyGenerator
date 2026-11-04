@@ -30,7 +30,7 @@ public class StaticConstructorGenerator : IIncrementalGenerator
                 source: Resources.SourceTrigger_cs.AsString());
         });
 
-        var framework = context.DetectFramework();
+        var framework = context.DetectFrameworkFromOptionsOrReferences();
         var version = context.DetectVersion();
 
         var dp1 = context.SyntaxProvider
